@@ -54,7 +54,14 @@ export default function Header({ locale }: HeaderProps) {
           >
             {/* Icon mark */}
             <span className="flex h-8 w-10 items-center justify-center border border-signal/50 transition-colors group-hover:border-signal">
-              <Image src="/images/medlex-mark.svg" alt="" width={28} height={20} priority aria-hidden="true" />
+              <Image
+                src="/images/medlex-mark.svg"
+                alt=""
+                width={28}
+                height={20}
+                priority
+                aria-hidden="true"
+              />
             </span>
 
             {/* Wordmark */}
@@ -69,7 +76,7 @@ export default function Header({ locale }: HeaderProps) {
           </Link>
 
           {/* ── Desktop nav ──────────────────────────────────────── */}
-          <Navigation locale={locale} />
+          <Navigation />
 
           {/* ── Desktop right actions ────────────────────────────── */}
           <div className="hidden items-center gap-4 lg:flex">
@@ -77,7 +84,11 @@ export default function Header({ locale }: HeaderProps) {
             <Link
               href={locale === "en" ? "/ar" : "/en"}
               className="font-body text-sm tracking-[0.15em] text-white/50 transition-colors hover:text-white"
-              aria-label={locale === "en" ? t("actions.switchToArabic") : t("actions.switchToEnglish")}
+              aria-label={
+                locale === "en"
+                  ? t("actions.switchToArabic")
+                  : t("actions.switchToEnglish")
+              }
             >
               {t("language")}
             </Link>
