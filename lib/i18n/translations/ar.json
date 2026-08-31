@@ -1,0 +1,25 @@
+{
+  "nav": {
+    "pathways": "المسارات",
+    "founder": "المؤسس",
+    "faq": "الأسئلة الشائعة",
+    "institutional": "المؤسسات",
+    "contact": "تواصل معنا"
+  },
+  "actions": {
+    "register": "سجّل اهتمامك",
+    "explore": "استكشف الدورات",
+    "menu": "فتح القائمة",
+    "close": "إغلاق القائمة",
+    "skipToContent": "انتقل إلى المحتوى",
+    "switchToArabic": "التبديل إلى العربية",
+    "switchToEnglish": "التبديل إلى الإنجليزية"
+  },
+  "brand": {
+    "name": "ميدلكس",
+    "descriptor": "الطب النفسي الشرعي والطب النفسي القانوني",
+    "home": "ميدلكس — الرئيسية"
+  },
+  "language": "English",
+  "direction": "rtl"
+}

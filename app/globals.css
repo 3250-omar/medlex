@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+/* ─── MedLex Design Tokens ──────────────────────────────────────── */
+:root {
+  --ink: #0b1a2e;
+  --paper: #f7f5f0;
+  --surface: #ffffff;
+  --surface-2: #eee9df;
+  --line: #d7d0c3;
+  --text: #10233d;
+  --muted: #617086;
+  --accent: #1a365d;
+  --accent-2: #284a78;
+  --accent-soft: #e8e0d1;
+  --signal: #b08d2a;
+  --signal-light: #c9a84c;
+  --content-max: 1200px;
+  --header-h: 72px;
+}
+
+/* ─── Tailwind Theme ─────────────────────────────────────────────── */
+@theme inline {
+  /* Colors */
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-text-base: var(--text);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-soft: var(--accent-soft);
+  --color-signal: var(--signal);
+  --color-signal-light: var(--signal-light);
+
+  /* Fonts */
+  --font-display: var(--font-ovo), Georgia, serif;
+  --font-body: var(--font-manrope), system-ui, sans-serif;
+
+  /* Animations */
+  --animate-marquee: marquee 35s linear infinite;
+  --animate-fade-up: fade-up 0.7s ease-out forwards;
+  --animate-fade-in: fade-in 0.5s ease-out forwards;
+}
+
+/* ─── Keyframes ──────────────────────────────────────────────────── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ─── Reset ──────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ─── Base ───────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  background-color: var(--paper);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Typography ─────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+/* ─── Focus ──────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+/* ─── Selection ──────────────────────────────────────────────────── */
+::selection {
+  background-color: var(--signal);
+  color: var(--surface);
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--surface-2); }
+::-webkit-scrollbar-thumb { background: var(--line); border-radius: 3px; }
+
+/* ─── Reduced motion ─────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Dark mode uses the same editorial tokens with a deeper paper and softened rules. */
+html[data-theme="dark"] {
+  --ink: #f5f1e8;
+  --paper: #091525;
+  --surface: #0f2033;
+  --surface-2: #142a40;
+  --line: #30465f;
+  --hair: rgba(245, 241, 232, 0.14);
+  --text: #f5f1e8;
+  --muted: #aeb9c7;
+  --accent: #8fb8e8;
+  --accent-2: #b9d4f2;
+  --accent-soft: #233b57;
+  --signal: #d9b274;
+  --signal-light: #e5c96a;
+  --glow: rgba(143, 184, 232, 0.12);
+}
+
+html[data-theme="dark"] body { background-color: var(--paper); color: var(--text); }
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4,
+html[data-theme="dark"] h5,
+html[data-theme="dark"] h6 { color: var(--ink); }

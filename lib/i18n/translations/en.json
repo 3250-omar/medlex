@@ -1,0 +1,25 @@
+{
+  "nav": {
+    "pathways": "Pathways",
+    "founder": "Founder",
+    "faq": "FAQ",
+    "institutional": "Institutional",
+    "contact": "Contact"
+  },
+  "actions": {
+    "register": "Register your interest",
+    "explore": "Explore Courses",
+    "menu": "Open menu",
+    "close": "Close menu",
+    "skipToContent": "Skip to content",
+    "switchToArabic": "Switch to Arabic",
+    "switchToEnglish": "Switch to English"
+  },
+  "brand": {
+    "name": "MEDLEX",
+    "descriptor": "Forensic & Medicolegal Psychiatry",
+    "home": "MedLex — home"
+  },
+  "language": "العربية",
+  "direction": "ltr"
+}
