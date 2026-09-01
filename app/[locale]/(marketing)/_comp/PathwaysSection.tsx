@@ -60,7 +60,7 @@ export default function PathwaysSection({ locale }: PathwaysSectionProps) {
         style={{ maxWidth: "var(--content-max)" }}
       >
         {/* ── Section header ───────────────────────────────────── */}
-        <div className="mb-16 grid grid-cols-1 gap-8 lg:grid-cols-[180px_1fr] lg:gap-16">
+        <div data-reveal className="mb-16 grid grid-cols-1 gap-8 lg:grid-cols-[180px_1fr] lg:gap-16">
           <div className="flex items-start gap-4 pt-1">
             <span className="mt-2 block h-px w-10 shrink-0 bg-signal opacity-70" />
             <span className="font-body text-[9px] uppercase leading-relaxed tracking-[0.25em] text-white/35">
@@ -84,7 +84,7 @@ export default function PathwaysSection({ locale }: PathwaysSectionProps) {
         </div>
 
         {/* ── Cards ─────────────────────────────────────────────── */}
-        <div className="grid grid-cols-1 gap-px bg-white/10 md:grid-cols-3">
+        <div data-reveal style={{ "--reveal-delay": "100ms" } as React.CSSProperties} className="grid grid-cols-1 gap-px bg-white/10 md:grid-cols-3">
           {PATHWAYS.map((p) => (
             <article
               key={p.num}

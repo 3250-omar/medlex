@@ -14,22 +14,32 @@ interface LocaleLayoutProps {
   params: Promise<{ locale: string }>;
 }
 
-export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
+export default async function LocaleLayout({
+  children,
+  params,
+}: LocaleLayoutProps) {
   const { locale } = await params;
   if (!SUPPORTED_LOCALES.includes(locale as Locale)) notFound();
-  const messages = (await import(`../../lib/i18n/translations/${locale}.json`)).default;
+  const messages = (await import(`../../lib/i18n/translations/${locale}.json`))
+    .default;
 
   return (
     <>
       <LocaleDocument locale={locale as Locale} />
       <NextIntlClientProvider locale={locale} messages={messages}>
-      <Providers>
-        <div lang={locale} dir={locale === "ar" ? "rtl" : "ltr"} className="flex min-h-screen flex-col">
-          <Header locale={locale} />
-          <main id="main-content" className="flex flex-1 flex-col">{children}</main>
-          <Footer locale={locale} />
-        </div>
-      </Providers>
+        <Providers>
+          <div
+            lang={locale}
+            dir={locale === "ar" ? "rtl" : "ltr"}
+            className="flex min-h-screen flex-col"
+          >
+            <Header />
+            <main id="main-content" className="flex flex-1 flex-col">
+              {children}
+            </main>
+            <Footer locale={locale} />
+          </div>
+        </Providers>
       </NextIntlClientProvider>
     </>
   );

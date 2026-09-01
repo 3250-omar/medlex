@@ -30,7 +30,7 @@ export default function Navigation() {
       aria-label="Main navigation"
     >
       {NAV_ITEMS.map((item, index) => {
-        const targetPath = `/${locale}${item.href.replace("/#", "")}`;
+        const targetPath = `/${locale}${item.href}`;
         const isActive =
           pathname === targetPath || pathname.startsWith(`${targetPath}/`);
         return (

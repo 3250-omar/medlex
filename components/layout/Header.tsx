@@ -5,14 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import Navigation from "./Navigation";
 import MobileMenu from "./MobileMenu";
-import ThemeToggle from "@/components/theme/ThemeToggle";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { InterestDialogTrigger } from "@/components/marketing/InterestDialog";
 
-interface HeaderProps {
-  locale: string;
-}
-
-export default function Header({ locale }: HeaderProps) {
+export default function Header() {
+  const locale = useLocale();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const t = useTranslations();
@@ -46,11 +43,11 @@ export default function Header({ locale }: HeaderProps) {
           className="mx-auto flex h-full items-center justify-between px-6 md:px-8 lg:px-12"
           style={{ maxWidth: "var(--content-max)" }}
         >
-          {/* ── Logo ─────────────────────────────────────────────── */}
+          {/* â”€â”€ Logo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           <Link
             href={`/${locale}`}
             className="group flex items-center gap-3"
-            aria-label="MedLex — home"
+            aria-label="MedLex â€” home"
           >
             {/* Icon mark */}
             <span className="flex h-8 w-10 items-center justify-center border border-signal/50 transition-colors group-hover:border-signal">
@@ -75,12 +72,11 @@ export default function Header({ locale }: HeaderProps) {
             </span>
           </Link>
 
-          {/* ── Desktop nav ──────────────────────────────────────── */}
+          {/* â”€â”€ Desktop nav â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           <Navigation />
 
-          {/* ── Desktop right actions ────────────────────────────── */}
+          {/* â”€â”€ Desktop right actions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           <div className="hidden items-center gap-4 lg:flex">
-            <ThemeToggle />
             <Link
               href={locale === "en" ? "/ar" : "/en"}
               className="font-body text-sm tracking-[0.15em] text-white/50 transition-colors hover:text-white"
@@ -92,15 +88,10 @@ export default function Header({ locale }: HeaderProps) {
             >
               {t("language")}
             </Link>
-            <Link
-              href={`/${locale}/register`}
-              className="border border-signal px-5 py-2 font-body text-sm tracking-wide text-signal transition-all duration-200 hover:bg-signal hover:text-ink"
-            >
-              {t("actions.register")}
-            </Link>
+            <InterestDialogTrigger className="border border-signal px-5 py-2 font-body text-sm tracking-wide text-signal transition-all duration-200 hover:bg-signal hover:text-ink">{t("actions.register")}</InterestDialogTrigger>
           </div>
 
-          {/* ── Mobile hamburger ─────────────────────────────────── */}
+          {/* â”€â”€ Mobile hamburger â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           <button
             onClick={() => setMenuOpen(true)}
             className="flex flex-col gap-[5px] p-2 lg:hidden"
@@ -122,3 +113,4 @@ export default function Header({ locale }: HeaderProps) {
     </>
   );
 }
+

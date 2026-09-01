@@ -26,7 +26,7 @@ export default function FlagshipCourseSection({ locale }: FlagshipCourseSectionP
       <div className="mx-auto w-full px-6 md:px-8 lg:px-12" style={{ maxWidth: "var(--content-max)" }}>
         
         {/* Section Header */}
-        <div className="mb-12">
+        <div data-reveal className="mb-12">
           <div className="flex items-center gap-3 mb-3">
             <span className="h-px w-8 bg-signal" />
             <span className="font-body text-[10px] uppercase tracking-[0.25em] text-signal font-semibold">
@@ -42,7 +42,7 @@ export default function FlagshipCourseSection({ locale }: FlagshipCourseSectionP
         </div>
 
         {/* Main Card Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        <div data-reveal style={{ "--reveal-delay": "100ms" } as React.CSSProperties} className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           
           {/* Left 2 Cols: Course Overview & Syllabus */}
           <div className="lg:col-span-2 bg-ink text-white p-8 md:p-12 border border-white/10 relative overflow-hidden">

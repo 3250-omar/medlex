@@ -8,7 +8,7 @@ const QUICK_LINKS = [
   { label: "Pathways", href: "/pathways" },
 ];
 
-const LEGAL_LINKS = [
+const LEGAL_LINKS = [ 
   { label: "Terms of Use", href: "/terms" },
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Refund Policy", href: "/refund-policy" },
@@ -116,7 +116,7 @@ export default function Footer({ locale }: FooterProps) {
               href="mailto:info@medlex.academy"
               className="font-body text-sm text-white/55 transition-colors hover:text-white"
             >
-              info@medl ex.academy
+              info@medlex.academy
             </a>
             {/* Social */}
             <div className="mt-6 flex gap-4">

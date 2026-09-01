@@ -9,7 +9,7 @@ export default function AcademyPreviewSection({ locale }: AcademyPreviewSectionP
     <section className="bg-paper py-24 border-b border-line" aria-labelledby="academy-preview-heading">
       <div className="mx-auto w-full px-6 md:px-8 lg:px-12" style={{ maxWidth: "var(--content-max)" }}>
         
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div data-reveal className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
           {/* Left CTA block */}
           <div className="lg:col-span-4 bg-ink text-white p-8 md:p-10 border border-white/10 flex flex-col justify-between h-full min-h-[360px]">

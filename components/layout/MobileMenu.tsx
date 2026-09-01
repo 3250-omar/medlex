@@ -3,8 +3,9 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { NAV_ITEMS } from "./Navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import ThemeToggle from "@/components/theme/ThemeToggle";
+import { InterestDialogTrigger } from "@/components/marketing/InterestDialog";
 
 interface MobileMenuProps {
   open: boolean;
@@ -12,7 +13,8 @@ interface MobileMenuProps {
   locale: string;
 }
 
-export default function MobileMenu({ open, onClose, locale }: MobileMenuProps) {
+export default function MobileMenu({ open, onClose }: MobileMenuProps) {
+  const locale = useLocale();
   const t = useTranslations();
   const labels = [
     t("nav.pathways"),
@@ -105,13 +107,7 @@ export default function MobileMenu({ open, onClose, locale }: MobileMenuProps) {
           >
             {t("language")}
           </Link>
-          <Link
-            href={`/${locale}/register`}
-            onClick={onClose}
-            className="border border-signal py-3 text-center font-body text-sm tracking-wide text-signal transition-all hover:bg-signal hover:text-ink"
-          >
-            {t("actions.register")}
-          </Link>
+          <InterestDialogTrigger className="border border-signal py-3 text-center font-body text-sm tracking-wide text-signal transition-all hover:bg-signal hover:text-ink">{t("actions.register")}</InterestDialogTrigger>
         </div>
       </div>
     </div>

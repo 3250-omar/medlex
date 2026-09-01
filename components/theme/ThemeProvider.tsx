@@ -14,17 +14,20 @@ const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 function resolveTheme(theme: Theme): "light" | "dark" {
   if (theme !== "system") return theme;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window === "undefined") return "system";
     const stored = window.localStorage.getItem("medlex-theme");
-    return stored === "light" || stored === "dark" || stored === "system" ? stored : "system";
+    return stored === "light" || stored === "dark" || stored === "system"
+      ? stored
+      : "system";
   });
   const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("light");
-
 
   useEffect(() => {
     const apply = () => {
@@ -52,7 +55,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     [theme, resolvedTheme],
   );
 
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+  );
 }
 
 export function useTheme() {
