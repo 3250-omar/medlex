@@ -88,15 +88,19 @@ export default function Header() {
             >
               {t("language")}
             </Link>
-            <InterestDialogTrigger className="border border-signal px-5 py-2 font-body text-sm tracking-wide text-signal transition-all duration-200 hover:bg-signal hover:text-ink">{t("actions.register")}</InterestDialogTrigger>
+            <InterestDialogTrigger className="border border-signal px-5 py-2 font-body text-sm tracking-wide text-signal transition-all duration-200 hover:bg-signal hover:text-ink">
+              {t("actions.register")}
+            </InterestDialogTrigger>
           </div>
 
           {/* â”€â”€ Mobile hamburger â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           <button
+            type="button"
             onClick={() => setMenuOpen(true)}
-            className="flex flex-col gap-[5px] p-2 lg:hidden"
+            className="flex min-h-11 min-w-11 flex-col items-center justify-center gap-[5px] lg:hidden"
             aria-label={t("actions.menu")}
             aria-expanded={menuOpen}
+            aria-controls="mobile-site-navigation"
           >
             <span className="block h-px w-6 bg-white" />
             <span className="block h-px w-4 bg-white" />
@@ -113,4 +117,3 @@ export default function Header() {
     </>
   );
 }
-

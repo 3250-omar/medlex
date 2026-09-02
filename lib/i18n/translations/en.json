@@ -21,5 +21,183 @@
     "home": "MedLex — home"
   },
   "language": "العربية",
-  "direction": "ltr"
+  "direction": "ltr",
+  "footer": {
+    "pathways": "Pathways",
+    "medlex": "MedLex",
+    "education": "Medico-Legal Education",
+    "academy": "The CASC Academy",
+    "foundations": "MedLex Foundations",
+    "founder": "The Founder",
+    "institutional": "Institutional work",
+    "contact": "Contact & register interest",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "description": "Specialised training and expert consultation in forensic and medicolegal psychiatry, serving courts, institutions, and clinicians across the MENA region.",
+    "disclaimer": "Consultation is not a substitute for legal representation"
+  },
+  "registration": {
+    "title": "Register your interest",
+    "description": "Choose the pathway that belongs to you — you will hear about that one alone.",
+    "choosePathway": "Choose a pathway",
+    "medicoLegal": "Medico-Legal",
+    "academy": "The CASC Academy",
+    "foundations": "Foundations",
+    "fullName": "Full name",
+    "username": "Username",
+    "email": "Email — the guide is sent here",
+    "phone": "Phone number",
+    "password": "Password",
+    "free": "Free on registration",
+    "guide": "The MedLex guide (PDF)",
+    "guideDescription": "Choose a pathway above and its guide is sent to your inbox on registration.",
+    "file": "[FILE: supplied by MedLex]",
+    "account": "[ACCOUNT: pending membership layer]",
+    "submit": "Register your interest",
+    "privacy": "Your details are used only to contact you about MedLex programmes, and are never shared.",
+    "confirmedLabel": "Registration confirmed",
+    "confirmedTitle": "Your interest has been recorded.",
+    "confirmedDescription": "We will share relevant early-access details for {pathway} when they are ready.",
+    "done": "Done"
+  },
+  "faq": {
+    "eyebrow": "MEDLEX FAQ",
+    "title": "Questions asked before registering.",
+    "subtitle": "General answers about the platform and its three pathways.",
+    "cta": "Register your interest",
+    "items": [
+      {
+        "question": "Who is this platform for?",
+        "answer": "MedLex is designed for psychiatrists, clinicians, legal professionals, and institutions working where mental health meets the law."
+      },
+      {
+        "question": "What is the difference between the three pathways?",
+        "answer": "The pathways move from foundational concepts to practical report writing and advanced professional capability, so you can begin at the right level."
+      },
+      {
+        "question": "What happens after I register my interest?",
+        "answer": "We will share the next available dates, course guidance, and early access information relevant to your interests."
+      },
+      {
+        "question": "Are prices and dates published?",
+        "answer": "Course dates and pricing are published as each cohort opens. Register your interest to receive the announcement first."
+      }
+    ]
+  },
+  "home": {
+    "hero": {
+      "kicker": "Forensic & Medicolegal Psychiatry · MENA",
+      "line1": "Where medicine",
+      "line2": "is asked to",
+      "answer": "answer",
+      "line3": "to the court.",
+      "body": "MedLex trains psychiatrists to produce evaluations that survive cross-examination, and gives courts, prosecutors, and ministries psychiatric evidence built to a documented standard.",
+      "register": "Register your interest",
+      "pathways": "The three pathways",
+      "badge": "Educational pathways, one for each professional audience"
+    },
+    "pathways": {
+      "eyebrow": "Three Educational Pathways",
+      "title": "One platform. Three ways in.",
+      "intro": "Each pathway has its own audience, its own pace, and its own next step. Choose the way in that belongs to you."
+    },
+    "who": {
+      "audiences": [
+        "Psychiatrists",
+        "Courts",
+        "Prosecution",
+        "Ministries",
+        "Legal counsel"
+      ],
+      "paragraphs": [
+        "MedLex Solutions is the first specialised forensic psychiatry training and consultation centre in the MENA region. We work along two lines that reinforce each other: structured training that equips psychiatrists with the forensic competence courts expect, and expert consultation that gives judicial and governmental institutions evaluations they can rely on.",
+        "The method is deliberately unglamorous — defined questions, documented reasoning, traceable sources, and conclusions stated at the confidence the evidence actually supports. That structure is what makes an opinion admissible, and it is also what protects the clinician who signed it.",
+        "We are not importing a model wholesale. Programmes are built around the legal frameworks practitioners here actually appear under, then aligned with international forensic standards rather than the other way round."
+      ],
+      "quote": "We’re not just training psychiatrists — we’re building the professional standard where clinical expertise becomes court-admissible evidence.",
+      "mission": "Mission · MedLex Solutions",
+      "stats": [
+        "Consultant training and practice in forensic psychiatry.",
+        "Countries of practice: the United Kingdom, Egypt, and Qatar."
+      ],
+      "imageAlt": "A caduceus joined with the scales of justice",
+      "eyebrow": "Who We Are",
+      "title": "A clinical opinion and a legal finding are not the same document.",
+      "intro": "Most psychiatric reports entering court were never written for court. MedLex exists to close that gap — from both ends."
+    },
+    "standards": {
+      "items": [
+        [
+          "First-mover, by construction",
+          "The region’s first specialised forensic psychiatry centre. We are not following a model — we are writing the one others will be measured against."
+        ],
+        [
+          "UK-trained, court-tested leadership",
+          "Led by a Consultant Forensic Psychiatrist whose opinion has been examined in tribunals, Magistrates’ and Crown Courts, and before the Parole Board."
+        ],
+        [
+          "A recognition pathway, not a certificate",
+          "Academic partnerships, supervision protocols, and judicial collaboration, built in sequence toward sustainable professional accreditation."
+        ],
+        [
+          "Built from live cases",
+          "Every module derives from actual court requirements and real legal frameworks — the failures we teach around are ones that happened in hearings."
+        ]
+      ],
+      "title": "Authority. Structure. Recognition.",
+      "eyebrow": "Standards",
+      "intro": "Why institutions and clinicians choose to work to our standard."
+    },
+    "flagship": {
+      "alt": "",
+      "body": "Eight modules across two live teaching days, built on a single simulated case file (MLC-100). Participants leave having produced a complete psychiatric medico-legal report.",
+      "eyebrow": "Flagship Programme",
+      "register": "Register your interest",
+      "title": "Writing Psychiatric Evidence"
+    },
+    "founder": {
+      "name": "Dr Ahmed Abouelghit",
+      "role": "UK-trained Consultant Forensic Psychiatrist",
+      "bio": "His practice spans forensic psychiatry, medico-legal reporting, Mental Health Tribunals, court and Parole Board work — alongside directing specialist training and serving as an accredited MRCPsych CASC examiner for the Royal College of Psychiatrists.",
+      "caption": "Dr. Ahmed Abouelghit · Consultant",
+      "imageAlt": "Dr. Ahmed Abouelghit, Consultant Forensic Psychiatrist",
+      "eyebrow": "The Founder",
+      "profile": "Read the full profile"
+    },
+    "pathwayCards": [
+      {
+        "title": "Medico-Legal Education",
+        "audience": "For psychiatrists, psychologists & legal professionals",
+        "description": "Four progressive tracks — from single-topic masterclasses to advanced certification — home of the flagship programme, Writing Psychiatric Evidence.",
+        "features": [
+          "Live interactive online",
+          "Bilingual EN · AR",
+          "Waitlist open"
+        ],
+        "link": "Explore the pathway"
+      },
+      {
+        "title": "The CASC Academy",
+        "audience": "For MRCPsych CASC candidates worldwide",
+        "description": "An interactive digital preparation platform that mirrors the real examination — designed by an accredited Royal College CASC examiner.",
+        "features": [
+          "Self-paced online",
+          "English only",
+          "First to launch — ready"
+        ],
+        "link": "Explore the Academy"
+      },
+      {
+        "title": "MedLex Foundations",
+        "audience": "For clinicians building careers beyond the clinic",
+        "description": "Professional development beyond clinical training — opening with The Clinician’s Edge and the Clinical Leadership Programme.",
+        "features": [
+          "Online & face-to-face",
+          "Bilingual EN · AR",
+          "First programmes launching"
+        ],
+        "link": "Explore Foundations"
+      }
+    ]
+  }
 }

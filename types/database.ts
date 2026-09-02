@@ -1,4 +1,10 @@
-export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[];
 
 export interface Database {
   public: {
@@ -17,7 +23,10 @@ export interface Database {
           is_published: boolean;
           created_at: string;
         };
-        Insert: Omit<Database["public"]["Tables"]["courses"]["Row"], "id" | "created_at"> & { id?: string; created_at?: string };
+        Insert: Omit<
+          Database["public"]["Tables"]["courses"]["Row"],
+          "id" | "created_at"
+        > & { id?: string; created_at?: string };
         Update: Partial<Database["public"]["Tables"]["courses"]["Insert"]>;
         Relationships: [];
       };

@@ -1,10 +1,8 @@
-import AcademyPreviewSection from "./_comp/AcademyPreviewSection";
 import FlagshipCourseSection from "./_comp/FlagshipCourseSection";
 import FounderSection from "./_comp/FounderSection";
 import HeroSection from "./_comp/HeroSection";
-import InstitutionalSection from "./_comp/InstitutionalSection";
 import PathwaysSection from "./_comp/PathwaysSection";
-import StatsBar from "./_comp/StatsBar";
+import StandardsSection from "./_comp/StandardsSection";
 import WhoWeAreSection from "./_comp/WhoWeAreSection";
 
 interface HomePageProps {
@@ -18,12 +16,10 @@ export default async function HomePage({ params }: HomePageProps) {
     <>
       <HeroSection locale={locale} />
       <WhoWeAreSection />
-      <StatsBar />
       <PathwaysSection locale={locale} />
       <FlagshipCourseSection locale={locale} />
-      <AcademyPreviewSection locale={locale} />
+      <StandardsSection />
       <FounderSection locale={locale} />
-      <InstitutionalSection locale={locale} />
     </>
   );
 }

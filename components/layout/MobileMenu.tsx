@@ -85,16 +85,36 @@ export default function MobileMenu({ open, onClose }: MobileMenuProps) {
 
         {/* nav links */}
         <nav className="flex flex-col gap-7" aria-label="Mobile navigation">
-          {NAV_ITEMS.map((item, index) => (
-            <Link
-              key={item.href}
-              href={`/${locale}${item.href}`}
-              onClick={onClose}
-              className="font-display text-2xl text-white/80 tracking-wide transition-colors hover:text-white"
-            >
-              {labels[index]}
-            </Link>
-          ))}
+          {NAV_ITEMS.map((item, index) => {
+            const isHash =
+              item.href.startsWith("/#") || item.href.startsWith("#");
+            const targetPath = `/${locale}${item.href}`;
+            return (
+              <Link
+                key={item.href}
+                href={targetPath}
+                onClick={(e) => {
+                  onClose();
+                  if (isHash) {
+                    const targetId = item.href.replace(/^\/?#/, "");
+                    const elem = document.getElementById(targetId);
+                    if (elem) {
+                      e.preventDefault();
+                      elem.scrollIntoView({ behavior: "smooth" });
+                      window.history.pushState(
+                        null,
+                        "",
+                        `/${locale}#${targetId}`,
+                      );
+                    }
+                  }
+                }}
+                className="font-display text-2xl text-white/80 tracking-wide transition-colors hover:text-white"
+              >
+                {labels[index]}
+              </Link>
+            );
+          })}
         </nav>
 
         {/* bottom actions */}

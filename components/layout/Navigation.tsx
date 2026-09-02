@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 
 const NAV_ITEMS = [
-  { label: "Pathways", href: "/pathways" },
+  { label: "Pathways", href: "/#pathways" },
   { label: "Founder", href: "/founder" },
   { label: "FAQ", href: "/faq" },
   { label: "Institutional", href: "/institutional" },
@@ -24,19 +24,37 @@ export default function Navigation() {
     t("nav.contact"),
   ];
 
+  const handleScroll = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    if (href.startsWith("/#") || href.startsWith("#")) {
+      const targetId = href.replace(/^\/?#/, "");
+      const elem = document.getElementById(targetId);
+      if (elem) {
+        e.preventDefault();
+        elem.scrollIntoView({ behavior: "smooth" });
+        window.history.pushState(null, "", `/${locale}#${targetId}`);
+      }
+    }
+  };
+
   return (
     <nav
       className="hidden items-center gap-8 lg:flex"
       aria-label="Main navigation"
     >
       {NAV_ITEMS.map((item, index) => {
+        const isHash = item.href.startsWith("/#") || item.href.startsWith("#");
         const targetPath = `/${locale}${item.href}`;
         const isActive =
-          pathname === targetPath || pathname.startsWith(`${targetPath}/`);
+          !isHash &&
+          (pathname === targetPath || pathname.startsWith(`${targetPath}/`));
         return (
           <Link
             key={item.href}
-            href={`/${locale}${item.href}`}
+            href={targetPath}
+            onClick={(e) => handleScroll(e, item.href)}
             aria-current={isActive ? "page" : undefined}
             className={`group relative font-body text-sm tracking-wide transition-colors duration-200 hover:text-white ${isActive ? "text-signal" : "text-white/70"}`}
           >

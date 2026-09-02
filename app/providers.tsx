@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
-import RevealObserver from "@/components/marketing/RevealObserver";
 import { InterestDialogProvider } from "@/components/marketing/InterestDialog";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
@@ -20,7 +19,6 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <InterestDialogProvider>
-          {/* <RevealObserver /> */}
           {children}
         </InterestDialogProvider>
       </ThemeProvider>

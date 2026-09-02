@@ -1,10 +1,51 @@
 "use client";
 
-import { useState } from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
-type FAQItem = { question: string; answer: string };
+export type FAQItem = { question: string; answer: string };
 
 export default function FAQAccordion({ items }: { items: FAQItem[] }) {
-  const [open, setOpen] = useState<number | null>(null);
-  return <div className="flex flex-col gap-3">{items.map((item, index) => { const isOpen = open === index; return <div key={item.question} className="border border-white/15 bg-white/[0.035] transition-colors duration-300 hover:border-white/30"><button type="button" className="flex min-h-20 w-full items-center gap-5 px-6 py-5 text-left md:gap-10" aria-expanded={isOpen} onClick={() => setOpen(isOpen ? null : index)}><span className="w-12 shrink-0 font-display text-3xl text-signal md:w-16">{String(index + 1).padStart(2, "0")}</span><span className="flex-1 font-display text-lg text-white md:text-xl">{item.question}</span><span className={`relative h-5 w-5 shrink-0 text-signal transition-transform duration-300 ${isOpen ? "rotate-45" : ""}`} aria-hidden="true"><span className="absolute left-0 top-1/2 h-px w-5 bg-current" /><span className="absolute left-1/2 top-0 h-5 w-px bg-current" /></span></button><div className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}><div className="overflow-hidden"><p className="border-t border-white/10 px-6 py-5 pl-[5.5rem] font-body text-sm leading-7 text-white/55 md:pl-32">{item.answer}</p></div></div></div>; })}</div>;
+  return (
+    <Accordion className="flex w-full flex-col -space-y-px">
+      {items.map((item, index) => {
+        const itemNumber = String(index + 1).padStart(2, "0");
+        return (
+          <AccordionItem
+            key={item.question}
+            value={item.question}
+            className="border border-white/15 bg-white/[0.025] transition-colors duration-200 hover:border-white/30 not-last:border-b"
+          >
+            <AccordionTrigger
+              showChevron={false}
+              className="group flex w-full cursor-pointer items-center justify-between gap-6 rounded-none px-6 py-6 text-left hover:no-underline md:gap-10 md:px-8 md:py-7"
+            >
+              <div className="flex flex-1 items-center gap-6 md:gap-10">
+                <span className="shrink-0 select-none font-display text-2xl font-normal text-signal md:text-3xl">
+                  {itemNumber}
+                </span>
+                <span className="font-display text-base font-normal leading-snug text-paper transition-colors duration-200 group-hover:text-white md:text-lg lg:text-xl">
+                  {item.question}
+                </span>
+              </div>
+              <span
+                className="relative flex size-5 shrink-0 items-center justify-center text-signal transition-transform duration-300 group-aria-expanded/accordion-trigger:rotate-45"
+                aria-hidden="true"
+              >
+                <span className="absolute h-px w-4 bg-current" />
+                <span className="absolute h-4 w-px bg-current" />
+              </span>
+            </AccordionTrigger>
+            <AccordionContent className="border-t border-white/10 px-6 py-6 font-body text-sm leading-relaxed text-white/65 md:px-8 md:pl-24 md:text-base lg:pl-28">
+              {item.answer}
+            </AccordionContent>
+          </AccordionItem>
+        );
+      })}
+    </Accordion>
+  );
 }
