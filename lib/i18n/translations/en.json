@@ -596,6 +596,40 @@
         "body": "Dr Ahmed Abouelghit — Consultant Forensic Psychiatrist, former MRCPsych CASC examiner, Royal College of Psychiatrists.",
         "action": "About the founder"
       },
+      "sampleStation": {
+        "title": "A station, in miniature",
+        "badge": "TRY IT",
+        "subtitle": "A shortened taster of how Academy stations work. Full stations unfold over several decision points - this one gives you a single moment, and the examiner's view of it",
+        "meta": "SAMPLE STATION - SPEAKING WITH A RELATIVE - COMMUNICATION & CONFIDENTIALITY",
+        "taskLabel": "Your task.",
+        "scenario": "Daniel, 24, has been admitted with a first episode of psychosis. He has told the team clearly that he does not want clinical information shared with his family. His mother, distressed, has asked to speak with you. Speak with her.",
+        "question": "She asks you directly: \"Just tell me - is it schizophrenia?\" What do you do first?",
+        "options": [
+          {
+            "id": "A",
+            "text": "Reassure her by sharing the likely diagnosis - she is his mother, and she clearly cares about him",
+            "examinerTitle": "THE EXAMINER'S VIEW",
+            "examinerFeedback": "The instinct to comfort is human - and it is exactly where marks leak in this station. Daniel has explicitly declined to share, and disclosing the likely diagnosis breaches that. Strong candidates hold the boundary without abandoning warmth; this option abandons the boundary to keep the warmth."
+          },
+          {
+            "id": "B",
+            "text": "Explain warmly that you cannot share Daniel's clinical information without his agreement - then explore her concerns, and offer what you can: general information, support for her, and a way forward",
+            "examinerTitle": "THE EXAMINER'S VIEW",
+            "scoringMove": "THE SCORING MOVE",
+            "examinerFeedback": "This is what the station is built to reward: the boundary is held, and the relationship is kept. You have declined to disclose, stayed with her distress, and opened a path forward - general information, support, and the possibility of Daniel choosing to involve her. The station rewards doing both at once, not choosing between them."
+          },
+          {
+            "id": "C",
+            "text": "Tell her that confidentiality rules prevent you discussing anything, and suggest she raises her questions with Daniel himself",
+            "examinerTitle": "THE EXAMINER'S VIEW",
+            "examinerFeedback": "Technically defensible - and it stalls in the communication domain. The task was to manage this conversation, not to end it. Citing the rule and stepping back reads as dismissive, and the marks for engaging with her distress go uncollected."
+          }
+        ],
+        "testingTitle": "WHAT THIS STATION IS REALLY TESTING",
+        "testingBody": "Not your knowledge of confidentiality - every candidate knows the rule. It is testing whether you can hold a boundary and a relationship at the same time, under time pressure.",
+        "disclaimer": "This sample uses an original teaching scenario built on the examination's publicly defined competency domains. Select the other options to compare the examiner's view of each.",
+        "cta": "Register your interest - get the free guide"
+      },
       "faqs": [
         {
           "question": "Does the Academy replace a live course or my study group?",

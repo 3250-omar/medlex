@@ -47,7 +47,7 @@ export default function FlagshipCourseSection({
             className="mt-10 inline-flex min-h-11 items-center gap-3 bg-signal px-5 py-3 font-body text-sm font-medium text-ink transition-colors hover:bg-signal-light focus-visible:bg-signal-light"
           >
             {t("flagship.register")}
-            <span aria-hidden="true">â†’</span>
+            {/* <span aria-hidden="true">â†’</span> */}
           </Link>
         </div>
 
