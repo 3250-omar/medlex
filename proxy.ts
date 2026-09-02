@@ -13,27 +13,36 @@ export async function proxy(request: NextRequest) {
     /\.(.*)$/.test(pathname);
   if (isPublicAsset) return NextResponse.next();
 
-  const hasLocale = locales.some(
-    (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`),
+  const locale = locales.find(
+    (candidate) =>
+      pathname === `/${candidate}` || pathname.startsWith(`/${candidate}/`),
   );
-  if (!hasLocale)
+  if (!locale) {
     return NextResponse.redirect(
       new URL(`/${defaultLocale}${pathname}`, request.url),
     );
+  }
 
-  let response = NextResponse.next({ request });
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-next-intl-locale", locale);
+  let response = NextResponse.next({ request: { headers: requestHeaders } });
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-  if (!supabaseUrl || !supabaseKey) return response;
+  const isAcademyRoute =
+    pathname === `/${locale}/academy` ||
+    pathname.startsWith(`/${locale}/academy/`);
+
+  if (!supabaseUrl || !supabaseKey) {
+    return isAcademyRoute
+      ? NextResponse.redirect(new URL(`/${locale}?auth=sign-in`, request.url))
+      : response;
+  }
 
   const supabase = createServerClient(supabaseUrl, supabaseKey, {
     cookies: {
       getAll: () => request.cookies.getAll(),
       setAll(cookiesToSet) {
-        cookiesToSet.forEach(({ name, value }) =>
-          request.cookies.set(name, value),
-        );
-        response = NextResponse.next({ request });
+        response = NextResponse.next({ request: { headers: requestHeaders } });
         cookiesToSet.forEach(({ name, value, options }) =>
           response.cookies.set(name, value, options),
         );
@@ -41,7 +50,15 @@ export async function proxy(request: NextRequest) {
     },
   });
 
-  await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (isAcademyRoute && !user) {
+    return NextResponse.redirect(
+      new URL(`/${locale}?auth=sign-in`, request.url),
+    );
+  }
+
   return response;
 }
 

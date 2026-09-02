@@ -449,5 +449,21 @@
         }
       ]
     }
+  },
+  "auth": {
+    "title": "Continue with MedLex",
+    "description": "Sign in to continue learning, or create your account to register your interest and access courses.",
+    "tabsLabel": "Authentication options",
+    "signIn": "Sign in",
+    "register": "Register",
+    "password": "Password",
+    "createAccount": "Create account",
+    "validation": {
+      "fullName": "Enter at least 2 characters.",
+      "username": "Username must be at least 3 characters.",
+      "email": "Enter a valid email address.",
+      "phone": "Enter at least 6 characters.",
+      "password": "Password must be between 8 and 72 characters."
+    }
   }
 }

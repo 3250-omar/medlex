@@ -61,6 +61,12 @@
 
 ## Phase 4 — Authentication, profiles, and protected route groups
 
+- [x] Sign-in and registration tabs in the interest modal, backed by TanStack Query mutations and Supabase Auth Route Handlers.
+- [x] Redirect successful authenticated sessions to the localized courses page.
+- [x] Protect Academy routes in `proxy.ts`; unauthenticated users are redirected to the localized sign-in modal.
+- [x] Cookie session refresh with `@supabase/ssr` and `proxy.ts`.
+- [ ] Verify a real sign-up/sign-in and email-confirmation flow against the configured Supabase project.
+
 - [ ] Registration, verification, login/logout, and password recovery/reset flows.
 - [ ] Cookie session refresh with `@supabase/ssr` and `proxy.ts`.
 - [ ] Profile onboarding and account settings.
