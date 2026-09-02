@@ -22,7 +22,7 @@ export default function FAQAccordion({ items }: { items: FAQItem[] }) {
           >
             <AccordionTrigger
               showChevron={false}
-              className="group flex w-full cursor-pointer items-center justify-between gap-6 rounded-none px-6 py-6 text-left hover:no-underline md:gap-10 md:px-8 md:py-7"
+              className="group flex w-full cursor-pointer items-center justify-between gap-6 rounded-none px-6 py-6 text-start hover:no-underline md:gap-10 md:px-8 md:py-7"
             >
               <div className="flex flex-1 items-center gap-6 md:gap-10">
                 <span className="shrink-0 select-none font-display text-2xl font-normal text-signal md:text-3xl">
@@ -40,7 +40,7 @@ export default function FAQAccordion({ items }: { items: FAQItem[] }) {
                 <span className="absolute h-4 w-px bg-current" />
               </span>
             </AccordionTrigger>
-            <AccordionContent className="border-t border-white/10 px-6 py-6 font-body text-sm leading-relaxed text-white/65 md:px-8 md:pl-24 md:text-base lg:pl-28">
+            <AccordionContent className="border-t border-white/10 px-6 py-6 font-body text-sm leading-relaxed text-white/65 md:px-8 md:ps-24 md:text-base lg:ps-28">
               {item.answer}
             </AccordionContent>
           </AccordionItem>

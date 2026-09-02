@@ -16,7 +16,7 @@ export default async function HomePage({ params }: HomePageProps) {
     <>
       <HeroSection locale={locale} />
       <WhoWeAreSection />
-      <PathwaysSection locale={locale} />
+      <PathwaysSection />
       <FlagshipCourseSection locale={locale} />
       <StandardsSection />
       <FounderSection locale={locale} />

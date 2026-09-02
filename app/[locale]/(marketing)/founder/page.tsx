@@ -1,3 +1,28 @@
-import EditorialPage from "@/components/marketing/EditorialPage";
+import FounderHeroSection from "./_comp/FounderHeroSection";
+import FounderMandateSection from "./_comp/FounderMandateSection";
+import FounderNextStepSection from "./_comp/FounderNextStepSection";
+import FounderProfileSection from "./_comp/FounderProfileSection";
 
-export default function FounderPage() { return <EditorialPage eyebrow="The founder" title="Standards shaped by practice, not theory alone." intro="MedLex was founded by Dr. Ahmed Abouelghit to make high-quality forensic and medicolegal psychiatry education accessible, structured, and useful in the real world." sections={[{ eyebrow: "Clinical", title: "Experience that translates", body: "Every lesson is grounded in the decisions clinicians make when the stakes are high and the record is permanent." }, { eyebrow: "Method", title: "Structure over noise", body: "A clear framework helps professionals explain complex mental states without losing nuance or humanity." }, { eyebrow: "Mission", title: "Serve justice better", body: "MedLex exists to raise the standard of psychiatric evidence for patients, courts, and communities." }]} cta={{ label: "Register your interest", href: "/register" }} />; }
+interface FounderPageProps {
+  params: Promise<{ locale: string }>;
+}
+
+export default async function FounderPage({ params }: FounderPageProps) {
+  const { locale } = await params;
+
+  return (
+    <main className="min-h-screen bg-ink text-text">
+      {/* 01. Hero Section */}
+      <FounderHeroSection />
+
+      {/* 02. Founder Profile & Bio Section */}
+      <FounderProfileSection locale={locale} />
+
+      {/* 03. Mandate & Pillars Section */}
+      <FounderMandateSection locale={locale} />
+
+      {/* 04. Next Step / Register Interest CTA */}
+      <FounderNextStepSection locale={locale} />
+    </main>
+  );
+}

@@ -1,17 +1,23 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Navigation from "./Navigation";
 import MobileMenu from "./MobileMenu";
 import { useLocale, useTranslations } from "next-intl";
 import { InterestDialogTrigger } from "@/components/marketing/InterestDialog";
+import { getLocalePath } from "@/lib/i18n/localePath";
 
 export default function Header() {
   const locale = useLocale();
+  const pathname = usePathname();
+  const alternateLocale = locale === "en" ? "ar" : "en";
+  const alternateLocalePath = getLocalePath(pathname, alternateLocale);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuTriggerRef = useRef<HTMLButtonElement>(null);
   const t = useTranslations();
 
   useEffect(() => {
@@ -25,7 +31,7 @@ export default function Header() {
       {/* {t("actions.skipToContent")} */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[300] focus:bg-signal focus:px-4 focus:py-2 focus:text-ink focus:text-sm focus:font-body"
+        className="sr-only focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-[300] focus:bg-signal focus:px-4 focus:py-2 focus:text-ink focus:text-sm focus:font-body"
       >
         {t("actions.skipToContent")}
       </a>
@@ -47,7 +53,7 @@ export default function Header() {
           <Link
             href={`/${locale}`}
             className="group flex items-center gap-3"
-            aria-label="MedLex â€” home"
+            aria-label={t("brand.home")}
           >
             {/* Icon mark */}
             <span className="flex h-8 w-10 items-center justify-center border border-signal/50 transition-colors group-hover:border-signal">
@@ -63,11 +69,9 @@ export default function Header() {
 
             {/* Wordmark */}
             <span className="flex flex-col leading-tight">
-              <span className="font-display text-[13px] tracking-[0.2em] text-white">
-                MEDLEX
-              </span>
+              <span className="font-display text-[13px] tracking-[0.2em] text-white">{t("brand.name")}</span>
               <span className="font-body text-[8px] tracking-[0.15em] text-white/40 uppercase">
-                Forensic &amp; Medicolegal Psychiatry
+                {t("brand.descriptor")}
               </span>
             </span>
           </Link>
@@ -78,7 +82,7 @@ export default function Header() {
           {/* â”€â”€ Desktop right actions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           <div className="hidden items-center gap-4 lg:flex">
             <Link
-              href={locale === "en" ? "/ar" : "/en"}
+              href={alternateLocalePath}
               className="font-body text-sm tracking-[0.15em] text-white/50 transition-colors hover:text-white"
               aria-label={
                 locale === "en"
@@ -95,6 +99,7 @@ export default function Header() {
 
           {/* â”€â”€ Mobile hamburger â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           <button
+            ref={menuTriggerRef}
             type="button"
             onClick={() => setMenuOpen(true)}
             className="flex min-h-11 min-w-11 flex-col items-center justify-center gap-[5px] lg:hidden"
@@ -113,6 +118,7 @@ export default function Header() {
         open={menuOpen}
         onClose={() => setMenuOpen(false)}
         locale={locale}
+        returnFocusRef={menuTriggerRef}
       />
     </>
   );

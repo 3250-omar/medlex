@@ -1,3 +1,8 @@
-import EditorialPage from "@/components/marketing/EditorialPage";
+import LocalizedEditorialPage from "@/components/marketing/LocalizedEditorialPage";
 
-export default function RegisterPage() { return <EditorialPage eyebrow="Register your interest" title="Be first to hear when the next cohort opens." intro="Leave your details and we will share course dates, pathway guidance, and early access updates." sections={[{ eyebrow: "What you receive", title: "Relevant updates", body: "Only the course and programme information that matches your professional interests." }, { eyebrow: "Your privacy", title: "Respect by default", body: "Your details are used for MedLex communications and are never sold." }, { eyebrow: "Next step", title: "A thoughtful welcome", body: "The full registration form and account creation flow will be connected in the authentication phase." }]} />; }
+type PageProps = { params: Promise<{ locale: string }> };
+
+export default async function RegisterPage({ params }: PageProps) {
+  const { locale } = await params;
+  return <LocalizedEditorialPage locale={locale} page="register" />;
+}

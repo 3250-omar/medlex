@@ -58,7 +58,7 @@ export function InterestDialogProvider({ children }: { children: ReactNode }) {
         >
           <div className="relative p-6 sm:p-10">
             <DialogClose
-              className="absolute right-4 top-4 grid size-11 place-items-center border border-line text-muted transition-colors hover:border-signal hover:text-signal"
+              className="absolute end-4 top-4 grid size-11 place-items-center border border-line text-muted transition-colors hover:border-signal hover:text-signal"
               aria-label={t("done")}
             >
               <X className="size-5" aria-hidden="true" />
@@ -88,7 +88,7 @@ export function InterestDialogProvider({ children }: { children: ReactNode }) {
               </div>
             ) : (
               <>
-                <DialogTitle className="pr-12 font-display text-3xl font-normal text-white sm:text-[2rem]">
+                <DialogTitle className="pe-12 font-display text-3xl font-normal text-white sm:text-[2rem]">
                   {t("title")}
                 </DialogTitle>
                 <DialogDescription className="mt-3 max-w-2xl text-sm leading-7 text-muted sm:text-base">

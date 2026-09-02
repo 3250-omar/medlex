@@ -199,5 +199,255 @@
         "link": "Explore Foundations"
       }
     ]
+  },
+  "founderPage": {
+    "hero": {
+      "eyebrow": "THE FOUNDER",
+      "title": "Built by someone who\nhas been cross-examined.",
+      "intro": "MedLex is led by a UK-trained Consultant Forensic Psychiatrist working across Egypt, the United Kingdom, and Qatar - at the intersection of psychiatry, law, and institutional practice."
+    },
+    "profile": {
+      "eyebrow": "FOUNDER & PROGRAMME DIRECTOR",
+      "name": "Dr. Ahmed Abouelghit",
+      "caption": "DR. AHMED ABOUELGHIT · CONSULTANT",
+      "stats": [
+        {
+          "value": "UK",
+          "label": "Trained & practised"
+        },
+        {
+          "value": "3",
+          "label": "Countries of practice"
+        }
+      ],
+      "paragraphs": [
+        "Consultant Forensic Psychiatrist, UK-trained, with broad international experience across Egypt, the United Kingdom, and Qatar. His work sits at the intersection of psychiatry, law, and institutional practice, with a focus on forensic assessment, medico-legal opinion, and the standards required in legally sensitive clinical settings.",
+        "As Forensic Psychiatry Training Program Director, he is actively involved in advancing specialist education and promoting high standards in forensic practice. His medico-legal experience was shaped in the United Kingdom across mental health tribunals, Magistrates' Courts, Crown Court, and the Parole Board - a practical understanding of how psychiatric opinion is examined in legal settings.",
+        "Alongside senior clinical and educational roles, he has contributed to professional training across the region, including consultancy work with UNICEF in Egypt supporting legal authorities. Through MedLex, he offers expert-led, court-conscious, and practice-grounded guidance in forensic and medico-legal psychiatry."
+      ],
+      "meta": [
+        {
+          "label": "Forums.",
+          "value": "Mental health tribunals · Magistrates' Court · Crown Court · Parole Board"
+        },
+        {
+          "label": "Focus.",
+          "value": "Forensic assessment, medico-legal opinion, standards in legally sensitive settings"
+        },
+        {
+          "label": "Teaching.",
+          "value": "Forensic Psychiatry Training Program Director; regional professional training"
+        },
+        {
+          "label": "Advisory.",
+          "value": "UNICEF Egypt - consultancy supporting legal authorities"
+        }
+      ]
+    },
+    "mandate": {
+      "eyebrow": "MANDATE",
+      "title": "To establish forensic\npsychiatry as a recognised\nspecialty in the MENA region.",
+      "subtitle": "Built on scientific rigour, legal alignment, and professional protection.",
+      "cards": [
+        {
+          "image": "/images/mandate-case-review.jpg",
+          "caption": "Case review in company - an opinion tested early holds up later."
+        },
+        {
+          "image": "/images/mandate-evidence.jpg",
+          "caption": "The paper trail is the evidence - documentation before conclusion."
+        },
+        {
+          "image": "/images/mandate-leadership.jpg",
+          "caption": "Institutional capacity built alongside individual competence."
+        }
+      ],
+      "pillars": [
+        {
+          "title": "Scientific rigour",
+          "description": "Method before conclusion. Structured instruments, documented reasoning, and opinions stated at the confidence the evidence supports."
+        },
+        {
+          "title": "Legal alignment",
+          "description": "Reports written to answer the legal question posed, in the framework of the jurisdiction hearing it - not a clinical summary handed to a court."
+        },
+        {
+          "title": "Professional protection",
+          "description": "A defensible methodology is a clinician's protection. We teach the record-keeping and reasoning that hold up when the opinion is challenged."
+        },
+        {
+          "title": "Regional relevance",
+          "description": "International standards, applied to the courts and institutions practitioners here actually appear before."
+        }
+      ]
+    },
+    "nextStep": {
+      "eyebrow": "NEXT STEP",
+      "title": "One clear step:\nregister your interest.",
+      "body": "Choose the pathway that belongs to you and you hear about that one alone — no general mailings, no commitment.",
+      "cardEyebrow": "THE THREE PATHWAYS",
+      "pathways": [
+        { "name": "Medico-Legal", "status": "Waitlist open" },
+        { "name": "The CASC Academy", "status": "First to launch" },
+        { "name": "MedLex Foundations", "status": "Launching" }
+      ],
+      "cta": "Register your interest"
+    }
+  },
+  "contactPage": {
+    "hero": {
+      "eyebrow": "CONTACT",
+      "title": "Register your interest",
+      "intro": "Be first to hear when enrolment opens. Choose your pathway and you will hear about that one alone."
+    },
+    "form": {
+      "eyebrow": "REGISTER YOUR INTEREST",
+      "title": "Be first to hear when enrolment opens.",
+      "intro": "Choose the pathway that concerns you and we will write to you about that one alone — no general mailings.",
+      "fields": {
+        "fullName": "Full Name",
+        "email": "Email",
+        "professionalRole": "Professional Role",
+        "organisation": "Organisation (Optional)",
+        "pathway": "Pathway of Interest",
+        "pathwayPlaceholder": "Select a pathway...",
+        "notes": "Notes (Optional)"
+      },
+      "pathways": [
+        "Writing Psychiatric Evidence",
+        "The CASC Academy",
+        "MedLex Foundations",
+        "Institutional Partnership",
+        "Other"
+      ],
+      "submit": "Register interest",
+      "privacy": "Your details are used only to contact you about MedLex programmes, and are never shared.",
+      "sidebar": {
+        "contactTitle": "CONTACT",
+        "email": "info@medlexsolutions.com",
+        "emailLabel": "Email",
+        "phone": "+20 101 951 5321",
+        "phoneLabel": "Phone",
+        "audienceTitle": "WHO THIS IS FOR",
+        "audience": [
+          "Psychiatrists and psychologists",
+          "Trainees",
+          "Legal professionals and justice-sector bodies"
+        ]
+      }
+    }
+  },
+  "editorialPages": {
+    "contact": {
+      "eyebrow": "Contact MedLex",
+      "title": "Bring us the question behind the question.",
+      "intro": "For course guidance, institutional partnerships, or speaking enquiries, send a note and our team will respond.",
+      "cta": "Register your interest",
+      "sections": [
+        {
+          "eyebrow": "Email",
+          "title": "info@medlex.academy",
+          "body": "For general enquiries and course support."
+        },
+        {
+          "eyebrow": "Institutions",
+          "title": "Partnership enquiries",
+          "body": "Tell us about your team, audience, and the outcome you want to build."
+        },
+        {
+          "eyebrow": "Response",
+          "title": "A considered reply",
+          "body": "We aim to respond with a useful next step, not a generic inbox receipt."
+        }
+      ]
+    },
+    "register": {
+      "eyebrow": "Register your interest",
+      "title": "Be first to hear when the next cohort opens.",
+      "intro": "Leave your details and we will share course dates, pathway guidance, and early access updates.",
+      "sections": [
+        {
+          "eyebrow": "What you receive",
+          "title": "Relevant updates",
+          "body": "Only the course and programme information that matches your professional interests."
+        },
+        {
+          "eyebrow": "Your privacy",
+          "title": "Respect by default",
+          "body": "Your details are used for MedLex communications and are never sold."
+        },
+        {
+          "eyebrow": "Next step",
+          "title": "A thoughtful welcome",
+          "body": "The full registration form and account creation flow will be connected in the authentication phase."
+        }
+      ]
+    },
+    "privacy": {
+      "eyebrow": "Legal / Privacy",
+      "title": "Your information, handled with care.",
+      "intro": "This page explains the principles MedLex follows when collecting and using information through the platform.",
+      "sections": [
+        {
+          "eyebrow": "Collection",
+          "title": "Only what we need",
+          "body": "We collect information required to provide course access, respond to enquiries, and improve the learning experience."
+        },
+        {
+          "eyebrow": "Control",
+          "title": "Your choices matter",
+          "body": "You can request access, correction, or deletion of your personal information by contacting the MedLex team."
+        },
+        {
+          "eyebrow": "Protection",
+          "title": "Designed for trust",
+          "body": "Access controls, secure storage, and server-side authorization help protect account and learning data."
+        }
+      ]
+    },
+    "terms": {
+      "eyebrow": "Legal / Terms",
+      "title": "Clear terms for a serious learning platform.",
+      "intro": "These terms set out the conditions for using MedLex courses, account services, and platform materials.",
+      "sections": [
+        {
+          "eyebrow": "Access",
+          "title": "Personal and considered",
+          "body": "Course access is provided to the registered learner for the period and scope described at purchase or enrolment."
+        },
+        {
+          "eyebrow": "Materials",
+          "title": "Learn, don't redistribute",
+          "body": "MedLex content is protected material and may not be copied, resold, or published without written permission."
+        },
+        {
+          "eyebrow": "Standards",
+          "title": "Professional use",
+          "body": "Course content supports education and professional development; it is not a substitute for case-specific legal or clinical advice."
+        }
+      ]
+    },
+    "refunds": {
+      "eyebrow": "Legal / Refunds",
+      "title": "A straightforward approach to refunds.",
+      "intro": "Our refund approach is designed to be clear before you enrol and fair when circumstances change.",
+      "sections": [
+        {
+          "eyebrow": "Before access",
+          "title": "Cancel with clarity",
+          "body": "Requests made before course access begins can be reviewed for a full refund, subject to the published course terms."
+        },
+        {
+          "eyebrow": "After access",
+          "title": "Talk to the team",
+          "body": "If access has started, contact us promptly. We review exceptional circumstances individually and explain the outcome."
+        },
+        {
+          "eyebrow": "Contact",
+          "title": "Keep your receipt",
+          "body": "Include your order reference and registered email when contacting info@medlex.academy so we can help quickly."
+        }
+      ]
+    }
   }
 }

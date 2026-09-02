@@ -1,6 +1,14 @@
 # MedLex Implementation Checklist
 
 **Status key:** `[x]` completed and evidenced in the repository; `[ ]` pending or not yet verified.  This checklist was audited on 2 September 2026 against the current working tree. A completed task does not close its phase until its acceptance criteria and quality gate are also complete.
+## Active Phase 1 update — 2 September 2026
+
+- [x] Strengthened mobile navigation keyboard behavior: focus moves into the menu, cycles within it, Escape closes it, and focus returns to the menu trigger.
+- [x] Ensured the mobile-menu close control meets the 44px minimum target and added horizontal overflow containment at the document level.
+- [x] Verified the current build with `yarn.cmd lint` (0 errors, 5 existing theme-related warnings), `yarn.cmd exec tsc --noEmit`, and `yarn.cmd build`.
+- [ ] Add the formatter: Prettier download is currently blocked by an npm registry TLS certificate-verification error.
+- [x] Captured homepage browser screenshots at 320, 375, 414, 768, 1024, and 1440px in `artifacts/phase1-home-*.png`.
+- [ ] Review the captures against the prototype and complete interactive responsive/keyboard QA.
 
 ## Phase 1 — Static website and visual system
 
@@ -35,7 +43,7 @@
 - [ ] Ensure every visible interface string is owned by a message/content file.
 - [ ] Add locale-aware links, metadata, dates, numbers, and validation messages.
 - [ ] Test English course content inside Arabic application chrome.
-- [ ] Verify equivalent-route language switching.
+- [x] Verify equivalent-route language switching.
 - [ ] QA RTL navigation, directional icons, forms, tables, and all EN/AR/light/dark combinations.
 - [ ] Verify contrast in both themes and eliminate first-paint theme flashing.
 

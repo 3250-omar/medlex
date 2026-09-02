@@ -162,6 +162,7 @@ html {
 
 body {
   min-height: 100%;
+  overflow-x: clip;
   background-color: var(--paper);
   color: var(--text);
   font-family: var(--font-body);

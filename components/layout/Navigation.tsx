@@ -28,7 +28,6 @@ export default function Navigation() {
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string,
   ) => {
-    console.log("🚀 ~ handleScroll ~ href:", href);
     if (href.startsWith("/#") || href.startsWith("#")) {
       const targetId = href.replace(/^\/?#/, "");
       const elem = document.getElementById(targetId);
@@ -61,7 +60,7 @@ export default function Navigation() {
           >
             {labels[index]}
             <span
-              className={`absolute -bottom-0.5 left-0 h-px bg-signal transition-all duration-300 ${isActive ? "w-full" : "w-0 group-hover:w-full"}`}
+              className={`absolute -bottom-0.5 start-0 h-px bg-signal transition-all duration-300 ${isActive ? "w-full" : "w-0 group-hover:w-full"}`}
             />
           </Link>
         );

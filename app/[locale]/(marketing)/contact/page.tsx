@@ -1,29 +1,20 @@
-import EditorialPage from "@/components/marketing/EditorialPage";
+import ContactHeroSection from "./_comp/ContactHeroSection";
+import ContactFormSection from "./_comp/ContactFormSection";
 
-export default function ContactPage() {
+interface ContactPageProps {
+  params: Promise<{ locale: string }>;
+}
+
+export default async function ContactPage({ params }: ContactPageProps) {
+  const { locale } = await params;
+
   return (
-    <EditorialPage
-      eyebrow="Contact MedLex"
-      title="Bring us the question behind the question."
-      intro="For course guidance, institutional partnerships, or speaking enquiries, send a note and our team will respond."
-      sections={[
-        {
-          eyebrow: "Email",
-          title: "info@medlex.academy",
-          body: "For general enquiries and course support.",
-        },
-        {
-          eyebrow: "Institutions",
-          title: "Partnership enquiries",
-          body: "Tell us about your team, audience, and the outcome you want to build.",
-        },
-        {
-          eyebrow: "Response",
-          title: "A considered reply",
-          body: "We aim to respond with a useful next step, not a generic inbox receipt.",
-        },
-      ]}
-      cta={{ label: "Register your interest", href: "/register" }}
-    />
+    <main className="min-h-screen bg-ink text-text">
+      {/* 01. Hero / Header Section */}
+      <ContactHeroSection locale={locale} />
+
+      {/* 02. Register Interest Form Section */}
+      <ContactFormSection locale={locale} />
+    </main>
   );
 }

@@ -1,20 +1,38 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { type RefObject, useEffect, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { NAV_ITEMS } from "./Navigation";
 import { useLocale, useTranslations } from "next-intl";
-import ThemeToggle from "@/components/theme/ThemeToggle";
 import { InterestDialogTrigger } from "@/components/marketing/InterestDialog";
+import { getLocalePath } from "@/lib/i18n/localePath";
 
 interface MobileMenuProps {
   open: boolean;
   onClose: () => void;
   locale: string;
+  returnFocusRef: RefObject<HTMLButtonElement | null>;
 }
 
-export default function MobileMenu({ open, onClose }: MobileMenuProps) {
+const FOCUSABLE_SELECTOR = [
+  "a[href]",
+  "button:not([disabled])",
+  "input:not([disabled])",
+  "select:not([disabled])",
+  "textarea:not([disabled])",
+  '[tabindex]:not([tabindex="-1"])',
+].join(",");
+
+export default function MobileMenu({
+  open,
+  onClose,
+  returnFocusRef,
+}: MobileMenuProps) {
   const locale = useLocale();
+  const pathname = usePathname();
+  const alternateLocale = locale === "en" ? "ar" : "en";
+  const alternateLocalePath = getLocalePath(pathname, alternateLocale);
   const t = useTranslations();
   const labels = [
     t("nav.pathways"),
@@ -33,15 +51,44 @@ export default function MobileMenu({ open, onClose }: MobileMenuProps) {
     };
   }, [open]);
 
-  /* trap focus and handle Escape */
   useEffect(() => {
     if (!open) return;
+
+    const panel = panelRef.current;
+    const menuTrigger = returnFocusRef.current;
+    const focusableElements = panel
+      ? Array.from(panel.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR))
+      : [];
+    const initialFocus = focusableElements[0];
+    initialFocus?.focus();
+
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+        return;
+      }
+
+      if (e.key !== "Tab" || focusableElements.length === 0) return;
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (e.shiftKey && document.activeElement === firstElement) {
+        e.preventDefault();
+        lastElement.focus();
+      } else if (!e.shiftKey && document.activeElement === lastElement) {
+        e.preventDefault();
+        firstElement.focus();
+      }
     };
+
     document.addEventListener("keydown", handleKey);
-    return () => document.removeEventListener("keydown", handleKey);
-  }, [open, onClose]);
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      menuTrigger?.focus();
+    };
+  }, [open, onClose, returnFocusRef]);
 
   if (!open) return null;
 
@@ -62,12 +109,12 @@ export default function MobileMenu({ open, onClose }: MobileMenuProps) {
       {/* slide-in panel */}
       <div
         ref={panelRef}
-        className="relative ml-auto flex h-full w-full max-w-sm flex-col bg-ink px-8 py-8"
+        className="relative ms-auto flex h-full w-full max-w-sm flex-col bg-ink px-8 py-8"
       >
         {/* close */}
         <button
           onClick={onClose}
-          className="mb-12 self-end p-2 text-white/50 transition-colors hover:text-white"
+          className="mb-12 flex min-h-11 min-w-11 items-center justify-center self-end text-white/50 transition-colors hover:text-white"
           aria-label={t("actions.close")}
         >
           <svg
@@ -120,7 +167,7 @@ export default function MobileMenu({ open, onClose }: MobileMenuProps) {
         {/* bottom actions */}
         <div className="mt-auto flex flex-col gap-4">
           <Link
-            href={locale === "en" ? "/ar" : "/en"}
+            href={alternateLocalePath}
             onClick={onClose}
             className="font-body text-sm text-white/40 tracking-[0.15em] transition-colors hover:text-white/70"
           >

@@ -111,7 +111,7 @@ export default function WhoWeAreSection() {
               {STATS.map((stat) => (
                 <div
                   key={stat.value}
-                  className="grid grid-cols-[72px_1fr] gap-6 py-6 text-left"
+                  className="grid grid-cols-[72px_1fr] gap-6 py-6 text-start"
                 >
                   <span className="font-display text-4xl text-signal">
                     {stat.value}
