@@ -1,9 +1,9 @@
-import FlagshipCourseSection from "./_comp/FlagshipCourseSection";
-import FounderSection from "./_comp/FounderSection";
-import HeroSection from "./_comp/HeroSection";
-import PathwaysSection from "./_comp/PathwaysSection";
-import StandardsSection from "./_comp/StandardsSection";
-import WhoWeAreSection from "./_comp/WhoWeAreSection";
+import FlagshipCourseSection from "./_comps/FlagshipCourseSection";
+import FounderSection from "./_comps/FounderSection";
+import HeroSection from "./_comps/HeroSection";
+import PathwaysSection from "./_comps/PathwaysSection";
+import StandardsSection from "./_comps/StandardsSection";
+import WhoWeAreSection from "./_comps/WhoWeAreSection";
 
 interface HomePageProps {
   params: Promise<{ locale: string }>;

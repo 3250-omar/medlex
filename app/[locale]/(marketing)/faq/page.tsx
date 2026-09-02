@@ -1,7 +1,7 @@
 import Container from "@/components/layout/Container";
-import FAQAccordion from "./_comp/FAQAccordion";
 import { InterestDialogTrigger } from "@/components/marketing/InterestDialog";
 import { getTranslations } from "next-intl/server";
+import FAQAccordion from "../_comps/FAQAccordion";
 
 export default async function FAQPage({
   params,

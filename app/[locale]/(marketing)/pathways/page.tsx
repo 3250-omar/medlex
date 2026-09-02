@@ -1,3 +1,29 @@
 import EditorialPage from "@/components/marketing/EditorialPage";
 
-export default function PathwaysPage() { return <EditorialPage eyebrow="Learning pathways" title="A clearer route through complex psychiatric evidence." intro="Structured education for clinicians, legal professionals, and institutions working where mental health meets the law." sections={[{ eyebrow: "01 / Foundations", title: "Build the frame", body: "Start with the language, ethics, and clinical reasoning that make medicolegal work defensible." }, { eyebrow: "02 / Practice", title: "Sharpen the report", body: "Move from theory to repeatable methods for assessment, formulation, and expert reporting." }, { eyebrow: "03 / Authority", title: "Stand up to scrutiny", body: "Develop the calm, precise communication required when your work enters a courtroom." }]} cta={{ label: "Explore courses", href: "/courses" }} />; }
+export default function PathwaysPage() {
+  return (
+    <EditorialPage
+      eyebrow="Learning pathways"
+      title="A clearer route through complex psychiatric evidence."
+      intro="Structured education for clinicians, legal professionals, and institutions working where mental health meets the law."
+      sections={[
+        {
+          eyebrow: "01 / Foundations",
+          title: "Build the frame",
+          body: "Start with the language, ethics, and clinical reasoning that make medicolegal work defensible.",
+        },
+        {
+          eyebrow: "02 / Practice",
+          title: "Sharpen the report",
+          body: "Move from theory to repeatable methods for assessment, formulation, and expert reporting.",
+        },
+        {
+          eyebrow: "03 / Authority",
+          title: "Stand up to scrutiny",
+          body: "Develop the calm, precise communication required when your work enters a courtroom.",
+        },
+      ]}
+      cta={{ label: "Explore courses", href: "/courses" }}
+    />
+  );
+}

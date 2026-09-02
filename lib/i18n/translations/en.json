@@ -287,9 +287,18 @@
       "body": "Choose the pathway that belongs to you and you hear about that one alone — no general mailings, no commitment.",
       "cardEyebrow": "THE THREE PATHWAYS",
       "pathways": [
-        { "name": "Medico-Legal", "status": "Waitlist open" },
-        { "name": "The CASC Academy", "status": "First to launch" },
-        { "name": "MedLex Foundations", "status": "Launching" }
+        {
+          "name": "Medico-Legal",
+          "status": "Waitlist open"
+        },
+        {
+          "name": "The CASC Academy",
+          "status": "First to launch"
+        },
+        {
+          "name": "MedLex Foundations",
+          "status": "Launching"
+        }
       ],
       "cta": "Register your interest"
     }
@@ -464,6 +473,198 @@
       "email": "Enter a valid email address.",
       "phone": "Enter at least 6 characters.",
       "password": "Password must be between 8 and 72 characters."
+    }
+  },
+  "pathwayPages": {
+    "labels": {
+      "delivery": "Delivery",
+      "languages": "Languages",
+      "status": "Status",
+      "register": "Register your interest and get the guide",
+      "programme": "Programme",
+      "faqEyebrow": "Questions",
+      "faqTitle": "Asked before joining"
+    },
+    "medico-legal": {
+      "eyebrow": "MEDLEX · PATHWAY 01 · MEDICO-LEGAL EDUCATION",
+      "title": "From a first forensic report to practice tested in court.",
+      "intro": "For psychiatrists, psychologists and legal professionals — four progressive tracks, home of the flagship programme Writing Psychiatric Evidence.",
+      "delivery": "Live interactive online",
+      "languages": "Arabic · English",
+      "status": "Waitlist open",
+      "audience": {
+        "eyebrow": "WHO THIS IS FOR",
+        "title": "Clinical opinion and legal judgment are not one document.",
+        "body": "This pathway is for specialists who receive the questions courts ask — not for the general public.",
+        "items": [
+          {
+            "title": "Psychiatrists",
+            "body": "Receiving legal referrals and needing a report structure that holds up under cross-examination."
+          },
+          {
+            "title": "Psychologists",
+            "body": "Working in court-directed assessment and needing a documented methodology."
+          },
+          {
+            "title": "Trainees",
+            "body": "Building forensic competence early, and in the right order."
+          },
+          {
+            "title": "Legal professionals",
+            "body": "Reading psychiatric reports, testing them, and working with experts."
+          }
+        ]
+      },
+      "formats": {
+        "eyebrow": "WHAT IT INCLUDES",
+        "title": "One structure, three ways to take it.",
+        "body": "From a single masterclass to an extended programme — the detail page sets out all three formats in full.",
+        "items": [
+          {
+            "eyebrow": "FORMAT 01",
+            "title": "Single masterclass",
+            "body": "Single topic · 3–6 hours"
+          },
+          {
+            "eyebrow": "FORMAT 02",
+            "title": "Interactive workshop series",
+            "body": "Four to six workshops, with materials and assignments between sessions"
+          },
+          {
+            "eyebrow": "FORMAT 03",
+            "title": "Extended programmes",
+            "body": "Three to twelve months"
+          }
+        ]
+      },
+      "founder": {
+        "eyebrow": "WHY THIS TEACHER",
+        "title": "Built by someone who has been cross-examined.",
+        "body": "A UK-trained consultant forensic psychiatrist, with experience before Mental Health Tribunals, Magistrates’ Courts, Crown Court and the Parole Board.",
+        "action": "About the founder"
+      }
+    },
+    "casc-academy": {
+      "eyebrow": "MEDLEX · THE CASC ACADEMY",
+      "title": "The CASC, from the examiner’s chair.",
+      "intro": "An interactive, self-paced preparation platform for the MRCPsych CASC — designed and written by a former Royal College of Psychiatrists CASC examiner.",
+      "delivery": "Self-paced online",
+      "languages": "English only",
+      "status": "First to launch — ready",
+      "audience": {
+        "eyebrow": "THE EXAMINATION",
+        "title": "What the CASC really tests",
+        "body": "The CASC is a station-based exam: a series of timed clinical encounters, observed and marked in real time.",
+        "items": [
+          {
+            "title": "Knowledge under pressure",
+            "body": "The CASC does not test what you know on paper. It tests what you say, what you do, and what you decide — observed, against the clock, in a consultation style that examiners recognise instantly."
+          },
+          {
+            "title": "A designed assessment",
+            "body": "Candidates rarely fail the CASC because they know too little psychiatry. They fail because they have never practised making the right moves, in the right order, in the way the station is designed to reward."
+          }
+        ]
+      },
+      "feature": {
+        "eyebrow": "THE GAP",
+        "title": "Preparation today comes in two forms. Both are useful. Neither is enough.",
+        "body": "Recorded video courses explain concepts. Face-to-face teaching provides feedback. The missing layer is deliberate, examiner-guided practice: structured, repeatable rehearsal of the decisions each station is built to assess.",
+        "quote": "Available whenever you study, for as long as you need it — with feedback framed the way an examiner actually marks.",
+        "stages": [
+          {
+            "title": "Interactive stations",
+            "body": "Realistic scenarios that unfold as the examiner would: choices and cues, not passive videos."
+          },
+          {
+            "title": "Decision points",
+            "body": "At the moments that matter, you choose the next move and see why each option succeeds or fails."
+          },
+          {
+            "title": "Examiner perspective feedback",
+            "body": "Every station is calibrated to what an examiner is looking for: structure, timing and clinical reasoning."
+          },
+          {
+            "title": "Structured self-assessment",
+            "body": "A consistent framework for judging your own performance honestly."
+          }
+        ]
+      },
+      "founder": {
+        "eyebrow": "FIRST-HAND, NOT SECOND-HAND",
+        "title": "Built by an examiner who has marked it.",
+        "body": "Dr Ahmed Abouelghit — Consultant Forensic Psychiatrist, former MRCPsych CASC examiner, Royal College of Psychiatrists.",
+        "action": "About the founder"
+      },
+      "faqs": [
+        {
+          "question": "Does the Academy replace a live course or my study group?",
+          "answer": "No — and it does not try to. It gives the structured practice layer that most preparation is missing, so your live teaching and study partners are more useful."
+        },
+        {
+          "question": "Does it reveal real examination content?",
+          "answer": "No. The Academy is built entirely on publicly defined competency domains and original scenarios, not recalled examination material."
+        },
+        {
+          "question": "Is it suitable for international medical graduates?",
+          "answer": "It was designed with international candidates foremost in mind. All material is written in clear English and reflects the consultation style the examination expects."
+        },
+        {
+          "question": "When does it launch, and what does it cost?",
+          "answer": "Launch and pricing are announced to the waitlist first. Registering your interest carries no commitment."
+        }
+      ]
+    },
+    "foundations": {
+      "eyebrow": "MEDLEX · PATHWAY 03 · MEDLEX FOUNDATIONS",
+      "title": "Professional development beyond the clinic.",
+      "intro": "The umbrella for non-clinical professional development — opening with The Clinician’s Edge and the Clinical Leadership Programme, and built to take on more.",
+      "delivery": "Online & face-to-face",
+      "languages": "Bilingual EN · AR",
+      "status": "First programmes launching",
+      "audience": {
+        "eyebrow": "WHO THIS IS FOR",
+        "title": "For clinicians building careers beyond the clinic.",
+        "body": "The competencies clinical training does not teach, and that a doctor needs the moment they lead a team, build a service, or negotiate a decision.",
+        "items": []
+      },
+      "programmes": {
+        "eyebrow": "PROGRAMMES",
+        "title": "Professional skills for the work around medicine.",
+        "body": "Focused programmes with practical tools, honest feedback, and a clear next step.",
+        "items": [
+          {
+            "title": "The Clinician’s Edge",
+            "body": "Essential professional competencies beyond clinical medicine, for mid-career clinicians.",
+            "details": [
+              "8 modules",
+              "Self-paced online",
+              "Short recorded videos in an interactive style",
+              "In Arabic, for mid-career clinicians in the region"
+            ],
+            "status": "Interest list — enrolment opens at launch, and is fully self-service after that.",
+            "action": "Register your interest"
+          },
+          {
+            "title": "Clinical Leadership Programme",
+            "body": "Leadership and management for clinicians — facilitated in person, with full participant workbooks and practical exercises.",
+            "details": [
+              "6 units",
+              "Face-to-face delivery",
+              "Facilitated in person by the founder",
+              "Full participant workbooks and practical exercises"
+            ],
+            "status": "Waitlist — the workshop is in person with limited seats; the date and city are announced to the list first.",
+            "action": "Register your interest in the workshop"
+          }
+        ]
+      },
+      "founder": {
+        "eyebrow": "MEDLEX FOUNDATIONS",
+        "title": "A clearer way to lead beyond the consulting room.",
+        "body": "The programmes are built for the real decisions that arrive once clinical expertise is no longer the whole job.",
+        "action": "About the founder"
+      }
     }
   }
 }

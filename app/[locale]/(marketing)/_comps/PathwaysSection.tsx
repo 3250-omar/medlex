@@ -45,7 +45,7 @@ export default function PathwaysSection() {
           <div>
             <h2
               id="pathways-heading"
-              className="font-display text-3xl text-white! lg:text-5xl"
+              className="scroll-mt-24 font-display text-3xl text-white! lg:text-5xl"
             >
               {t("pathways.title")}
             </h2>
