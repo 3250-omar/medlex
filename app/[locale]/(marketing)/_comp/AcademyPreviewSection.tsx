@@ -42,13 +42,13 @@ export default function AcademyPreviewSection({ locale }: AcademyPreviewSectionP
             <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-6 border-b border-line gap-4">
               <div>
                 <span className="font-body text-xs text-muted uppercase tracking-wider">Learner Portal</span>
-                <h3 className="font-display text-xl text-ink">Welcome back, Dr. Sara</h3>
+                <h3 className="font-display text-xl text-white">Welcome back, Dr. Sara</h3>
               </div>
               <div className="flex items-center gap-3">
                 <span className="inline-flex items-center px-3 py-1 bg-surface-2 border border-line text-xs font-body text-muted">
                   Active Enrollment: 1
                 </span>
-                <span className="inline-flex items-center px-3 py-1 bg-signal/15 border border-signal/30 text-xs font-body text-ink font-semibold">
+                <span className="inline-flex items-center px-3 py-1 bg-signal/15 border border-signal/30 text-xs font-body text-signal font-semibold">
                   150 Points Earned
                 </span>
               </div>
@@ -58,16 +58,16 @@ export default function AcademyPreviewSection({ locale }: AcademyPreviewSectionP
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               
               {/* Continue Course Card */}
-              <div className="md:col-span-2 bg-paper border border-line p-5 flex flex-col justify-between">
+              <div className="md:col-span-2 bg-surface-2 border border-line p-5 flex flex-col justify-between">
                 <div>
                   <span className="font-body text-[10px] uppercase tracking-wider text-muted">Continue Learning</span>
-                  <h4 className="font-display text-base text-ink mt-1">Expert Witness in Forensic Psychiatry</h4>
+                  <h4 className="font-display text-base text-white mt-1">Expert Witness in Forensic Psychiatry</h4>
                   
                   {/* Progress Bar */}
                   <div className="mt-4">
                     <div className="flex justify-between text-xs font-body text-muted mb-1.5">
                       <span>Module 4 of 6</span>
-                      <span className="font-semibold text-ink">72%</span>
+                      <span className="font-semibold text-signal">72%</span>
                     </div>
                     <div className="w-full bg-line h-2">
                       <div className="bg-signal h-2" style={{ width: "72%" }} />
@@ -78,7 +78,7 @@ export default function AcademyPreviewSection({ locale }: AcademyPreviewSectionP
                 <div className="mt-6 flex justify-end">
                   <Link
                     href={`/${locale}/academy`}
-                    className="bg-ink hover:bg-accent text-white font-body text-xs px-4 py-2 transition-colors"
+                    className="bg-accent-soft hover:bg-accent text-white font-body text-xs px-4 py-2 transition-colors border border-line"
                   >
                     Resume Module →
                   </Link>
@@ -86,7 +86,7 @@ export default function AcademyPreviewSection({ locale }: AcademyPreviewSectionP
               </div>
 
               {/* Progress Overview Donut / Stats */}
-              <div className="bg-paper border border-line p-5 flex flex-col items-center justify-center text-center">
+              <div className="bg-surface-2 border border-line p-5 flex flex-col items-center justify-center text-center">
                 <div className="relative w-20 h-20 flex items-center justify-center">
                   <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                     <path
@@ -106,9 +106,9 @@ export default function AcademyPreviewSection({ locale }: AcademyPreviewSectionP
                       d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                     />
                   </svg>
-                  <span className="absolute font-display text-base text-ink">72%</span>
+                  <span className="absolute font-display text-base text-white">72%</span>
                 </div>
-                <span className="font-body text-xs font-semibold text-ink mt-2">Overall Completion</span>
+                <span className="font-body text-xs font-semibold text-white mt-2">Overall Completion</span>
                 <div className="mt-2 text-[11px] font-body text-muted space-y-0.5">
                   <p>13 Activities Completed</p>
                   <p>4 Remaining</p>
@@ -122,7 +122,7 @@ export default function AcademyPreviewSection({ locale }: AcademyPreviewSectionP
               <div className="flex items-center gap-3">
                 <span className="text-xl text-signal">🎖</span>
                 <div>
-                  <h5 className="font-display text-sm text-ink">Certificate of Medicolegal Foundations</h5>
+                  <h5 className="font-display text-sm text-white">Certificate of Medicolegal Foundations</h5>
                   <p className="font-body text-[11px] text-muted">Issued on May 15, 2026 • Verified Serial #ML-8842</p>
                 </div>
               </div>

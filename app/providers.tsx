@@ -17,11 +17,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <InterestDialogProvider>
-          {children}
-        </InterestDialogProvider>
-      </ThemeProvider>
+      {/* <ThemeProvider> */}
+      <InterestDialogProvider>{children}</InterestDialogProvider>
+      {/* </ThemeProvider> */}
     </QueryClientProvider>
   );
 }

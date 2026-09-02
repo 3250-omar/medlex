@@ -37,14 +37,14 @@ export default function FounderSection({ locale }: FounderSectionProps) {
               className="object-cover object-top"
             />
             <span
-              className="absolute right-4 top-4 grid size-13 place-items-center rounded-full border border-white/45 bg-ink/30 font-body text-[9px] leading-3 text-paper backdrop-blur-sm"
+              className="absolute right-4 top-4 grid size-13 place-items-center rounded-full border border-white/45 bg-ink/30 font-body text-[9px] leading-3 text-white backdrop-blur-sm"
               aria-hidden="true"
             >
               MED
               <br />
               LEX
             </span>
-            <figcaption className="absolute inset-x-0 bottom-0 bg-linear-to-t from-ink via-ink/80 to-transparent px-5 pb-5 pt-16 font-body text-[10px] font-semibold uppercase tracking-[0.14em] text-paper">
+            <figcaption className="absolute inset-x-0 bottom-0 bg-linear-to-t from-ink via-ink/80 to-transparent px-5 pb-5 pt-16 font-body text-[10px] font-semibold uppercase tracking-[0.14em] text-white/90">
               {t("founder.caption")}
             </figcaption>
           </div>
@@ -56,7 +56,7 @@ export default function FounderSection({ locale }: FounderSectionProps) {
           </span>
           <h2
             id="founder-heading"
-            className="mt-7 font-display text-4xl leading-tight !text-paper md:text-5xl lg:text-6xl"
+            className="mt-7 font-display text-4xl leading-tight text-white md:text-5xl lg:text-6xl"
           >
             {t("founder.name")}
           </h2>

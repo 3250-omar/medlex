@@ -32,10 +32,7 @@ export default function StatsBar() {
       className="border-b border-line bg-surface"
       aria-label="Key statistics"
     >
-      <div
-        className="mx-auto"
-        style={{ maxWidth: "var(--content-max)" }}
-      >
+      <div className="mx-auto" style={{ maxWidth: "var(--content-max)" }}>
         <dl className="grid grid-cols-2 divide-x divide-line md:grid-cols-3 lg:grid-cols-5">
           {STATS.map((stat, i) => (
             <div
@@ -49,7 +46,7 @@ export default function StatsBar() {
               <dt className="order-2 mt-1 font-body text-[9px] uppercase tracking-[0.2em] text-muted">
                 {stat.label}
               </dt>
-              <dd className="order-1 font-display text-4xl text-ink">
+              <dd className="order-1 font-display text-4xl text-signal">
                 {stat.value}
               </dd>
               <p className="order-3 mt-2 whitespace-pre-line font-body text-[11px] leading-relaxed text-muted/60">

@@ -27,11 +27,18 @@ const SERVICES = [
   },
 ];
 
-export default function InstitutionalSection({ locale }: InstitutionalSectionProps) {
+export default function InstitutionalSection({
+  locale,
+}: InstitutionalSectionProps) {
   return (
-    <section className="bg-paper py-24 border-b border-line" aria-labelledby="institutional-heading">
-      <div className="mx-auto w-full px-6 md:px-8 lg:px-12" style={{ maxWidth: "var(--content-max)" }}>
-        
+    <section
+      className="bg-paper py-24 border-b border-line"
+      aria-labelledby="institutional-heading"
+    >
+      <div
+        className="mx-auto w-full px-6 md:px-8 lg:px-12"
+        style={{ maxWidth: "var(--content-max)" }}
+      >
         {/* Section Header */}
         <div className="mb-16 grid grid-cols-1 lg:grid-cols-[180px_1fr] gap-8">
           <div className="flex items-start gap-3 pt-1">
@@ -41,11 +48,16 @@ export default function InstitutionalSection({ locale }: InstitutionalSectionPro
             </span>
           </div>
           <div>
-            <h2 id="institutional-heading" className="font-display text-3xl md:text-4xl lg:text-5xl text-ink">
+            <h2
+              id="institutional-heading"
+              className="font-display text-3xl md:text-4xl lg:text-5xl text-white"
+            >
               Institutional Services
             </h2>
             <p className="mt-4 font-body text-base text-muted max-w-2xl">
-              Evidence-based solutions for judicial bodies, ministries of health, legal chambers, and healthcare authorities seeking excellence in medicolegal psychiatry.
+              Evidence-based solutions for judicial bodies, ministries of
+              health, legal chambers, and healthcare authorities seeking
+              excellence in medicolegal psychiatry.
             </p>
           </div>
         </div>
@@ -53,10 +65,13 @@ export default function InstitutionalSection({ locale }: InstitutionalSectionPro
         {/* 4 Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {SERVICES.map((srv, idx) => (
-            <div key={idx} className="bg-surface border border-line p-8 flex flex-col justify-between hover:border-signal transition-colors group">
+            <div
+              key={idx}
+              className="bg-surface border border-line p-8 flex flex-col justify-between hover:border-signal transition-colors group"
+            >
               <div>
                 <span className="text-3xl mb-4 block">{srv.icon}</span>
-                <h3 className="font-display text-lg text-ink mb-3 group-hover:text-accent transition-colors">
+                <h3 className="font-display text-lg text-white mb-3 group-hover:text-signal transition-colors">
                   {srv.title}
                 </h3>
                 <p className="font-body text-xs text-muted leading-relaxed">
@@ -66,7 +81,7 @@ export default function InstitutionalSection({ locale }: InstitutionalSectionPro
               <div className="pt-6 mt-6 border-t border-line">
                 <Link
                   href={`/${locale}/institutional`}
-                  className="font-body text-xs font-semibold text-signal hover:text-ink transition-colors inline-flex items-center gap-1"
+                  className="font-body text-xs font-semibold text-signal hover:text-signal-light transition-colors inline-flex items-center gap-1"
                 >
                   Learn More <span>→</span>
                 </Link>
@@ -85,7 +100,8 @@ export default function InstitutionalSection({ locale }: InstitutionalSectionPro
               Need a tailored institutional training program or consultation?
             </h3>
             <p className="font-body text-sm text-white/60 mt-2 max-w-xl">
-              Our faculty designs bespoke continuous medical and legal education (CME/CLE) programs aligned with your regional jurisdiction.
+              Our faculty designs bespoke continuous medical and legal education
+              (CME/CLE) programs aligned with your regional jurisdiction.
             </p>
           </div>
           <Link
@@ -95,7 +111,6 @@ export default function InstitutionalSection({ locale }: InstitutionalSectionPro
             Request Proposal →
           </Link>
         </div>
-
       </div>
     </section>
   );

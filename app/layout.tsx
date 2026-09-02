@@ -4,7 +4,7 @@ import "./globals.css";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: {
@@ -24,10 +24,18 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn(ovo.variable, manrope.variable, "font-sans", geist.variable)}
+      className={cn(
+        "dark",
+        ovo.variable,
+        manrope.variable,
+        "font-sans",
+        geist.variable,
+      )}
+      data-theme="dark"
+      style={{ colorScheme: "dark" }}
       suppressHydrationWarning
     >
-      <body className="flex min-h-screen flex-col antialiased">
+      <body className="flex min-h-screen flex-col bg-paper text-text antialiased">
         {children}
       </body>
     </html>

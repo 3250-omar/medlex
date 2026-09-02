@@ -42,11 +42,11 @@ export default function WhoWeAreSection() {
           <div>
             <h2
               id="who-we-are-heading"
-              className="max-w-[18ch] font-display text-3xl leading-snug text-paper! lg:text-4xl xl:text-5xl"
+              className="max-w-[18ch] font-display text-3xl leading-snug text-white lg:text-4xl xl:text-5xl"
             >
               {t("who.title")}
             </h2>
-            <p className="mt-5 max-w-xl font-body text-base leading-7 text-white/65">
+            <p className="mt-5 max-w-xl font-body text-base leading-7 text-white/70">
               {t("who.intro")}
             </p>
           </div>
@@ -54,18 +54,25 @@ export default function WhoWeAreSection() {
 
         <div className="grid grid-cols-1 items-start gap-16 lg:grid-cols-[minmax(0,1.08fr)_minmax(360px,.92fr)] lg:gap-20">
           <div className="space-y-5">
-            <p className="font-body text-[15px] leading-7 text-paper">{t("who.paragraphs.0")}</p><p className="font-body text-[15px] leading-7 text-paper">{t("who.paragraphs.1")}</p><p className="font-body text-[15px] leading-7 text-paper">{t("who.paragraphs.2")}</p>
+            <p className="font-body text-[15px] leading-7 text-white/80">
+              {t("who.paragraphs.0")}
+            </p>
+            <p className="font-body text-[15px] leading-7 text-white/80">
+              {t("who.paragraphs.1")}
+            </p>
+            <p className="font-body text-[15px] leading-7 text-white/80">
+              {t("who.paragraphs.2")}
+            </p>
 
             <div className="flex flex-wrap gap-2 pt-4">
               {AUDIENCE_KEYS.map((audience) => (
                 <span
                   key={audience}
-                  className="border border-white/20 px-3 py-1.5 font-body text-sm text-white/80"
+                  className="border border-white/20 px-3 py-1.5 font-body text-sm text-white/80 transition-colors hover:border-signal/50"
                 >
-                  <strong className="font-semibold text-paper">
+                  <strong className="font-semibold text-white">
                     {t(`who.audiences.${AUDIENCE_KEYS.indexOf(audience)}`)}
                   </strong>
-                  
                 </span>
               ))}
             </div>
@@ -78,7 +85,7 @@ export default function WhoWeAreSection() {
                 alt={t("who.imageAlt")}
                 fill
                 sizes="(min-width: 1024px) 42vw, 100vw"
-                className="object-cover "
+                className="object-cover"
               />
               {/* grayscale sepia-[.3] contrast-110 brightness-[.8] */}
               <span
@@ -92,8 +99,9 @@ export default function WhoWeAreSection() {
             </figure>
 
             <div className="border-l-2 border-signal px-5 py-7 lg:px-6">
-              <blockquote className="font-display text-lg leading-snug text-paper lg:text-2xl">
-                &ldquo;{t("who.quote")}&rdquo;</blockquote>
+              <blockquote className="font-display text-lg leading-snug text-white lg:text-2xl">
+                &ldquo;{t("who.quote")}&rdquo;
+              </blockquote>
               <cite className="mt-4 block font-body text-[9px] not-italic uppercase tracking-[0.2em] text-white/55">
                 {t("who.mission")}
               </cite>

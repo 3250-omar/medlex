@@ -8,7 +8,7 @@ export default function NotFound() {
         <p className="mb-2 font-body text-[9px] uppercase tracking-[0.3em] text-muted!">
           404 — Page not found
         </p>
-        <h1 className="font-display text-4xl text-ink">
+        <h1 className="font-display text-4xl text-white">
           This page does not exist.
         </h1>
         <p className="mt-4 font-body text-sm text-muted! max-w-sm mx-auto">
@@ -18,13 +18,13 @@ export default function NotFound() {
       <div className="flex flex-col sm:flex-row gap-3">
         <Link
           href="/en"
-          className="bg-ink px-8 py-3 font-body text-sm text-white! transition-colors hover:bg-accent"
+          className="bg-signal px-8 py-3 font-body text-sm text-ink! font-semibold transition-colors hover:bg-signal-light"
         >
           Return home
         </Link>
         <Link
           href="/en/pathways"
-          className="border border-line px-8 py-3 font-body text-sm text-text! transition-colors hover:border-ink"
+          className="border border-line px-8 py-3 font-body text-sm text-text! transition-colors hover:border-signal"
         >
           View pathways
         </Link>

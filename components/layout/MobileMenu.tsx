@@ -119,7 +119,6 @@ export default function MobileMenu({ open, onClose }: MobileMenuProps) {
 
         {/* bottom actions */}
         <div className="mt-auto flex flex-col gap-4">
-          <ThemeToggle />
           <Link
             href={locale === "en" ? "/ar" : "/en"}
             onClick={onClose}
@@ -127,7 +126,9 @@ export default function MobileMenu({ open, onClose }: MobileMenuProps) {
           >
             {t("language")}
           </Link>
-          <InterestDialogTrigger className="border border-signal py-3 text-center font-body text-sm tracking-wide text-signal transition-all hover:bg-signal hover:text-ink">{t("actions.register")}</InterestDialogTrigger>
+          <InterestDialogTrigger className="border border-signal py-3 text-center font-body text-sm tracking-wide text-signal transition-all hover:bg-signal hover:text-ink">
+            {t("actions.register")}
+          </InterestDialogTrigger>
         </div>
       </div>
     </div>

@@ -19,7 +19,7 @@ export default function LocaleError({ error, reset }: ErrorProps) {
         <p className="mb-2 font-body text-[9px] uppercase tracking-[0.3em] text-muted">
           Something went wrong
         </p>
-        <h1 className="font-display text-3xl text-ink">
+        <h1 className="font-display text-3xl text-white">
           An unexpected error occurred.
         </h1>
         <p className="mt-4 font-body text-sm text-muted">
@@ -35,7 +35,7 @@ export default function LocaleError({ error, reset }: ErrorProps) {
       </div>
       <button
         onClick={reset}
-        className="border border-ink px-8 py-3 font-body text-sm text-ink transition-colors hover:bg-ink hover:text-white"
+        className="bg-signal px-8 py-3 font-body text-sm font-semibold text-ink transition-colors hover:bg-signal-light"
       >
         Try again
       </button>

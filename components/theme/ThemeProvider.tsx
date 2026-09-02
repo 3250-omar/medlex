@@ -20,39 +20,22 @@ function resolveTheme(theme: Theme): "light" | "dark" {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === "undefined") return "system";
-    const stored = window.localStorage.getItem("medlex-theme");
-    return stored === "light" || stored === "dark" || stored === "system"
-      ? stored
-      : "system";
-  });
-  const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("light");
+  const [theme, setTheme] = useState<Theme>("dark");
+  const [resolvedTheme] = useState<"light" | "dark">("dark");
 
   useEffect(() => {
-    const apply = () => {
-      const resolved = resolveTheme(theme);
-      setResolvedTheme(resolved);
-      document.documentElement.dataset.theme = resolved;
-      document.documentElement.style.colorScheme = resolved;
-    };
-
-    apply();
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-    media.addEventListener("change", apply);
-    return () => media.removeEventListener("change", apply);
-  }, [theme]);
+    document.documentElement.dataset.theme = "dark";
+    document.documentElement.classList.add("dark");
+    document.documentElement.style.colorScheme = "dark";
+  }, []);
 
   const value = useMemo<ThemeContextValue>(
     () => ({
-      theme,
-      resolvedTheme,
-      setTheme: (nextTheme) => {
-        setTheme(nextTheme);
-        window.localStorage.setItem("medlex-theme", nextTheme);
-      },
+      theme: "dark",
+      resolvedTheme: "dark",
+      setTheme: () => {},
     }),
-    [theme, resolvedTheme],
+    [],
   );
 
   return (

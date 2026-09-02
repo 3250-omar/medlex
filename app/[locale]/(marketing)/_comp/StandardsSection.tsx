@@ -44,7 +44,7 @@ export default function StandardsSection() {
           <div>
             <h2
               id="standards-heading"
-              className="max-w-xl font-display text-4xl leading-tight !text-paper md:text-5xl lg:text-6xl"
+              className="max-w-xl font-display text-4xl leading-tight text-white md:text-5xl lg:text-6xl"
             >
               {t("standards.title")}
             </h2>
@@ -66,7 +66,7 @@ export default function StandardsSection() {
                   aria-hidden="true"
                 />
                 <div>
-                  <h3 className="font-display text-xl leading-snug !text-paper lg:text-2xl">
+                  <h3 className="font-display text-xl leading-snug text-white lg:text-2xl">
                     {t(`standards.items.${STANDARDS.indexOf(standard)}.0`)}
                   </h3>
                   <p className="mt-4 max-w-lg font-body text-[15px] leading-7 text-white/70">

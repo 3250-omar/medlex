@@ -38,7 +38,7 @@ export default function FlagshipCourseSection({ locale }: FlagshipCourseSectionP
         </div>
 
         <div data-reveal>
-          <h2 id="flagship-heading" className="max-w-3xl font-display text-4xl leading-tight !text-paper md:text-5xl lg:text-6xl">
+          <h2 id="flagship-heading" className="max-w-3xl font-display text-4xl leading-tight text-white md:text-5xl lg:text-6xl">
             {t("flagship.title")}
           </h2>
           <p className="mt-5 max-w-2xl font-body text-base leading-7 text-white/75 lg:text-lg">

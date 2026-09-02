@@ -5,52 +5,54 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --ink: #0b1a2e;
-  --paper: #f7f5f0;
-  --surface: #ffffff;
-  --surface-2: #eee9df;
-  --line: #d7d0c3;
-  --text: #10233d;
-  --muted: #617086;
+  --ink: #071525;
+  --paper: #091525;
+  --surface: #0f2033;
+  --surface-2: #142a40;
+  --line: #233b57;
+  --hair: rgba(245, 241, 232, 0.14);
+  --text: #f5f1e8;
+  --muted: #aeb9c7;
   --accent: #1a365d;
   --accent-2: #284a78;
-  --accent-soft: #e8e0d1;
-  --signal: #b08d2a;
-  --signal-light: #c9a84c;
+  --accent-soft: #233b57;
+  --signal: #d9b274;
+  --signal-light: #e5c96a;
+  --glow: rgba(143, 184, 232, 0.12);
   --content-max: 1200px;
   --header-h: 72px;
   --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
   --motion-enter: 700ms;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
+  --background: #091525;
+  --foreground: #f5f1e8;
+  --card: #0f2033;
+  --card-foreground: #f5f1e8;
+  --popover: #0f2033;
+  --popover-foreground: #f5f1e8;
+  --primary: #d9b274;
+  --primary-foreground: #071525;
+  --secondary: #142a40;
+  --secondary-foreground: #f5f1e8;
+  --muted-foreground: #aeb9c7;
+  --accent-foreground: #f5f1e8;
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #d9b274;
+  --chart-1: #d9b274;
+  --chart-2: #8fb8e8;
+  --chart-3: #284a78;
+  --chart-4: #aeb9c7;
+  --chart-5: #0f2033;
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: #0f2033;
+  --sidebar-foreground: #f5f1e8;
+  --sidebar-primary: #d9b274;
+  --sidebar-primary-foreground: #071525;
+  --sidebar-accent: #142a40;
+  --sidebar-accent-foreground: #f5f1e8;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #d9b274;
 }
 
 @theme inline {
@@ -176,7 +178,7 @@ h5,
 h6 {
   font-family: var(--font-display);
   line-height: 1.15;
-  color: var(--ink);
+  color: var(--text);
 }
 
 :focus-visible {
@@ -212,25 +214,27 @@ h6 {
   }
 }
 
-/* Dark mode uses the same editorial tokens with a deeper paper and softened rules. */
-html[data-theme="dark"] {
-  --ink: #f5f1e8;
+/* Dark mode consistency */
+html[data-theme="dark"],
+html.dark {
+  --ink: #071525;
   --paper: #091525;
   --surface: #0f2033;
   --surface-2: #142a40;
-  --line: #30465f;
+  --line: #233b57;
   --hair: rgba(245, 241, 232, 0.14);
   --text: #f5f1e8;
   --muted: #aeb9c7;
-  --accent: #8fb8e8;
-  --accent-2: #b9d4f2;
+  --accent: #1a365d;
+  --accent-2: #284a78;
   --accent-soft: #233b57;
   --signal: #d9b274;
   --signal-light: #e5c96a;
   --glow: rgba(143, 184, 232, 0.12);
 }
 
-html[data-theme="dark"] body {
+html[data-theme="dark"] body,
+html.dark body {
   background-color: var(--paper);
   color: var(--text);
 }
@@ -239,8 +243,14 @@ html[data-theme="dark"] h2,
 html[data-theme="dark"] h3,
 html[data-theme="dark"] h4,
 html[data-theme="dark"] h5,
-html[data-theme="dark"] h6 {
-  color: var(--ink);
+html[data-theme="dark"] h6,
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark h6 {
+  color: var(--text);
 }
 /* Page-transition and scroll-ready reveal: restrained, compositional motion. */
 @keyframes medlex-reveal {
@@ -283,37 +293,37 @@ html[data-theme="dark"] h6 {
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --background: #091525;
+  --foreground: #f5f1e8;
+  --card: #0f2033;
+  --card-foreground: #f5f1e8;
+  --popover: #0f2033;
+  --popover-foreground: #f5f1e8;
+  --primary: #d9b274;
+  --primary-foreground: #071525;
+  --secondary: #142a40;
+  --secondary-foreground: #f5f1e8;
+  --muted: #142a40;
+  --muted-foreground: #aeb9c7;
+  --accent: #142a40;
+  --accent-foreground: #f5f1e8;
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #d9b274;
+  --chart-1: #d9b274;
+  --chart-2: #8fb8e8;
+  --chart-3: #284a78;
+  --chart-4: #aeb9c7;
+  --chart-5: #0f2033;
+  --sidebar: #0f2033;
+  --sidebar-foreground: #f5f1e8;
+  --sidebar-primary: #d9b274;
+  --sidebar-primary-foreground: #071525;
+  --sidebar-accent: #142a40;
+  --sidebar-accent-foreground: #f5f1e8;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #d9b274;
 }
 
 @layer base {

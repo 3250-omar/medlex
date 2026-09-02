@@ -28,7 +28,7 @@ export default function FAQAccordion({ items }: { items: FAQItem[] }) {
                 <span className="shrink-0 select-none font-display text-2xl font-normal text-signal md:text-3xl">
                   {itemNumber}
                 </span>
-                <span className="font-display text-base font-normal leading-snug text-paper transition-colors duration-200 group-hover:text-white md:text-lg lg:text-xl">
+                <span className="font-display text-base font-normal leading-snug text-white transition-colors duration-200 group-hover:text-signal/80 md:text-lg lg:text-xl">
                   {item.question}
                 </span>
               </div>

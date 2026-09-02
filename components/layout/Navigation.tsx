@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 
 const NAV_ITEMS = [
-  { label: "Pathways", href: "/#pathways" },
+  { label: "Pathways", href: "/#pathways-heading" },
   { label: "Founder", href: "/founder" },
   { label: "FAQ", href: "/faq" },
   { label: "Institutional", href: "/institutional" },
@@ -28,6 +28,7 @@ export default function Navigation() {
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string,
   ) => {
+    console.log("🚀 ~ handleScroll ~ href:", href);
     if (href.startsWith("/#") || href.startsWith("#")) {
       const targetId = href.replace(/^\/?#/, "");
       const elem = document.getElementById(targetId);

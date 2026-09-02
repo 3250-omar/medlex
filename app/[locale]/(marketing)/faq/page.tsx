@@ -25,7 +25,7 @@ export default async function FAQPage({
                 {t("eyebrow")}
               </span>
             </div>
-            <h1 className="mt-7 font-display text-4xl leading-[1.08] text-paper! md:text-6xl lg:text-[68px]">
+            <h1 className="mt-7 font-display text-4xl leading-[1.08] text-white md:text-6xl lg:text-[68px]">
               {t("title")}
             </h1>
             <p className="mt-6 font-body text-sm leading-relaxed text-white/65 md:text-base">

@@ -58,7 +58,7 @@ export function InterestDialogProvider({ children }: { children: ReactNode }) {
         >
           <div className="relative p-6 sm:p-10">
             <DialogClose
-              className="absolute right-4 top-4 grid size-11 place-items-center border border-line text-muted transition-colors hover:border-signal hover:text-ink"
+              className="absolute right-4 top-4 grid size-11 place-items-center border border-line text-muted transition-colors hover:border-signal hover:text-signal"
               aria-label={t("done")}
             >
               <X className="size-5" aria-hidden="true" />
@@ -74,7 +74,7 @@ export function InterestDialogProvider({ children }: { children: ReactNode }) {
                 <p className="mt-8 font-body text-[10px] uppercase tracking-[.24em] text-signal">
                   {t("confirmedLabel")}
                 </p>
-                <DialogTitle className="mt-4 font-display text-3xl font-normal text-ink">
+                <DialogTitle className="mt-4 font-display text-3xl font-normal text-white">
                   {t("confirmedTitle")}
                 </DialogTitle>
                 <DialogDescription className="mt-4 text-sm leading-7 text-muted">
@@ -82,13 +82,13 @@ export function InterestDialogProvider({ children }: { children: ReactNode }) {
                     pathway: t(pathwayKeys[pathway]),
                   })}
                 </DialogDescription>
-                <DialogClose className="mt-8 min-h-12 bg-ink px-7 font-body text-sm text-surface transition-colors hover:bg-accent">
+                <DialogClose className="mt-8 min-h-12 bg-signal px-7 font-body text-sm font-semibold text-ink transition-colors hover:bg-signal-light">
                   {t("done")}
                 </DialogClose>
               </div>
             ) : (
               <>
-                <DialogTitle className="pr-12 font-display text-3xl font-normal text-ink sm:text-[2rem]">
+                <DialogTitle className="pr-12 font-display text-3xl font-normal text-white sm:text-[2rem]">
                   {t("title")}
                 </DialogTitle>
                 <DialogDescription className="mt-3 max-w-2xl text-sm leading-7 text-muted sm:text-base">
@@ -106,7 +106,7 @@ export function InterestDialogProvider({ children }: { children: ReactNode }) {
                       role="tab"
                       aria-selected={pathway === key}
                       onClick={() => setPathway(key)}
-                      className="min-h-11 text-xs text-muted transition-colors hover:text-ink"
+                      className="min-h-11 text-xs text-muted transition-colors hover:text-white aria-selected:text-signal aria-selected:font-semibold"
                     >
                       {t(pathwayKeys[key])}
                     </button>
@@ -153,7 +153,7 @@ export function InterestDialogProvider({ children }: { children: ReactNode }) {
                     <p className="font-body text-[10px] font-semibold uppercase tracking-[.2em] text-muted">
                       {t("free")}
                     </p>
-                    <h3 className="mt-5 font-display text-xl font-normal text-ink">
+                    <h3 className="mt-5 font-display text-xl font-normal text-white">
                       {t("guide")}
                     </h3>
                     <p className="mt-4 text-sm leading-6 text-muted">
