@@ -4,6 +4,17 @@ import { NextResponse, type NextRequest } from "next/server";
 const locales = ["en", "ar"] as const;
 const defaultLocale = "en";
 
+/** Segment-level paths that require authentication (no locale prefix). */
+const PROTECTED_ROUTES = ["academy", "courses"] as const;
+
+function isProtectedRoute(pathname: string, locale: string): boolean {
+  return PROTECTED_ROUTES.some(
+    (route) =>
+      pathname === `/${locale}/${route}` ||
+      pathname.startsWith(`/${locale}/${route}/`),
+  );
+}
+
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isPublicAsset =
@@ -28,12 +39,10 @@ export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request: { headers: requestHeaders } });
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-  const isAcademyRoute =
-    pathname === `/${locale}/academy` ||
-    pathname.startsWith(`/${locale}/academy/`);
+  const isProtected = isProtectedRoute(pathname, locale);
 
   if (!supabaseUrl || !supabaseKey) {
-    return isAcademyRoute
+    return isProtected
       ? NextResponse.redirect(new URL(`/${locale}?auth=sign-in`, request.url))
       : response;
   }
@@ -53,7 +62,7 @@ export async function proxy(request: NextRequest) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (isAcademyRoute && !user) {
+  if (isProtected && !user) {
     return NextResponse.redirect(
       new URL(`/${locale}?auth=sign-in`, request.url),
     );
