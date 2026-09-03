@@ -121,7 +121,7 @@ export default function Header() {
           </Link>
 
           {/* ── Desktop nav ──────────────────────────────────────────── */}
-          <Navigation />
+          <Navigation showCourses={Boolean(user)} />
 
           {/* ── Desktop right actions ────────────────────────────────── */}
           <div className="hidden items-center gap-4 lg:flex">
@@ -227,6 +227,7 @@ export default function Header() {
         open={menuOpen}
         onClose={() => setMenuOpen(false)}
         locale={locale}
+        showCourses={Boolean(user)}
         returnFocusRef={menuTriggerRef}
       />
     </>

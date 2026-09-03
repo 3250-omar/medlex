@@ -1,5 +1,6 @@
 {
   "nav": {
+    "courses": "Courses",
     "pathways": "Pathways",
     "founder": "Founder",
     "faq": "FAQ",
@@ -467,6 +468,7 @@
     "register": "Register",
     "password": "Password",
     "createAccount": "Create account",
+    "confirmationRequired": "Check your email to confirm your account, then sign in to continue.",
     "validation": {
       "fullName": "Enter at least 2 characters.",
       "username": "Username must be at least 3 characters.",

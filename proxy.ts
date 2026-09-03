@@ -5,7 +5,7 @@ const locales = ["en", "ar"] as const;
 const defaultLocale = "en";
 
 /** Segment-level paths that require authentication (no locale prefix). */
-const PROTECTED_ROUTES = ["academy"] as const;
+const PROTECTED_ROUTES = ["academy", "courses"] as const;
 
 function isProtectedRoute(pathname: string, locale: string): boolean {
   return PROTECTED_ROUTES.some(

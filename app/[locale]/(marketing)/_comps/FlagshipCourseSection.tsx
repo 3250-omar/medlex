@@ -1,6 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useCurrentUser } from "../_apiCalls/academyQueries";
 
 interface FlagshipCourseSectionProps {
   locale: string;
@@ -10,6 +14,8 @@ export default function FlagshipCourseSection({
   locale,
 }: FlagshipCourseSectionProps) {
   const t = useTranslations("home");
+  const router = useRouter();
+  const { data: user } = useCurrentUser();
   return (
     <section
       className="relative isolate overflow-hidden bg-ink py-24 lg:py-32"
@@ -42,13 +48,19 @@ export default function FlagshipCourseSection({
               {t("flagship.eyebrow")}
             </span>
           </div>
-          <Link
+          {user ? <button
+            type="button"
+            onClick={() => router.push(`/${locale}/courses`)}
+            className="mt-10 inline-flex min-h-11 items-center gap-3 bg-signal px-5 py-3 font-body text-sm font-medium text-ink transition-colors hover:bg-signal-light focus-visible:bg-signal-light"
+          >
+            Go to your courses
+          </button> : <Link
             href={`/${locale}/pathways/medico-legal`}
             className="mt-10 inline-flex min-h-11 items-center gap-3 bg-signal px-5 py-3 font-body text-sm font-medium text-ink transition-colors hover:bg-signal-light focus-visible:bg-signal-light"
           >
             {t("flagship.register")}
             {/* <span aria-hidden="true">â†’</span> */}
-          </Link>
+          </Link>}
         </div>
 
         <div data-reveal>

@@ -9,6 +9,7 @@ import {
   type ReactNode,
   useCallback,
   useContext,
+  useRef,
   useState,
 } from "react";
 import { useLocale, useTranslations } from "next-intl";
@@ -31,10 +32,14 @@ type AuthTab = "sign-in" | "register";
 type Pathway = "medico-legal" | "casc-academy" | "foundations";
 type AuthField = "fullName" | "username" | "email" | "phone" | "password";
 type ContextValue = {
-  openInterestDialog: (pathway?: Pathway, tab?: AuthTab) => void;
+  openInterestDialog: (
+    pathway?: Pathway,
+    tab?: AuthTab,
+    onAuthenticated?: () => Promise<void> | void,
+  ) => void;
 };
 
-const InterestContext = createContext<ContextValue | null>(null);
+export const InterestDialogContext = createContext<ContextValue | null>(null);
 const pathwayKeys: Record<Pathway, "medicoLegal" | "academy" | "foundations"> =
   {
     "medico-legal": "medicoLegal",
@@ -56,6 +61,7 @@ export function InterestDialogProvider({ children }: { children: ReactNode }) {
   const [fieldErrors, setFieldErrors] = useState<
     Partial<Record<AuthField, string>>
   >({});
+  const onAuthenticatedRef = useRef<(() => Promise<void> | void) | null>(null);
   const signIn = useSignInMutation();
   const signUp = useSignUpMutation();
 
@@ -67,10 +73,15 @@ export function InterestDialogProvider({ children }: { children: ReactNode }) {
   }, [signIn, signUp]);
 
   const openInterestDialog = useCallback(
-    (nextPathway: Pathway = "medico-legal", nextTab: AuthTab = "register") => {
+    (
+      nextPathway: Pathway = "medico-legal",
+      nextTab: AuthTab = "register",
+      onAuthenticated?: () => Promise<void> | void,
+    ) => {
       setPathway(nextPathway);
       setTab(nextTab);
       setFormError(null);
+      onAuthenticatedRef.current = onAuthenticated ?? null;
       setOpen(true);
     },
     [],
@@ -87,11 +98,15 @@ export function InterestDialogProvider({ children }: { children: ReactNode }) {
   };
 
   function getFieldErrors(issues: { path: PropertyKey[] }[]) {
-    return issues.reduce<Partial<Record<AuthField, string>>>((errors, issue) => {
-      const field = String(issue.path[0]) as AuthField;
-      if (field in validationMessages) errors[field] = validationMessages[field];
-      return errors;
-    }, {});
+    return issues.reduce<Partial<Record<AuthField, string>>>(
+      (errors, issue) => {
+        const field = String(issue.path[0]) as AuthField;
+        if (field in validationMessages)
+          errors[field] = validationMessages[field];
+        return errors;
+      },
+      {},
+    );
   }
 
   function validateField(field: AuthField, value: string) {
@@ -109,8 +124,20 @@ export function InterestDialogProvider({ children }: { children: ReactNode }) {
     });
   }
 
-  function handleSuccess() {
+  async function handleSuccess(result: {
+    requiresEmailConfirmation?: boolean;
+  }) {
+    if (result.requiresEmailConfirmation) {
+      setFormError(auth("confirmationRequired"));
+      return;
+    }
+    const onAuthenticated = onAuthenticatedRef.current;
+    onAuthenticatedRef.current = null;
     close();
+    if (onAuthenticated) {
+      await onAuthenticated();
+      return;
+    }
     router.push(`/${locale}/courses`);
   }
 
@@ -129,7 +156,7 @@ export function InterestDialogProvider({ children }: { children: ReactNode }) {
     }
 
     signIn.mutate(validation.data, {
-      onSuccess: handleSuccess,
+      onSuccess: (result) => void handleSuccess(result),
       onError: (error) => setFormError(error.message),
     });
   }
@@ -152,7 +179,7 @@ export function InterestDialogProvider({ children }: { children: ReactNode }) {
     }
 
     signUp.mutate(validation.data, {
-      onSuccess: handleSuccess,
+      onSuccess: (result) => void handleSuccess(result),
       onError: (error) => setFormError(error.message),
     });
   }
@@ -160,7 +187,7 @@ export function InterestDialogProvider({ children }: { children: ReactNode }) {
   const isSubmitting = signIn.isPending || signUp.isPending;
 
   return (
-    <InterestContext.Provider value={{ openInterestDialog }}>
+    <InterestDialogContext.Provider value={{ openInterestDialog }}>
       {children}
       <Dialog
         open={open || shouldForceSignIn}
@@ -337,7 +364,7 @@ export function InterestDialogProvider({ children }: { children: ReactNode }) {
           </div>
         </DialogContent>
       </Dialog>
-    </InterestContext.Provider>
+    </InterestDialogContext.Provider>
   );
 }
 
@@ -424,7 +451,7 @@ export function InterestDialogTrigger({
   className: string;
   pathway?: Pathway;
 }) {
-  const context = useContext(InterestContext);
+  const context = useContext(InterestDialogContext);
   if (!context)
     throw new Error(
       "InterestDialogTrigger must be used inside InterestDialogProvider.",

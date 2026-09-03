@@ -13,6 +13,7 @@ interface MobileMenuProps {
   onClose: () => void;
   locale: string;
   returnFocusRef: RefObject<HTMLButtonElement | null>;
+  showCourses?: boolean;
 }
 
 const FOCUSABLE_SELECTOR = [
@@ -28,6 +29,7 @@ export default function MobileMenu({
   open,
   onClose,
   returnFocusRef,
+  showCourses = false,
 }: MobileMenuProps) {
   const locale = useLocale();
   const pathname = usePathname();
@@ -41,6 +43,9 @@ export default function MobileMenu({
     t("nav.institutional"),
     t("nav.contact"),
   ];
+  const items = showCourses
+    ? [...NAV_ITEMS, { label: "Courses", href: "/courses" }]
+    : NAV_ITEMS;
   const panelRef = useRef<HTMLDivElement>(null);
 
   /* lock body scroll when open */
@@ -132,7 +137,7 @@ export default function MobileMenu({
 
         {/* nav links */}
         <nav className="flex flex-col gap-7" aria-label="Mobile navigation">
-          {NAV_ITEMS.map((item, index) => {
+          {items.map((item, index) => {
             const isHash =
               item.href.startsWith("/#") || item.href.startsWith("#");
             const targetPath = `/${locale}${item.href}`;
@@ -158,7 +163,7 @@ export default function MobileMenu({
                 }}
                 className="font-display text-2xl text-white/80 tracking-wide transition-colors hover:text-white"
               >
-                {labels[index]}
+                {item.label === "Courses" ? t("nav.courses") : labels[index]}
               </Link>
             );
           })}

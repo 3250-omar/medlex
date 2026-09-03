@@ -12,7 +12,7 @@ const NAV_ITEMS = [
   { label: "Contact", href: "/contact" },
 ] as const;
 
-export default function Navigation() {
+export default function Navigation({ showCourses = false }: { showCourses?: boolean }) {
   const locale = useLocale();
   const pathname = usePathname();
   const t = useTranslations();
@@ -23,6 +23,9 @@ export default function Navigation() {
     t("nav.institutional"),
     t("nav.contact"),
   ];
+  const items = showCourses
+    ? [...NAV_ITEMS, { label: "Courses", href: "/courses" }]
+    : NAV_ITEMS;
 
   const handleScroll = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -44,7 +47,7 @@ export default function Navigation() {
       className="hidden items-center gap-8 lg:flex"
       aria-label="Main navigation"
     >
-      {NAV_ITEMS.map((item, index) => {
+      {items.map((item, index) => {
         const isHash = item.href.startsWith("/#") || item.href.startsWith("#");
         const targetPath = `/${locale}${item.href}`;
         const isActive =
@@ -58,7 +61,7 @@ export default function Navigation() {
             aria-current={isActive ? "page" : undefined}
             className={`group relative font-body text-sm tracking-wide transition-colors duration-200 hover:text-white ${isActive ? "text-signal" : "text-white/70"}`}
           >
-            {labels[index]}
+            {item.label === "Courses" ? t("nav.courses") : labels[index]}
             <span
               className={`absolute -bottom-0.5 start-0 h-px bg-signal transition-all duration-300 ${isActive ? "w-full" : "w-0 group-hover:w-full"}`}
             />

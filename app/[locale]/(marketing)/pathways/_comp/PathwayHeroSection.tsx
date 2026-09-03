@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Eyebrow from "./Eyebrow";
 import InterestButton from "./InterestButton";
+import SubscribeButton from "./SubscribeButton";
 import {
   type PathwayContent,
   type PathwayKey,
@@ -19,6 +20,7 @@ export default function PathwayHeroSection({
   labels,
 }: PathwayHeroSectionProps) {
   const isMedicoLegal = pathway === "medico-legal";
+  const isCascAcademy = pathway === "casc-academy";
 
   return (
     <section className="relative isolate overflow-hidden border-b border-white/10">
@@ -64,7 +66,13 @@ export default function PathwayHeroSection({
             ))}
           </dl>
           <div className="mt-8">
-            <InterestButton pathway={pathway}>{labels.register}</InterestButton>
+            {isCascAcademy ? (
+              <SubscribeButton>{labels.register}</SubscribeButton>
+            ) : (
+              <InterestButton pathway={pathway}>
+                {labels.register}
+              </InterestButton>
+            )}
           </div>
         </div>
       </div>

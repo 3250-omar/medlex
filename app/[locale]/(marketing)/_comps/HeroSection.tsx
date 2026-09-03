@@ -4,6 +4,8 @@ import { type PointerEvent, useEffect, useRef } from "react";
 import Image from "next/image";
 import { InterestDialogTrigger } from "@/components/marketing/InterestDialog";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useCurrentUser } from "../_apiCalls/academyQueries";
 import MarqueeStrip from "./MarqueeStrip";
 
 interface HeroSectionProps {
@@ -12,6 +14,8 @@ interface HeroSectionProps {
 
 export default function HeroSection({ locale }: HeroSectionProps) {
   const t = useTranslations("home.hero");
+  const router = useRouter();
+  const { data: user } = useCurrentUser();
   const heroRef = useRef<HTMLElement>(null);
   const guillocheRef = useRef<HTMLCanvasElement>(null);
 
@@ -235,7 +239,9 @@ export default function HeroSection({ locale }: HeroSectionProps) {
 
             {/* CTAs */}
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <InterestDialogTrigger className="inline-flex items-center gap-2 border border-signal px-7 py-3.5 font-body text-sm tracking-wide text-signal transition-all duration-200 hover:bg-signal hover:text-ink">
+              {user ? <button type="button" onClick={() => router.push(`/${locale}/courses`)} className="inline-flex items-center gap-2 border border-signal px-7 py-3.5 font-body text-sm tracking-wide text-signal transition-all duration-200 hover:bg-signal hover:text-ink">Go to your courses
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M2.5 7h9M8.5 3.5L12 7l-3.5 3.5" /></svg>
+              </button> : <InterestDialogTrigger className="inline-flex items-center gap-2 border border-signal px-7 py-3.5 font-body text-sm tracking-wide text-signal transition-all duration-200 hover:bg-signal hover:text-ink">
                 {t("register")}
                 <svg
                   width="14"
@@ -248,7 +254,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
                 >
                   <path d="M2.5 7h9M8.5 3.5L12 7l-3.5 3.5" />
                 </svg>
-              </InterestDialogTrigger>
+              </InterestDialogTrigger>}
               <a
                 href="#pathways-heading"
                 onClick={(e) => {

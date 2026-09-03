@@ -1,5 +1,6 @@
 import Eyebrow from "./Eyebrow";
 import InterestButton from "./InterestButton";
+import SubscribeButton from "./SubscribeButton";
 import { type PathwayContent, type PathwayKey } from "./pathwayContent";
 
 interface ProgrammesSectionProps {
@@ -56,9 +57,7 @@ export default function ProgrammesSection({
                       {item.status}
                     </p>
                     <div className="mt-5">
-                      <InterestButton pathway={pathway}>
-                        {item.action}
-                      </InterestButton>
+                      {pathway === "casc-academy" ? <SubscribeButton>{item.action}</SubscribeButton> : <InterestButton pathway={pathway}>{item.action}</InterestButton>}
                     </div>
                   </aside>
                 </div>

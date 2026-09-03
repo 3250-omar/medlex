@@ -1,29 +1,14 @@
-import EditorialPage from "@/components/marketing/EditorialPage";
+import EnrolledCourses from "./_comps/EnrolledCourses";
 
 export default function CoursesPage() {
   return (
-    <EditorialPage
-      eyebrow="The catalogue"
-      title="Learn the work behind the evidence."
-      intro="Explore structured courses designed to move from foundational understanding to confident medicolegal practice."
-      sections={[
-        {
-          eyebrow: "Flagship",
-          title: "Forensic Psychiatry Essentials",
-          body: "A practical foundation in assessment, formulation, report writing, and courtroom communication.",
-        },
-        {
-          eyebrow: "Academy",
-          title: "CASC Academy",
-          body: "A focused preparation pathway for clinicians building confidence through structured practice.",
-        },
-        {
-          eyebrow: "Coming soon",
-          title: "Advanced pathways",
-          body: "More specialist courses and institutional cohorts are being shaped with the MedLex community.",
-        },
-      ]}
-      cta={{ label: "Register for updates", href: "/register" }}
-    />
+    <main className="min-h-screen bg-ink pb-20 pt-28 text-white sm:pt-36">
+      <section className="mx-auto w-full px-6 sm:px-8 lg:max-w-6xl lg:px-10">
+        <p className="font-body text-[10px] font-semibold uppercase tracking-[.2em] text-signal">Your learning</p>
+        <h1 className="mt-5 font-display text-4xl leading-tight sm:text-5xl">Your courses</h1>
+        <p className="mt-5 max-w-2xl font-body leading-7 text-white/65">Continue the courses you are enrolled in and return to your learning at any time.</p>
+        <div className="mt-12"><EnrolledCourses /></div>
+      </section>
+    </main>
   );
 }
