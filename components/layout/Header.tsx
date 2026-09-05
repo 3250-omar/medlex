@@ -30,6 +30,8 @@ export default function Header() {
   const pathname = usePathname();
   const alternateLocale = locale === "en" ? "ar" : "en";
   const alternateLocalePath = getLocalePath(pathname, alternateLocale);
+  const isLessonPath =
+    pathname.includes("/academy/courses/") && pathname.includes("/learn/");
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuTriggerRef = useRef<HTMLButtonElement>(null);
@@ -166,7 +168,9 @@ export default function Header() {
 
       <header
         className={[
-          "fixed inset-x-0 top-0 z-50 transition-all duration-300",
+          isLessonPath
+            ? "relative z-50 transition-all duration-300"
+            : "fixed inset-x-0 top-0 z-50 transition-all duration-300",
           scrolled || pathname.includes("/learn")
             ? "bg-ink/95 shadow-[0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-md"
             : "bg-transparent",

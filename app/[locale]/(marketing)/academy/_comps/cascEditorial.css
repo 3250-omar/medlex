@@ -72,7 +72,6 @@ html[data-theme="dark"] .casc-experience h3 {
   background: var(--navy);
   color: #fff;
   border-bottom: 5px solid var(--gold);
-  padding-top: var(--header-h, 72px);
 }
 
 .casc-experience header .wrap {
