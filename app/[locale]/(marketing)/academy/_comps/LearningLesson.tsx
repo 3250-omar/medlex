@@ -9,6 +9,10 @@ import {
   useLearningUnit,
   type AssessmentQuestion,
 } from "../_apiCalls/learningQueries";
+import {
+  useCompleteUnit,
+  useOpenUnit,
+} from "../../_apiCalls/academyQueries";
 import "./cascEditorial.css";
 
 type Props = { locale: string; courseSlug: string; unitSlug: string };
@@ -24,6 +28,9 @@ export default function LearningLesson({
   const [answeredAllQuestions, setAnsweredAllQuestions] = useState(false);
   const [remainingQuestions, setRemainingQuestions] = useState(0);
 
+  const { mutate: completeUnit } = useCompleteUnit();
+  const { mutate: openUnit } = useOpenUnit();
+
   const {
     data: unit,
     isLoading,
@@ -31,6 +38,13 @@ export default function LearningLesson({
     refetch,
   } = useLearningUnit(courseSlug, unitSlug);
   const { data: outline } = useCourseOutline(courseSlug);
+
+  // Record unit opened in backend when unit is loaded
+  useEffect(() => {
+    if (unit) {
+      openUnit({ courseSlug, unitSlug });
+    }
+  }, [unit, courseSlug, unitSlug, openUnit]);
 
   const currentIndex =
     outline?.units.findIndex((u) => u.slug === unitSlug) ?? -1;
@@ -138,7 +152,7 @@ export default function LearningLesson({
       const nextSlug = nextUnit?.slug;
       const nextUrl = nextSlug
         ? `/${locale}/academy/courses/${courseSlug}/learn/${nextSlug}`
-        : `/${locale}/academy`;
+        : `/${locale}/academy/courses/${courseSlug}/certificate`;
 
       const doneBtn = root.querySelector<HTMLAnchorElement>(
         ".done a.btn, .done .mark, .done a[href]",
@@ -359,6 +373,9 @@ export default function LearningLesson({
 
         acts.finish = 1;
         updateProgress();
+
+        // Record completion in backend
+        completeUnit({ courseSlug, unitSlug });
 
         const destUrl = finishLink.getAttribute("href");
         if (destUrl && destUrl !== "#") {
@@ -849,6 +866,9 @@ export default function LearningLesson({
                 href={`/${locale}/academy/courses/${courseSlug}/learn/${nextUnit.slug}`}
                 title={nextUnit.title}
                 className="casc-nav-next-active"
+                onClick={() => {
+                  completeUnit({ courseSlug, unitSlug });
+                }}
               >
                 Next <ChevronRight size={16} />
               </Link>
@@ -862,13 +882,26 @@ export default function LearningLesson({
                 Next (Locked) <ChevronRight size={16} />
               </button>
             )
-          ) : (
+          ) : answeredAllQuestions ? (
             <Link
-              href={`/${locale}/academy`}
+              href={`/${locale}/academy/courses/${courseSlug}/certificate`}
               style={{ background: "var(--gold)", color: "var(--navy)" }}
+              className="casc-nav-next-active"
+              onClick={() => {
+                completeUnit({ courseSlug, unitSlug });
+              }}
             >
-              Academy Home
+              Complete Course & Claim Certificate 🎓
             </Link>
+          ) : (
+            <button
+              type="button"
+              disabled
+              className="casc-nav-next-disabled"
+              title={`Answer all questions to complete course (${remainingQuestions} remaining)`}
+            >
+              Complete Course (Locked)
+            </button>
           )}
         </div>
       </nav>

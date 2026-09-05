@@ -31,13 +31,14 @@ export async function GET() {
   const result = (await db
     .from("enrollments")
     .select(
-      "id, status, enrolled_at, expires_at, last_accessed_unit_id, courses!inner(slug, title_en, title_ar, description_en, description_ar), course_releases!inner(learning_units(slug, sequence_number, is_published))",
+      "id, status, enrolled_at, expires_at, last_accessed_unit_id, courses!inner(slug, title_en, title_ar, description_en, description_ar), course_releases!inner(learning_units(id, slug, sequence_number, is_published)), unit_progress(unit_id, status, progress_percent)",
     )
     .in("status", ["active", "paused", "completed"])
     .order("enrolled_at", { ascending: false })) as {
     data: Row[] | null;
     error: { message: string } | null;
   };
+
   if (result.error)
     return NextResponse.json(
       { error: "Unable to load your courses." },
@@ -53,10 +54,11 @@ export async function GET() {
         ? [enrollment.course_releases]
         : [];
     const release = releases[0] as Row | undefined;
-    const units = Array.isArray(release?.learning_units)
+    const rawUnits = Array.isArray(release?.learning_units)
       ? release.learning_units
       : [];
-    const firstUnit = [...units]
+
+    const units = [...rawUnits]
       .filter((unit): unit is Row =>
         Boolean(
           unit && typeof unit === "object" && unit.is_published !== false,
@@ -65,7 +67,58 @@ export async function GET() {
       .sort(
         (a, b) =>
           Number(a.sequence_number ?? 0) - Number(b.sequence_number ?? 0),
-      )[0];
+      );
+
+    const firstUnit = units[0];
+    const totalUnits = units.length;
+
+    const progressRecords = Array.isArray(enrollment.unit_progress)
+      ? (enrollment.unit_progress as Row[])
+      : [];
+
+    const completedUnitIds = new Set(
+      progressRecords
+        .filter((p) => p.status === "completed")
+        .map((p) => String(p.unit_id)),
+    );
+
+    const completedUnits = units.filter((u) =>
+      completedUnitIds.has(String(u.id)),
+    ).length;
+
+    const progressPercent =
+      totalUnits > 0 ? Math.round((completedUnits / totalUnits) * 100) : 0;
+
+    // Determine current resume unit slug
+    let currentUnitSlug: string | null = null;
+    const lastAccessedId = enrollment.last_accessed_unit_id
+      ? String(enrollment.last_accessed_unit_id)
+      : null;
+
+    if (lastAccessedId) {
+      const lastIndex = units.findIndex((u) => String(u.id) === lastAccessedId);
+      if (lastIndex !== -1) {
+        // If last accessed is already completed and there is a next unit, suggest next unit
+        if (completedUnitIds.has(lastAccessedId) && lastIndex + 1 < units.length) {
+          currentUnitSlug = String(units[lastIndex + 1].slug);
+        } else {
+          currentUnitSlug = String(units[lastIndex].slug);
+        }
+      }
+    }
+
+    // If still null, find the first incomplete unit
+    if (!currentUnitSlug) {
+      const firstIncomplete = units.find(
+        (u) => !completedUnitIds.has(String(u.id)),
+      );
+      currentUnitSlug = firstIncomplete
+        ? String(firstIncomplete.slug)
+        : firstUnit
+          ? String(firstUnit.slug)
+          : null;
+    }
+
     return {
       enrollmentId: String(enrollment.id),
       status: String(enrollment.status),
@@ -86,7 +139,12 @@ export async function GET() {
           : null,
       firstUnitSlug:
         typeof firstUnit?.slug === "string" ? firstUnit.slug : null,
+      currentUnitSlug,
+      completedUnits,
+      totalUnits,
+      progressPercent,
     };
   });
+
   return NextResponse.json({ data: courses });
 }

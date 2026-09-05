@@ -144,7 +144,7 @@ export function InterestDialogProvider({ children }: { children: ReactNode }) {
       await onAuthenticated();
       return;
     }
-    router.push(`/${locale}/courses`);
+    router.refresh();
   }
 
   function handleSignIn(event: FormEvent<HTMLFormElement>) {

@@ -16,6 +16,7 @@ export default function EnrolledCourses() {
     error,
     refetch,
   } = useEnrolledCourses(Boolean(user));
+
   if (isLoading)
     return (
       <div className="grid gap-4 sm:grid-cols-2">
@@ -70,14 +71,63 @@ export default function EnrolledCourses() {
               ? course.descriptionAr
               : course.descriptionEn}
           </p>
-          {course.firstUnitSlug ? (
-            <Link
-              className="mt-7 inline-flex min-h-12 items-center justify-center bg-signal px-5 font-body text-sm font-medium text-ink"
-              href={`/${locale}/academy/courses/${course.slug}/learn/${course.firstUnitSlug}`}
-            >
-              Open course questions
-            </Link>
-          ) : null}
+
+          {/* Progress bar and counter */}
+          <div className="mt-6 border-t border-white/10 pt-4">
+            <div className="flex items-center justify-between font-body text-xs text-white/70">
+              <span>
+                {locale === "ar"
+                  ? `${course.completedUnits || 0} من أصل ${course.totalUnits || 0} درس مكتمل`
+                  : `${course.completedUnits || 0} of ${course.totalUnits || 0} lessons completed`}
+              </span>
+              <span className="font-medium text-signal">
+                {course.progressPercent || 0}%
+              </span>
+            </div>
+            <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+              <div
+                className="h-full bg-signal transition-all duration-500 ease-out"
+                style={{
+                  width: `${Math.min(100, Math.max(0, course.progressPercent || 0))}%`,
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            {course.currentUnitSlug || course.firstUnitSlug ? (
+              <Link
+                className="inline-flex min-h-12 flex-1 items-center justify-center bg-signal px-5 font-body text-sm font-medium text-ink transition-transform hover:-translate-y-0.5 hover:bg-signal-light"
+                href={`/${locale}/academy/courses/${course.slug}/learn/${course.currentUnitSlug || course.firstUnitSlug}`}
+              >
+                {course.progressPercent && course.progressPercent >= 100
+                  ? locale === "ar"
+                    ? "مراجعة الكورس ✓"
+                    : "Review course ✓"
+                  : course.progressPercent && course.progressPercent > 0
+                    ? locale === "ar"
+                      ? "متابعة الكورس →"
+                      : "Resume course →"
+                    : locale === "ar"
+                      ? "ابدأ الكورس →"
+                      : "Start course →"}
+              </Link>
+            ) : null}
+
+            {course.progressPercent && course.progressPercent >= 50 ? (
+              <Link
+                className="inline-flex min-h-12 items-center justify-center border border-[#d4af37]/60 bg-[#d4af37]/10 px-5 font-body text-sm font-semibold text-[#d4af37] transition-all hover:bg-[#d4af37] hover:text-[#070e17]"
+                href={`/${locale}/academy/courses/${course.slug}/certificate`}
+                title={
+                  locale === "ar"
+                    ? "عرض شهادة الإتمام"
+                    : "View Certificate of Completion"
+                }
+              >
+                🎓 {locale === "ar" ? "الشهادة" : "Certificate"}
+              </Link>
+            ) : null}
+          </div>
         </article>
       ))}
     </div>

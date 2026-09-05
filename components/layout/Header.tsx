@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import Navigation from "./Navigation";
 import MobileMenu from "./MobileMenu";
@@ -34,8 +34,18 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuTriggerRef = useRef<HTMLButtonElement>(null);
   const t = useTranslations();
+  const router = useRouter();
   const queryClient = useQueryClient();
   const { data: user } = useCurrentUser();
+
+  const isProtectedPath = (path: string) => {
+    const cleanPath = path.replace(/^\/(en|ar)/, "");
+    return (
+      cleanPath.startsWith("/courses") ||
+      cleanPath.startsWith("/academy") ||
+      cleanPath.startsWith("/profile")
+    );
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -51,6 +61,10 @@ export default function Header() {
     } = supabase.auth.onAuthStateChange((event) => {
       if (event === "SIGNED_OUT") {
         queryClient.removeQueries({ queryKey: academyQueryKeys.authenticated });
+        if (isProtectedPath(pathname)) {
+          router.push(`/${locale}`);
+        }
+        router.refresh();
       }
       void queryClient.invalidateQueries({
         queryKey: academyQueryKeys.currentUser,
@@ -58,7 +72,7 @@ export default function Header() {
     });
 
     return () => subscription.unsubscribe();
-  }, [queryClient]);
+  }, [queryClient, pathname, locale, router]);
 
   async function handleSignOut() {
     try {
@@ -74,7 +88,13 @@ export default function Header() {
     queryClient.removeQueries({ queryKey: academyQueryKeys.authenticated });
     await queryClient.invalidateQueries({
       queryKey: academyQueryKeys.currentUser,
-    });  }
+    });
+
+    if (isProtectedPath(pathname)) {
+      router.push(`/${locale}`);
+      router.refresh();
+    }
+  }
 
   const userName = user?.fullName ?? user?.email ?? "User";
   const initials = user ? userName.charAt(0).toUpperCase() : "";
@@ -125,7 +145,7 @@ export default function Header() {
 
         <DropdownMenuSeparator className="bg-white/10" />
 
-        <DropdownMenuItem 
+        <DropdownMenuItem
           onClick={handleSignOut}
           className="cursor-pointer rounded-none px-3 py-2 font-body text-sm text-destructive hover:bg-destructive/10 focus:bg-destructive/10 focus:text-destructive"
         >
