@@ -1,3 +1,13 @@
-import EditorialPage from "@/components/marketing/EditorialPage";
+import InstitutionalPageClient from "./_comp/InstitutionalPageClient";
 
-export default function InstitutionalPage() { return <EditorialPage eyebrow="For institutions" title="Build capability that holds up under pressure." intro="Partner with MedLex to design education, consultation, and quality frameworks around your organisation's medicolegal needs." sections={[{ eyebrow: "Education", title: "Cohort programmes", body: "Bring a shared standard to teams with private cohorts, workshops, and guided assessment." }, { eyebrow: "Consultation", title: "Expert perspective", body: "Get practical support for service design, report quality, and difficult forensic questions." }, { eyebrow: "Partnership", title: "Long-term capability", body: "Create a durable learning pathway that grows with your people and your service." }]} cta={{ label: "Start a conversation", href: "/contact" }} />; }
+interface InstitutionalPageProps {
+  params: Promise<{ locale: string }>;
+}
+
+export default async function InstitutionalPage({
+  params,
+}: InstitutionalPageProps) {
+  const { locale } = await params;
+
+  return <InstitutionalPageClient locale={locale} />;
+}

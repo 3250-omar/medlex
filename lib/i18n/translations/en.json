@@ -767,5 +767,262 @@
       "signIn": "Sign in / Register",
       "returnHome": "Return to Home"
     }
+  },
+  "institutionalPage": {
+    "hero": {
+      "eyebrow": "FOR INSTITUTIONS",
+      "title": "Expert consultation\n& court services.",
+      "intro": "Independent psychiatric evaluations, clinical governance review, and capacity-building programmes built to judicial standards across the MENA region.",
+      "metrics": [
+        {
+          "label": "Jurisdictions",
+          "value": "3 Countries",
+          "detail": "UK · Egypt · Qatar"
+        },
+        {
+          "label": "Forums",
+          "value": "Court-Tested",
+          "detail": "Tribunals, Courts & Parole Boards"
+        },
+        {
+          "label": "Methodology",
+          "value": "Defensible",
+          "detail": "Evidentiary standard before conclusion"
+        }
+      ]
+    },
+    "servicesGrid": {
+      "eyebrow": "AREAS OF PRACTICE",
+      "title": "Four specialised services for judicial and healthcare bodies.",
+      "cards": [
+        {
+          "tag": "01 · ASSESSMENTS",
+          "title": "Clinical Forensic Assessment",
+          "desc": "Independent psychiatric evaluations for courts, prosecution, and legal counsel in criminal, civil, and custodial proceedings.",
+          "linkText": "Explore Service"
+        },
+        {
+          "tag": "02 · PROTOCOLS",
+          "title": "Institutional Policy & Protocols",
+          "desc": "Development of defensible clinical governance standards, fitness-to-plead frameworks, and structured risk assessment tools.",
+          "linkText": "Explore Service"
+        },
+        {
+          "tag": "03 · CASE REVIEW",
+          "title": "Case Review & Second Opinions",
+          "desc": "Peer review of disputed psychiatric evidence, medico-legal audit, and independent evaluation of complex court files.",
+          "linkText": "Explore Service"
+        },
+        {
+          "tag": "04 · TRAINING",
+          "title": "Capacity Building & Training",
+          "desc": "Bespoke forensic psychiatry curriculums and masterclasses for judges, prosecutors, hospital leadership, and legal teams.",
+          "linkText": "Explore Service"
+        }
+      ]
+    },
+    "standards": {
+      "eyebrow": "STANDARDS & INTEGRITY",
+      "title": "Built for the scrutiny of modern courts and institutions.",
+      "intro": "Why judicial bodies, ministries, and hospitals rely on MedLex expert consultation.",
+      "pillars": [
+        {
+          "title": "UK-Trained Consultant Leadership",
+          "desc": "Led by a Consultant Forensic Psychiatrist with extensive practice across UK Mental Health Tribunals, Crown Courts, and regional bodies."
+        },
+        {
+          "title": "Evidence Before Opinion",
+          "desc": "Method before conclusion. Defined questions, structured psychometric instruments, and opinions stated at the confidence the evidence supports."
+        },
+        {
+          "title": "Jurisdictional Alignment",
+          "desc": "Reports constructed around the specific statutory questions posed under your jurisdiction's penal, civil, or healthcare code."
+        },
+        {
+          "title": "Professional Protection",
+          "desc": "Court-conscious methodology that protects institutional integrity, maintains strict clinician neutrality, and survives cross-examination."
+        }
+      ]
+    },
+    "details": {
+      "service1": {
+        "number": "01",
+        "eyebrow": "ASSESSMENT & EVALUATION",
+        "title": "Clinical Forensic Assessment",
+        "subtitle": "Independent psychiatric evaluations built to evidentiary standards.",
+        "description": "We produce court-admissible psychiatric evaluations for civil and criminal cases. Our reports address specific statutory questions with rigorous documentation, diagnostic clarity, and defensible clinical reasoning that withstands cross-examination.",
+        "features": [
+          "Criminal responsibility, sanity, and diminished capacity",
+          "Fitness to plead and stand trial",
+          "Mental capacity, guardianship, and testamentary capacity",
+          "Structured violence and recidivism risk assessment (HCR-20 / SAPROF)",
+          "Assessment of custodial and prison placement suitability"
+        ],
+        "specCard": {
+          "eyebrow": "ENGAGEMENT SPECIFICATION",
+          "formatLabel": "Format",
+          "formatValue": "In-person & Secure Remote",
+          "timelineLabel": "Typical Lead Time",
+          "timelineValue": "10–20 Business Days",
+          "jurisdictionLabel": "Jurisdiction",
+          "jurisdictionValue": "UK, Egypt, Qatar & GCC",
+          "clientsLabel": "Primary Clients",
+          "clientsValue": "Courts, Prosecution, Defence & In-House Counsel",
+          "action": "Request Assessment"
+        }
+      },
+      "service2": {
+        "number": "02",
+        "eyebrow": "GOVERNANCE & SAFETY",
+        "title": "Institutional Policy & Protocols",
+        "subtitle": "Clinical governance standards that minimise medicolegal risk.",
+        "description": "Healthcare facilities and custodial institutions operate under severe legal scrutiny. We assist leadership in drafting, auditing, and implementing protocols that meet international human rights benchmarks while aligning with local statutory frameworks.",
+        "features": [
+          "Involuntary admission & detention compliance frameworks",
+          "Seclusion, physical restraint, and de-escalation governance",
+          "High-risk incident, suicide, and near-miss investigation protocols",
+          "Medicolegal confidentiality, record-keeping, and disclosure policies",
+          "Dual-obligation ethics guidance for prison and security-setting clinicians"
+        ],
+        "specCard": {
+          "eyebrow": "ENGAGEMENT SPECIFICATION",
+          "formatLabel": "Delivery",
+          "formatValue": "Institutional Advisory & On-Site Audits",
+          "timelineLabel": "Duration",
+          "timelineValue": "4–12 Weeks Structured Mandate",
+          "jurisdictionLabel": "Alignment",
+          "jurisdictionValue": "National Health & Mental Health Acts",
+          "clientsLabel": "Primary Clients",
+          "clientsValue": "Ministries of Health, Hospital Groups, Custodial Services",
+          "action": "Request Protocol Review"
+        }
+      },
+      "service3": {
+        "number": "03",
+        "eyebrow": "AUDIT & SECOND OPINION",
+        "title": "Case Review & Second Opinions",
+        "subtitle": "Objective forensic audit of complex psychiatric evidence.",
+        "description": "When medical evidence is disputed, contradictory, or methodologically flawed, courts and legal teams require an authoritative, independent second perspective. We provide rigorous review of medical records, existing expert reports, and interview transcripts.",
+        "features": [
+          "Evidentiary audit of prior psychiatric expert reports",
+          "Identification of cognitive bias, diagnostic overreach, or procedural flaws",
+          "Cross-examination briefings and question formulation for trial counsel",
+          "Independent expert witness testimony before tribunals and appellate courts",
+          "Multidisciplinary case conference facilitation for complex matters"
+        ],
+        "specCard": {
+          "eyebrow": "ENGAGEMENT SPECIFICATION",
+          "formatLabel": "Review Type",
+          "formatValue": "Confidential Dossier & Case Audit",
+          "timelineLabel": "Turnaround",
+          "timelineValue": "5–10 Business Days (Priority triage available)",
+          "jurisdictionLabel": "Scope",
+          "jurisdictionValue": "Appellate, Criminal & Disciplinary Hearings",
+          "clientsLabel": "Primary Clients",
+          "clientsValue": "Judicial Panels, Senior Legal Counsel, Regulatory Bodies",
+          "action": "Submit Dossier for Review"
+        }
+      },
+      "service4": {
+        "number": "04",
+        "eyebrow": "EDUCATION & CAPACITY",
+        "title": "Capacity Building & Training",
+        "subtitle": "Specialised forensic curriculums for judicial and medical personnel.",
+        "description": "We bridge the cultural and intellectual divide between clinical medicine and the law. Our programmes equip judicial officers to critically appraise psychiatric evidence, and teach clinicians how to write reports that survive legal examination.",
+        "features": [
+          "Forensic mental health literacy for judges and prosecutors",
+          "Accredited medicolegal report writing masterclasses for psychiatrists",
+          "Risk formulation and management workshops for clinical teams",
+          "Simulated courtroom cross-examination and mock-trial workshops",
+          "Continuing Medical / Legal Education (CME/CLE) accredited modules"
+        ],
+        "specCard": {
+          "eyebrow": "ENGAGEMENT SPECIFICATION",
+          "formatLabel": "Format",
+          "formatValue": "Executive Workshops & Cohort Training",
+          "timelineLabel": "Cohort Size",
+          "timelineValue": "15–45 Participants per Cohort",
+          "jurisdictionLabel": "Delivery",
+          "jurisdictionValue": "On-Site (MENA) or Interactive Virtual",
+          "clientsLabel": "Primary Clients",
+          "clientsValue": "Judicial Academies, University Hospitals, Medical Syndicates",
+          "action": "Inquire for Cohorts"
+        }
+      }
+    },
+    "engagements": {
+      "eyebrow": "MODES OF ENGAGEMENT",
+      "title": "Four standard frameworks for institutional collaboration.",
+      "items": [
+        {
+          "tag": "FRAMEWORK 01",
+          "title": "Single-Case Expert Instruction",
+          "desc": "Direct instruction by courts, public prosecutors, or joint legal parties for expert opinion, written evaluation, and viva voce testimony in specific cases."
+        },
+        {
+          "tag": "FRAMEWORK 02",
+          "title": "Advisory Retainer & Council",
+          "desc": "Ongoing consultative access for ministries, correctional authorities, and judicial bodies seeking on-call forensic psychiatry expertise and legislative advice."
+        },
+        {
+          "tag": "FRAMEWORK 03",
+          "title": "Clinical Governance Review",
+          "desc": "Comprehensive forensic and medicolegal audits of inpatient facilities, secure psychiatric units, and custodial healthcare services."
+        },
+        {
+          "tag": "FRAMEWORK 04",
+          "title": "Institutional Training Partnerships",
+          "desc": "Multi-year curriculum design and delivery for national judicial training centres, postgraduate medical faculties, and bar associations."
+        }
+      ]
+    },
+    "form": {
+      "eyebrow": "DIRECT INQUIRY",
+      "title": "Request an institutional consultation.",
+      "intro": "Submit your institutional inquiry below. Our senior advisory team will review your mandate and respond under strict professional confidentiality.",
+      "fields": {
+        "orgName": "Organisation / Institutional Body",
+        "orgNamePlaceholder": "e.g. Ministry of Justice, Hospital Group, Law Firm",
+        "contactPerson": "Contact Person & Title",
+        "contactPersonPlaceholder": "e.g. Dr. / Counsellor Full Name",
+        "email": "Official / Corporate Email",
+        "emailPlaceholder": "official@organisation.gov / .org",
+        "jurisdiction": "Jurisdiction / Country",
+        "jurisdictionPlaceholder": "Select jurisdiction...",
+        "service": "Service Required",
+        "servicePlaceholder": "Select service...",
+        "brief": "Scope of Work / Case Summary",
+        "briefPlaceholder": "Please provide a non-confidential overview of the mandate, timeline, and specific requirements..."
+      },
+      "jurisdictions": [
+        "Egypt",
+        "Qatar",
+        "United Kingdom",
+        "United Arab Emirates",
+        "Kingdom of Saudi Arabia",
+        "Kuwait",
+        "Other MENA Jurisdiction",
+        "International"
+      ],
+      "services": [
+        "Clinical Forensic Assessment (Case Specific)",
+        "Institutional Policy & Governance Protocols",
+        "Case Review & Second Expert Opinion",
+        "Capacity Building & Institutional Training",
+        "Governmental or Judicial Advisory Mandate",
+        "Other Bespoke Consultation"
+      ],
+      "submit": "Submit Institutional Inquiry",
+      "submitting": "Submitting Inquiry...",
+      "successTitle": "Inquiry Received",
+      "successDesc": "Thank you. Our institutional liaison team will review your inquiry and follow up within 1–2 business days under strict professional confidentiality.",
+      "confidentiality": "All communications are treated with strict legal and medical confidentiality in accordance with international professional standards."
+    },
+    "ctaBanner": {
+      "eyebrow": "BESPOKE ENGAGEMENTS",
+      "title": "Need a tailored institutional training program or consultation?",
+      "desc": "Our faculty designs bespoke continuous medical and legal education (CME/CLE) programs aligned with your regional jurisdiction.",
+      "action": "Request Proposal"
+    }
   }
 }

@@ -17,11 +17,15 @@ const SpotlightCard = ({
     const rect = card.getBoundingClientRect();
     card.style.setProperty("--mouse-x", `${event.clientX - rect.left}px`);
     card.style.setProperty("--mouse-y", `${event.clientY - rect.top}px`);
-    card.style.setProperty("--spotlight-color", spotlightColor);
+  card.style.setProperty("--spotlight-color", spotlightColor);
   };
 
   return (
-    <div ref={cardRef} onPointerMove={handlePointerMove} className={`card-spotlight ${className}`}>
+    <div
+      ref={cardRef}
+      onPointerMove={handlePointerMove}
+      className={`card-spotlight ${className}`}
+    >
       {children}
     </div>
   );

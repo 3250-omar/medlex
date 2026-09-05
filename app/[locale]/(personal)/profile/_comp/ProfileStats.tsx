@@ -12,7 +12,7 @@ export default function ProfileStats({
   const t = useTranslations("profile.stats");
 
   return (
-    <section className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+    <section className="grid grid-cols-1 gap-4 sm:grid-cols-3">
       <div className="border border-white/10 bg-white/[0.02] p-5">
         <p className="font-body text-[10px] uppercase tracking-[0.2em] text-signal">
           {t("enrolledCourses")}

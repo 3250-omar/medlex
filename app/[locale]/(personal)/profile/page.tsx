@@ -6,6 +6,7 @@ import { showApiError } from "@/lib/api/errorToast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
+import SpotlightCard from "@/components/SpotlightCard";
 import {
   academyQueryKeys,
   useCurrentUser,
@@ -45,56 +46,72 @@ export default function ProfilePage() {
     queryClient.removeQueries({ queryKey: academyQueryKeys.authenticated });
     await queryClient.invalidateQueries({
       queryKey: academyQueryKeys.currentUser,
-    });    router.push(`/${locale}`);
+    });
+    router.push(`/${locale}`);
   }
 
-  // ── Loading Skeleton ────────────────────────────────────────────────────────
   if (isLoadingUser) {
     return <ProfileSkeleton />;
   }
 
-  // ── Guest State (Not Logged In) ─────────────────────────────────────────────
   if (!user) {
     return <ProfileGuestState locale={locale} />;
   }
 
-  // ── Authenticated Profile View ──────────────────────────────────────────────
   const enrolledCount = courses?.length ?? 0;
 
   return (
-    <main className="min-h-screen bg-ink pb-24 pt-28 text-white sm:pt-36">
-      <div className="mx-auto w-full max-w-5xl px-6 sm:px-8 lg:px-10">
-        {/* Breadcrumb / Label */}
-        <div className="flex items-center gap-2 font-body text-xs text-white/40">
-          <Link href={`/${locale}`} className="hover:text-white">
+    <main className="relative isolate min-h-screen overflow-hidden bg-ink pb-24 pt-28 text-white sm:pt-36">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-80 border-b border-white/5 bg-white/[0.015]"
+      />
+
+      <div className="relative mx-auto w-full max-w-6xl px-6 sm:px-8 lg:px-10">
+        <nav
+          aria-label={t("breadcrumb.profile")}
+          className="flex items-center gap-2 font-body text-xs text-white/45"
+        >
+          <Link
+            href={`/${locale}`}
+            className="rounded-sm transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal"
+          >
             {t("breadcrumb.home")}
           </Link>
-          <span>/</span>
-          <span className="text-signal">
+          <span aria-hidden="true">/</span>
+          <span className="font-medium text-signal">
             {t("breadcrumb.profile")}
           </span>
-        </div>
+        </nav>
 
-        {/* Hero Identity Banner */}
-        <ProfileHeader user={user} locale={locale} onSignOut={handleSignOut} />
+        <SpotlightCard className="mt-6 rounded-2xl">
+          <ProfileHeader user={user} locale={locale} onSignOut={handleSignOut} />
+        </SpotlightCard>
 
-        {/* Quick Stats Grid */}
-        <ProfileStats enrolledCount={enrolledCount} locale={locale} />
+        <SpotlightCard className="mt-5 rounded-2xl">
+          <ProfileStats enrolledCount={enrolledCount} locale={locale} />
+        </SpotlightCard>
 
-        {/* Main Content: Two Columns */}
-        <div className="mt-8 grid gap-8 lg:grid-cols-3">
-          {/* Left / Main Column (Personal Information & Enrolled Courses) */}
-          <div className="space-y-8 lg:col-span-2">
-            <ProfileDetails user={user} locale={locale} />
-            <ProfileCourses
-              courses={courses}
-              isLoading={isLoadingCourses}
-              locale={locale}
-            />
+        <div className="mt-8 grid gap-6 lg:grid-cols-3 lg:gap-8">
+          <div className="space-y-6 lg:col-span-2">
+            <SpotlightCard className="rounded-2xl">
+              <ProfileDetails user={user} locale={locale} />
+            </SpotlightCard>
+
+            <SpotlightCard className="rounded-2xl">
+              <ProfileCourses
+                courses={courses}
+                isLoading={isLoadingCourses}
+                locale={locale}
+              />
+            </SpotlightCard>
           </div>
 
-          {/* Right Column: Quick Links & Academy Information */}
-          <ProfileSidebar locale={locale} />
+          <aside aria-label={t("breadcrumb.profile")} className="lg:pt-0.5">
+            <SpotlightCard className="rounded-2xl">
+              <ProfileSidebar locale={locale} />
+            </SpotlightCard>
+          </aside>
         </div>
       </div>
     </main>

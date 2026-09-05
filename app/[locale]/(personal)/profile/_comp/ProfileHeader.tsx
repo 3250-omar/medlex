@@ -27,7 +27,7 @@ export default function ProfileHeader({
     : null;
 
   return (
-    <section className="relative mt-6 overflow-hidden border border-white/10 bg-white/[0.02] p-6 sm:p-8">
+    <section className="relative overflow-hidden  p-6  sm:p-8">
       <div className="relative z-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-5">
           {/* Avatar circle */}
