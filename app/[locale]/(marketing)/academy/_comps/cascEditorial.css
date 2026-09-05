@@ -72,30 +72,15 @@ html[data-theme="dark"] .casc-experience h3 {
   background: var(--navy);
   color: #fff;
   border-bottom: 5px solid var(--gold);
+  padding-top: var(--header-h, 72px);
 }
 
 .casc-experience header .wrap {
-  padding: 26px 24px 34px;
+  padding: 24px 24px 34px;
 }
 
 .casc-experience .topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 18px;
-  flex-wrap: wrap;
-  margin-bottom: 40px;
-}
-
-.casc-experience .topbar img {
-  height: 42px;
-}
-
-.casc-experience .topbar span {
-  font-size: 12px;
-  color: var(--mute);
-  letter-spacing: 0.06em;
-  text-align: right;
+  display: none !important;
 }
 
 .casc-experience .tagrow {
@@ -1288,5 +1273,240 @@ html[data-theme="dark"] .casc-experience .done h2 {
 @media (prefers-reduced-motion: reduce) {
   .casc-experience * {
     transition: none !important;
+  }
+}
+/* Floating Course Lesson Menu */
+.casc-lesson-menu {
+  position: fixed;
+  z-index: 100;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+}
+
+.casc-lesson-menu-trigger {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  color: var(--navy);
+  background: var(--gold);
+  box-shadow: 0 8px 24px rgba(7, 14, 23, 0.3);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  transition:
+    background 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.casc-lesson-menu-trigger:hover,
+.casc-lesson-menu-trigger[data-popup-open] {
+  background: var(--lgold);
+  box-shadow: 0 10px 28px rgba(7, 14, 23, 0.38);
+}
+
+.casc-lesson-menu-trigger:focus-visible,
+.casc-lesson-menu-group-toggle:focus-visible,
+.casc-lesson-menu-popover a:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.casc-lesson-menu-popover {
+  width: min(340px, calc(100vw - 32px)) !important;
+  max-height: min(70dvh, 680px) !important;
+  overflow-y: auto !important;
+  padding: 0 !important;
+  border: 1px solid rgba(212, 175, 55, 0.75) !important;
+  border-radius: 12px !important;
+  background: rgba(7, 14, 23, 0.98) !important;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.38) !important;
+  color: #fff !important;
+}
+
+.casc-lesson-menu-heading {
+  display: block !important;
+  padding: 18px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.casc-lesson-menu-heading p,
+.casc-lesson-menu-heading [data-slot="popover-title"],
+.casc-lesson-menu-group h3 {
+  margin: 0;
+}
+
+.casc-lesson-menu-heading p {
+  color: var(--lgold);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.casc-lesson-menu-heading [data-slot="popover-title"] {
+  display: block;
+  margin-top: 5px;
+  color: #fff;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.casc-lesson-menu-group {
+  padding: 10px 12px;
+}
+
+.casc-lesson-menu-group + .casc-lesson-menu-group {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.casc-lesson-menu-group-toggle {
+  display: flex;
+  width: 100%;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px;
+  border: 0;
+  border-radius: 8px;
+  color: var(--lgold);
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.casc-lesson-menu-group-toggle:hover {
+  background: rgba(212, 175, 55, 0.12);
+}
+
+.casc-lesson-menu-group-toggle span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.casc-lesson-menu-group-toggle small {
+  display: inline-flex;
+  min-width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 10px;
+}
+
+.casc-lesson-menu-group-toggle svg {
+  transition: transform 0.15s ease;
+}
+
+.casc-lesson-menu-group-toggle svg.is-expanded {
+  transform: rotate(180deg);
+}
+
+.casc-lesson-menu-group ol {
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.casc-lesson-menu-group li + li {
+  margin-top: 4px;
+}
+
+.casc-lesson-menu-group a,
+.casc-lesson-menu-group ol > li > button {
+  width: 100%;
+  min-height: 52px;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) 18px;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+}
+
+.casc-lesson-menu-group a:hover,
+.casc-lesson-menu-group a.is-current {
+  border-color: rgba(212, 175, 55, 0.6);
+  background: rgba(212, 175, 55, 0.12);
+}
+
+.casc-lesson-menu-group ol > li > button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.casc-lesson-menu-marker {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  color: var(--lgold);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.casc-lesson-menu-copy {
+  min-width: 0;
+}
+
+.casc-lesson-menu-copy > span,
+.casc-lesson-menu-copy small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.casc-lesson-menu-copy > span {
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.casc-lesson-menu-copy small {
+  margin-top: 2px;
+  color: var(--mute);
+  font-size: 11px;
+}
+
+@media (max-width: 640px) {
+  .casc-lesson-menu {
+    top: auto;
+    right: 12px;
+    bottom: 84px;
+    transform: none;
+  }
+
+  .casc-lesson-menu-popover {
+    max-height: min(64dvh, 560px) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .casc-lesson-menu-trigger,
+  .casc-lesson-menu-group-toggle,
+  .casc-lesson-menu-group-toggle svg {
+    transition: none;
   }
 }

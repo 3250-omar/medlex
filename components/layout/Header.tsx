@@ -167,7 +167,7 @@ export default function Header() {
       <header
         className={[
           "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-          scrolled
+          scrolled || pathname.includes("/learn")
             ? "bg-ink/95 shadow-[0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-md"
             : "bg-transparent",
         ].join(" ")}

@@ -62,7 +62,9 @@ export async function POST(request: Request, context: RouteParams) {
   });
 
   if (error) {
-    const isThresholdError = error.message?.includes("progress_threshold_not_met");
+    const isThresholdError = error.message?.includes(
+      "progress_threshold_not_met",
+    );
     return NextResponse.json(
       {
         error: isThresholdError

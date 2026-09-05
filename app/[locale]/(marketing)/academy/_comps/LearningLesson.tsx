@@ -4,15 +4,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, RefreshCw } from "lucide-react";
+import CourseLessonMenu from "./CourseLessonMenu";
 import {
   useCourseOutline,
   useLearningUnit,
   type AssessmentQuestion,
 } from "../_apiCalls/learningQueries";
-import {
-  useCompleteUnit,
-  useOpenUnit,
-} from "../../_apiCalls/academyQueries";
+import { useCompleteUnit, useOpenUnit } from "../../_apiCalls/academyQueries";
 import "./cascEditorial.css";
 
 type Props = { locale: string; courseSlug: string; unitSlug: string };
@@ -54,19 +52,14 @@ export default function LearningLesson({
     currentIndex >= 0 ? outline?.units[currentIndex + 1] : undefined;
 
   // Hide global marketing header & footer during lesson
+  // Hide marketing footer during lesson to keep sticky navigation clean
   useEffect(() => {
-    const siteHeader = document.querySelector(
-      "header:not(.casc-experience header)",
-    ) as HTMLElement | null;
     const siteFooter = document.querySelector(
       "body > footer:not(.casc-experience footer)",
     ) as HTMLElement | null;
-    const prevHeaderDisplay = siteHeader?.style.display;
     const prevFooterDisplay = siteFooter?.style.display;
-    if (siteHeader) siteHeader.style.display = "none";
     if (siteFooter) siteFooter.style.display = "none";
     return () => {
-      if (siteHeader) siteHeader.style.display = prevHeaderDisplay ?? "";
       if (siteFooter) siteFooter.style.display = prevFooterDisplay ?? "";
     };
   }, []);
@@ -837,6 +830,15 @@ export default function LearningLesson({
         className="casc-content-mount"
         dangerouslySetInnerHTML={{ __html: fullHtml }}
       />
+
+      {outline ? (
+        <CourseLessonMenu
+          courseSlug={courseSlug}
+          currentUnitSlug={unitSlug}
+          locale={locale}
+          outline={outline}
+        />
+      ) : null}
 
       {/* Sticky Bottom Unit Pagination Bar */}
       <nav className="casc-bottom-nav" aria-label="Course Lesson Navigation">

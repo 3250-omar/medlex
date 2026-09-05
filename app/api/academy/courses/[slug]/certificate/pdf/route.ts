@@ -57,14 +57,16 @@ export async function GET(request: Request, context: RouteParams) {
     );
   }
 
-  if (!status.eligible) {
-    return NextResponse.json(
-      {
-        error: `A minimum of 50% course progress is required to obtain a certificate. Your current progress is ${status.progress_percent}%.`,
-      },
-      { status: 403 },
-    );
-  }
+  // Temporarily disabled: require at least 50% course progress before downloading.
+  // Keep this condition for straightforward restoration later.
+  // if (!status.eligible) {
+  //   return NextResponse.json(
+  //     {
+  //       error: `A minimum of 50% course progress is required to obtain a certificate. Your current progress is ${status.progress_percent}%.`,
+  //     },
+  //     { status: 403 },
+  //   );
+  // }
 
   // 2. Issue or fetch certificate record
   let recipientName = status.certificate?.recipient_name || status.user_name || "Learner";
@@ -98,12 +100,12 @@ export async function GET(request: Request, context: RouteParams) {
     year: "numeric",
   });
 
-  // 3. Load PDF template
+  // 3. Load certificate template
   const templatePath = path.join(
     process.cwd(),
     "public",
     "certificates",
-    "casc-academy-template.pdf",
+    "casc-academy-template.png",
   );
 
   if (!fs.existsSync(templatePath)) {
@@ -113,62 +115,54 @@ export async function GET(request: Request, context: RouteParams) {
     );
   }
 
-  const templateBytes = fs.readFileSync(templatePath);
-  const pdfDoc = await PDFDocument.load(templateBytes);
-  const page = pdfDoc.getPages()[0];
+  const pngBytes = fs.readFileSync(templatePath);
+  const pdfDoc = await PDFDocument.create();
+  const pngImage = await pdfDoc.embedPng(pngBytes);
 
-  // Flatten existing form fields
-  try {
-    const form = pdfDoc.getForm();
-    const nameField = form.getTextField("certificate_name");
-    const dateField = form.getTextField("certificate_date");
-    nameField.setText("");
-    dateField.setText("");
-    form.flatten();
-  } catch {
-    // Form fields might already be empty or flat
-  }
+  // A4 Landscape: 841.8898 x 595.2756
+  const width = 841.8898;
+  const height = 595.2756;
+  const page = pdfDoc.addPage([width, height]);
+
+  // Draw authentic template image
+  page.drawImage(pngImage, {
+    x: 0,
+    y: 0,
+    width,
+    height,
+  });
 
   // Embed fonts
   const fontTimesBold = await pdfDoc.embedFont(StandardFonts.TimesRomanBold);
   const fontHelveticaBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
-  // Position Name in white box: { x: 205.26, y: 330.24, width: 431.37, height: 31.18 }
-  const nameSize = recipientName.length > 30 ? 17 : 21;
+  // Center Name horizontally above the gold line (y=329.28 in PDF coordinates)
+  const nameSize = recipientName.length > 30 ? 20 : 24;
   const nameWidth = fontTimesBold.widthOfTextAtSize(recipientName, nameSize);
-  const nameBoxX = 205.26;
-  const nameBoxW = 431.37;
-  const nameBoxY = 330.24;
-  const nameBoxH = 31.18;
-
-  const nameX = Math.max(nameBoxX + 10, nameBoxX + (nameBoxW - nameWidth) / 2);
-  const nameY = nameBoxY + (nameBoxH - nameSize) / 2 + 2;
+  const nameX = (width - nameWidth) / 2;
+  const nameY = 329.28 + 6;
 
   page.drawText(recipientName, {
     x: nameX,
     y: nameY,
     size: nameSize,
     font: fontTimesBold,
-    color: rgb(0.06, 0.12, 0.22), // Deep Navy
+    color: rgb(1, 1, 1), // Pure White
   });
 
-  // Position Date in white box: { x: 197.17, y: 148.90, width: 175.42, height: 22.68 }
-  const dateSize = 12;
+  // Center Date horizontally above the date line (y=148.68 in PDF coordinates)
+  const dateSize = 13;
   const dateWidth = fontHelveticaBold.widthOfTextAtSize(formattedDate, dateSize);
-  const dateBoxX = 197.17;
-  const dateBoxW = 175.42;
-  const dateBoxY = 148.90;
-  const dateBoxH = 22.68;
-
-  const dateX = Math.max(dateBoxX + 5, dateBoxX + (dateBoxW - dateWidth) / 2);
-  const dateY = dateBoxY + (dateBoxH - dateSize) / 2 + 1;
+  const dateCenter = (197.17 + 372.59) / 2;
+  const dateX = dateCenter - dateWidth / 2;
+  const dateY = 148.68 + 5;
 
   page.drawText(formattedDate, {
     x: dateX,
     y: dateY,
     size: dateSize,
     font: fontHelveticaBold,
-    color: rgb(0.06, 0.12, 0.22),
+    color: rgb(0.92, 0.94, 0.98), // Light off-white
   });
 
   // Record download event asynchronously if certificate exists
