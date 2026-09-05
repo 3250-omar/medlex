@@ -5,7 +5,8 @@
     "founder": "Founder",
     "faq": "FAQ",
     "institutional": "Institutional",
-    "contact": "Contact"
+    "contact": "Contact",
+    "profile": "Profile"
   },
   "actions": {
     "register": "Register your interest",
@@ -14,7 +15,8 @@
     "close": "Close menu",
     "skipToContent": "Skip to content",
     "switchToArabic": "Switch to Arabic",
-    "switchToEnglish": "Switch to English"
+    "switchToEnglish": "Switch to English",
+    "logout": "Log out"
   },
   "brand": {
     "name": "MEDLEX",
@@ -98,6 +100,7 @@
       "badge": "Educational pathways, one for each professional audience"
     },
     "pathways": {
+      "enrolled": "Enrolled",
       "eyebrow": "Three Educational Pathways",
       "title": "One platform. Three ways in.",
       "intro": "Each pathway has its own audience, its own pace, and its own next step. Choose the way in that belongs to you."
@@ -701,6 +704,68 @@
         "body": "The programmes are built for the real decisions that arrive once clinical expertise is no longer the whole job.",
         "action": "About the founder"
       }
+    }
+  },
+  "profile": {
+    "breadcrumb": {
+      "home": "Home",
+      "profile": "Profile"
+    },
+    "header": {
+      "defaultUser": "User",
+      "activeMember": "Active Member",
+      "memberSince": "Member since",
+      "signOut": "Sign out"
+    },
+    "stats": {
+      "enrolledCourses": "Enrolled Courses",
+      "activePathways": "Active learning pathways",
+      "noEnrollments": "No active enrollments yet",
+      "membershipTier": "Membership Tier",
+      "academyName": "MedLex Academy",
+      "fullAccess": "Full access to enrolled content",
+      "securityStatus": "Security Status",
+      "verified": "Verified",
+      "secureSession": "Secure authenticated session"
+    },
+    "details": {
+      "eyebrow": "Account Info",
+      "title": "Personal Information",
+      "fullName": "Full Name",
+      "email": "Email Address",
+      "username": "Username",
+      "phone": "Phone Number",
+      "userId": "User ID",
+      "notSpecified": "Not specified",
+      "notSet": "Not set"
+    },
+    "courses": {
+      "eyebrow": "My Learning",
+      "title": "Enrolled Pathways",
+      "expires": "Expires",
+      "continueCourse": "Continue Course",
+      "emptyTitle": "No enrolled courses yet",
+      "emptyDescription": "Explore our specialised psychiatric and medico-legal training pathways to begin your learning.",
+      "explorePathways": "Explore Pathways",
+      "courseCatalogue": "Course Catalogue"
+    },
+    "sidebar": {
+      "quickActions": "Quick Actions",
+      "learningHub": "Learning Hub",
+      "allCourses": "All Courses Catalogue",
+      "pathways": "MedLex Pathways",
+      "aboutAcademy": "About MedLex Academy",
+      "support": "Support",
+      "needAssistance": "Need assistance?",
+      "supportDescription": "Our team is available to assist you with pathway registration, institutional arrangements, and academic enquiries.",
+      "contactSupport": "Contact MedLex Support"
+    },
+    "guest": {
+      "eyebrow": "Personal Profile",
+      "title": "Please sign in to view your profile",
+      "description": "Sign in or register to access your enrolled courses, certifications, and account details in the MedLex Academy.",
+      "signIn": "Sign in / Register",
+      "returnHome": "Return to Home"
     }
   }
 }

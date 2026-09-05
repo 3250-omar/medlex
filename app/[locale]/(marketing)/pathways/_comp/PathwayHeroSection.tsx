@@ -1,7 +1,15 @@
+"use client";
+
 import Image from "next/image";
+import Link from "next/link";
+import { useLocale } from "next-intl";
 import Eyebrow from "./Eyebrow";
 import InterestButton from "./InterestButton";
 import SubscribeButton from "./SubscribeButton";
+import {
+  useCurrentUser,
+  useEnrolledCourses,
+} from "../../_apiCalls/academyQueries";
 import {
   type PathwayContent,
   type PathwayKey,
@@ -19,8 +27,57 @@ export default function PathwayHeroSection({
   content,
   labels,
 }: PathwayHeroSectionProps) {
+  const locale = useLocale();
   const isMedicoLegal = pathway === "medico-legal";
   const isCascAcademy = pathway === "casc-academy";
+
+  const { data: user } = useCurrentUser();
+  const { data: enrolledCourses } = useEnrolledCourses(Boolean(user));
+
+  const enrolledCourse = enrolledCourses?.find((c) => c.slug === pathway);
+
+  const isSubscribed = !!enrolledCourse;
+
+  const buttonClassName =
+    "inline-flex min-h-12 items-center justify-center bg-signal px-6 font-body text-sm font-medium text-ink transition-colors hover:bg-signal-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal";
+
+  function renderHeroButton() {
+    if (!isCascAcademy) {
+      // Foundations & medico-legal are not available yet
+      return (
+        <button
+          type="button"
+          disabled
+          className={`${buttonClassName} disabled:cursor-not-allowed disabled:opacity-60`}
+        >
+          Coming soon
+          <span className="ms-3" aria-hidden="true">
+            →
+          </span>
+        </button>
+      );
+    }
+
+    if (isSubscribed) {
+      // Logged in + subscribed: link directly to the course
+      const firstUnit = enrolledCourse.firstUnitSlug ?? "start-here";
+      return (
+        <Link
+          href={`/${locale}/academy/courses/${pathway}/learn/${firstUnit}`}
+          className={buttonClassName}
+        >
+          Go to the course
+          <span className="ms-3" aria-hidden="true">
+            →
+          </span>
+        </Link>
+      );
+    }
+
+    // Not subscribed (or not logged in): show subscribe button
+    // SubscribeButton handles auth internally — opens register dialog if guest
+    return <SubscribeButton pathway={pathway}>Subscribe</SubscribeButton>;
+  }
 
   return (
     <section className="relative isolate overflow-hidden border-b border-white/10">
@@ -65,15 +122,7 @@ export default function PathwayHeroSection({
               </div>
             ))}
           </dl>
-          <div className="mt-8">
-            {isCascAcademy ? (
-              <SubscribeButton>{labels.register}</SubscribeButton>
-            ) : (
-              <InterestButton pathway={pathway}>
-                {labels.register}
-              </InterestButton>
-            )}
-          </div>
+          <div className="mt-8">{renderHeroButton()}</div>
         </div>
       </div>
     </section>

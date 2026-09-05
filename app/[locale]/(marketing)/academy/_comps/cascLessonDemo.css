@@ -1,0 +1,163 @@
+.casc-rich-content .player {
+  overflow: hidden;
+  border: 1px solid #d9e0e6;
+  border-radius: 8px;
+  background: #fff;
+}
+.casc-rich-content .player-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 16px;
+  background: #17375f;
+}
+.casc-rich-content .player-head .who {
+  color: #fff;
+  font-size: 14px;
+  line-height: 56px;
+}
+.casc-rich-content .player-head .who b {
+  color: #f4c83b;
+}
+.casc-rich-content .toggle {
+  align-self: stretch;
+  display: flex;
+  border: 0;
+  background: transparent;
+}
+.casc-rich-content .toggle button {
+  min-height: 0;
+  border: 1px solid #d6ad20;
+  border-inline-end: 0;
+  border-radius: 0;
+  background: #17375f;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 0 16px;
+}
+.casc-rich-content .toggle button:first-child {
+  border-radius: 8px 0 0 8px;
+}
+.casc-rich-content .toggle button:last-child {
+  border-inline-end: 1px solid #d6ad20;
+  border-radius: 0 8px 8px 0;
+}
+.casc-rich-content .toggle button.active {
+  background: #e1b92f;
+  color: #17375f;
+}
+.casc-rich-content .script {
+  padding: 0 16px;
+}
+.casc-rich-content .takenote {
+  margin: 18px 0 10px;
+  color: #3b5069;
+  font-size: 14px;
+}
+.casc-rich-content .takenote b {
+  color: #c39419;
+}
+.casc-rich-content .line {
+  position: relative;
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr) 28px;
+  gap: 12px;
+  align-items: start;
+  padding: 14px 0;
+  border-bottom: 1px solid #edf0f2;
+}
+.casc-rich-content .line:last-child {
+  border-bottom: 0;
+}
+.casc-rich-content .spk {
+  color: #a67d13;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.casc-rich-content .txt {
+  color: #273c55;
+  font-size: 16px;
+  line-height: 1.55;
+}
+.casc-rich-content .flagbtn {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  border: 1px solid #d9a910 !important;
+  border-radius: 50%;
+  background: #fff !important;
+  color: #b48300 !important;
+  font-size: 14px !important;
+  font-weight: 800;
+  padding: 0;
+}
+.casc-rich-content .flagbtn.open {
+  background: #d9a910 !important;
+  color: #17375f !important;
+}
+.casc-rich-content .line .read {
+  display: none;
+  grid-column: 2 / -1;
+  margin: 4px 0 2px;
+  border: 0;
+  border-radius: 8px;
+  background: #1d426f;
+  color: #fff;
+  padding: 15px 18px;
+  font-size: 15px;
+  line-height: 1.55;
+}
+.casc-rich-content .line.revealed .read {
+  display: block;
+}
+.casc-rich-content .line .read b {
+  display: block;
+  margin-bottom: 6px;
+  color: #f1c738;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+.casc-rich-content .line .read em {
+  color: #fff;
+}
+@media (max-width: 640px) {
+  .casc-rich-content .player-head {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+  }
+  .casc-rich-content .player-head .who {
+    line-height: 44px;
+    padding: 0 14px;
+  }
+  .casc-rich-content .toggle {
+    min-height: 42px;
+  }
+  .casc-rich-content .toggle button {
+    flex: 1;
+    padding: 0 8px;
+    font-size: 12px;
+  }
+  .casc-rich-content .script {
+    padding: 0 14px;
+  }
+  .casc-rich-content .line {
+    grid-template-columns: 1fr 28px;
+    gap: 8px;
+  }
+  .casc-rich-content .spk {
+    grid-column: 1 / -1;
+  }
+  .casc-rich-content .txt {
+    font-size: 15px;
+  }
+  .casc-rich-content .line .read {
+    grid-column: 1 / -1;
+  }
+}

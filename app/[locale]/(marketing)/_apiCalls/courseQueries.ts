@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/api/client";
 
 export interface PublicCourse {
   id: string;
@@ -22,10 +23,7 @@ export const courseQueryKeys = {
 };
 
 async function getPublishedCourses(): Promise<PublicCourse[]> {
-  const response = await fetch("/api/courses");
-  if (!response.ok) throw new Error("Unable to load courses");
-  const body = (await response.json()) as { data: PublicCourse[] };
-  return body.data;
+  return apiRequest<PublicCourse[]>("/api/courses");
 }
 
 export function usePublishedCourses() {

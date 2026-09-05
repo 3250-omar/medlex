@@ -1,0 +1,271 @@
+/* CASC lesson canvas — intentionally separate from the marketing shell. */
+.casc-shell {
+  --casc-navy: #1d426f;
+  --casc-deep: #17375f;
+  --casc-gold: #e1ba32;
+  --casc-body: #26384b;
+  --casc-hair: #e7e9e9;
+  --casc-tint: #faf5e5;
+  background: #fff;
+  color: var(--casc-body);
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.casc-wrap {
+  width: min(calc(100% - 40px), 860px);
+}
+.casc-lesson-header {
+  padding: 22px 0 28px;
+  border-bottom: 4px solid var(--casc-gold);
+  background: var(--casc-navy);
+}
+.casc-topline {
+  min-height: 30px;
+  color: #dce8f5;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+}
+.casc-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-family: Georgia, serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+}
+.casc-brand img {
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+}
+.casc-tags {
+  margin-top: 16px;
+}
+.casc-tag {
+  border-radius: 0;
+  padding: 5px 8px;
+  font-size: 9px;
+}
+.casc-lesson-header h1 {
+  font-size: clamp(31px, 4vw, 42px);
+  line-height: 1.03;
+  margin: 9px 0 6px;
+  letter-spacing: -0.02em;
+}
+.casc-subtitle {
+  max-width: 660px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.casc-lens {
+  max-width: 650px;
+  margin-top: 15px;
+  border-radius: 2px;
+  padding: 12px 15px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.casc-modebar {
+  top: 0;
+  box-shadow: 0 1px 0 rgba(10, 31, 58, 0.24);
+}
+.casc-modebar .casc-wrap {
+  min-height: 47px;
+  padding: 0;
+}
+.casc-mode-label {
+  font-size: 9px;
+}
+.casc-toggle {
+  border-radius: 2px;
+}
+.casc-toggle button {
+  min-height: 31px;
+  padding: 6px 13px;
+  font-size: 11px;
+}
+.casc-progress {
+  font-size: 10px;
+  font-weight: 700;
+}
+.casc-canvas {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0 0 60px;
+}
+.casc-rich-content section {
+  padding: 52px 0;
+}
+.casc-rich-content section:first-child {
+  padding-top: 34px;
+}
+.casc-rich-content h2,
+.casc-shell section h2,
+html.dark .casc-rich-content h2,
+html[data-theme="dark"] .casc-rich-content h2 {
+  color: var(--casc-navy, #1a365d) !important;
+  font-family: var(--serif, "Source Serif 4", Georgia, serif) !important;
+  font-size: clamp(24px, 3vw, 30px);
+  line-height: 1.1;
+  margin: 8px 0 13px;
+}
+.casc-rich-content h3 {
+  color: var(--casc-gold) !important;
+  font-family: Georgia, serif;
+  font-size: 18px;
+  line-height: 1.25;
+}
+.casc-rich-content p {
+  color: var(--casc-body);
+  font-size: 14px;
+  line-height: 1.65;
+}
+.casc-rich-content .stepnum,
+.casc-rich-content .eyebrow {
+  font-size: 9px;
+  color: #bd9015;
+}
+.casc-rich-content .note,
+.casc-rich-content .lens {
+  border-color: #e5cb75;
+  border-radius: 4px;
+  padding: 14px 16px;
+}
+.casc-rich-content .player,
+.casc-rich-content .q,
+.casc-rich-content .pcard {
+  border-color: #dfe4e9;
+  border-radius: 5px;
+  box-shadow: 0 2px 6px rgba(18, 49, 80, 0.025);
+}
+.casc-rich-content .player-head {
+  padding: 10px 14px;
+  font-size: 12px;
+}
+.casc-rich-content .toggle {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid #dfe4e9;
+  background: #fff;
+}
+.casc-rich-content .toggle button {
+  min-height: 36px;
+  border: 0;
+  border-inline-end: 1px solid #dfe4e9;
+  background: #fff;
+  color: var(--casc-navy);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 0 11px;
+}
+.casc-rich-content .toggle button.active {
+  background: var(--casc-gold);
+  color: #172f50;
+}
+.casc-rich-content .line {
+  padding: 13px 15px;
+}
+.casc-rich-content .flagbtn {
+  border: 0;
+  background: transparent;
+  color: #b58b1c;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 0;
+}
+.casc-rich-content .q {
+  padding: 15px;
+  margin-top: 16px;
+}
+.casc-rich-content .opt {
+  min-height: 46px;
+  margin: 8px 0;
+  border-radius: 4px;
+  font-size: 13px;
+}
+.casc-rich-content .fb {
+  font-size: 13px;
+  line-height: 1.55;
+}
+.casc-rich-content .duo {
+  gap: 14px;
+}
+.casc-rich-content table {
+  font-size: 13px;
+  line-height: 1.5;
+}
+.casc-rich-content li {
+  margin: 0.35rem 0;
+  line-height: 1.55;
+}
+.casc-pagination {
+  margin-top: 8px;
+  padding: 22px 0;
+  border-top: 1px solid var(--casc-hair);
+}
+.casc-pagination a,
+.casc-pagination-disabled {
+  font-size: 12px;
+}
+.casc-next-hint {
+  font-size: 12px;
+}
+.casc-exam-card {
+  margin: 52px 0;
+  border-radius: 5px;
+}
+@media (max-width: 640px) {
+  .casc-wrap {
+    width: min(calc(100% - 28px), 860px);
+  }
+  .casc-lesson-header {
+    padding: 16px 0 22px;
+  }
+  .casc-topline {
+    align-items: center;
+    flex-direction: row;
+    font-size: 9px;
+  }
+  .casc-topline > span {
+    max-width: 180px;
+    text-align: end;
+  }
+  .casc-lesson-header h1 {
+    font-size: 30px;
+  }
+  .casc-subtitle,
+  .casc-lens {
+    font-size: 13px;
+  }
+  .casc-modebar .casc-wrap {
+    gap: 8px;
+  }
+  .casc-mode-label {
+    display: none;
+  }
+  .casc-progress {
+    width: 100%;
+    padding-bottom: 8px;
+  }
+  .casc-rich-content section {
+    padding: 36px 0;
+  }
+  .casc-rich-content h2 {
+    font-size: 24px;
+  }
+  .casc-rich-content p {
+    font-size: 14px;
+  }
+  .casc-rich-content .duo {
+    grid-template-columns: 1fr;
+  }
+  .casc-rich-content table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}

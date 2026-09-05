@@ -2719,6 +2719,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cn@npm:^0.2.4":
+  version: 0.2.4
+  resolution: "cn@npm:0.2.4"
+  bin:
+    cn: bin/cn.mjs
+  checksum: 10c0/8de1dc645247e83825ae96f4f333bc2cb8e1c5b5c4ab29f54e68fabdc02813ef478f7ef6f0710005071ce7a27b414f493aa07e683a40dfe2f727f90cf74509c0
+  languageName: node
+  linkType: hard
+
 "code-block-writer@npm:^13.0.3":
   version: 13.0.3
   resolution: "code-block-writer@npm:13.0.3"
@@ -5186,6 +5195,7 @@ __metadata:
     "@types/react-dom": "npm:^19"
     class-variance-authority: "npm:^0.7.1"
     clsx: "npm:^2.1.1"
+    cn: "npm:^0.2.4"
     eslint: "npm:^9"
     eslint-config-next: "npm:16.3.3"
     lucide-react: "npm:^1.38.0"

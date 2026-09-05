@@ -2,11 +2,20 @@
 
 import Link from "next/link";
 import { useLocale } from "next-intl";
-import { useEnrolledCourses } from "../../_apiCalls/academyQueries";
+import {
+  useCurrentUser,
+  useEnrolledCourses,
+} from "../../_apiCalls/academyQueries";
 
 export default function EnrolledCourses() {
   const locale = useLocale();
-  const { data: courses, isLoading, error, refetch } = useEnrolledCourses();
+  const { data: user } = useCurrentUser();
+  const {
+    data: courses,
+    isLoading,
+    error,
+    refetch,
+  } = useEnrolledCourses(Boolean(user));
   if (isLoading)
     return (
       <div className="grid gap-4 sm:grid-cols-2">
@@ -34,8 +43,8 @@ export default function EnrolledCourses() {
           Your active courses will appear here once you subscribe.
         </p>
         <Link
-          className="mt-6 inline-flex min-h-12 items-center bg-signal px-6 font-body text-sm font-medium text-ink"
-          href={`/${locale}/pathways`}
+          className="mt-6 inline-flex min-h-12 items-center bg-signal px-6 font-body text-sm font-medium text-ink transition-transform hover:-translate-y-0.5 hover:bg-signal-light"
+          href={`/${locale}#pathways-heading`}
         >
           Explore pathways
         </Link>

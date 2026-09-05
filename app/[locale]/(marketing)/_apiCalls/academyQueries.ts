@@ -1,11 +1,15 @@
 "use client";
 
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/api/client";
 
 export type CurrentUser = {
   id: string;
   email: string | null;
   fullName: string | null;
+  username?: string | null;
+  phone?: string | null;
+  createdAt?: string | null;
 };
 export type Subscription = {
   enrollmentId: string;
@@ -25,28 +29,19 @@ export type EnrolledCourse = {
 };
 
 export const academyQueryKeys = {
+  authenticated: ["authenticated"] as const,
   currentUser: ["auth", "me"] as const,
-  enrolledCourses: ["courses", "enrolled"] as const,
-  course: (slug: string) => ["academy", "course", slug] as const,
+  enrolledCourses: ["authenticated", "courses", "enrolled"] as const,
+  course: (slug: string) =>
+    ["authenticated", "academy", "course", slug] as const,
   unit: (courseSlug: string, unitSlug: string) =>
-    ["academy", "unit", courseSlug, unitSlug] as const,
+    ["authenticated", "academy", "unit", courseSlug, unitSlug] as const,
 };
-
-async function readJson<T>(input: RequestInfo, init?: RequestInit): Promise<T> {
-  const response = await fetch(input, init);
-  const body = (await response.json().catch(() => null)) as {
-    data?: T;
-    error?: string;
-  } | null;
-  if (!response.ok || body?.data === undefined)
-    throw new Error(body?.error ?? "Unable to complete the request.");
-  return body.data;
-}
 
 export function useCurrentUser() {
   return useQuery({
     queryKey: academyQueryKeys.currentUser,
-    queryFn: () => readJson<CurrentUser | null>("/api/auth/me"),
+    queryFn: () => apiRequest<CurrentUser | null>("/api/auth/me"),
     staleTime: 30_000,
   });
 }
@@ -54,15 +49,16 @@ export function useCurrentUser() {
 export function useSubscribeToCourse() {
   return useMutation({
     mutationFn: (slug: string) =>
-      readJson<Subscription>(`/api/courses/${slug}/subscribe`, {
+      apiRequest<Subscription>(`/api/courses/${slug}/subscribe`, {
         method: "POST",
       }),
   });
 }
 
-export function useEnrolledCourses() {
+export function useEnrolledCourses(enabled = true) {
   return useQuery({
     queryKey: academyQueryKeys.enrolledCourses,
-    queryFn: () => readJson<EnrolledCourse[]>("/api/courses/enrolled"),
+    queryFn: () => apiRequest<EnrolledCourse[]>("/api/courses/enrolled"),
+    enabled,
   });
 }

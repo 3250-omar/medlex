@@ -226,6 +226,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
               <span className="hero-title-line">
                 {t("line2")}
                 <em className="hero-answer not-italic text-signal">
+                  {" "}
                   {t("answer")}
                 </em>
               </span>
@@ -239,22 +240,41 @@ export default function HeroSection({ locale }: HeroSectionProps) {
 
             {/* CTAs */}
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              {user ? <button type="button" onClick={() => router.push(`/${locale}/courses`)} className="inline-flex items-center gap-2 border border-signal px-7 py-3.5 font-body text-sm tracking-wide text-signal transition-all duration-200 hover:bg-signal hover:text-ink">Go to your courses
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M2.5 7h9M8.5 3.5L12 7l-3.5 3.5" /></svg>
-              </button> : <InterestDialogTrigger className="inline-flex items-center gap-2 border border-signal px-7 py-3.5 font-body text-sm tracking-wide text-signal transition-all duration-200 hover:bg-signal hover:text-ink">
-                {t("register")}
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  aria-hidden="true"
+              {user ? (
+                <button
+                  type="button"
+                  onClick={() => router.push(`/${locale}/courses`)}
+                  className="inline-flex items-center gap-2 border border-signal px-7 py-3.5 font-body text-sm tracking-wide text-signal transition-all duration-200 hover:bg-signal hover:text-ink"
                 >
-                  <path d="M2.5 7h9M8.5 3.5L12 7l-3.5 3.5" />
-                </svg>
-              </InterestDialogTrigger>}
+                  Go to your courses
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5 7h9M8.5 3.5L12 7l-3.5 3.5" />
+                  </svg>
+                </button>
+              ) : (
+                <InterestDialogTrigger className="inline-flex items-center gap-2 border border-signal px-7 py-3.5 font-body text-sm tracking-wide text-signal transition-all duration-200 hover:bg-signal hover:text-ink">
+                  {t("register")}
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5 7h9M8.5 3.5L12 7l-3.5 3.5" />
+                  </svg>
+                </InterestDialogTrigger>
+              )}
               <a
                 href="#pathways-heading"
                 onClick={(e) => {

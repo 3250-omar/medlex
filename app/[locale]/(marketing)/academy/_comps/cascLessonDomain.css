@@ -1,0 +1,214 @@
+.casc-rich-content .spine {
+  overflow: hidden;
+  margin-top: 22px;
+  border: 1px solid #e5c767;
+  border-radius: 6px;
+  background: #fff;
+}
+.casc-rich-content .spine-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #1d426f;
+  color: #fff;
+  padding: 11px 14px;
+  font-size: 13px;
+}
+.casc-rich-content .spine-head span {
+  color: #e5c767;
+  font-size: 11px;
+}
+.casc-rich-content .cons {
+  display: block;
+}
+.casc-rich-content .con {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  min-height: 39px;
+  border-bottom: 1px solid #e6e9ec;
+  padding: 0 14px;
+  font-size: 13px;
+}
+.casc-rich-content .con:last-child {
+  border-bottom: 0;
+}
+.casc-rich-content .con .n {
+  color: #bd8b13;
+  font-weight: 800;
+}
+.casc-rich-content .dots {
+  display: flex;
+  gap: 4px;
+}
+.casc-rich-content .dot {
+  display: block;
+  width: 9px;
+  height: 9px;
+  border: 1px solid #deb734;
+  border-radius: 50%;
+}
+.casc-rich-content .legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: #fbf6e8;
+  padding: 10px 14px;
+  color: #6e7379;
+  font-size: 10px;
+}
+.casc-rich-content .legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.casc-rich-content .legend i {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border: 1px solid #deb734;
+  border-radius: 50%;
+}
+.casc-rich-content .legend .f i {
+  background: #deb734;
+}
+.casc-rich-content .stn {
+  overflow: hidden;
+  margin-top: 22px;
+  border: 1px solid #e3e7e9;
+  border-radius: 7px;
+}
+.casc-rich-content .srow {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  border-bottom: 1px solid #e3e7e9;
+  padding: 18px 15px;
+}
+.casc-rich-content .srow:last-child {
+  border-bottom: 0;
+}
+.casc-rich-content .srow .num {
+  color: #c49316;
+  font-family: Georgia, serif;
+  font-size: 16px;
+  font-weight: 700;
+}
+.casc-rich-content .srow .t {
+  display: grid;
+  gap: 5px;
+}
+.casc-rich-content .srow .t b {
+  color: #1d426f;
+  font-family: Georgia, serif;
+  font-size: 16px;
+}
+.casc-rich-content .srow .t span {
+  color: #536273;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.casc-rich-content .chip {
+  border: 1px solid #e3bf50;
+  border-radius: 4px;
+  color: #a77e10;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  padding: 6px 8px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.casc-rich-content .chip.go {
+  background: #dcb128;
+  color: #1d426f;
+}
+.casc-rich-content .also {
+  max-width: 100%;
+  margin-top: 18px;
+}
+.casc-rich-content .done {
+  display: block !important;
+  background: #1d426f;
+  color: #fff;
+  margin: 0 calc(50% - 50vw);
+  padding: 54px max(20px, calc((100vw - 860px) / 2));
+  text-align: center;
+}
+.casc-rich-content .done h2 {
+  color: #fff !important;
+  font-size: 27px;
+}
+.casc-rich-content .done p {
+  color: #e0e9f0;
+  margin-inline: auto;
+  max-width: 620px;
+}
+.casc-rich-content .done .eyebrow {
+  color: #f3cb3d;
+}
+.casc-rich-content .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-top: 14px;
+  background: #dfb52a;
+  color: #17375f;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 0 18px;
+  text-decoration: none;
+}
+.casc-rich-content .tag2 {
+  margin-top: 18px;
+  color: #f1ca3a;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.casc-rich-content footer {
+  display: flex !important;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 calc(50% - 50vw);
+  background: #17375f;
+  color: #a8bbcd;
+  padding: 20px max(20px, calc((100vw - 860px) / 2));
+  font-size: 10px;
+}
+@media (max-width: 640px) {
+  .casc-rich-content .spine-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .casc-rich-content .con {
+    grid-template-columns: 22px minmax(0, 1fr);
+    padding: 9px 12px;
+    font-size: 12px;
+  }
+  .casc-rich-content .dots {
+    grid-column: 2;
+  }
+  .casc-rich-content .srow {
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 10px;
+    padding: 14px 12px;
+  }
+  .casc-rich-content .chip {
+    grid-column: 2;
+    justify-self: start;
+  }
+  .casc-rich-content .done {
+    padding: 42px 20px;
+  }
+  .casc-rich-content footer {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 18px 20px;
+  }
+}

@@ -12,7 +12,10 @@ export async function GET() {
       ? {
           id: user.id,
           email: user.email ?? null,
-          fullName: user.user_metadata.full_name ?? null,
+          fullName: user.user_metadata?.full_name ?? null,
+          username: user.user_metadata?.username ?? null,
+          phone: user.user_metadata?.phone ?? null,
+          createdAt: user.created_at ?? null,
         }
       : null,
   });

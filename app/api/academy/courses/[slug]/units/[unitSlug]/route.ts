@@ -32,7 +32,7 @@ export async function GET(
   const { data, error } = await db
     .from("learning_units")
     .select(
-      "id, slug, title, summary, eyebrow, lens_text, unit_code, sequence_number, content_blocks(id, block_type, sort_order, content), assessments(id, source_key, duration_seconds, pass_score, require_all_critical, allow_retry_per_question, feedback_policy)",
+      "id, slug, title, summary, eyebrow, lens_text, unit_code, sequence_number, content_blocks(id, block_type, sort_order, content), assessments(id, source_key, duration_seconds, pass_score, require_all_critical, allow_retry_per_question, feedback_policy, assessment_questions(id, source_key, sort_order, is_critical, critical_label, stem, explanation, answer_options(id, source_key, sort_order, option_text, feedback)))",
     )
     .eq("slug", unitSlug)
     .single();

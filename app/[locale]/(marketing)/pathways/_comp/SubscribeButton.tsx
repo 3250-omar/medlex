@@ -10,11 +10,14 @@ import {
   useSubscribeToCourse,
 } from "../../_apiCalls/academyQueries";
 import { useQueryClient } from "@tanstack/react-query";
+import { type PathwayKey } from "./pathwayContent";
 
 export default function SubscribeButton({
   children,
+  pathway = "casc-academy",
 }: {
   children: React.ReactNode;
+  pathway?: PathwayKey;
 }) {
   const locale = useLocale();
   const router = useRouter();
@@ -24,25 +27,25 @@ export default function SubscribeButton({
   const subscribe = useSubscribeToCourse();
 
   const completeSubscription = useCallback(async () => {
-    const result = await subscribe.mutateAsync("casc-academy");
+    const result = await subscribe.mutateAsync(pathway);
     await queryClient.invalidateQueries({
       queryKey: academyQueryKeys.currentUser,
     });
     router.push(
-      `/${locale}/academy/courses/casc-academy/learn/${result.firstUnitSlug ?? "start-here"}`,
+      `/${locale}/academy/courses/${pathway}/learn/${result.firstUnitSlug ?? "start-here"}`,
     );
-  }, [locale, queryClient, router, subscribe]);
+  }, [locale, pathway, queryClient, router, subscribe]);
 
   function handleClick() {
     if (!user) {
       dialog?.openInterestDialog(
-        "casc-academy",
+        pathway,
         "register",
         completeSubscription,
       );
       return;
     }
-    router.push(`/${locale}/courses`);
+    completeSubscription();
   }
 
   return (
@@ -52,10 +55,11 @@ export default function SubscribeButton({
       disabled={isLoading || subscribe.isPending}
       className="inline-flex min-h-12 items-center justify-center bg-signal px-6 font-body text-sm font-medium text-ink transition-colors hover:bg-signal-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal disabled:cursor-not-allowed disabled:opacity-60"
     >
-      {subscribe.isPending ? "…" : user ? "Go to your courses" : children}
+      {subscribe.isPending ? "…" : children}
       <span className="ms-3" aria-hidden="true">
         →
       </span>
     </button>
   );
 }
+

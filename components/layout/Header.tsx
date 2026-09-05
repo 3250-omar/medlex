@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
@@ -10,6 +11,12 @@ import { useLocale, useTranslations } from "next-intl";
 import { InterestDialogTrigger } from "@/components/marketing/InterestDialog";
 import { getLocalePath } from "@/lib/i18n/localePath";
 import { createClient } from "@/lib/supabase/browser";
+import { apiRequest } from "@/lib/api/client";
+import { showApiError } from "@/lib/api/errorToast";
+import {
+  academyQueryKeys,
+  useCurrentUser,
+} from "@/app/[locale]/(marketing)/_apiCalls/academyQueries";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,8 +25,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-type AuthUser = { name: string; email: string } | null;
-
 export default function Header() {
   const locale = useLocale();
   const pathname = usePathname();
@@ -27,9 +32,10 @@ export default function Header() {
   const alternateLocalePath = getLocalePath(pathname, alternateLocale);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [user, setUser] = useState<AuthUser>(null);
   const menuTriggerRef = useRef<HTMLButtonElement>(null);
   const t = useTranslations();
+  const queryClient = useQueryClient();
+  const { data: user } = useCurrentUser();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -40,37 +46,94 @@ export default function Header() {
   /* ── Auth state listener ───────────────────────────────────────────── */
   useEffect(() => {
     const supabase = createClient();
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
-        const name =
-          session.user.user_metadata?.full_name ?? session.user.email ?? "User";
-        setUser({ name, email: session.user.email ?? "" });
-      }
-    });
-
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) {
-        const name =
-          session.user.user_metadata?.full_name ?? session.user.email ?? "User";
-        setUser({ name, email: session.user.email ?? "" });
-      } else {
-        setUser(null);
+    } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "SIGNED_OUT") {
+        queryClient.removeQueries({ queryKey: academyQueryKeys.authenticated });
       }
+      void queryClient.invalidateQueries({
+        queryKey: academyQueryKeys.currentUser,
+      });
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [queryClient]);
 
   async function handleSignOut() {
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    setUser(null);
-  }
+    try {
+      await apiRequest<{ signedOut: boolean }>("/api/auth/sign-out", {
+        method: "POST",
+      });
+    } catch (error) {
+      showApiError(error);
+      return;
+    }
 
-  const initials = user?.name?.charAt(0).toUpperCase() ?? "";
+    queryClient.setQueryData(academyQueryKeys.currentUser, null);
+    queryClient.removeQueries({ queryKey: academyQueryKeys.authenticated });
+    await queryClient.invalidateQueries({
+      queryKey: academyQueryKeys.currentUser,
+    });  }
+
+  const userName = user?.fullName ?? user?.email ?? "User";
+  const initials = user ? userName.charAt(0).toUpperCase() : "";
+
+  const userMenu = user ? (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={
+          <button
+            type="button"
+            aria-label={`${userName} - open account menu`}
+            className="flex size-9 items-center justify-center rounded-full bg-signal font-body text-sm font-semibold text-ink transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
+          >
+            {initials}
+          </button>
+        }
+      />
+
+      <DropdownMenuContent
+        side="bottom"
+        align="end"
+        sideOffset={8}
+        className="min-w-[180px] rounded-none border border-white/10 bg-ink p-1 text-sm text-white shadow-xl"
+      >
+        {/* User info */}
+        <div className="px-3 py-2">
+          <p className="truncate font-body text-xs font-semibold text-white">
+            {userName}
+          </p>
+          <p className="truncate font-body text-[11px] text-white/45">
+            {user.email}
+          </p>
+        </div>
+
+        <DropdownMenuSeparator className="bg-white/10" />
+
+        <DropdownMenuItem
+          className="cursor-pointer rounded-none px-3 py-2 font-body text-sm text-white/75 hover:bg-white/6 hover:text-white focus:bg-white/8 focus:text-white"
+          render={
+            <Link
+              href={`/${locale}/profile`}
+              className="flex w-full items-center gap-2"
+            >
+              {t("nav.profile")}
+            </Link>
+          }
+        />
+
+        <DropdownMenuSeparator className="bg-white/10" />
+
+        <DropdownMenuItem 
+          onClick={handleSignOut}
+          className="cursor-pointer rounded-none px-3 py-2 font-body text-sm text-destructive hover:bg-destructive/10 focus:bg-destructive/10 focus:text-destructive"
+        >
+          {t("actions.logout")}
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  ) : null;
 
   return (
     <>
@@ -91,7 +154,7 @@ export default function Header() {
         style={{ height: "var(--header-h)" }}
       >
         <div
-          className="mx-auto flex h-full items-center justify-between px-6 md:px-8 lg:px-12"
+          className="relative mx-auto flex h-full items-center justify-between px-6 md:px-8 lg:px-12"
           style={{ maxWidth: "var(--content-max)" }}
         >
           {/* ── Logo ─────────────────────────────────────────────────── */}
@@ -120,6 +183,13 @@ export default function Header() {
             </span>
           </Link>
 
+          {/* ── Mobile user menu (centered between logo and hamburger) ── */}
+          {user && (
+            <div className="absolute left-1/2 -translate-x-1/2 lg:hidden">
+              {userMenu}
+            </div>
+          )}
+
           {/* ── Desktop nav ──────────────────────────────────────────── */}
           <Navigation showCourses={Boolean(user)} />
 
@@ -139,65 +209,7 @@ export default function Header() {
             </Link>
 
             {user ? (
-              /* ── Authenticated: avatar + dropdown ─────────────────── */
-              <DropdownMenu>
-                <DropdownMenuTrigger
-                  render={
-                    <button
-                      type="button"
-                      id="header-user-menu"
-                      aria-label={`${user.name} — open account menu`}
-                      className="flex size-9 items-center justify-center rounded-full bg-signal font-body text-sm font-semibold text-ink transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
-                    >
-                      {initials}
-                    </button>
-                  }
-                />
-
-                <DropdownMenuContent
-                  side="bottom"
-                  align="end"
-                  sideOffset={8}
-                  className="min-w-[180px] rounded-none border border-white/10 bg-ink p-1 text-sm text-white shadow-xl"
-                >
-                  {/* User info */}
-                  <div className="px-3 py-2">
-                    <p className="truncate font-body text-xs font-semibold text-white">
-                      {user.name}
-                    </p>
-                    <p className="truncate font-body text-[11px] text-white/45">
-                      {user.email}
-                    </p>
-                  </div>
-
-                  <DropdownMenuSeparator className="bg-white/10" />
-
-                  <DropdownMenuItem
-                    id="header-profile-link"
-                    className="cursor-pointer rounded-none px-3 py-2 font-body text-sm text-white/75 hover:bg-white/6 hover:text-white focus:bg-white/8 focus:text-white"
-                    render={
-                      <Link
-                        href={`/${locale}/academy`}
-                        className="flex w-full items-center gap-2"
-                      >
-                        Profile
-                      </Link>
-                    }
-                  />
-
-                  <DropdownMenuSeparator className="bg-white/10" />
-
-                  <DropdownMenuItem
-                    id="header-sign-out"
-                    className="cursor-pointer rounded-none px-3 py-2 font-body text-sm text-destructive hover:bg-destructive/10 focus:bg-destructive/10 focus:text-destructive"
-                    render={
-                      <button type="button" onClick={handleSignOut}>
-                        Log out
-                      </button>
-                    }
-                  />
-                </DropdownMenuContent>
-              </DropdownMenu>
+              userMenu
             ) : (
               /* ── Guest: register button ───────────────────────────── */
               <InterestDialogTrigger className="border border-signal px-5 py-2 font-body text-sm tracking-wide text-signal transition-all duration-200 hover:bg-signal hover:text-ink">

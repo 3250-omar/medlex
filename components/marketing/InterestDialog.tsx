@@ -12,6 +12,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
@@ -26,6 +27,7 @@ import {
   useSignInMutation,
   useSignUpMutation,
 } from "@/components/marketing/authMutations";
+import { academyQueryKeys } from "@/app/[locale]/(marketing)/_apiCalls/academyQueries";
 import { signInSchema, signUpSchema } from "@/lib/auth/validation";
 
 type AuthTab = "sign-in" | "register";
@@ -62,6 +64,7 @@ export function InterestDialogProvider({ children }: { children: ReactNode }) {
     Partial<Record<AuthField, string>>
   >({});
   const onAuthenticatedRef = useRef<(() => Promise<void> | void) | null>(null);
+  const queryClient = useQueryClient();
   const signIn = useSignInMutation();
   const signUp = useSignUpMutation();
 
@@ -131,6 +134,9 @@ export function InterestDialogProvider({ children }: { children: ReactNode }) {
       setFormError(auth("confirmationRequired"));
       return;
     }
+    await queryClient.invalidateQueries({
+      queryKey: academyQueryKeys.currentUser,
+    });
     const onAuthenticated = onAuthenticatedRef.current;
     onAuthenticatedRef.current = null;
     close();
