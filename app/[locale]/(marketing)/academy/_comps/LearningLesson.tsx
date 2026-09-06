@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, RefreshCw } from "lucide-react";
-import CourseLessonMenu from "./CourseLessonMenu";
 import {
   useCourseOutline,
   useLearningUnit,
@@ -773,7 +772,8 @@ export default function LearningLesson({
           <div
             style={{
               height: "180px",
-              background: "#fafafa",
+              background: "var(--navy)",
+              border: "1px solid var(--hair)",
               borderRadius: "12px",
             }}
           />
@@ -830,15 +830,6 @@ export default function LearningLesson({
         className="casc-content-mount"
         dangerouslySetInnerHTML={{ __html: fullHtml }}
       />
-
-      {outline ? (
-        <CourseLessonMenu
-          courseSlug={courseSlug}
-          currentUnitSlug={unitSlug}
-          locale={locale}
-          outline={outline}
-        />
-      ) : null}
 
       {/* Sticky Bottom Unit Pagination Bar */}
       <nav className="casc-bottom-nav" aria-label="Course Lesson Navigation">

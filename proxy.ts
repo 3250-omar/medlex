@@ -43,7 +43,12 @@ export async function proxy(request: NextRequest) {
 
   if (!supabaseUrl || !supabaseKey) {
     return isProtected
-      ? NextResponse.redirect(new URL(`/${locale}?auth=sign-in`, request.url))
+      ? NextResponse.redirect(
+          new URL(
+            `/${locale}/auth?tab=sign-in&redirect=${encodeURIComponent(pathname)}`,
+            request.url,
+          ),
+        )
       : response;
   }
 
@@ -64,7 +69,10 @@ export async function proxy(request: NextRequest) {
   } = await supabase.auth.getUser();
   if (isProtected && !user) {
     return NextResponse.redirect(
-      new URL(`/${locale}?auth=sign-in`, request.url),
+      new URL(
+        `/${locale}/auth?tab=sign-in&redirect=${encodeURIComponent(pathname)}`,
+        request.url,
+      ),
     );
   }
 

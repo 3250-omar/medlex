@@ -1,28 +1,48 @@
 @import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&family=Inter:wght@400;500;600;700&display=swap");
 
 .casc-experience {
-  --navy: #1a365d;
-  --navy2: #21436e;
-  --deep: #142a49;
-  --gold: #d4af37;
-  --goldd: #b08d2a;
-  --lgold: #e8d4a0;
-  --tint: #f6f2e6;
-  --ink: #23303f;
-  --char: #313538;
-  --grey: #5c636c;
-  --lbody: #d7dee8;
-  --mute: #9db0c7;
-  --hair: #e6e6e0;
-  --red: #8f3d3d;
-  --serif: "Source Serif 4", Georgia, serif;
-  --sans: "Inter", system-ui, sans-serif;
+  /* Medlex System Design Tokens */
+  --ink: #071525;
+  --paper: #091525;
+  --surface: #0f2033;
+  --surface-2: #142a40;
+  --line: #233b57;
+  --hair: #233b57;
+  --text: #f5f1e8;
+  --muted: #aeb9c7;
+  --signal: #d9b274;
+  --signal-light: #e5c96a;
+  --glow: rgba(143, 184, 232, 0.12);
+
+  /* Semantic Theme Mappings */
+  --navy: var(--surface); /* #0f2033 card surface */
+  --navy2: var(--surface-2); /* #142a40 elevated surface */
+  --deep: var(--ink); /* #071525 deep ink */
+  --gold: var(--signal); /* #d9b274 Medlex signal gold */
+  --goldd: var(--signal); /* #d9b274 */
+  --lgold: var(--signal-light); /* #e5c96a */
+  --tint: rgba(217, 178, 116, 0.08); /* Subtle amber glow */
+  --char: var(--text); /* #f5f1e8 warm ivory text */
+  --grey: var(--muted); /* #aeb9c7 muted text */
+  --lbody: rgba(245, 241, 232, 0.85);
+  --mute: var(--muted);
+  --red: #ef4444;
+  --red-bg: rgba(239, 68, 68, 0.12);
+  --red-border: rgba(239, 68, 68, 0.35);
+  --green: #10b981;
+  --green-bg: rgba(16, 185, 129, 0.12);
+  --green-border: rgba(16, 185, 129, 0.35);
+  --serif: var(
+    --font-display,
+    var(--font-ovo, "Source Serif 4", Georgia, serif)
+  );
+  --sans: var(--font-body, var(--font-manrope, "Inter", system-ui, sans-serif));
 
   font-family: var(--sans);
   color: var(--char);
-  background: #fff;
-  font-size: 16.5px;
-  line-height: 1.65;
+  background: var(--paper);
+  font-size: 16px;
+  line-height: 1.7;
   min-height: 100vh;
 }
 
@@ -33,6 +53,7 @@
 .casc-experience h1,
 .casc-experience h2,
 .casc-experience h3,
+.casc-experience h4,
 html.dark .casc-experience h1,
 html.dark .casc-experience h2,
 html.dark .casc-experience h3,
@@ -40,8 +61,18 @@ html[data-theme="dark"] .casc-experience h1,
 html[data-theme="dark"] .casc-experience h2,
 html[data-theme="dark"] .casc-experience h3 {
   font-family: var(--serif) !important;
-  color: var(--navy) !important;
-  line-height: 1.15;
+  color: var(--text) !important;
+  line-height: 1.25;
+}
+
+.casc-experience p,
+.casc-experience li {
+  color: var(--lbody);
+}
+
+.casc-experience strong,
+.casc-experience b {
+  color: var(--text);
 }
 
 .casc-experience .wrap {
@@ -52,10 +83,10 @@ html[data-theme="dark"] .casc-experience h3 {
 
 .casc-experience .eyebrow {
   font-weight: 700;
-  font-size: 11.5px;
-  letter-spacing: 0.17em;
+  font-size: 11px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--goldd);
+  color: var(--gold);
 }
 
 .casc-experience .on-navy .eyebrow,
@@ -69,13 +100,14 @@ html[data-theme="dark"] .casc-experience h3 {
 
 /* Header */
 .casc-experience header {
-  background: var(--navy);
-  color: #fff;
-  border-bottom: 5px solid var(--gold);
+  background: var(--ink);
+  color: var(--text);
+  border-bottom: 2px solid var(--hair);
+  position: relative;
 }
 
 .casc-experience header .wrap {
-  padding: 24px 24px 34px;
+  padding: 28px 24px 38px;
 }
 
 .casc-experience .topbar {
@@ -96,37 +128,44 @@ html[data-theme="dark"] .casc-experience h3 {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 5px 11px;
+  border-radius: 6px;
+  border: 1px solid var(--hair);
 }
 
 .casc-experience .tag.prime {
   background: var(--gold);
-  color: var(--navy);
+  color: var(--ink);
+  font-weight: 700;
+  border-color: var(--gold);
 }
 
 .casc-experience header h1 {
-  color: #fff;
-  font-size: 36px;
-  margin: 6px 0 6px;
+  color: var(--text) !important;
+  font-size: clamp(28px, 4vw, 40px);
+  margin: 8px 0 10px;
+  letter-spacing: -0.015em;
 }
 
 .casc-experience header .sub {
-  color: var(--lbody);
+  color: var(--grey);
   max-width: 62ch;
+  line-height: 1.6;
 }
 
 .casc-experience .lens {
-  margin-top: 20px;
-  background: var(--navy2);
+  margin-top: 22px;
+  background: var(--navy);
+  border: 1px solid var(--hair);
   border-left: 4px solid var(--gold);
-  border-radius: 8px;
-  padding: 14px 18px;
+  border-radius: 10px;
+  padding: 16px 20px;
   font-family: var(--serif);
   font-style: italic;
-  font-size: 16.5px;
-  color: #fff;
-  max-width: 66ch;
+  font-size: 16px;
+  color: var(--text);
+  max-width: 68ch;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
 .casc-experience .lens b {
@@ -145,13 +184,9 @@ html[data-theme="dark"] .casc-experience h3 {
   position: sticky;
   top: 0;
   z-index: 60;
-  background: #fff;
+  background: rgba(7, 21, 37, 0.94);
+  backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--hair);
-}
-
-.casc-experience .modebar {
-  background: var(--deep);
-  border-bottom: 1px solid var(--gold);
 }
 
 .casc-experience .rail .wrap,
@@ -159,69 +194,69 @@ html[data-theme="dark"] .casc-experience h3 {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 10px 24px;
+  padding: 11px 24px;
   flex-wrap: wrap;
 }
 
-.casc-experience .rail .label {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--grey);
-  white-space: nowrap;
-}
-
+.casc-experience .rail .label,
 .casc-experience .modebar .label {
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
   color: var(--lgold);
   letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .casc-experience .mtoggle {
   display: flex;
-  border: 1px solid var(--gold);
+  border: 1px solid var(--hair);
+  background: var(--navy);
   border-radius: 8px;
   overflow: hidden;
 }
 
 .casc-experience .mtoggle button {
   background: transparent;
-  color: var(--lgold);
+  color: var(--grey);
   border: 0;
-  padding: 8px 16px;
-  font-weight: 700;
+  padding: 7px 16px;
+  font-weight: 600;
   font-size: 13px;
   cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.casc-experience .mtoggle button:hover {
+  color: var(--text);
+  background: var(--navy2);
 }
 
 .casc-experience .mtoggle button.active {
   background: var(--gold);
-  color: var(--navy);
+  color: var(--ink);
+  font-weight: 700;
 }
 
 .casc-experience .timer {
   margin-left: auto;
   font-weight: 700;
-  color: #fff;
+  color: var(--text);
   font-size: 15px;
   display: none;
 }
 
 .casc-experience .timer.warn {
-  color: #f0b9b9;
+  color: #fca5a5;
 }
 
 .casc-experience .bar {
   flex: 1;
   min-width: 120px;
   height: 6px;
-  background: var(--hair);
+  background: rgba(255, 255, 255, 0.12);
   border-radius: 3px;
   overflow: hidden;
-}
-
-.casc-experience .modebar .bar {
-  background: rgba(255, 255, 255, 0.15);
 }
 
 .casc-experience .bar i {
@@ -230,18 +265,16 @@ html[data-theme="dark"] .casc-experience h3 {
   width: 0%;
   background: var(--gold);
   transition: width 0.4s ease;
+  box-shadow: 0 0 8px rgba(217, 178, 116, 0.5);
 }
 
-.casc-experience .pct {
+.casc-experience .pct,
+.casc-experience .modebar .pct {
   font-size: 12px;
   font-weight: 700;
-  color: var(--goldd);
+  color: var(--gold);
   width: 38px;
   text-align: right;
-}
-
-.casc-experience .modebar .pct {
-  color: var(--lgold);
 }
 
 /* Sections */
@@ -261,52 +294,62 @@ html[data-theme="dark"] .casc-experience h3 {
 .casc-experience section h2,
 html.dark .casc-experience section h2,
 html[data-theme="dark"] .casc-experience section h2 {
-  color: var(--navy) !important;
+  color: var(--text) !important;
   font-family: var(--serif) !important;
   font-size: 26px;
-  margin: 6px 0 12px;
+  margin: 6px 0 14px;
 }
 
 .casc-experience .intro {
   max-width: 68ch;
+  color: var(--grey);
+  font-size: 16px;
+  line-height: 1.65;
 }
 
 .casc-experience .note {
-  background: var(--tint);
-  border: 1px solid var(--gold);
+  background: var(--navy);
+  border: 1px solid var(--hair);
+  border-left: 4px solid var(--gold);
   border-radius: 10px;
-  padding: 16px 18px;
-  margin-top: 18px;
+  padding: 16px 20px;
+  margin-top: 20px;
   max-width: 72ch;
   font-size: 15px;
+  color: var(--text);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
 .casc-experience .note b {
-  color: var(--navy);
+  color: var(--gold);
 }
 
 /* Constructs spine (Domain hubs) */
 .casc-experience .spine {
   margin-top: 22px;
-  border: 1px solid var(--gold);
+  border: 1px solid var(--hair);
   border-radius: 12px;
   overflow: hidden;
+  background: var(--navy);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .casc-experience .spine-head {
-  background: var(--navy);
-  color: #fff;
-  padding: 12px 18px;
+  background: var(--deep);
+  color: var(--text);
+  padding: 13px 18px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
+  border-bottom: 1px solid var(--hair);
 }
 
 .casc-experience .spine-head b {
   font-family: var(--serif);
   font-size: 17px;
+  color: var(--text);
 }
 
 .casc-experience .spine-head span {
@@ -324,9 +367,10 @@ html[data-theme="dark"] .casc-experience section h2 {
   grid-template-columns: 34px 1fr 118px;
   gap: 12px;
   align-items: center;
-  padding: 11px 18px;
+  padding: 12px 18px;
   border-top: 1px solid var(--hair);
   font-size: 15px;
+  color: var(--text);
 }
 
 .casc-experience .con:first-child {
@@ -336,7 +380,7 @@ html[data-theme="dark"] .casc-experience section h2 {
 .casc-experience .con .n {
   font-family: var(--serif);
   font-weight: 700;
-  color: var(--goldd);
+  color: var(--gold);
 }
 
 .casc-experience .dots {
@@ -350,7 +394,7 @@ html[data-theme="dark"] .casc-experience section h2 {
   height: 13px;
   border-radius: 50%;
   border: 1.5px solid var(--gold);
-  background: #fff;
+  background: var(--deep);
 }
 
 .casc-experience .legend {
@@ -358,7 +402,7 @@ html[data-theme="dark"] .casc-experience section h2 {
   gap: 18px;
   flex-wrap: wrap;
   padding: 12px 18px;
-  background: var(--tint);
+  background: var(--deep);
   border-top: 1px solid var(--hair);
   font-size: 12.5px;
   color: var(--grey);
@@ -370,7 +414,7 @@ html[data-theme="dark"] .casc-experience section h2 {
   height: 11px;
   border-radius: 50%;
   border: 1.5px solid var(--gold);
-  background: #fff;
+  background: var(--deep);
   margin-right: 5px;
   vertical-align: -1px;
 }
@@ -385,6 +429,8 @@ html[data-theme="dark"] .casc-experience section h2 {
   border: 1px solid var(--hair);
   border-radius: 12px;
   overflow: hidden;
+  background: var(--navy);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .casc-experience .srow {
@@ -396,6 +442,11 @@ html[data-theme="dark"] .casc-experience section h2 {
   align-items: center;
   text-decoration: none;
   color: inherit;
+  transition: background 0.15s ease;
+}
+
+.casc-experience .srow:hover {
+  background: var(--navy2);
 }
 
 .casc-experience .srow:first-child {
@@ -413,7 +464,7 @@ html[data-theme="dark"] .casc-experience section h2 {
   display: block;
   font-family: var(--serif);
   font-size: 17px;
-  color: var(--navy);
+  color: var(--text);
 }
 
 .casc-experience .srow .t span {
@@ -426,17 +477,19 @@ html[data-theme="dark"] .casc-experience section h2 {
   font-weight: 700;
   letter-spacing: 0.09em;
   text-transform: uppercase;
-  padding: 6px 11px;
+  padding: 6px 12px;
   border-radius: 6px;
-  background: var(--tint);
-  color: var(--goldd);
-  border: 1px solid var(--gold);
+  background: var(--navy2);
+  color: var(--gold);
+  border: 1px solid var(--hair);
   white-space: nowrap;
 }
 
 .casc-experience .chip.go {
   background: var(--gold);
-  color: var(--navy);
+  color: var(--ink);
+  font-weight: 700;
+  border-color: var(--gold);
 }
 
 .casc-experience .also {
@@ -447,7 +500,7 @@ html[data-theme="dark"] .casc-experience section h2 {
 }
 
 .casc-experience .also b {
-  color: var(--navy);
+  color: var(--text);
 }
 
 /* Player */
@@ -456,6 +509,8 @@ html[data-theme="dark"] .casc-experience section h2 {
   border: 1px solid var(--hair);
   border-radius: 12px;
   overflow: hidden;
+  background: var(--navy);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .casc-experience .player-head {
@@ -465,11 +520,12 @@ html[data-theme="dark"] .casc-experience section h2 {
   flex-wrap: wrap;
   gap: 10px;
   background: var(--deep);
-  padding: 12px 16px;
+  border-bottom: 1px solid var(--hair);
+  padding: 12px 18px;
 }
 
 .casc-experience .player-head .who {
-  color: #fff;
+  color: var(--text);
   font-size: 14px;
 }
 
@@ -479,7 +535,8 @@ html[data-theme="dark"] .casc-experience section h2 {
 
 .casc-experience .toggle {
   display: flex;
-  border: 1px solid var(--gold);
+  border: 1px solid var(--hair);
+  background: var(--navy);
   border-radius: 8px;
   overflow: hidden;
   flex-wrap: wrap;
@@ -487,17 +544,23 @@ html[data-theme="dark"] .casc-experience section h2 {
 
 .casc-experience .toggle button {
   background: transparent;
-  color: var(--lgold);
+  color: var(--grey);
   border: 0;
-  padding: 8px 13px;
+  padding: 8px 14px;
   font-weight: 600;
   font-size: 12.5px;
   cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.casc-experience .toggle button:hover {
+  color: var(--text);
 }
 
 .casc-experience .toggle button.active {
   background: var(--gold);
-  color: var(--navy);
+  color: var(--ink);
+  font-weight: 700;
 }
 
 .casc-experience .script {
@@ -507,26 +570,33 @@ html[data-theme="dark"] .casc-experience section h2 {
 .casc-experience .line {
   display: grid;
   grid-template-columns: 88px 1fr 34px;
-  gap: 10px;
-  padding: 9px 16px;
+  gap: 12px;
+  padding: 10px 18px;
   align-items: start;
+  border-bottom: 1px solid rgba(35, 59, 87, 0.4);
+}
+
+.casc-experience .line:last-child {
+  border-bottom: 0;
 }
 
 .casc-experience .line .spk {
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   color: var(--grey);
   padding-top: 4px;
   text-transform: uppercase;
 }
 
 .casc-experience .line.cand .spk {
-  color: var(--goldd);
+  color: var(--gold);
+  font-weight: 700;
 }
 
 .casc-experience .line .txt {
   font-size: 15.5px;
+  color: var(--text);
 }
 
 .casc-experience .line .txt em {
@@ -536,31 +606,33 @@ html[data-theme="dark"] .casc-experience section h2 {
 }
 
 .casc-experience .flagbtn {
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   border: 1.5px solid var(--gold);
-  background: #fff;
-  color: var(--goldd);
+  background: var(--navy2);
+  color: var(--gold);
   font-weight: 700;
   cursor: pointer;
   font-size: 13px;
   line-height: 1;
+  transition: all 0.15s ease;
 }
 
 .casc-experience .flagbtn:hover,
 .casc-experience .flagbtn.open {
   background: var(--gold);
-  color: var(--navy);
+  color: var(--ink);
 }
 
 .casc-experience .read {
   grid-column: 1 / -1;
-  background: var(--navy);
-  color: #fff;
+  background: var(--deep);
+  color: var(--text);
+  border: 1px solid var(--hair);
   border-radius: 8px;
-  padding: 12px 16px;
-  margin: 2px 0 4px;
+  padding: 14px 18px;
+  margin: 4px 0 6px;
   display: none;
   font-size: 14.5px;
 }
@@ -568,7 +640,7 @@ html[data-theme="dark"] .casc-experience section h2 {
 .casc-experience .read b {
   display: block;
   color: var(--gold);
-  font-size: 10.5px;
+  font-size: 11px;
   letter-spacing: 0.16em;
   margin-bottom: 4px;
 }
@@ -578,71 +650,79 @@ html[data-theme="dark"] .casc-experience section h2 {
 }
 
 .casc-experience .takenote {
-  padding: 10px 16px 4px;
+  padding: 12px 18px 6px;
   font-size: 13px;
   color: var(--grey);
 }
 
 .casc-experience .takenote b {
-  color: var(--goldd);
+  color: var(--gold);
 }
 
 /* Question & Decisions */
 .casc-experience .q {
-  margin-top: 24px;
+  margin-top: 26px;
   border: 1px solid var(--hair);
-  border-radius: 12px;
-  padding: 20px;
+  background: var(--navy);
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .casc-experience .q h3 {
-  font-size: 18.5px;
-  margin-bottom: 4px;
+  font-size: 19px;
+  margin-bottom: 6px;
+  color: var(--text) !important;
 }
 
 .casc-experience .q .stem {
   font-size: 15.5px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   max-width: 68ch;
+  color: var(--text);
 }
 
 .casc-experience .q .hint {
   font-size: 13px;
   color: var(--grey);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .casc-experience .opt {
   display: block;
   width: 100%;
   text-align: left;
-  background: #fff;
+  background: var(--navy2);
   border: 1.5px solid var(--hair);
-  border-radius: 9px;
-  padding: 12px 14px;
-  margin: 8px 0;
+  border-radius: 10px;
+  padding: 13px 16px;
+  margin: 9px 0;
   font-size: 15px;
+  color: var(--text);
   cursor: pointer;
-  transition: border-color 0.15s;
+  transition: all 0.2s ease;
 }
 
 .casc-experience .opt:hover:not(:disabled) {
   border-color: var(--gold);
+  background: rgba(217, 178, 116, 0.08);
 }
 
 .casc-experience .opt.correct {
-  border-color: var(--gold);
-  background: var(--tint);
+  border-color: var(--green);
+  background: var(--green-bg);
+  color: #a7f3d0;
 }
 
 .casc-experience .opt.wrong {
-  border-color: #c96e6e;
-  background: #faf1f1;
+  border-color: var(--red);
+  background: var(--red-bg);
+  color: #fca5a5;
 }
 
 .casc-experience .opt.picked {
-  border-color: var(--navy2);
-  background: #eef2f7;
+  border-color: var(--gold);
+  background: rgba(217, 178, 116, 0.14);
 }
 
 .casc-experience .opt:disabled {
@@ -650,30 +730,35 @@ html[data-theme="dark"] .casc-experience section h2 {
 }
 
 .casc-experience .fb {
-  margin-top: 10px;
+  margin-top: 12px;
   border-radius: 8px;
-  padding: 12px 14px;
+  padding: 14px 16px;
   font-size: 14.5px;
 }
 
 .casc-experience .fb.good {
-  background: var(--navy);
-  color: #fff;
+  background: var(--green-bg);
+  border: 1px solid var(--green-border);
+  color: #d1fae5;
 }
 
 .casc-experience .fb.good b {
-  color: var(--gold);
+  color: #34d399;
 }
 
 .casc-experience .fb.bad {
-  background: #f7ecec;
-  color: #5d3535;
-  border: 1px solid #d9b8b8;
+  background: var(--red-bg);
+  color: #fecaca;
+  border: 1px solid var(--red-border);
+}
+
+.casc-experience .fb.bad b {
+  color: #f87171;
 }
 
 .casc-experience .fb b {
   display: block;
-  font-size: 10.5px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   margin-bottom: 4px;
 }
@@ -688,9 +773,12 @@ html[data-theme="dark"] .casc-experience section h2 {
 
 .casc-experience .card {
   border: 1px solid var(--hair);
+  background: var(--navy);
   border-radius: 12px;
   padding: 18px 20px;
   font-size: 15px;
+  color: var(--text);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
 }
 
 .casc-experience .card b {
@@ -698,12 +786,12 @@ html[data-theme="dark"] .casc-experience section h2 {
   font-family: var(--serif);
   font-size: 16.5px;
   margin-bottom: 8px;
-  color: var(--navy);
+  color: var(--text);
 }
 
 .casc-experience .card.gold {
   background: var(--tint);
-  border-color: var(--gold);
+  border-color: rgba(217, 178, 116, 0.4);
 }
 
 .casc-experience .card li {
@@ -714,6 +802,10 @@ html[data-theme="dark"] .casc-experience section h2 {
   border-radius: 12px;
   padding: 18px 20px;
   font-size: 15px;
+  background: var(--navy);
+  border: 1px solid var(--hair);
+  color: var(--text);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
 }
 
 .casc-experience .flagcard b {
@@ -721,16 +813,17 @@ html[data-theme="dark"] .casc-experience section h2 {
   font-family: var(--serif);
   font-size: 17px;
   margin-bottom: 6px;
+  color: var(--text);
 }
 
 .casc-experience .flagcard.red {
-  background: #fbf3f3;
-  border: 1px solid #d3a3a3;
-  color: #4c2f2f;
+  background: var(--red-bg);
+  border: 1px solid var(--red-border);
+  color: #fca5a5;
 }
 
 .casc-experience .flagcard.red b {
-  color: var(--red);
+  color: #f87171;
 }
 
 .casc-experience .flagcard.smile {
@@ -740,7 +833,7 @@ html[data-theme="dark"] .casc-experience section h2 {
 }
 
 .casc-experience .flagcard.smile b {
-  color: var(--goldd);
+  color: var(--gold);
 }
 
 .casc-experience .takes {
@@ -755,9 +848,10 @@ html[data-theme="dark"] .casc-experience section h2 {
 /* Ladder */
 .casc-experience .ladder {
   margin-top: 20px;
-  border: 1px solid var(--gold);
+  border: 1px solid var(--hair);
   border-radius: 12px;
   overflow: hidden;
+  background: var(--navy);
 }
 
 .casc-experience .rung {
@@ -767,6 +861,7 @@ html[data-theme="dark"] .casc-experience section h2 {
   padding: 14px 18px;
   border-top: 1px solid var(--hair);
   font-size: 15px;
+  color: var(--text);
 }
 
 .casc-experience .rung:first-child {
@@ -775,14 +870,14 @@ html[data-theme="dark"] .casc-experience section h2 {
 
 .casc-experience .rung .st {
   font-weight: 700;
-  color: var(--navy);
+  color: var(--text);
 }
 
 .casc-experience .rung .st span {
   display: block;
   font-size: 11px;
   letter-spacing: 0.1em;
-  color: var(--goldd);
+  color: var(--gold);
   text-transform: uppercase;
   font-weight: 700;
 }
@@ -802,7 +897,7 @@ html[data-theme="dark"] .casc-experience section h2 {
 .casc-experience .reframe {
   font-family: var(--serif);
   font-style: italic;
-  color: var(--navy);
+  color: var(--text);
   font-size: 16.5px;
   margin: 14px 0 0;
   max-width: 66ch;
@@ -829,38 +924,42 @@ html[data-theme="dark"] .casc-experience section h2 {
 }
 
 .casc-experience .pcard {
-  border: 1px solid var(--gold);
+  border: 1px solid var(--hair);
   border-radius: 12px;
   overflow: hidden;
-  background: #fff;
+  background: var(--navy);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .casc-experience .pcard .ph {
-  background: var(--navy);
-  color: #fff;
-  padding: 11px 16px;
+  background: var(--deep);
+  color: var(--text);
+  padding: 12px 18px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
+  border-bottom: 1px solid var(--hair);
 }
 
 .casc-experience .pcard .ph b {
   font-family: var(--serif);
   font-size: 16px;
+  color: var(--text);
 }
 
 .casc-experience .pcard .ph span {
-  font-size: 10.5px;
+  font-size: 11px;
   letter-spacing: 0.14em;
-  color: var(--lgold);
+  color: var(--gold);
   text-transform: uppercase;
   text-align: right;
 }
 
 .casc-experience .pcard .pb {
-  padding: 16px 18px;
+  padding: 18px 20px;
   font-size: 14.5px;
+  color: var(--text);
 }
 
 .casc-experience .pcard ul {
@@ -873,29 +972,32 @@ html[data-theme="dark"] .casc-experience section h2 {
 
 .casc-experience .secret {
   background: var(--tint);
+  border: 1px solid rgba(217, 178, 116, 0.3);
   border-radius: 8px;
-  padding: 10px 12px;
-  margin-top: 10px;
+  padding: 12px 14px;
+  margin-top: 12px;
   font-size: 13.5px;
+  color: var(--text);
 }
 
 .casc-experience .secret b {
-  color: var(--goldd);
-  font-size: 10.5px;
+  color: var(--gold);
+  font-size: 11px;
   letter-spacing: 0.14em;
 }
 
 .casc-experience .rub {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 8px;
+  margin-top: 10px;
   font-size: 14px;
 }
 
 .casc-experience .rub td {
   border-top: 1px solid var(--hair);
-  padding: 8px 6px;
+  padding: 9px 8px;
   vertical-align: top;
+  color: var(--text);
 }
 
 .casc-experience .rub td:first-child {
@@ -905,15 +1007,15 @@ html[data-theme="dark"] .casc-experience section h2 {
 .casc-experience .rub input {
   width: 17px;
   height: 17px;
-  accent-color: var(--goldd);
+  accent-color: var(--gold);
 }
 
 .casc-experience .rub tr.dom td {
-  background: var(--navy);
-  color: #fff;
+  background: var(--deep);
+  color: var(--gold);
   border-top: 0;
-  padding: 7px 10px;
-  font-size: 10.5px;
+  padding: 8px 12px;
+  font-size: 11px;
   letter-spacing: 0.13em;
   text-transform: uppercase;
   font-weight: 700;
@@ -926,13 +1028,13 @@ html[data-theme="dark"] .casc-experience section h2 {
 }
 
 .casc-experience .scoreline {
-  margin-top: 12px;
+  margin-top: 14px;
   font-size: 14px;
   color: var(--grey);
 }
 
 .casc-experience .scoreline b {
-  color: var(--navy);
+  color: var(--text);
 }
 
 .casc-experience .printrow {
@@ -945,7 +1047,7 @@ html[data-theme="dark"] .casc-experience section h2 {
 .casc-experience .btn {
   display: inline-block;
   background: var(--gold);
-  color: var(--navy);
+  color: var(--ink);
   font-weight: 700;
   font-size: 15px;
   border: 0;
@@ -953,12 +1055,22 @@ html[data-theme="dark"] .casc-experience section h2 {
   padding: 13px 22px;
   cursor: pointer;
   text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.casc-experience .btn:hover {
+  background: var(--lgold);
 }
 
 .casc-experience .btn.ghost {
-  background: #fff;
-  color: var(--navy);
-  border: 1.5px solid var(--navy);
+  background: var(--navy2);
+  color: var(--text);
+  border: 1.5px solid var(--hair);
+}
+
+.casc-experience .btn.ghost:hover {
+  border-color: var(--gold);
+  color: var(--gold);
 }
 
 /* Exam Panel */
@@ -967,15 +1079,19 @@ html[data-theme="dark"] .casc-experience section h2 {
 }
 
 .casc-experience .exambox {
-  border: 1.5px solid var(--gold);
+  border: 1.5px solid var(--hair);
+  background: var(--navy);
   border-radius: 12px;
-  padding: 22px;
-  margin-top: 22px;
+  padding: 24px;
+  margin-top: 24px;
+  color: var(--text);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .casc-experience .exambox h3 {
-  font-size: 18px;
+  font-size: 19px;
   margin-bottom: 8px;
+  color: var(--text) !important;
 }
 
 .casc-experience .results {
@@ -985,48 +1101,50 @@ html[data-theme="dark"] .casc-experience section h2 {
 
 .casc-experience .scorebig {
   font-family: var(--serif);
-  font-size: 30px;
-  color: var(--navy);
+  font-size: 32px;
+  color: var(--gold);
   font-weight: 700;
 }
 
 .casc-experience .constructs {
-  margin-top: 14px;
+  margin-top: 16px;
   background: var(--tint);
-  border: 1px solid var(--gold);
+  border: 1px solid rgba(217, 178, 116, 0.3);
   border-radius: 10px;
-  padding: 14px 16px;
+  padding: 16px 18px;
   font-size: 15px;
+  color: var(--text);
 }
 
 .casc-experience .constructs b {
-  color: var(--goldd);
-  font-size: 10.5px;
+  color: var(--gold);
+  font-size: 11px;
   letter-spacing: 0.14em;
   display: block;
   margin-bottom: 6px;
 }
 
 .casc-experience .constructs li {
-  margin: 4px 0 4px 18px;
+  margin: 5px 0 5px 18px;
 }
 
 /* Done section & Footer */
 .casc-experience .done {
   background: var(--navy);
-  color: #fff;
+  color: var(--text);
   text-align: center;
   border-bottom: 0;
+  padding: 60px 0;
 }
 
 .casc-experience .done h2,
 html.dark .casc-experience .done h2,
 html[data-theme="dark"] .casc-experience .done h2 {
-  color: #ffffff !important;
+  color: var(--text) !important;
 }
 
 .casc-experience .done p {
-  color: var(--lbody);
+  color: var(--grey);
   max-width: 56ch;
   margin: 10px auto 0;
 }
@@ -1049,7 +1167,8 @@ html[data-theme="dark"] .casc-experience .done h2 {
   background: var(--deep);
   color: var(--mute);
   font-size: 13px;
-  padding: 22px 0;
+  padding: 24px 0;
+  border-top: 1px solid var(--hair);
 }
 
 .casc-experience footer .wrap {
@@ -1073,18 +1192,18 @@ html[data-theme="dark"] .casc-experience .done h2 {
 .casc-experience .done a.btn.casc-btn-unlocked,
 .casc-experience a.btn.casc-btn-unlocked {
   background: var(--gold) !important;
-  color: var(--navy) !important;
+  color: var(--ink) !important;
   cursor: pointer !important;
-  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+  box-shadow: 0 0 18px rgba(217, 178, 116, 0.45);
   animation: casc-pulse-unlocked 1.5s infinite alternate ease-in-out;
 }
 
 @keyframes casc-pulse-unlocked {
   from {
-    box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+    box-shadow: 0 0 8px rgba(217, 178, 116, 0.3);
   }
   to {
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
+    box-shadow: 0 0 22px rgba(217, 178, 116, 0.7);
   }
 }
 
@@ -1103,15 +1222,15 @@ html[data-theme="dark"] .casc-experience .done h2 {
 
 @keyframes casc-highlight-pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7);
+    box-shadow: 0 0 0 0 rgba(217, 178, 116, 0.7);
     border-color: var(--gold);
   }
   50% {
-    box-shadow: 0 0 0 8px rgba(212, 175, 55, 0.3);
+    box-shadow: 0 0 0 8px rgba(217, 178, 116, 0.3);
     border-color: var(--gold);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+    box-shadow: 0 0 0 0 rgba(217, 178, 116, 0);
   }
 }
 
@@ -1125,11 +1244,11 @@ html[data-theme="dark"] .casc-experience .done h2 {
   position: sticky;
   bottom: 0;
   z-index: 50;
-  background: rgba(20, 42, 73, 0.95);
-  backdrop-filter: blur(8px);
-  border-top: 1px solid var(--gold);
+  background: rgba(7, 21, 37, 0.94);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid var(--hair);
   padding: 12px 24px;
-  color: #fff;
+  color: var(--text);
 }
 
 .casc-bottom-nav .nav-inner {
@@ -1146,50 +1265,68 @@ html[data-theme="dark"] .casc-experience .done h2 {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: transparent;
-  color: var(--lgold);
-  border: 1px solid var(--gold);
-  padding: 7px 14px;
-  border-radius: 6px;
+  background: var(--navy);
+  color: var(--text);
+  border: 1px solid var(--hair);
+  padding: 8px 16px;
+  border-radius: 8px;
   font-size: 13px;
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
   transition:
     background 0.15s,
-    color 0.15s;
+    color 0.15s,
+    border-color 0.15s;
 }
 
 .casc-bottom-nav a:hover,
 .casc-bottom-nav button:hover:not(:disabled) {
-  background: var(--gold);
-  color: var(--navy);
+  background: var(--navy2);
+  border-color: var(--gold);
+  color: var(--gold);
 }
 
 .casc-bottom-nav button:disabled,
 .casc-bottom-nav button.casc-nav-next-disabled {
-  opacity: 0.45;
+  opacity: 0.35;
   cursor: not-allowed;
   border-style: dashed;
-  color: var(--lgold);
+  color: var(--grey);
+  border-color: var(--hair);
 }
 
 .casc-bottom-nav a.casc-nav-next-active {
   background: var(--gold);
-  color: var(--navy);
-  box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+  color: var(--ink);
+  border-color: var(--gold);
+  font-weight: 700;
+  box-shadow: 0 0 16px rgba(217, 178, 116, 0.35);
 }
 
 .casc-bottom-nav a.casc-nav-next-active:hover {
   background: var(--lgold);
-  color: var(--navy);
+  color: var(--ink);
 }
 
 .casc-bottom-nav .nav-counter {
   font-size: 12px;
-  color: var(--mute);
+  color: var(--grey);
   letter-spacing: 0.05em;
   font-weight: 600;
+}
+
+/* Floating Course Lesson Menu Position */
+.casc-lesson-menu {
+  position: fixed;
+  z-index: 100;
+  top: 96px;
+  right: 16px;
+  pointer-events: none;
+}
+
+.casc-lesson-menu > * {
+  pointer-events: auto;
 }
 
 /* Responsive */
@@ -1197,315 +1334,53 @@ html[data-theme="dark"] .casc-experience .done h2 {
   .casc-experience .duo {
     grid-template-columns: 1fr;
   }
-}
 
-@media (max-width: 640px) {
-  .casc-experience header h1 {
-    font-size: 28px;
-  }
-  .casc-experience .line {
-    grid-template-columns: 70px 1fr 32px;
-  }
-  .casc-experience .topbar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 32px;
-  }
-  .casc-experience .topbar span {
-    text-align: left;
-  }
   .casc-experience .rung {
     grid-template-columns: 1fr;
-    gap: 4px;
   }
+
   .casc-experience .doms {
     columns: 1;
   }
-  .casc-experience .con {
-    grid-template-columns: 28px 1fr;
-  }
-  .casc-experience .dots {
-    grid-column: 1 / -1;
-    justify-content: flex-start;
-    padding-left: 40px;
-  }
-  .casc-experience .srow {
-    grid-template-columns: 54px 1fr;
-  }
-  .casc-experience .chip {
-    grid-column: 2;
-    justify-self: start;
-  }
-  .casc-bottom-nav .nav-inner {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-}
-
-/* Print Styles */
-@media print {
-  body * {
-    visibility: hidden;
-  }
-  #packs,
-  #packs * {
-    visibility: visible;
-  }
-  #packs {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-  }
-  body.pr-cand .pcard:not(.c-cand) {
-    display: none !important;
-  }
-  body.pr-role .pcard:not(.c-role) {
-    display: none !important;
-  }
-  body.pr-obs .pcard:not(.c-obs) {
-    display: none !important;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .casc-experience * {
-    transition: none !important;
-  }
-}
-/* Floating Course Lesson Menu */
-.casc-lesson-menu {
-  position: fixed;
-  z-index: 100;
-  top: 50%;
-  right: 16px;
-  transform: translateY(-50%);
-}
-
-.casc-lesson-menu-trigger {
-  display: inline-flex;
-  min-height: 44px;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px 14px;
-  border: 1px solid var(--gold);
-  border-radius: 999px;
-  color: var(--navy);
-  background: var(--gold);
-  box-shadow: 0 8px 24px rgba(7, 14, 23, 0.3);
-  cursor: pointer;
-  font: inherit;
-  font-weight: 700;
-  transition:
-    background 0.15s ease,
-    box-shadow 0.15s ease;
-}
-
-.casc-lesson-menu-trigger:hover,
-.casc-lesson-menu-trigger[data-popup-open] {
-  background: var(--lgold);
-  box-shadow: 0 10px 28px rgba(7, 14, 23, 0.38);
-}
-
-.casc-lesson-menu-trigger:focus-visible,
-.casc-lesson-menu-group-toggle:focus-visible,
-.casc-lesson-menu-popover a:focus-visible {
-  outline: 3px solid #fff;
-  outline-offset: 3px;
-}
-
-.casc-lesson-menu-popover {
-  width: min(340px, calc(100vw - 32px)) !important;
-  max-height: min(70dvh, 680px) !important;
-  overflow-y: auto !important;
-  padding: 0 !important;
-  border: 1px solid rgba(212, 175, 55, 0.75) !important;
-  border-radius: 12px !important;
-  background: rgba(7, 14, 23, 0.98) !important;
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.38) !important;
-  color: #fff !important;
-}
-
-.casc-lesson-menu-heading {
-  display: block !important;
-  padding: 18px !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.casc-lesson-menu-heading p,
-.casc-lesson-menu-heading [data-slot="popover-title"],
-.casc-lesson-menu-group h3 {
-  margin: 0;
-}
-
-.casc-lesson-menu-heading p {
-  color: var(--lgold);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.casc-lesson-menu-heading [data-slot="popover-title"] {
-  display: block;
-  margin-top: 5px;
-  color: #fff;
-  font-size: 16px;
-  line-height: 1.35;
-}
-
-.casc-lesson-menu-group {
-  padding: 10px 12px;
-}
-
-.casc-lesson-menu-group + .casc-lesson-menu-group {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.casc-lesson-menu-group-toggle {
-  display: flex;
-  width: 100%;
-  min-height: 44px;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 8px;
-  border: 0;
-  border-radius: 8px;
-  color: var(--lgold);
-  background: transparent;
-  cursor: pointer;
-  font: inherit;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-align: left;
-  text-transform: uppercase;
-}
-
-.casc-lesson-menu-group-toggle:hover {
-  background: rgba(212, 175, 55, 0.12);
-}
-
-.casc-lesson-menu-group-toggle span {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.casc-lesson-menu-group-toggle small {
-  display: inline-flex;
-  min-width: 20px;
-  height: 20px;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid currentColor;
-  border-radius: 999px;
-  font-size: 10px;
-}
-
-.casc-lesson-menu-group-toggle svg {
-  transition: transform 0.15s ease;
-}
-
-.casc-lesson-menu-group-toggle svg.is-expanded {
-  transform: rotate(180deg);
-}
-
-.casc-lesson-menu-group ol {
-  margin: 4px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.casc-lesson-menu-group li + li {
-  margin-top: 4px;
-}
-
-.casc-lesson-menu-group a,
-.casc-lesson-menu-group ol > li > button {
-  width: 100%;
-  min-height: 52px;
-  display: grid;
-  grid-template-columns: 28px minmax(0, 1fr) 18px;
-  align-items: center;
-  gap: 10px;
-  padding: 8px;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  color: inherit;
-  background: transparent;
-  font: inherit;
-  text-align: left;
-  text-decoration: none;
-}
-
-.casc-lesson-menu-group a:hover,
-.casc-lesson-menu-group a.is-current {
-  border-color: rgba(212, 175, 55, 0.6);
-  background: rgba(212, 175, 55, 0.12);
-}
-
-.casc-lesson-menu-group ol > li > button:disabled {
-  cursor: not-allowed;
-  opacity: 0.48;
-}
-
-.casc-lesson-menu-marker {
-  width: 28px;
-  height: 28px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  color: var(--lgold);
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.casc-lesson-menu-copy {
-  min-width: 0;
-}
-
-.casc-lesson-menu-copy > span,
-.casc-lesson-menu-copy small {
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.casc-lesson-menu-copy > span {
-  font-size: 13px;
-  font-weight: 650;
-}
-
-.casc-lesson-menu-copy small {
-  margin-top: 2px;
-  color: var(--mute);
-  font-size: 11px;
 }
 
 @media (max-width: 640px) {
+  .casc-experience .wrap {
+    padding: 0 16px;
+  }
+
+  .casc-experience header .wrap {
+    padding: 24px 16px 30px;
+  }
+
+  .casc-experience section {
+    padding: 38px 0;
+  }
+
+  .casc-bottom-nav {
+    padding: 10px 14px;
+  }
+
+  .casc-bottom-nav .nav-inner {
+    gap: 8px;
+  }
+
+  .casc-bottom-nav a,
+  .casc-bottom-nav button {
+    padding: 7px 11px;
+    font-size: 12px;
+  }
+
   .casc-lesson-menu {
     top: auto;
     right: 12px;
     bottom: 84px;
     transform: none;
   }
-
-  .casc-lesson-menu-popover {
-    max-height: min(64dvh, 560px) !important;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .casc-lesson-menu-trigger,
-  .casc-lesson-menu-group-toggle,
-  .casc-lesson-menu-group-toggle svg {
-    transition: none;
+  .casc-experience * {
+    transition: none !important;
   }
 }

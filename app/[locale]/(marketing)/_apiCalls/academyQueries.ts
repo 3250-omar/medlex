@@ -42,6 +42,7 @@ export const academyQueryKeys = {
     ["authenticated", "academy", "unit", courseSlug, unitSlug] as const,
   certificateStatus: (slug: string) =>
     ["academy", "course", slug, "certificate"] as const,
+  giftStatus: ["gifts", "status"] as const,
 };
 
 export function useCurrentUser() {
@@ -66,6 +67,20 @@ export function useEnrolledCourses(enabled = true) {
     queryKey: academyQueryKeys.enrolledCourses,
     queryFn: () => apiRequest<EnrolledCourse[]>("/api/courses/enrolled"),
     enabled,
+  });
+}
+
+export type GiftStatus = {
+  giftDownloaded: boolean;
+  giftDownloadedAt: string | null;
+};
+
+export function useGiftStatus(enabled = true) {
+  return useQuery({
+    queryKey: academyQueryKeys.giftStatus,
+    queryFn: () => apiRequest<GiftStatus>("/api/gifts/status"),
+    enabled,
+    staleTime: 60_000,
   });
 }
 
