@@ -28,6 +28,7 @@ import { academyQueryKeys } from "@/app/[locale]/(marketing)/_apiCalls/academyQu
 import { signInSchema, signUpSchema } from "@/lib/auth/validation";
 
 export type AuthTab = "sign-in" | "register";
+type AuthField = keyof typeof signUpSchema.shape;
 export function AuthPageContent() {
   const locale = useLocale();
   const router = useRouter();
@@ -301,7 +302,10 @@ export function AuthPageContent() {
           {/* ============================================================ */}
           <div className="w-full lg:col-span-7">
             <div className="relative overflow-hidden rounded-3xl border border-line/90 bg-surface/95 p-5 shadow-2xl shadow-ink/80 ring-1 ring-white/10 backdrop-blur-2xl sm:p-8 md:p-10">
-              <div className="pointer-events-none absolute inset-x-12 top-0 h-px bg-gradient-to-r from-transparent via-signal/70 to-transparent" aria-hidden="true" />
+              <div
+                className="pointer-events-none absolute inset-x-12 top-0 h-px bg-gradient-to-r from-transparent via-signal/70 to-transparent"
+                aria-hidden="true"
+              />
 
               {/* Header inside Card */}
               <div className="flex items-center justify-between gap-4 pb-6 mb-6 border-b border-line/70">
@@ -711,7 +715,10 @@ function AuthInputField({
       <span>{label}</span>
       <div className="relative flex items-center rounded-xl transition-shadow focus-within:ring-2 focus-within:ring-signal/20">
         {icon && (
-          <span className="pointer-events-none absolute start-3.5 flex items-center justify-center" aria-hidden="true">
+          <span
+            className="pointer-events-none absolute start-3.5 flex items-center justify-center"
+            aria-hidden="true"
+          >
             {icon}
           </span>
         )}
