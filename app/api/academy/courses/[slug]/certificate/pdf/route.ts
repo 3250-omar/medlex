@@ -69,7 +69,8 @@ export async function GET(request: Request, context: RouteParams) {
   // }
 
   // 2. Issue or fetch certificate record
-  let recipientName = status.certificate?.recipient_name || status.user_name || "Learner";
+  let recipientName =
+    status.certificate?.recipient_name || status.user_name || "Learner";
   let issuedAtDate = status.certificate?.issued_at
     ? new Date(status.certificate.issued_at)
     : new Date();
@@ -152,7 +153,10 @@ export async function GET(request: Request, context: RouteParams) {
 
   // Center Date horizontally above the date line (y=148.68 in PDF coordinates)
   const dateSize = 13;
-  const dateWidth = fontHelveticaBold.widthOfTextAtSize(formattedDate, dateSize);
+  const dateWidth = fontHelveticaBold.widthOfTextAtSize(
+    formattedDate,
+    dateSize,
+  );
   const dateCenter = (197.17 + 372.59) / 2;
   const dateX = dateCenter - dateWidth / 2;
   const dateY = 148.68 + 5;
@@ -165,22 +169,28 @@ export async function GET(request: Request, context: RouteParams) {
     color: rgb(0.92, 0.94, 0.98), // Light off-white
   });
 
-  // Record download event asynchronously if certificate exists
-  if (certificateId) {
-    try {
-      void supabase
-        .from("certificate_download_events")
-        .insert({
-          certificate_id: certificateId,
-          user_id: user.id,
-        })
-        .then();
-    } catch {
-      // Non-blocking download event logging
-    }
+  if (!certificateId) {
+    return NextResponse.json(
+      { error: "Unable to create the certificate download record." },
+      { status: 500 },
+    );
   }
 
   const generatedPdfBytes = await pdfDoc.save();
+
+  const { error: downloadEventError } = await supabase
+    .from("certificate_download_events")
+    .insert({
+      certificate_id: certificateId,
+      user_id: user.id,
+    });
+
+  if (downloadEventError) {
+    return NextResponse.json(
+      { error: "Unable to record the certificate download." },
+      { status: 500 },
+    );
+  }
 
   return new NextResponse(Buffer.from(generatedPdfBytes), {
     status: 200,
