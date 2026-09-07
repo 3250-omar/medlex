@@ -11,6 +11,7 @@ import Eyebrow from "./Eyebrow";
 import SubscribeButton from "./SubscribeButton";
 import {
   academyQueryKeys,
+  type GiftStatus,
   useCurrentUser,
   useEnrolledCourses,
   useGiftStatus,
@@ -44,10 +45,12 @@ export default function PathwayHeroSection({
   const enrolledCourse = enrolledCourses?.find((c) => c.slug === pathway);
 
   const isSubscribed = !!enrolledCourse;
-  // Hide gift button if the user already downloaded before this session
-  const hasDownloadedGift = giftStatus?.giftDownloaded ?? false;
+  const hasDownloadedGift1 = giftStatus?.gift1Downloaded ?? false;
+  const hasDownloadedGift2 = giftStatus?.gift2Downloaded ?? false;
   const [justSubscribed, setJustSubscribed] = useState(false);
-  const [isDownloadingGift, setIsDownloadingGift] = useState(false);
+  const [downloadingGiftId, setDownloadingGiftId] = useState<"1" | "2" | null>(
+    null,
+  );
 
   const triggerPartyAnimation = useCallback(() => {
     const count = 200;
@@ -76,11 +79,11 @@ export default function PathwayHeroSection({
     triggerPartyAnimation();
   }, [triggerPartyAnimation]);
 
-  const handleDownloadGift = async () => {
+  const handleDownloadGift = async (giftId: "1" | "2", fileName: string) => {
     try {
-      setIsDownloadingGift(true);
+      setDownloadingGiftId(giftId);
       triggerPartyAnimation();
-      const response = await fetch("/api/gifts/download");
+      const response = await fetch(`/api/gifts/download?gift=${giftId}`);
       if (!response.ok) {
         throw new Error("Failed to download gift");
       }
@@ -88,22 +91,33 @@ export default function PathwayHeroSection({
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = "Twelve Weeks to the CASC.pdf";
+      link.download = fileName;
       document.body.appendChild(link);
       link.click();
       window.URL.revokeObjectURL(url);
       link.remove();
-      queryClient.setQueryData(academyQueryKeys.giftStatus, {
-        giftDownloaded: true,
-        giftDownloadedAt: new Date().toISOString(),
-      });
+
+      queryClient.setQueryData<GiftStatus>(
+        academyQueryKeys.giftStatus,
+        (current) => ({
+          gift1Downloaded: giftId === "1" || current?.gift1Downloaded === true,
+          gift1DownloadedAt:
+            giftId === "1"
+              ? new Date().toISOString()
+              : (current?.gift1DownloadedAt ?? null),
+          gift2Downloaded: giftId === "2" || current?.gift2Downloaded === true,
+          gift2DownloadedAt:
+            giftId === "2"
+              ? new Date().toISOString()
+              : (current?.gift2DownloadedAt ?? null),
+        }),
+      );
     } catch (err) {
       console.error("Failed to download gift:", err);
     } finally {
-      setIsDownloadingGift(false);
+      setDownloadingGiftId(null);
     }
   };
-
   const buttonClassName =
     "inline-flex min-h-12 items-center justify-center bg-signal px-6 font-body text-sm font-medium text-ink transition-colors hover:bg-signal-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal";
 
@@ -118,7 +132,7 @@ export default function PathwayHeroSection({
         >
           Coming soon
           <span className="ms-3" aria-hidden="true">
-            →
+            ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢
           </span>
         </button>
       );
@@ -134,31 +148,42 @@ export default function PathwayHeroSection({
             className={buttonClassName}
           >
             Go to the course
-            <span className="ms-3" aria-hidden="true">
-              →
-            </span>
           </Link>
-          {!hasDownloadedGift && (
-            <button
-              type="button"
-              onClick={handleDownloadGift}
-              disabled={isDownloadingGift}
-              className="inline-flex min-h-12 items-center justify-center gap-2.5 border border-signal/50 bg-signal/15 px-6 font-body text-sm font-semibold text-signal transition-all hover:border-signal hover:bg-signal hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {isDownloadingGift ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  <span>Downloading gift...</span>
-                </>
-              ) : (
-                <>
-                  <Gift className="h-4 w-4" />
-                  <span>Get your gift now</span>
-                  <Download className="h-3.5 w-3.5 opacity-80" />
-                </>
-              )}
-            </button>
-          )}
+          {[
+            {
+              id: "1" as const,
+              fileName: "The Examiner's Briefing.pdf",
+              downloaded: hasDownloadedGift1,
+            },
+            {
+              id: "2" as const,
+              fileName: "The Examiner's Error Log.pdf",
+              downloaded: hasDownloadedGift2,
+            },
+          ]
+            .filter((gift) => !gift.downloaded)
+            .map((gift) => (
+              <button
+                key={gift.id}
+                type="button"
+                onClick={() => handleDownloadGift(gift.id, gift.fileName)}
+                disabled={downloadingGiftId !== null}
+                className="inline-flex min-h-12 items-center justify-center gap-2.5 border border-signal/50 bg-signal/15 px-6 font-body text-sm font-semibold text-signal transition-all hover:border-signal hover:bg-signal hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {downloadingGiftId === gift.id ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span>Downloading {gift.fileName}...</span>
+                  </>
+                ) : (
+                  <>
+                    <Gift className="h-4 w-4" />
+                    <span>Download {gift.fileName}</span>
+                    <Download className="h-3.5 w-3.5 opacity-80" />
+                  </>
+                )}
+              </button>
+            ))}
         </div>
       );
     }
@@ -173,7 +198,7 @@ export default function PathwayHeroSection({
         showArrow={false}
       >
         <span>Subscribe to get your gift</span>
-        <span
+        {/* <span
           className="text-base transition-transform duration-300 group-hover:scale-125"
           role="img"
           aria-label="party"
@@ -228,9 +253,9 @@ export default function PathwayHeroSection({
             ))}
           </dl>
           <div className="mt-8">
-            {justSubscribed && !hasDownloadedGift && (
+            {justSubscribed && (!hasDownloadedGift1 || !hasDownloadedGift2) && (
               <div className="mb-4 inline-flex items-center gap-2 rounded-md border border-signal/40 bg-signal/10 px-4 py-2 text-xs font-semibold text-signal backdrop-blur-sm">
-                <span className="text-sm">🎉</span>
+                <span className="text-sm">ÃƒÂ°Ã…Â¸Ã…Â½Ã¢â‚¬Â°</span>
                 <span>
                   You are officially enrolled! Download your gift below.
                 </span>

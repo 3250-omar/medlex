@@ -9,13 +9,18 @@ export async function GET() {
 
   if (!user) {
     return NextResponse.json({
-      data: { giftDownloaded: false, giftDownloadedAt: null },
+      data: {
+        gift1Downloaded: false,
+        gift1DownloadedAt: null,
+        gift2Downloaded: false,
+        gift2DownloadedAt: null,
+      },
     });
   }
 
   const { data, error } = await supabase
     .from("profiles")
-    .select("gift_downloaded_at")
+    .select("gift_1_downloaded_at, gift_2_downloaded_at")
     .eq("id", user.id)
     .single();
 
@@ -28,8 +33,10 @@ export async function GET() {
 
   return NextResponse.json({
     data: {
-      giftDownloaded: data?.gift_downloaded_at != null,
-      giftDownloadedAt: data?.gift_downloaded_at ?? null,
+      gift1Downloaded: data?.gift_1_downloaded_at != null,
+      gift1DownloadedAt: data?.gift_1_downloaded_at ?? null,
+      gift2Downloaded: data?.gift_2_downloaded_at != null,
+      gift2DownloadedAt: data?.gift_2_downloaded_at ?? null,
     },
   });
 }

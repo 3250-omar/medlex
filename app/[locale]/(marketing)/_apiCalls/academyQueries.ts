@@ -72,8 +72,10 @@ export function useEnrolledCourses(enabled = true) {
 }
 
 export type GiftStatus = {
-  giftDownloaded: boolean;
-  giftDownloadedAt: string | null;
+  gift1Downloaded: boolean;
+  gift1DownloadedAt: string | null;
+  gift2Downloaded: boolean;
+  gift2DownloadedAt: string | null;
 };
 
 export function useGiftStatus(enabled = true) {

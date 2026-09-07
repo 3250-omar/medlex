@@ -16,16 +16,20 @@ export interface Database {
           phone: string | null;
           role: "learner" | "admin";
           gift_downloaded_at: string | null;
+          gift_1_downloaded_at: string | null;
+          gift_2_downloaded_at: string | null;
           created_at: string;
           updated_at: string;
         };
         Insert: Omit<
           Database["public"]["Tables"]["profiles"]["Row"],
-          "created_at" | "updated_at" | "gift_downloaded_at"
+          "created_at" | "updated_at" | "gift_downloaded_at" | "gift_1_downloaded_at" | "gift_2_downloaded_at"
         > & {
           created_at?: string;
           updated_at?: string;
           gift_downloaded_at?: string | null;
+          gift_1_downloaded_at?: string | null;
+          gift_2_downloaded_at?: string | null;
         };
         Update: Partial<Database["public"]["Tables"]["profiles"]["Insert"]>;
         Relationships: [];
