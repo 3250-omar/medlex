@@ -204,7 +204,7 @@ export default function PathwayHeroSection({
           aria-label="party"
         >
           🎉
-        </span>
+        </span>*/}
       </SubscribeButton>
     );
   }
