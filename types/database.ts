@@ -14,6 +14,8 @@ export interface Database {
           id: string;
           full_name: string | null;
           phone: string | null;
+          avatar_path: string | null;
+          exam_date: string | null;
           role: "learner" | "admin";
           gift_downloaded_at: string | null;
           gift_1_downloaded_at: string | null;
@@ -23,10 +25,18 @@ export interface Database {
         };
         Insert: Omit<
           Database["public"]["Tables"]["profiles"]["Row"],
-          "created_at" | "updated_at" | "gift_downloaded_at" | "gift_1_downloaded_at" | "gift_2_downloaded_at"
+          | "created_at"
+          | "updated_at"
+          | "avatar_path"
+          | "exam_date"
+          | "gift_downloaded_at"
+          | "gift_1_downloaded_at"
+          | "gift_2_downloaded_at"
         > & {
           created_at?: string;
           updated_at?: string;
+          avatar_path?: string | null;
+          exam_date?: string | null;
           gift_downloaded_at?: string | null;
           gift_1_downloaded_at?: string | null;
           gift_2_downloaded_at?: string | null;
@@ -210,7 +220,9 @@ export interface Database {
           user_id?: string | null;
           downloaded_at?: string;
         };
-        Update: Partial<Database["public"]["Tables"]["certificate_download_events"]["Insert"]>;
+        Update: Partial<
+          Database["public"]["Tables"]["certificate_download_events"]["Insert"]
+        >;
         Relationships: [];
       };
     };

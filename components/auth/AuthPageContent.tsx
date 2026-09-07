@@ -14,6 +14,7 @@ import {
   Lock,
   Mail,
   Phone,
+  ImagePlus,
   ShieldCheck,
   Sparkles,
   User,
@@ -56,6 +57,20 @@ export function AuthPageContent() {
   const [localTab, setLocalTab] = React.useState<AuthTab | null>(null);
   const [showPassword, setShowPassword] = React.useState(false);
   const [examDate, setExamDate] = React.useState<Date>();
+  const [profileImage, setProfileImage] = React.useState<File | null>(null);
+  const [profileImagePreviewUrl, setProfileImagePreviewUrl] =
+    React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    if (!profileImage) {
+      setProfileImagePreviewUrl(null);
+      return;
+    }
+
+    const previewUrl = URL.createObjectURL(profileImage);
+    setProfileImagePreviewUrl(previewUrl);
+    return () => URL.revokeObjectURL(previewUrl);
+  }, [profileImage]);
 
   const tab: AuthTab = localTab ?? defaultTab;
 
@@ -189,7 +204,15 @@ export function AuthPageContent() {
       return;
     }
 
-    signUp.mutate(validation.data, {
+    const signUpData = new FormData();
+    Object.entries(validation.data).forEach(([key, value]) => {
+      signUpData.set(key, value);
+    });
+    if (profileImage) {
+      signUpData.set("profileImage", profileImage);
+    }
+
+    signUp.mutate(signUpData, {
       onSuccess: (result) => void handleSuccess(result),
       onError: (error) => setFormError(error.message),
     });
@@ -536,6 +559,53 @@ export function AuthPageContent() {
                     </div>
                     {/* Inputs Grid */}
                     <div className="grid gap-4 sm:grid-cols-2">
+<div className="sm:col-span-2 rounded-2xl border border-line/70 bg-surface-2/25 p-3.5 sm:p-4">
+                        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                          <div className="flex min-w-0 items-center gap-3">
+                            {profileImagePreviewUrl ? (
+                              <img
+                                src={profileImagePreviewUrl}
+                                alt="Selected profile image preview"
+                                className="size-14 shrink-0 rounded-xl border border-signal/40 object-cover"
+                              />
+                            ) : (
+                              <div className="flex size-14 shrink-0 items-center justify-center rounded-xl border border-signal/25 bg-signal/10 text-signal">
+                                <ImagePlus className="size-6" aria-hidden="true" />
+                              </div>
+                            )}
+                            <div className="min-w-0">
+                              <p className="text-sm font-semibold normal-case tracking-normal text-text">
+                                Profile image <span className="font-normal text-muted">(optional)</span>
+                              </p>
+                              <p className="mt-0.5 truncate text-xs font-normal normal-case tracking-normal text-muted">
+                                {profileImage
+                                  ? profileImage.name
+                                  : "JPG, PNG, or WebP up to 5 MB"}
+                              </p>
+                            </div>
+                          </div>
+                          <label
+                            htmlFor="profile-image"
+                            className="inline-flex min-h-10 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg border border-line bg-surface px-3.5 text-xs font-semibold normal-case tracking-normal text-text transition-colors hover:border-signal/60 hover:text-signal focus-within:outline-none focus-within:ring-2 focus-within:ring-signal/50"
+                          >
+                            <ImagePlus className="size-4" aria-hidden="true" />
+                            {profileImage ? "Change image" : "Choose image"}
+                            <input
+                              id="profile-image"
+                              name="profile-image"
+                              type="file"
+                              accept="image/jpeg,image/png,image/webp"
+                              className="sr-only"
+                              onChange={(event) => {
+                                setProfileImage(
+                                  event.currentTarget.files?.[0] ?? null,
+                                );
+                                setFormError(null);
+                              }}
+                            />
+                          </label>
+                        </div>
+                      </div>
                       <AuthInputField
                         label={t("fullName")}
                         name="full-name"

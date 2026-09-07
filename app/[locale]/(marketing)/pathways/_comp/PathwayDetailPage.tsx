@@ -1,11 +1,11 @@
 import AudienceSection from "./AudienceSection";
+import CascAcademyLanding from "./CascAcademyLanding";
 import FeatureSection from "./FeatureSection";
 import FormatsSection from "./FormatsSection";
 import PathwayFaqSection from "./PathwayFaqSection";
 import PathwayFounderSection from "./PathwayFounderSection";
 import PathwayHeroSection from "./PathwayHeroSection";
 import ProgrammesSection from "./ProgrammesSection";
-import SampleStationSection from "./SampleStationSection";
 import {
   type PathwayContent,
   type PathwayKey,
@@ -23,8 +23,12 @@ export default function PathwayDetailPage({
   content,
   labels,
 }: PathwayDetailPageProps) {
+  if (pathway === "casc-academy") {
+    return <CascAcademyLanding content={content} labels={labels} />;
+  }
+
   return (
-    <main className="bg-ink text-white">
+    <main className="bg-ink text-white ">
       <PathwayHeroSection pathway={pathway} content={content} labels={labels} />
       <AudienceSection audience={content.audience} />
       {content.feature ? <FeatureSection feature={content.feature} /> : null}
@@ -37,7 +41,6 @@ export default function PathwayDetailPage({
         />
       ) : null}
       <PathwayFounderSection founder={content.founder} />
-      {pathway === "casc-academy" ? <SampleStationSection /> : null}
       {content.faqs ? (
         <PathwayFaqSection
           faqs={content.faqs}

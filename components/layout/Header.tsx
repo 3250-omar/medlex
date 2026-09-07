@@ -56,7 +56,6 @@ function ExamCountdown({
     year: "numeric",
   }).format(new Date(`${examDate}T00:00:00`));
 
-
   const getCountdownLabel = (
     key: "daysShort" | "hoursShort" | "minutesShort" | "secondsShort",
     fallback: string,
@@ -82,13 +81,22 @@ function ExamCountdown({
           <CalendarDays className="size-4 text-signal" aria-hidden="true" />
           {isExamDay ? (
             <p className="whitespace-nowrap px-1 text-sm font-semibold text-signal sm:text-base">
-              {t("today")} — {locale === "ar" ? "\u0628\u0627\u0644\u062a\u0648\u0641\u064a\u0642" : "Good luck"}
+              {t("today")} —{" "}
+              {locale === "ar"
+                ? "\u0628\u0627\u0644\u062a\u0648\u0641\u064a\u0642"
+                : "Good luck"}
             </p>
           ) : (
             <>
-              <div className="flex items-center overflow-hidden rounded-sm border border-white/10 bg-ink/40" aria-hidden="true">
+              <div
+                className="flex items-center overflow-hidden rounded-sm border border-white/10 bg-ink/40"
+                aria-hidden="true"
+              >
                 {countdownUnits.map((unit) => (
-                  <div key={unit.label} className="min-w-9 border-e border-white/10 px-1 text-center last:border-e-0">
+                  <div
+                    key={unit.label}
+                    className="min-w-9 border-e border-white/10 px-1 text-center last:border-e-0"
+                  >
                     <Counter
                       value={String(unit.value)}
                       fontSize={30}
@@ -106,7 +114,9 @@ function ExamCountdown({
                   </div>
                 ))}
               </div>
-              <span className="sr-only">{t("daysRemaining", { count: days })}</span>
+              <span className="sr-only">
+                {t("daysRemaining", { count: days })}
+              </span>
             </>
           )}
           <div className="hidden border-s border-white/10 ps-4 leading-tight sm:block">
@@ -187,7 +197,8 @@ export default function Header() {
   const shouldShowExamCountdown =
     Boolean(user?.examDate) &&
     !pathname.includes("/academy/courses/") &&
-    (examEndTime === null || now < examEndTime);
+    (examEndTime === null || now < examEndTime) &&
+    !pathname.includes("/academy/preview");
 
   useEffect(() => {
     if (!user?.examDate) return;
@@ -274,7 +285,15 @@ export default function Header() {
             aria-label={`${userName} - open account menu`}
             className="flex size-9 items-center justify-center rounded-full bg-signal font-body text-sm font-semibold text-ink transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
           >
-            {initials}
+            {user.avatarUrl ? (
+              <img
+                src={user.avatarUrl}
+                alt=""
+                className="size-full rounded-full object-cover"
+              />
+            ) : (
+              initials
+            )}
           </button>
         }
       />
@@ -348,7 +367,7 @@ export default function Header() {
             examDate={user.examDate}
             course={coursesLoading ? undefined : currentCourse}
             isLoading={coursesLoading}
-          now={now}
+            now={now}
           />
         )}
         <div

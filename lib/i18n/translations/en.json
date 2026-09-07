@@ -738,6 +738,7 @@
       "email": "Email Address",
       "username": "Username",
       "phone": "Phone Number",
+      "examDate": "Exam Date",
       "userId": "User ID",
       "notSpecified": "Not specified",
       "notSet": "Not set"

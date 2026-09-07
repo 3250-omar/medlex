@@ -10,6 +10,8 @@ export type CurrentUser = {
   username?: string | null;
   phone?: string | null;
   examDate?: string | null;
+  avatarPath?: string | null;
+  avatarUrl?: string | null;
   createdAt?: string | null;
 };
 export type Subscription = {

@@ -7,8 +7,17 @@ interface ProfileDetailsProps {
   locale: string;
 }
 
-export default function ProfileDetails({ user }: ProfileDetailsProps) {
+export default function ProfileDetails({
+  user,
+  locale,
+}: ProfileDetailsProps) {
   const t = useTranslations("profile.details");
+  const formattedExamDate = user.examDate
+    ? new Date(`${user.examDate}T00:00:00`).toLocaleDateString(
+        locale === "ar" ? "ar-EG" : "en-GB",
+        { day: "numeric", month: "long", year: "numeric" },
+      )
+    : null;
 
   return (
     <section className="border border-white/10 bg-white/[0.02] p-6 sm:p-8">
@@ -58,6 +67,15 @@ export default function ProfileDetails({ user }: ProfileDetailsProps) {
           </dt>
           <dd className="mt-1 font-body text-sm font-medium text-white sm:mt-0">
             {user.phone ?? t("notSpecified")}
+          </dd>
+        </div>
+
+        <div className="flex flex-col py-3.5 sm:flex-row sm:justify-between">
+          <dt className="font-body text-xs text-white/50">
+            {t("examDate")}
+          </dt>
+          <dd className="mt-1 font-body text-sm font-medium text-white sm:mt-0">
+            {formattedExamDate ?? t("notSpecified")}
           </dd>
         </div>
 

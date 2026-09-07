@@ -132,7 +132,7 @@ export default function PathwayHeroSection({
         >
           Coming soon
           <span className="ms-3" aria-hidden="true">
-            ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢
+            🎉
           </span>
         </button>
       );
@@ -198,13 +198,13 @@ export default function PathwayHeroSection({
         showArrow={false}
       >
         <span>Subscribe to get your gift</span>
-        {/* <span
+        <span
           className="text-base transition-transform duration-300 group-hover:scale-125"
           role="img"
           aria-label="party"
         >
           🎉
-        </span>*/}
+        </span>
       </SubscribeButton>
     );
   }
@@ -255,7 +255,7 @@ export default function PathwayHeroSection({
           <div className="mt-8">
             {justSubscribed && (!hasDownloadedGift1 || !hasDownloadedGift2) && (
               <div className="mb-4 inline-flex items-center gap-2 rounded-md border border-signal/40 bg-signal/10 px-4 py-2 text-xs font-semibold text-signal backdrop-blur-sm">
-                <span className="text-sm">ÃƒÂ°Ã…Â¸Ã…Â½Ã¢â‚¬Â°</span>
+                <span className="text-sm">🎉</span>
                 <span>
                   You are officially enrolled! Download your gift below.
                 </span>

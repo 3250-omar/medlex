@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import type { SignInInput, SignUpInput } from "@/lib/auth/validation";
+import type { SignInInput } from "@/lib/auth/validation";
 import { apiRequest } from "@/lib/api/client";
 
 type AuthResponse = {
@@ -28,6 +28,10 @@ export function useSignInMutation() {
 
 export function useSignUpMutation() {
   return useMutation({
-    mutationFn: (input: SignUpInput) => postAuth("/api/auth/sign-up", input),
+    mutationFn: (input: FormData) =>
+      apiRequest<AuthResponse>("/api/auth/sign-up", {
+        method: "POST",
+        body: input,
+      }),
   });
 }

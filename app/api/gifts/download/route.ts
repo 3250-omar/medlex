@@ -41,29 +41,6 @@ export async function GET(request: Request) {
     );
   }
 
-  const { data: enrollment, error: enrollmentError } = await supabase
-    .from("enrollments")
-    .select("id, courses!inner(slug)")
-    .eq("user_id", user.id)
-    .eq("courses.slug", "casc-academy")
-    .in("status", ["active", "paused", "completed"])
-    .limit(1)
-    .maybeSingle();
-
-  if (enrollmentError) {
-    return NextResponse.json(
-      { error: "Unable to verify gift eligibility." },
-      { status: 500 },
-    );
-  }
-
-  if (!enrollment) {
-    return NextResponse.json(
-      { error: "CASC Academy enrollment is required to download this gift." },
-      { status: 403 },
-    );
-  }
-
   const filePath = path.join(process.cwd(), "public", "gifts", gift.fileName);
   if (!fs.existsSync(filePath)) {
     return NextResponse.json(
@@ -115,7 +92,8 @@ export async function GET(request: Request) {
         role: "learner" as const,
         gift_1_downloaded_at: giftId === "1" ? downloadedAt : null,
         gift_2_downloaded_at: giftId === "2" ? downloadedAt : null,
-      };      const { error: insertError } = await supabase
+      };
+      const { error: insertError } = await supabase
         .from("profiles")
         .insert(profileInsert);
 

@@ -32,7 +32,15 @@ export default function ProfileHeader({
         <div className="flex items-center gap-5">
           {/* Avatar circle */}
           <div className="flex size-20 shrink-0 items-center justify-center rounded-full border-2 border-signal/40 bg-signal font-display text-2xl font-bold text-ink shadow-[0_0_24px_rgba(163,230,53,0.25)]">
-            {initials}
+            {user.avatarUrl ? (
+              <img
+                src={user.avatarUrl}
+                alt=""
+                className="size-full rounded-full object-cover"
+              />
+            ) : (
+              initials
+            )}
           </div>
 
           {/* Name & Quick details */}
