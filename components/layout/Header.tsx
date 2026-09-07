@@ -116,7 +116,6 @@ function ExamCountdown({
             <p className="mt-0.5 text-xs text-white/65">{formattedExamDate}</p>
           </div>
         </div>
-
         {!isLoading && (
           <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-4 gap-y-2">
             <p className="min-w-48 flex-1 text-sm leading-snug text-white/80">

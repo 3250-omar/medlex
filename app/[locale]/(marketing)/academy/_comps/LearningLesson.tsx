@@ -144,7 +144,7 @@ export default function LearningLesson({
       const nextSlug = nextUnit?.slug;
       const nextUrl = nextSlug
         ? `/${locale}/academy/courses/${courseSlug}/learn/${nextSlug}`
-        : `/${locale}/academy/courses/${courseSlug}/certificate`;
+        : `/${locale}/academy/courses/${courseSlug}/completion`;
 
       const doneBtn = root.querySelector<HTMLAnchorElement>(
         ".done a.btn, .done .mark, .done a[href]",
@@ -877,14 +877,14 @@ export default function LearningLesson({
             )
           ) : answeredAllQuestions ? (
             <Link
-              href={`/${locale}/academy/courses/${courseSlug}/certificate`}
+              href={`/${locale}/academy/courses/${courseSlug}/completion`}
               style={{ background: "var(--gold)", color: "var(--navy)" }}
               className="casc-nav-next-active"
               onClick={() => {
                 completeUnit({ courseSlug, unitSlug });
               }}
             >
-              Complete Course & Claim Certificate 🎓
+              Complete Course & Continue
             </Link>
           ) : (
             <button

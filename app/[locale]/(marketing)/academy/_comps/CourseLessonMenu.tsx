@@ -1,13 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import {
-  BookOpen,
-  Check,
-  Layers,
-  LockKeyhole,
-  Stethoscope,
-} from "lucide-react";
+import { Check, FileText, Layers, Stethoscope } from "lucide-react";
 import CollapsedMenu, {
   type CollapsedMenuGroup,
   type CollapsedMenuItem,
@@ -21,7 +15,7 @@ type CourseLessonMenuProps = {
   outline: CourseOutline;
 };
 
-type LessonCategory = "domains" | "stations" | "other";
+type LessonCategory = "domains" | "stations";
 
 function isCompleted(status: string | null, progressPercent: number) {
   return status === "completed" || progressPercent >= 100;
@@ -30,7 +24,7 @@ function isCompleted(status: string | null, progressPercent: number) {
 function getCategory(slug: string): LessonCategory {
   if (slug.startsWith("domain")) return "domains";
   if (slug.startsWith("station")) return "stations";
-  return "other";
+  return "domains";
 }
 
 export default function CourseLessonMenu({
@@ -39,13 +33,6 @@ export default function CourseLessonMenu({
   locale,
   outline,
 }: CourseLessonMenuProps) {
-  const firstIncompleteIndex = outline.units.findIndex(
-    (unit) => !isCompleted(unit.status, unit.progressPercent),
-  );
-  const unlockedThroughIndex =
-    firstIncompleteIndex === -1
-      ? outline.units.length - 1
-      : firstIncompleteIndex;
   const lessonIndexBySlug = useMemo(
     () => new Map(outline.units.map((unit, index) => [unit.slug, index])),
     [outline.units],
@@ -77,12 +64,6 @@ export default function CourseLessonMenu({
         icon: <Stethoscope size={13} className="text-signal" />,
         units: [],
       },
-      other: {
-        key: "other",
-        label: "Other lessons",
-        icon: <BookOpen size={13} className="text-signal" />,
-        units: [],
-      },
     };
 
     for (const unit of outline.units) {
@@ -103,7 +84,6 @@ export default function CourseLessonMenu({
         const items: CollapsedMenuItem[] = group.units.map((lesson) => {
           const lessonIndex = lessonIndexBySlug.get(lesson.slug) ?? 0;
           const completed = isCompleted(lesson.status, lesson.progressPercent);
-          const unlocked = lessonIndex <= unlockedThroughIndex;
           const isCurrent = lesson.slug === currentUnitSlug;
           const lessonNumber = lessonIndex + 1;
 
@@ -119,9 +99,7 @@ export default function CourseLessonMenu({
                     ? "Completed"
                     : isCurrent
                       ? "Current lesson"
-                      : unlocked
-                        ? "Available"
-                        : "Locked"}
+                      : "Available"}
                 </span>
               </div>
             ),
@@ -139,19 +117,12 @@ export default function CourseLessonMenu({
               >
                 {lessonNumber}
               </span>
-            ) : unlocked ? (
+            ) : (
               <span
                 className="flex size-6 shrink-0 items-center justify-center rounded-full bg-surface-2 border border-line text-text group-hover:text-signal font-semibold text-xs transition-colors"
                 title={`Lesson ${lessonNumber}`}
               >
                 {lessonNumber}
-              </span>
-            ) : (
-              <span
-                className="flex size-6 shrink-0 items-center justify-center rounded-full bg-surface-2/40 text-muted/50 text-xs"
-                title={`Lesson ${lessonNumber} (Locked)`}
-              >
-                <LockKeyhole size={12} />
               </span>
             ),
             badge: completed ? (
@@ -162,13 +133,8 @@ export default function CourseLessonMenu({
               <span className="text-signal text-[10px] font-semibold">
                 Active
               </span>
-            ) : !unlocked ? (
-              <LockKeyhole size={11} className="text-muted/60" />
             ) : undefined,
-            disabled: !unlocked,
-            href: unlocked
-              ? `/${locale}/academy/courses/${courseSlug}/learn/${lesson.slug}`
-              : undefined,
+            href: `/${locale}/academy/courses/${courseSlug}/learn/${lesson.slug}`,
           };
         });
 
@@ -181,14 +147,7 @@ export default function CourseLessonMenu({
           items,
         };
       });
-  }, [
-    outline.units,
-    lessonIndexBySlug,
-    unlockedThroughIndex,
-    currentUnitSlug,
-    locale,
-    courseSlug,
-  ]);
+  }, [outline.units, lessonIndexBySlug, currentUnitSlug, locale, courseSlug]);
 
   const totalUnits = Math.max(1, outline.units.length);
   const progressPercent = Math.round((completedCount / totalUnits) * 100);
@@ -200,8 +159,12 @@ export default function CourseLessonMenu({
     >
       <CollapsedMenu
         groups={menuGroups}
+        topAction={{
+          label: "View workbook",
+          href: "/gifts/Twelve%20Weeks%20to%20the%20CASC.pdf",
+          icon: <FileText size={16} />,
+        }}
         value={currentUnitSlug}
-        defaultCollapsed
         expandedWidthClassName="w-72"
         collapsedWidthClassName="w-[64px]"
         variant="card"

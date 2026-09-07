@@ -18,11 +18,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 
 export interface CollapsedMenuItem {
   id: string | number;
@@ -68,6 +63,13 @@ export interface CollapsedMenuProps extends Omit<
    * Menu items to render (when not using groups)
    */
   items?: CollapsedMenuItem[];
+
+  /** Optional action displayed above the menu items. */
+  topAction?: {
+    label: string;
+    href: string;
+    icon: React.ReactNode;
+  };
 
   /**
    * Categorized / grouped menu items
@@ -165,7 +167,6 @@ export interface CollapsedMenuProps extends Omit<
   movable?: boolean;
 }
 
-
 interface CollapsedMenuItemButtonProps {
   item: CollapsedMenuItem;
   active: boolean;
@@ -193,19 +194,49 @@ const CollapsedMenuItemButton = React.memo(function CollapsedMenuItemButton({
       className={cn(
         "group relative flex items-center font-body text-sm font-medium transition-all duration-200 outline-none select-none cursor-pointer",
         "focus-visible:ring-2 focus-visible:ring-signal/40 focus-visible:ring-offset-1 focus-visible:ring-offset-surface",
-        collapsed ? "size-10 mx-auto justify-center rounded-xl" : "w-full gap-2.5 px-3 py-2 rounded-xl text-start",
+        collapsed
+          ? "size-10 mx-auto justify-center rounded-xl"
+          : "w-full gap-2.5 px-3 py-2 rounded-xl text-start",
         active
-          ? ["bg-signal/15 text-signal border border-signal/30 shadow-xs", "after:absolute after:rounded-full after:bg-signal", collapsed ? "after:bottom-1 after:size-1" : "after:left-1 after:top-2 after:bottom-2 after:w-1 after:rounded-r"]
+          ? [
+              "bg-signal/15 text-signal border border-signal/30 shadow-xs",
+              "after:absolute after:rounded-full after:bg-signal",
+              collapsed
+                ? "after:bottom-1 after:size-1"
+                : "after:left-1 after:top-2 after:bottom-2 after:w-1 after:rounded-r",
+            ]
           : "text-muted hover:text-text hover:bg-surface-2/70 border border-transparent",
         item.disabled && "pointer-events-none opacity-40 cursor-not-allowed",
         item.className,
       )}
     >
-      <span className={cn("flex shrink-0 items-center justify-center transition-transform duration-200 [&_svg]:size-4.5", active ? "text-signal" : "text-muted group-hover:text-text group-hover:scale-105")}>
+      <span
+        className={cn(
+          "flex shrink-0 items-center justify-center transition-transform duration-200 [&_svg]:size-4.5",
+          active
+            ? "text-signal"
+            : "text-muted group-hover:text-text group-hover:scale-105",
+        )}
+      >
         {item.icon}
       </span>
-      {!collapsed && <span className="truncate flex-1 font-body text-sm leading-snug tracking-wide">{item.title}</span>}
-      {!collapsed && item.badge && <span className={cn("ml-auto text-xs font-semibold px-2 py-0.5 rounded-md shrink-0 transition-colors", active ? "bg-signal text-ink" : "bg-surface-2 text-muted group-hover:text-text")}>{item.badge}</span>}
+      {!collapsed && (
+        <span className="truncate flex-1 font-body text-sm leading-snug tracking-wide">
+          {item.title}
+        </span>
+      )}
+      {!collapsed && item.badge && (
+        <span
+          className={cn(
+            "ml-auto text-xs font-semibold px-2 py-0.5 rounded-md shrink-0 transition-colors",
+            active
+              ? "bg-signal text-ink"
+              : "bg-surface-2 text-muted group-hover:text-text",
+          )}
+        >
+          {item.badge}
+        </span>
+      )}
     </button>
   );
 
@@ -214,10 +245,22 @@ const CollapsedMenuItemButton = React.memo(function CollapsedMenuItemButton({
   return (
     <Tooltip>
       <TooltipTrigger render={button} />
-      <TooltipContent side="right" sideOffset={12} className="flex items-center gap-2 max-w-xs">
-        {groupLabel && <span className="text-[10px] uppercase font-bold tracking-wider text-signal border-r border-line pr-1.5 shrink-0">{groupLabel}</span>}
+      <TooltipContent
+        side="right"
+        sideOffset={12}
+        className="flex items-center gap-2 max-w-xs"
+      >
+        {groupLabel && (
+          <span className="text-[10px] uppercase font-bold tracking-wider text-signal border-r border-line pr-1.5 shrink-0">
+            {groupLabel}
+          </span>
+        )}
         <span className="truncate">{item.title}</span>
-        {item.badge && <span className="rounded bg-surface px-1.5 py-0.2 text-[10px] text-signal font-semibold shrink-0">{item.badge}</span>}
+        {item.badge && (
+          <span className="rounded bg-surface px-1.5 py-0.2 text-[10px] text-signal font-semibold shrink-0">
+            {item.badge}
+          </span>
+        )}
       </TooltipContent>
     </Tooltip>
   );
@@ -225,6 +268,7 @@ const CollapsedMenuItemButton = React.memo(function CollapsedMenuItemButton({
 
 export function CollapsedMenu({
   items,
+  topAction,
   groups,
   searchIndex,
   isSearchString,
@@ -253,7 +297,7 @@ export function CollapsedMenu({
 
   const menuRef = React.useRef<HTMLDivElement>(null);
   const searchInputRef = React.useRef<HTMLInputElement>(null);
-  const shouldFocusSearchRef = React.useRef(false);
+  const hasAutoCollapsedOnMobileRef = React.useRef(false);
 
   // Drag / movable position state
   const [position, setPosition] = React.useState<{
@@ -266,13 +310,16 @@ export function CollapsedMenu({
     startY: number;
     initialX: number;
     initialY: number;
+    maxX: number;
+    maxY: number;
   } | null>(null);
   const dragFrameRef = React.useRef<number | null>(null);
+  const dragPositionRef = React.useRef<{ x: number; y: number } | null>(null);
 
   const handlePointerDown = React.useCallback(
     (e: React.PointerEvent<HTMLElement>) => {
       if (!movable) return;
-      if (e.button !== 0) return; // Only primary pointer button
+      if (e.pointerType === "mouse" && e.button !== 0) return; // Only primary mouse button
 
       const node = menuRef.current;
       if (!node) return;
@@ -283,7 +330,10 @@ export function CollapsedMenu({
         startY: e.clientY,
         initialX: rect.left,
         initialY: rect.top,
+        maxX: Math.max(8, window.innerWidth - rect.width - 8),
+        maxY: Math.max(8, window.innerHeight - rect.height - 8),
       };
+      dragPositionRef.current = { x: rect.left, y: rect.top };
 
       try {
         e.currentTarget.setPointerCapture(e.pointerId);
@@ -297,29 +347,31 @@ export function CollapsedMenu({
 
   const handlePointerMove = React.useCallback(
     (e: React.PointerEvent<HTMLElement>) => {
-      if (!dragStartRef.current || !isDragging || !menuRef.current) return;
-
-      const deltaX = e.clientX - dragStartRef.current.startX;
-      const deltaY = e.clientY - dragStartRef.current.startY;
-
-      const rect = menuRef.current.getBoundingClientRect();
-      const maxX = Math.max(8, window.innerWidth - rect.width - 8);
-      const maxY = Math.max(8, window.innerHeight - rect.height - 8);
+      const dragStart = dragStartRef.current;
+      const node = menuRef.current;
+      if (!dragStart || !isDragging || !node) return;
 
       const targetX = Math.max(
         8,
-        Math.min(maxX, dragStartRef.current.initialX + deltaX),
+        Math.min(
+          dragStart.maxX,
+          dragStart.initialX + e.clientX - dragStart.startX,
+        ),
       );
       const targetY = Math.max(
         8,
-        Math.min(maxY, dragStartRef.current.initialY + deltaY),
+        Math.min(
+          dragStart.maxY,
+          dragStart.initialY + e.clientY - dragStart.startY,
+        ),
       );
+      dragPositionRef.current = { x: targetX, y: targetY };
 
       if (dragFrameRef.current !== null) {
         cancelAnimationFrame(dragFrameRef.current);
       }
       dragFrameRef.current = requestAnimationFrame(() => {
-        setPosition({ x: targetX, y: targetY });
+        node.style.transform = `translate3d(${targetX - dragStart.initialX}px, ${targetY - dragStart.initialY}px, 0)`;
         dragFrameRef.current = null;
       });
     },
@@ -328,8 +380,18 @@ export function CollapsedMenu({
 
   const handlePointerUp = React.useCallback(
     (e: React.PointerEvent<HTMLElement>) => {
-      if (dragStartRef.current) {
-        dragStartRef.current = null;
+      if (dragFrameRef.current !== null) {
+        cancelAnimationFrame(dragFrameRef.current);
+        dragFrameRef.current = null;
+      }
+      const finalPosition = dragPositionRef.current;
+      dragStartRef.current = null;
+      dragPositionRef.current = null;
+      if (menuRef.current) {
+        menuRef.current.style.transform = "";
+      }
+      if (finalPosition) {
+        setPosition(finalPosition);
       }
       setIsDragging(false);
       try {
@@ -345,12 +407,7 @@ export function CollapsedMenu({
     setPosition(null);
   }, []);
 
-  // Popover state for flyout menu when collapsed
-  const [openPopoverGroup, setOpenPopoverGroup] = React.useState<string | null>(
-    null,
-  );
   const [searchQuery, setSearchQuery] = React.useState("");
-
   // Check if menu is placed on right half of viewport
   const isRightSide = React.useMemo(() => {
     if (typeof window === "undefined") return true;
@@ -375,9 +432,6 @@ export function CollapsedMenu({
       if (controlledCollapsed === undefined) {
         setUncontrolledCollapsed(resolved);
       }
-      if (!resolved) {
-        setOpenPopoverGroup(null);
-      }
       onCollapsedChange?.(resolved);
     },
     [controlledCollapsed, isCollapsed, onCollapsedChange],
@@ -387,33 +441,16 @@ export function CollapsedMenu({
     setCollapsed((prev) => !prev);
   }, [setCollapsed]);
 
-  const handleOpenSearch = React.useCallback(() => {
-    if (isCollapsed) {
-      shouldFocusSearchRef.current = true;
-      setCollapsed(false);
-      return;
-    }
-
-    searchInputRef.current?.focus();
-  }, [isCollapsed, setCollapsed]);
-
-  React.useEffect(() => {
-    if (!shouldFocusSearchRef.current || isCollapsed) return;
-
-    searchInputRef.current?.focus();
-    shouldFocusSearchRef.current = false;
-  }, [isCollapsed]);
-
   // Style with smart anchoring based on viewport side so it expands INTO the screen
   const computedStyle = React.useMemo(() => {
     if (!position) return style;
 
-    const estimatedWidth = isCollapsed ? 64 : 288;
+    const windowWidth =
+      typeof window !== "undefined" ? window.innerWidth : 1200;
+    const estimatedWidth = Math.min(isCollapsed ? 64 : 288, windowWidth - 16);
 
     if (isRightSide) {
       // Pin right edge so when it expands or opens, it expands TO THE LEFT into the viewport
-      const windowWidth =
-        typeof window !== "undefined" ? window.innerWidth : 1200;
       const rightDistance = Math.max(
         8,
         windowWidth - position.x - estimatedWidth,
@@ -484,8 +521,13 @@ export function CollapsedMenu({
     if (!autoCollapseOnMobile) return;
     const mediaQuery = window.matchMedia("(max-width: 1023px)");
     const handleMedia = (e: MediaQueryListEvent | MediaQueryList) => {
-      if (e.matches) {
+      if (e.matches && !hasAutoCollapsedOnMobileRef.current) {
+        hasAutoCollapsedOnMobileRef.current = true;
         setCollapsed(true);
+        return;
+      }
+      if (!e.matches) {
+        hasAutoCollapsedOnMobileRef.current = false;
       }
     };
     handleMedia(mediaQuery);
@@ -641,18 +683,6 @@ export function CollapsedMenu({
     [activeId, handleItemClick, isCollapsed],
   );
 
-  const renderFullItem = React.useCallback(
-    (item: CollapsedMenuItem) => (
-      <CollapsedMenuItemButton
-        key={item.id}
-        item={item}
-        active={String(activeId) === String(item.id)}
-        collapsed={false}
-        onSelect={handleItemClick}
-      />
-    ),
-    [activeId, handleItemClick],
-  );
   return (
     <TooltipProvider delay={100}>
       <div
@@ -662,10 +692,12 @@ export function CollapsedMenu({
         data-dragging={isDragging}
         style={computedStyle}
         className={cn(
-          "sticky top-4 h-fit flex flex-col transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          "relative sticky top-16 h-fit flex flex-col transition-[width] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)]",
           isDragging &&
-            "!transition-none select-none shadow-2xl ring-2 ring-signal/40",
+            "!transition-none !backdrop-blur-none select-none shadow-2xl ring-2 ring-signal/40",
           isCollapsed ? collapsedWidthClassName : expandedWidthClassName,
+           !isCollapsed &&
+             "max-lg:fixed max-lg:top-16 max-lg:bottom-4 max-lg:end-2 max-lg:z-50 max-lg:!h-[calc(100dvh-5rem)] max-lg:w-[min(18rem,calc(100vw-1rem))] max-lg:max-w-[calc(100vw-1rem)] max-lg:overflow-hidden",
           variant === "card" && [
             "rounded-2xl border border-line bg-surface/95 backdrop-blur-md p-2.5",
             "shadow-xl shadow-ink/30 ring-1 ring-white/5",
@@ -677,7 +709,45 @@ export function CollapsedMenu({
         )}
         {...props}
       >
-        {/* Drag handle in collapsed mode */}
+        {topAction && (
+          <div
+            data-mobile-workbook
+            className="absolute bottom-full start-0 mb-3 z-10"
+          >
+            <Tooltip>
+              <TooltipTrigger
+                render={(triggerProps) => (
+                  <a
+                    {...triggerProps}
+                    href={topAction.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={topAction.label}
+                    className={cn(
+                      "flex min-h-11 items-center rounded-2xl border border-amber-300/40 bg-amber-950/80 px-3 text-amber-200 shadow-lg shadow-black/25 backdrop-blur-md transition-colors hover:border-amber-200/70 hover:bg-amber-900/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/60",
+                      "h-11 w-max justify-start gap-2 px-3",
+                      "max-md:!size-10 max-md:!min-h-10 max-md:!w-10 max-md:!justify-center max-md:!gap-0 max-md:!px-0",
+                    )}
+                  >
+                    <span className="shrink-0 [&_svg]:size-4.5">
+                      {topAction.icon}
+                    </span>
+                    <span className="whitespace-nowrap text-sm font-semibold max-md:!hidden">
+                      {topAction.label}
+                    </span>
+                  </a>
+                )}
+              />
+              <TooltipContent
+                side={isRightSide ? "left" : "right"}
+                sideOffset={10}
+              >
+                {topAction.label}
+              </TooltipContent>
+            </Tooltip>
+          </div>
+        )}
+
         {movable && isCollapsed && (
           <Tooltip>
             <TooltipTrigger
@@ -688,11 +758,7 @@ export function CollapsedMenu({
               onPointerCancel={handlePointerUp}
               onDoubleClick={handleResetPosition}
               aria-label="Drag to move menu"
-              className={cn(
-                "flex w-full items-center justify-center py-1 -mt-0.5 mb-1 rounded-md border border-transparent select-none",
-                "text-muted/40 transition-colors hover:text-signal hover:bg-surface-2/60",
-                "cursor-grab active:cursor-grabbing touch-none",
-              )}
+              className="flex w-full items-center justify-center py-1 -mt-0.5 mb-1 rounded-md border border-transparent select-none text-muted/40 transition-colors hover:text-signal hover:bg-surface-2/60 cursor-grab active:cursor-grabbing touch-none"
             >
               <GripHorizontal className="size-3.5" />
             </TooltipTrigger>
@@ -702,7 +768,6 @@ export function CollapsedMenu({
           </Tooltip>
         )}
 
-        {/* Top bar with optional header and collapse toggle button */}
         {(collapsible || header || allItems.length > 0) && (
           <div
             className={cn(
@@ -719,29 +784,7 @@ export function CollapsedMenu({
                 {header}
               </div>
             )}
-
             <div className="flex items-center gap-1 shrink-0">
-              {isCollapsed ? (
-                <Tooltip>
-                  <TooltipTrigger
-                    type="button"
-                    onClick={handleOpenSearch}
-                    aria-label="Search lessons"
-                    className={cn(
-                      "inline-flex size-10 shrink-0 items-center justify-center rounded-xl border border-transparent",
-                      "text-muted transition-all duration-200 hover:border-line hover:bg-surface-2 hover:text-signal",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal/40",
-                      "cursor-pointer active:scale-95",
-                    )}
-                  >
-                    <Search className="size-4.5" aria-hidden="true" />
-                  </TooltipTrigger>
-                  <TooltipContent side="right" sideOffset={10}>
-                    Search lessons
-                  </TooltipContent>
-                </Tooltip>
-              ) : null}
-              {/* Drag handle in expanded mode */}
               {movable && !isCollapsed && (
                 <Tooltip>
                   <TooltipTrigger
@@ -752,11 +795,7 @@ export function CollapsedMenu({
                     onPointerCancel={handlePointerUp}
                     onDoubleClick={handleResetPosition}
                     aria-label="Drag to move menu"
-                    className={cn(
-                      "inline-flex size-7 shrink-0 items-center justify-center rounded-md border border-transparent select-none",
-                      "text-muted/50 transition-colors hover:border-line hover:bg-surface-2 hover:text-signal",
-                      "cursor-grab active:cursor-grabbing touch-none",
-                    )}
+                    className="inline-flex size-7 shrink-0 items-center justify-center rounded-md border border-transparent select-none text-muted/50 transition-colors hover:border-line hover:bg-surface-2 hover:text-signal cursor-grab active:cursor-grabbing touch-none"
                   >
                     <GripVertical className="size-3.5" />
                   </TooltipTrigger>
@@ -765,7 +804,6 @@ export function CollapsedMenu({
                   </TooltipContent>
                 </Tooltip>
               )}
-
               {collapsible && (
                 <Tooltip>
                   <TooltipTrigger
@@ -774,12 +812,7 @@ export function CollapsedMenu({
                     aria-label={
                       isCollapsed ? "Expand sidebar" : "Collapse sidebar"
                     }
-                    className={cn(
-                      "inline-flex size-8 shrink-0 items-center justify-center rounded-lg border border-transparent",
-                      "text-muted transition-all duration-200 hover:border-line hover:bg-surface-2 hover:text-signal",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal/40",
-                      "cursor-pointer active:scale-95",
-                    )}
+                    className="inline-flex size-8 shrink-0 items-center justify-center rounded-lg border border-transparent text-muted transition-all duration-200 hover:border-line hover:bg-surface-2 hover:text-signal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal/40 cursor-pointer active:scale-95"
                   >
                     {isCollapsed ? (
                       <PanelLeftOpen className="size-4.5" />
@@ -829,7 +862,7 @@ export function CollapsedMenu({
 
         {/* Menu Items List */}
         <nav
-          className="flex flex-col gap-1.5 overflow-y-auto overflow-x-hidden max-h-[min(70vh,580px)] pr-0.5"
+          className="min-h-0 w-full flex-1 flex flex-col gap-1.5 overflow-y-auto overflow-x-hidden max-h-[min(80vh,680px)] max-lg:!max-h-none pr-0.5"
           role="menu"
           aria-orientation="vertical"
         >
@@ -845,9 +878,7 @@ export function CollapsedMenu({
               const isGroupExpanded =
                 normalizedSearchQuery.length > 0 ||
                 expandedGroups.has(group.key);
-
               if (isCollapsed) {
-                const isPopoverOpen = openPopoverGroup === group.key;
                 const hasActive = group.items.some(
                   (item) => String(item.id) === String(activeId),
                 );
@@ -860,108 +891,35 @@ export function CollapsedMenu({
                         aria-hidden="true"
                       />
                     )}
-
-                    {/* Category Popover Flyout in collapsed mode */}
-                    <Popover
-                      open={isPopoverOpen}
-                      onOpenChange={(open) => {
-                        setOpenPopoverGroup(open ? group.key : null);
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setExpandedGroups((previous) => {
+                          const next = new Set(previous);
+                          next.add(group.key);
+                          return next;
+                        });
+                        setCollapsed(false);
                       }}
+                      aria-label="Open category"
+                      className={cn(
+                        "size-10 mx-auto flex items-center justify-center rounded-xl transition-all duration-200 cursor-pointer outline-none",
+                        "focus-visible:ring-2 focus-visible:ring-signal/40",
+                        hasActive
+                          ? "bg-surface-2 text-signal border border-line shadow-xs"
+                          : "text-muted hover:text-text hover:bg-surface-2/60 border border-transparent",
+                      )}
                     >
-                      <Tooltip>
-                        <TooltipTrigger
-                          render={(triggerProps) => (
-                            <PopoverTrigger
-                              {...triggerProps}
-                              type="button"
-                              aria-label={`${group.label}: Open category`}
-                              className={cn(
-                                "size-10 mx-auto flex items-center justify-center rounded-xl transition-all duration-200 cursor-pointer outline-none",
-                                "focus-visible:ring-2 focus-visible:ring-signal/40",
-                                isPopoverOpen || hasActive
-                                  ? "bg-surface-2 text-signal border border-line shadow-xs"
-                                  : "text-muted hover:text-text hover:bg-surface-2/60 border border-transparent",
-                              )}
-                            >
-                              <span className="relative flex items-center justify-center [&_svg]:size-4.5">
-                                {group.icon ?? (
-                                  <span className="text-xs font-bold uppercase tracking-wider">
-                                    {typeof group.label === "string"
-                                      ? group.label.charAt(0)
-                                      : "•"}
-                                  </span>
-                                )}
-                                <span
-                                  className={cn(
-                                    "absolute -bottom-1 -right-1 size-1.5 rounded-full",
-                                    isPopoverOpen || hasActive
-                                      ? "bg-signal"
-                                      : "bg-muted/40",
-                                  )}
-                                />
-                              </span>
-                            </PopoverTrigger>
+                      <span className="relative flex items-center justify-center [&_svg]:size-4.5">
+                        {group.icon}
+                        <span
+                          className={cn(
+                            "absolute -bottom-1 -right-1 size-1.5 rounded-full",
+                            hasActive ? "bg-signal" : "bg-muted/40",
                           )}
                         />
-                        {!isPopoverOpen && (
-                          <TooltipContent
-                            side={isRightSide ? "left" : "right"}
-                            sideOffset={12}
-                            className="flex items-center gap-2 max-w-xs"
-                          >
-                            <span className="text-[10px] uppercase font-bold tracking-wider text-signal">
-                              {group.label}
-                            </span>
-                            <span className="rounded bg-surface px-1.5 py-0.2 text-[10px] text-muted font-normal">
-                              {group.badge ?? group.items.length}
-                            </span>
-                          </TooltipContent>
-                        )}
-                      </Tooltip>
-
-                      <PopoverContent
-                        side={isRightSide ? "left" : "right"}
-                        align="start"
-                        sideOffset={14}
-                        positionerClassName="z-[99999]"
-                        className={cn(
-                          "w-80 max-w-[calc(100vw-32px)] flex flex-col gap-2 p-3.5 rounded-2xl",
-                          "border border-line bg-surface/98 backdrop-blur-xl text-text",
-                          "shadow-2xl shadow-ink/60 ring-1 ring-white/10 outline-none select-none",
-                        )}
-                      >
-                        {/* Category Header */}
-                        <div className="flex items-center justify-between pb-2.5 mb-0.5 border-b border-line/60">
-                          <div className="flex items-center gap-2 min-w-0">
-                            {group.icon && (
-                              <span className="text-signal shrink-0 [&_svg]:size-4">
-                                {group.icon}
-                              </span>
-                            )}
-                            <span className="font-heading text-sm font-semibold text-text truncate">
-                              {group.label}
-                            </span>
-                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-surface-2 border border-line text-signal font-semibold shrink-0">
-                              {group.badge ?? group.items.length}
-                            </span>
-                          </div>
-
-                          <button
-                            type="button"
-                            onClick={() => setOpenPopoverGroup(null)}
-                            aria-label="Close"
-                            className="size-6 inline-flex items-center justify-center rounded-md text-muted hover:text-text hover:bg-surface-2 transition-colors cursor-pointer"
-                          >
-                            <X className="size-3.5" />
-                          </button>
-                        </div>
-
-                        {/* Task / Lesson List */}
-                        <div className="flex flex-col gap-1 max-h-[min(60vh,460px)] overflow-y-auto overflow-x-hidden pr-1">
-                          {group.items.map((item) => renderFullItem(item))}
-                        </div>
-                      </PopoverContent>
-                    </Popover>
+                      </span>
+                    </button>
                   </div>
                 );
               }
