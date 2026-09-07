@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { fullName, username, phone, email, password } = payload.data;
+  const { fullName, username, phone, examDate, email, password } = payload.data;
   const { response, supabase } = createRouteClient(request);
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -23,6 +23,7 @@ export async function POST(request: NextRequest) {
         full_name: fullName,
         username,
         phone,
+        exam_date: examDate,
       },
     },
   });

@@ -199,7 +199,7 @@ export default function PathwayHeroSection({
           <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(7,24,42,.97),rgba(7,24,42,.75),rgba(7,24,42,.58))]" />
         </>
       )}
-      <div className="mx-auto w-full px-6 py-24 sm:px-8 lg:max-w-6xl lg:px-10 lg:py-28">
+      <div className="mx-auto w-full px-6 pb-14 pt-20 sm:px-8 sm:pb-16 sm:pt-22 lg:max-w-6xl lg:px-10 lg:pb-16 lg:pt-24">
         <div className="max-w-3xl">
           <Eyebrow>{content.eyebrow}</Eyebrow>
           <h1 className="mt-7 max-w-3xl font-display text-4xl leading-[1.04] text-white sm:text-5xl lg:text-6xl">

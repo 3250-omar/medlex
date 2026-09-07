@@ -15,6 +15,7 @@ export async function GET() {
           fullName: user.user_metadata?.full_name ?? null,
           username: user.user_metadata?.username ?? null,
           phone: user.user_metadata?.phone ?? null,
+          examDate: user.user_metadata?.exam_date ?? null,
           createdAt: user.created_at ?? null,
         }
       : null,

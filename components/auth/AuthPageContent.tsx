@@ -26,9 +26,17 @@ import {
 } from "@/components/marketing/authMutations";
 import { academyQueryKeys } from "@/app/[locale]/(marketing)/_apiCalls/academyQueries";
 import { signInSchema, signUpSchema } from "@/lib/auth/validation";
+import { DatePicker } from "@/components/ui/datePicker";
 
 export type AuthTab = "sign-in" | "register";
 type AuthField = keyof typeof signUpSchema.shape;
+
+function formatDateForForm(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
 export function AuthPageContent() {
   const locale = useLocale();
   const router = useRouter();
@@ -47,6 +55,7 @@ export function AuthPageContent() {
   // Local state
   const [localTab, setLocalTab] = React.useState<AuthTab | null>(null);
   const [showPassword, setShowPassword] = React.useState(false);
+  const [examDate, setExamDate] = React.useState<Date>();
 
   const tab: AuthTab = localTab ?? defaultTab;
 
@@ -65,6 +74,7 @@ export function AuthPageContent() {
     email: auth("validation.email"),
     phone: auth("validation.phone"),
     password: auth("validation.password"),
+    examDate: auth("validation.examDate"),
   };
 
   function getFieldErrors(issues: { path: PropertyKey[] }[]) {
@@ -170,6 +180,7 @@ export function AuthPageContent() {
       email: String(formData.get("email") ?? "").trim(),
       phone: String(formData.get("phone-number") ?? "").trim(),
       password: String(formData.get("password") ?? ""),
+      examDate: String(formData.get("exam-date") ?? ""),
     };
 
     const validation = signUpSchema.safeParse(input);
@@ -582,7 +593,38 @@ export function AuthPageContent() {
                         autoComplete="tel"
                         placeholder="+44 7000 000000"
                       />
-
+                      <div className="flex flex-col gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted">
+                        <label htmlFor="exam-date">{auth("examDate")}</label>
+                        <input
+                          type="hidden"
+                          name="exam-date"
+                          value={
+                            examDate ? formatDateForForm(examDate) : ""
+                          }
+                        />
+                        <DatePicker
+                          id="exam-date"
+                          value={examDate}
+                          onChange={(date) => {
+                            setExamDate(date);
+                            clearFieldError("examDate");
+                          }}
+                          placeholder={auth("examDatePlaceholder")}
+                          className={cn(
+                            fieldErrors.examDate &&
+                              "border-destructive bg-destructive/5 text-destructive",
+                          )}
+                        />
+                        {fieldErrors.examDate && (
+                          <span
+                            id="examDate-error"
+                            className="mt-0.5 normal-case tracking-normal text-xs text-destructive"
+                            aria-live="polite"
+                          >
+                            {fieldErrors.examDate}
+                          </span>
+                        )}
+                      </div>
                       <AuthInputField
                         label={auth("password")}
                         name="password"
@@ -596,7 +638,7 @@ export function AuthPageContent() {
                         type={showPassword ? "text" : "password"}
                         autoComplete="new-password"
                         placeholder="••••••••"
-                        className="sm:col-span-2"
+                        className="sm:col-span-2! md:col-span-1!"
                         trailing={
                           <button
                             type="button"

@@ -206,7 +206,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
       </div>
 
       <div
-        className="relative mx-auto flex w-full flex-1 items-center px-6 py-32 md:px-8 lg:px-12"
+        className="relative mx-auto flex w-full flex-1 items-center px-6 pb-24 pt-[calc(var(--header-h)+3rem)] md:px-8 md:pb-28 md:pt-[calc(var(--header-h)+4rem)] lg:px-12"
         style={{ maxWidth: "var(--content-max)" }}
       >
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,.92fr)] lg:gap-14">

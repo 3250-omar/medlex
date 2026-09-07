@@ -477,8 +477,11 @@
       "username": "Username must be at least 3 characters.",
       "email": "Enter a valid email address.",
       "phone": "Enter at least 6 characters.",
-      "password": "Password must be between 8 and 72 characters."
-    }
+      "password": "Password must be between 8 and 72 characters.",
+      "examDate": "Select a valid exam date."
+    },
+    "examDate": "Exam date",
+    "examDatePlaceholder": "Select your exam date"
   },
   "pathwayPages": {
     "labels": {
@@ -1024,5 +1027,21 @@
       "desc": "Our faculty designs bespoke continuous medical and legal education (CME/CLE) programs aligned with your regional jurisdiction.",
       "action": "Request Proposal"
     }
+  },
+  "exam": {
+    "today": "Your exam is today",
+    "daysRemaining": "{count} days to your exam",
+    "subscribeMessage": "Subscribe to build a focused plan before exam day.",
+    "subscribedMessage": "You are making progress. Keep the momentum going.",
+    "progress": "Course progress: {count}%",
+    "continueLesson": "Continue current lesson",
+    "exploreCourses": "Explore courses",
+    "title": "Your exam countdown",
+    "daysLabel": "days to go",
+    "examDateLabel": "Exam date",
+    "daysShort": "days",
+    "hoursShort": "hrs",
+    "minutesShort": "min",
+    "secondsShort": "sec"
   }
 }

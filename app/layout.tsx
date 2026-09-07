@@ -3,6 +3,7 @@ import { ovo, manrope } from "@/lib/fonts";
 import "./globals.css";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { siteUrl } from "@/lib/seo/metadata";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -13,7 +14,10 @@ export const metadata: Metadata = {
   },
   description:
     "MedLex trains psychiatrists to produce evaluations that survive cross-examination and gives courts, prosecutors, and ministries psychiatric evidence built to a documented standard.",
-  metadataBase: new URL("https://medlex.academy"),
+  metadataBase: siteUrl,
+  applicationName: "MedLex",
+  category: "Education",
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({

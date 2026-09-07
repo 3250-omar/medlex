@@ -8,7 +8,7 @@ interface AudienceSectionProps {
 export default function AudienceSection({ audience }: AudienceSectionProps) {
   return (
     <section className="border-b border-white/10 bg-[#09192b]">
-      <div className="mx-auto grid w-full gap-10 px-6 py-20 sm:px-8 lg:max-w-6xl lg:grid-cols-[10rem_1fr] lg:gap-6 lg:px-10 lg:py-28">
+      <div className="mx-auto grid w-full gap-8 px-6 py-14 sm:px-8 sm:py-16 lg:max-w-6xl lg:grid-cols-[10rem_1fr] lg:gap-6 lg:px-10 lg:py-20">
         <Eyebrow>{audience.eyebrow}</Eyebrow>
         <div>
           <h2 className="max-w-2xl font-display text-3xl leading-tight sm:text-4xl">

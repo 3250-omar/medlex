@@ -1,4 +1,6 @@
 -- Allow learners to record downloads of certificates issued for their own enrollments.
+drop policy if exists "learners record own certificate downloads" on public.certificate_download_events;
+
 create policy "learners record own certificate downloads"
 on public.certificate_download_events
 for insert

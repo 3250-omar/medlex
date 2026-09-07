@@ -26,7 +26,7 @@ export async function GET() {
     .in("status", ["active", "paused", "completed"])
     .limit(1)
     .maybeSingle();
-  
+
   if (enrollmentError) {
     return NextResponse.json(
       { error: "Unable to verify gift eligibility." },
@@ -57,17 +57,57 @@ export async function GET() {
   const fileBuffer = fs.readFileSync(filePath);
 
   // Retain the first successful request timestamp for the one-time gift status.
-  const { error: updateError } = await supabase
+  const downloadedAt = new Date().toISOString();
+  const { data: updatedProfile, error: updateError } = await supabase
     .from("profiles")
-    .update({ gift_downloaded_at: new Date().toISOString() })
+    .update({ gift_downloaded_at: downloadedAt })
     .eq("id", user.id)
-    .is("gift_downloaded_at", null);
+    .is("gift_downloaded_at", null)
+    .select("gift_downloaded_at")
+    .maybeSingle();
 
   if (updateError) {
     return NextResponse.json(
       { error: "Unable to record the gift download." },
       { status: 500 },
     );
+  }
+
+  if (!updatedProfile) {
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("gift_downloaded_at")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    if (profileError && profileError.code !== "PGRST116") {
+      return NextResponse.json(
+        { error: "Unable to record the gift download." },
+        { status: 500 },
+      );
+    }
+
+    if (!profile) {
+      const { error: insertError } = await supabase.from("profiles").insert({
+        id: user.id,
+        full_name: null,
+        phone: null,
+        role: "learner",
+        gift_downloaded_at: downloadedAt,
+      });
+
+      if (insertError) {
+        return NextResponse.json(
+          { error: "Unable to record the gift download." },
+          { status: 500 },
+        );
+      }
+    } else if (!profile.gift_downloaded_at) {
+      return NextResponse.json(
+        { error: "Unable to record the gift download." },
+        { status: 500 },
+      );
+    }
   }
 
   return new NextResponse(fileBuffer, {

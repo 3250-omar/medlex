@@ -8,6 +8,7 @@ import {
   GripVertical,
   PanelLeftClose,
   PanelLeftOpen,
+  Search,
   X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -41,6 +42,22 @@ export interface CollapsedMenuGroup {
   badge?: React.ReactNode;
   defaultExpanded?: boolean;
   items: CollapsedMenuItem[];
+}
+
+function getSearchableTitle(title: React.ReactNode): string {
+  if (typeof title === "string" || typeof title === "number") {
+    return String(title);
+  }
+
+  if (Array.isArray(title)) {
+    return title.map(getSearchableTitle).join(" ");
+  }
+
+  if (React.isValidElement<{ children?: React.ReactNode }>(title)) {
+    return getSearchableTitle(title.props.children);
+  }
+
+  return "";
 }
 
 export interface CollapsedMenuProps extends Omit<
@@ -148,6 +165,64 @@ export interface CollapsedMenuProps extends Omit<
   movable?: boolean;
 }
 
+
+interface CollapsedMenuItemButtonProps {
+  item: CollapsedMenuItem;
+  active: boolean;
+  collapsed: boolean;
+  groupLabel?: React.ReactNode;
+  onSelect: (item: CollapsedMenuItem) => void;
+}
+
+const CollapsedMenuItemButton = React.memo(function CollapsedMenuItemButton({
+  item,
+  active,
+  collapsed,
+  groupLabel,
+  onSelect,
+}: CollapsedMenuItemButtonProps) {
+  const handleClick = React.useCallback(() => onSelect(item), [item, onSelect]);
+  const button = (
+    <button
+      type="button"
+      role="menuitem"
+      disabled={item.disabled}
+      aria-current={active ? "page" : undefined}
+      aria-disabled={item.disabled}
+      onClick={handleClick}
+      className={cn(
+        "group relative flex items-center font-body text-sm font-medium transition-all duration-200 outline-none select-none cursor-pointer",
+        "focus-visible:ring-2 focus-visible:ring-signal/40 focus-visible:ring-offset-1 focus-visible:ring-offset-surface",
+        collapsed ? "size-10 mx-auto justify-center rounded-xl" : "w-full gap-2.5 px-3 py-2 rounded-xl text-start",
+        active
+          ? ["bg-signal/15 text-signal border border-signal/30 shadow-xs", "after:absolute after:rounded-full after:bg-signal", collapsed ? "after:bottom-1 after:size-1" : "after:left-1 after:top-2 after:bottom-2 after:w-1 after:rounded-r"]
+          : "text-muted hover:text-text hover:bg-surface-2/70 border border-transparent",
+        item.disabled && "pointer-events-none opacity-40 cursor-not-allowed",
+        item.className,
+      )}
+    >
+      <span className={cn("flex shrink-0 items-center justify-center transition-transform duration-200 [&_svg]:size-4.5", active ? "text-signal" : "text-muted group-hover:text-text group-hover:scale-105")}>
+        {item.icon}
+      </span>
+      {!collapsed && <span className="truncate flex-1 font-body text-sm leading-snug tracking-wide">{item.title}</span>}
+      {!collapsed && item.badge && <span className={cn("ml-auto text-xs font-semibold px-2 py-0.5 rounded-md shrink-0 transition-colors", active ? "bg-signal text-ink" : "bg-surface-2 text-muted group-hover:text-text")}>{item.badge}</span>}
+    </button>
+  );
+
+  if (!collapsed) return button;
+
+  return (
+    <Tooltip>
+      <TooltipTrigger render={button} />
+      <TooltipContent side="right" sideOffset={12} className="flex items-center gap-2 max-w-xs">
+        {groupLabel && <span className="text-[10px] uppercase font-bold tracking-wider text-signal border-r border-line pr-1.5 shrink-0">{groupLabel}</span>}
+        <span className="truncate">{item.title}</span>
+        {item.badge && <span className="rounded bg-surface px-1.5 py-0.2 text-[10px] text-signal font-semibold shrink-0">{item.badge}</span>}
+      </TooltipContent>
+    </Tooltip>
+  );
+});
+
 export function CollapsedMenu({
   items,
   groups,
@@ -177,6 +252,8 @@ export function CollapsedMenu({
   const searchParams = useSearchParams();
 
   const menuRef = React.useRef<HTMLDivElement>(null);
+  const searchInputRef = React.useRef<HTMLInputElement>(null);
+  const shouldFocusSearchRef = React.useRef(false);
 
   // Drag / movable position state
   const [position, setPosition] = React.useState<{
@@ -190,6 +267,7 @@ export function CollapsedMenu({
     initialX: number;
     initialY: number;
   } | null>(null);
+  const dragFrameRef = React.useRef<number | null>(null);
 
   const handlePointerDown = React.useCallback(
     (e: React.PointerEvent<HTMLElement>) => {
@@ -237,7 +315,13 @@ export function CollapsedMenu({
         Math.min(maxY, dragStartRef.current.initialY + deltaY),
       );
 
-      setPosition({ x: targetX, y: targetY });
+      if (dragFrameRef.current !== null) {
+        cancelAnimationFrame(dragFrameRef.current);
+      }
+      dragFrameRef.current = requestAnimationFrame(() => {
+        setPosition({ x: targetX, y: targetY });
+        dragFrameRef.current = null;
+      });
     },
     [isDragging],
   );
@@ -265,6 +349,7 @@ export function CollapsedMenu({
   const [openPopoverGroup, setOpenPopoverGroup] = React.useState<string | null>(
     null,
   );
+  const [searchQuery, setSearchQuery] = React.useState("");
 
   // Check if menu is placed on right half of viewport
   const isRightSide = React.useMemo(() => {
@@ -301,6 +386,23 @@ export function CollapsedMenu({
   const toggleCollapsed = React.useCallback(() => {
     setCollapsed((prev) => !prev);
   }, [setCollapsed]);
+
+  const handleOpenSearch = React.useCallback(() => {
+    if (isCollapsed) {
+      shouldFocusSearchRef.current = true;
+      setCollapsed(false);
+      return;
+    }
+
+    searchInputRef.current?.focus();
+  }, [isCollapsed, setCollapsed]);
+
+  React.useEffect(() => {
+    if (!shouldFocusSearchRef.current || isCollapsed) return;
+
+    searchInputRef.current?.focus();
+    shouldFocusSearchRef.current = false;
+  }, [isCollapsed]);
 
   // Style with smart anchoring based on viewport side so it expands INTO the screen
   const computedStyle = React.useMemo(() => {
@@ -371,6 +473,14 @@ export function CollapsedMenu({
 
   // Responsive auto-collapse for tablets / mobile
   React.useEffect(() => {
+    return () => {
+      if (dragFrameRef.current !== null) {
+        cancelAnimationFrame(dragFrameRef.current);
+      }
+    };
+  }, []);
+
+  React.useEffect(() => {
     if (!autoCollapseOnMobile) return;
     const mediaQuery = window.matchMedia("(max-width: 1023px)");
     const handleMedia = (e: MediaQueryListEvent | MediaQueryList) => {
@@ -390,6 +500,34 @@ export function CollapsedMenu({
     }
     return items ?? [];
   }, [items, groups]);
+
+  const normalizedSearchQuery = searchQuery.trim().toLocaleLowerCase();
+  const filteredGroups = React.useMemo(
+    () =>
+      groups
+        ?.map((group) => ({
+          ...group,
+          items: group.items.filter((item) =>
+            getSearchableTitle(item.title)
+              .toLocaleLowerCase()
+              .includes(normalizedSearchQuery),
+          ),
+        }))
+        .filter((group) => group.items.length > 0) ?? [],
+    [groups, normalizedSearchQuery],
+  );
+  const filteredItems = React.useMemo(
+    () =>
+      allItems.filter((item) =>
+        getSearchableTitle(item.title)
+          .toLocaleLowerCase()
+          .includes(normalizedSearchQuery),
+      ),
+    [allItems, normalizedSearchQuery],
+  );
+  const hasSearchResults = groups?.length
+    ? filteredGroups.length > 0
+    : filteredItems.length > 0;
 
   // Determine active item id
   const effectiveIsSearchString =
@@ -490,176 +628,31 @@ export function CollapsedMenu({
   );
 
   const renderItem = React.useCallback(
-    (item: CollapsedMenuItem, groupLabel?: React.ReactNode) => {
-      const isActive = String(activeId) === String(item.id);
-
-      const itemButton = (
-        <button
-          key={item.id}
-          type="button"
-          role="menuitem"
-          disabled={item.disabled}
-          aria-current={isActive ? "page" : undefined}
-          aria-disabled={item.disabled}
-          onClick={() => handleItemClick(item)}
-          className={cn(
-            "group relative flex items-center font-body text-sm font-medium transition-all duration-200 outline-none select-none cursor-pointer",
-            "focus-visible:ring-2 focus-visible:ring-signal/40 focus-visible:ring-offset-1 focus-visible:ring-offset-surface",
-            isCollapsed
-              ? "size-10 mx-auto justify-center rounded-xl"
-              : "w-full gap-2.5 px-3 py-2 rounded-xl text-start",
-            isActive
-              ? [
-                  "bg-signal/15 text-signal border border-signal/30 shadow-xs",
-                  "after:absolute after:rounded-full after:bg-signal",
-                  isCollapsed
-                    ? "after:bottom-1 after:size-1"
-                    : "after:left-1 after:top-2 after:bottom-2 after:w-1 after:rounded-r",
-                ]
-              : [
-                  "text-muted hover:text-text hover:bg-surface-2/70 border border-transparent",
-                ],
-            item.disabled &&
-              "pointer-events-none opacity-40 cursor-not-allowed",
-            item.className,
-          )}
-        >
-          {/* Icon */}
-          <span
-            className={cn(
-              "flex shrink-0 items-center justify-center transition-transform duration-200",
-              isActive
-                ? "text-signal"
-                : "text-muted group-hover:text-text group-hover:scale-105",
-              "[&_svg]:size-4.5",
-            )}
-          >
-            {item.icon}
-          </span>
-
-          {/* Title (visible only when expanded) */}
-          {!isCollapsed && (
-            <span className="truncate flex-1 font-body text-sm leading-none tracking-wide">
-              {item.title}
-            </span>
-          )}
-
-          {/* Badge (visible when expanded) */}
-          {!isCollapsed && item.badge && (
-            <span
-              className={cn(
-                "ml-auto text-xs font-semibold px-2 py-0.5 rounded-md shrink-0 transition-colors",
-                isActive
-                  ? "bg-signal text-ink"
-                  : "bg-surface-2 text-muted group-hover:text-text",
-              )}
-            >
-              {item.badge}
-            </span>
-          )}
-        </button>
-      );
-
-      // In collapsed mode, wrap each item in a Tooltip
-      if (isCollapsed) {
-        return (
-          <Tooltip key={item.id}>
-            <TooltipTrigger render={itemButton} />
-            <TooltipContent
-              side="right"
-              sideOffset={12}
-              className="flex items-center gap-2 max-w-xs"
-            >
-              {groupLabel && (
-                <span className="text-[10px] uppercase font-bold tracking-wider text-signal border-r border-line pr-1.5 shrink-0">
-                  {groupLabel}
-                </span>
-              )}
-              <span className="truncate">{item.title}</span>
-              {item.badge && (
-                <span className="rounded bg-surface px-1.5 py-0.2 text-[10px] text-signal font-semibold shrink-0">
-                  {item.badge}
-                </span>
-              )}
-            </TooltipContent>
-          </Tooltip>
-        );
-      }
-
-      return itemButton;
-    },
+    (item: CollapsedMenuItem, groupLabel?: React.ReactNode) => (
+      <CollapsedMenuItemButton
+        key={item.id}
+        item={item}
+        active={String(activeId) === String(item.id)}
+        collapsed={isCollapsed}
+        groupLabel={groupLabel}
+        onSelect={handleItemClick}
+      />
+    ),
     [activeId, handleItemClick, isCollapsed],
   );
 
   const renderFullItem = React.useCallback(
-    (item: CollapsedMenuItem) => {
-      const isActive = String(activeId) === String(item.id);
-
-      return (
-        <button
-          key={item.id}
-          type="button"
-          role="menuitem"
-          disabled={item.disabled}
-          aria-current={isActive ? "page" : undefined}
-          aria-disabled={item.disabled}
-          onClick={() => {
-            handleItemClick(item);
-            setOpenPopoverGroup(null);
-          }}
-          className={cn(
-            "group relative flex items-center w-full gap-2.5 px-3 py-2 rounded-xl text-start font-body text-sm font-medium transition-all duration-200 outline-none select-none cursor-pointer",
-            "focus-visible:ring-2 focus-visible:ring-signal/40 focus-visible:ring-offset-1 focus-visible:ring-offset-surface",
-            isActive
-              ? [
-                  "bg-signal/15 text-signal border border-signal/30 shadow-xs",
-                  "after:absolute after:rounded-full after:bg-signal after:left-1 after:top-2 after:bottom-2 after:w-1 after:rounded-r",
-                ]
-              : [
-                  "text-muted hover:text-text hover:bg-surface-2/70 border border-transparent",
-                ],
-            item.disabled &&
-              "pointer-events-none opacity-40 cursor-not-allowed",
-            item.className,
-          )}
-        >
-          {/* Icon */}
-          <span
-            className={cn(
-              "flex shrink-0 items-center justify-center transition-transform duration-200",
-              isActive
-                ? "text-signal"
-                : "text-muted group-hover:text-text group-hover:scale-105",
-              "[&_svg]:size-4.5",
-            )}
-          >
-            {item.icon}
-          </span>
-
-          {/* Title */}
-          <span className="truncate flex-1 font-body text-sm leading-snug tracking-wide">
-            {item.title}
-          </span>
-
-          {/* Badge */}
-          {item.badge && (
-            <span
-              className={cn(
-                "ml-auto text-xs font-semibold px-2 py-0.5 rounded-md shrink-0 transition-colors",
-                isActive
-                  ? "bg-signal text-ink"
-                  : "bg-surface-2 text-muted group-hover:text-text",
-              )}
-            >
-              {item.badge}
-            </span>
-          )}
-        </button>
-      );
-    },
+    (item: CollapsedMenuItem) => (
+      <CollapsedMenuItemButton
+        key={item.id}
+        item={item}
+        active={String(activeId) === String(item.id)}
+        collapsed={false}
+        onSelect={handleItemClick}
+      />
+    ),
     [activeId, handleItemClick],
   );
-
   return (
     <TooltipProvider delay={100}>
       <div
@@ -710,7 +703,7 @@ export function CollapsedMenu({
         )}
 
         {/* Top bar with optional header and collapse toggle button */}
-        {(collapsible || header) && (
+        {(collapsible || header || allItems.length > 0) && (
           <div
             className={cn(
               "flex items-center pb-2.5 mb-2 border-b border-line/60 transition-all duration-200",
@@ -728,6 +721,26 @@ export function CollapsedMenu({
             )}
 
             <div className="flex items-center gap-1 shrink-0">
+              {isCollapsed ? (
+                <Tooltip>
+                  <TooltipTrigger
+                    type="button"
+                    onClick={handleOpenSearch}
+                    aria-label="Search lessons"
+                    className={cn(
+                      "inline-flex size-10 shrink-0 items-center justify-center rounded-xl border border-transparent",
+                      "text-muted transition-all duration-200 hover:border-line hover:bg-surface-2 hover:text-signal",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal/40",
+                      "cursor-pointer active:scale-95",
+                    )}
+                  >
+                    <Search className="size-4.5" aria-hidden="true" />
+                  </TooltipTrigger>
+                  <TooltipContent side="right" sideOffset={10}>
+                    Search lessons
+                  </TooltipContent>
+                </Tooltip>
+              ) : null}
               {/* Drag handle in expanded mode */}
               {movable && !isCollapsed && (
                 <Tooltip>
@@ -783,178 +796,220 @@ export function CollapsedMenu({
           </div>
         )}
 
+        {!isCollapsed && (
+          <div className="relative mb-2">
+            <Search
+              className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted"
+              aria-hidden="true"
+            />
+            <input
+              ref={searchInputRef}
+              type="search"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              placeholder="Search lessons"
+              aria-label="Search lessons by name"
+              className={cn(
+                "h-10 w-full rounded-xl border border-line bg-surface-2/50 ps-9 pe-9 font-body text-sm text-text outline-none",
+                "placeholder:text-muted focus:border-signal/50 focus:ring-2 focus:ring-signal/25",
+              )}
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery("")}
+                aria-label="Clear lesson search"
+                className="absolute end-1.5 top-1/2 inline-flex size-7 -translate-y-1/2 items-center justify-center rounded-lg text-muted transition-colors hover:bg-surface hover:text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal/40"
+              >
+                <X className="size-3.5" aria-hidden="true" />
+              </button>
+            )}
+          </div>
+        )}
+
         {/* Menu Items List */}
         <nav
           className="flex flex-col gap-1.5 overflow-y-auto overflow-x-hidden max-h-[min(70vh,580px)] pr-0.5"
           role="menu"
           aria-orientation="vertical"
         >
-          {groups && groups.length > 0
-            ? groups.map((group, gIdx) => {
-                const isGroupExpanded = expandedGroups.has(group.key);
+          {!hasSearchResults ? (
+            <p
+              className="px-3 py-4 text-center font-body text-sm text-muted"
+              role="status"
+            >
+              No lessons found.
+            </p>
+          ) : groups && groups.length > 0 ? (
+            filteredGroups.map((group, gIdx) => {
+              const isGroupExpanded =
+                normalizedSearchQuery.length > 0 ||
+                expandedGroups.has(group.key);
 
-                if (isCollapsed) {
-                  const isPopoverOpen = openPopoverGroup === group.key;
-                  const hasActive = group.items.some(
-                    (item) => String(item.id) === String(activeId),
-                  );
-
-                  return (
-                    <div key={group.key} className="flex flex-col gap-1">
-                      {gIdx > 0 && (
-                        <div
-                          className="h-px bg-line/40 my-1 mx-1.5"
-                          aria-hidden="true"
-                        />
-                      )}
-
-                      {/* Category Popover Flyout in collapsed mode */}
-                      <Popover
-                        open={isPopoverOpen}
-                        onOpenChange={(open) => {
-                          setOpenPopoverGroup(open ? group.key : null);
-                        }}
-                      >
-                        <Tooltip>
-                          <TooltipTrigger
-                            render={(triggerProps) => (
-                              <PopoverTrigger
-                                {...triggerProps}
-                                type="button"
-                                aria-label={`${group.label}: Open category`}
-                                className={cn(
-                                  "size-10 mx-auto flex items-center justify-center rounded-xl transition-all duration-200 cursor-pointer outline-none",
-                                  "focus-visible:ring-2 focus-visible:ring-signal/40",
-                                  isPopoverOpen || hasActive
-                                    ? "bg-surface-2 text-signal border border-line shadow-xs"
-                                    : "text-muted hover:text-text hover:bg-surface-2/60 border border-transparent",
-                                )}
-                              >
-                                <span className="relative flex items-center justify-center [&_svg]:size-4.5">
-                                  {group.icon ?? (
-                                    <span className="text-xs font-bold uppercase tracking-wider">
-                                      {typeof group.label === "string"
-                                        ? group.label.charAt(0)
-                                        : "•"}
-                                    </span>
-                                  )}
-                                  <span
-                                    className={cn(
-                                      "absolute -bottom-1 -right-1 size-1.5 rounded-full",
-                                      isPopoverOpen || hasActive
-                                        ? "bg-signal"
-                                        : "bg-muted/40",
-                                    )}
-                                  />
-                                </span>
-                              </PopoverTrigger>
-                            )}
-                          />
-                          {!isPopoverOpen && (
-                            <TooltipContent
-                              side={isRightSide ? "left" : "right"}
-                              sideOffset={12}
-                              className="flex items-center gap-2 max-w-xs"
-                            >
-                              <span className="text-[10px] uppercase font-bold tracking-wider text-signal">
-                                {group.label}
-                              </span>
-                              <span className="rounded bg-surface px-1.5 py-0.2 text-[10px] text-muted font-normal">
-                                {group.badge ?? group.items.length}
-                              </span>
-                            </TooltipContent>
-                          )}
-                        </Tooltip>
-
-                        <PopoverContent
-                          side={isRightSide ? "left" : "right"}
-                          align="start"
-                          sideOffset={14}
-                          positionerClassName="z-[99999]"
-                          className={cn(
-                            "w-80 max-w-[calc(100vw-32px)] flex flex-col gap-2 p-3.5 rounded-2xl",
-                            "border border-line bg-surface/98 backdrop-blur-xl text-text",
-                            "shadow-2xl shadow-ink/60 ring-1 ring-white/10 outline-none select-none",
-                          )}
-                        >
-                          {/* Category Header */}
-                          <div className="flex items-center justify-between pb-2.5 mb-0.5 border-b border-line/60">
-                            <div className="flex items-center gap-2 min-w-0">
-                              {group.icon && (
-                                <span className="text-signal shrink-0 [&_svg]:size-4">
-                                  {group.icon}
-                                </span>
-                              )}
-                              <span className="font-heading text-sm font-semibold text-text truncate">
-                                {group.label}
-                              </span>
-                              <span className="text-[10px] px-2 py-0.5 rounded-full bg-surface-2 border border-line text-signal font-semibold shrink-0">
-                                {group.badge ?? group.items.length}
-                              </span>
-                            </div>
-
-                            <button
-                              type="button"
-                              onClick={() => setOpenPopoverGroup(null)}
-                              aria-label="Close"
-                              className="size-6 inline-flex items-center justify-center rounded-md text-muted hover:text-text hover:bg-surface-2 transition-colors cursor-pointer"
-                            >
-                              <X className="size-3.5" />
-                            </button>
-                          </div>
-
-                          {/* Task / Lesson List */}
-                          <div className="flex flex-col gap-1 max-h-[min(60vh,460px)] overflow-y-auto overflow-x-hidden pr-1">
-                            {group.items.map((item) => renderFullItem(item))}
-                          </div>
-                        </PopoverContent>
-                      </Popover>
-                    </div>
-                  );
-                }
+              if (isCollapsed) {
+                const isPopoverOpen = openPopoverGroup === group.key;
+                const hasActive = group.items.some(
+                  (item) => String(item.id) === String(activeId),
+                );
 
                 return (
                   <div key={group.key} className="flex flex-col gap-1">
-                    {gIdx > 0 && <div className="h-px bg-line/40 my-1 mx-1" />}
-                    <button
-                      type="button"
-                      onClick={() => toggleGroup(group.key)}
-                      aria-expanded={isGroupExpanded}
-                      className={cn(
-                        "flex items-center justify-between w-full px-2 py-1.5 rounded-lg text-start transition-colors cursor-pointer",
-                        "text-[11px] font-semibold tracking-wider uppercase text-muted hover:text-text hover:bg-surface-2/60",
-                        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-signal/40",
-                      )}
-                    >
-                      <span className="flex items-center gap-1.5 truncate">
-                        {group.icon && (
-                          <span className="shrink-0 text-muted">
-                            {group.icon}
-                          </span>
-                        )}
-                        <span className="truncate">{group.label}</span>
-                        <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-surface-2 border border-line text-muted font-normal">
-                          {group.badge ?? group.items.length}
-                        </span>
-                      </span>
-                      <ChevronDown
-                        size={14}
-                        className={cn(
-                          "shrink-0 text-muted transition-transform duration-200",
-                          isGroupExpanded && "rotate-180 text-signal",
-                        )}
+                    {gIdx > 0 && (
+                      <div
+                        className="h-px bg-line/40 my-1 mx-1.5"
+                        aria-hidden="true"
                       />
-                    </button>
-
-                    {isGroupExpanded && (
-                      <div className="flex flex-col gap-1 pl-1">
-                        {group.items.map((item) => renderItem(item))}
-                      </div>
                     )}
+
+                    {/* Category Popover Flyout in collapsed mode */}
+                    <Popover
+                      open={isPopoverOpen}
+                      onOpenChange={(open) => {
+                        setOpenPopoverGroup(open ? group.key : null);
+                      }}
+                    >
+                      <Tooltip>
+                        <TooltipTrigger
+                          render={(triggerProps) => (
+                            <PopoverTrigger
+                              {...triggerProps}
+                              type="button"
+                              aria-label={`${group.label}: Open category`}
+                              className={cn(
+                                "size-10 mx-auto flex items-center justify-center rounded-xl transition-all duration-200 cursor-pointer outline-none",
+                                "focus-visible:ring-2 focus-visible:ring-signal/40",
+                                isPopoverOpen || hasActive
+                                  ? "bg-surface-2 text-signal border border-line shadow-xs"
+                                  : "text-muted hover:text-text hover:bg-surface-2/60 border border-transparent",
+                              )}
+                            >
+                              <span className="relative flex items-center justify-center [&_svg]:size-4.5">
+                                {group.icon ?? (
+                                  <span className="text-xs font-bold uppercase tracking-wider">
+                                    {typeof group.label === "string"
+                                      ? group.label.charAt(0)
+                                      : "•"}
+                                  </span>
+                                )}
+                                <span
+                                  className={cn(
+                                    "absolute -bottom-1 -right-1 size-1.5 rounded-full",
+                                    isPopoverOpen || hasActive
+                                      ? "bg-signal"
+                                      : "bg-muted/40",
+                                  )}
+                                />
+                              </span>
+                            </PopoverTrigger>
+                          )}
+                        />
+                        {!isPopoverOpen && (
+                          <TooltipContent
+                            side={isRightSide ? "left" : "right"}
+                            sideOffset={12}
+                            className="flex items-center gap-2 max-w-xs"
+                          >
+                            <span className="text-[10px] uppercase font-bold tracking-wider text-signal">
+                              {group.label}
+                            </span>
+                            <span className="rounded bg-surface px-1.5 py-0.2 text-[10px] text-muted font-normal">
+                              {group.badge ?? group.items.length}
+                            </span>
+                          </TooltipContent>
+                        )}
+                      </Tooltip>
+
+                      <PopoverContent
+                        side={isRightSide ? "left" : "right"}
+                        align="start"
+                        sideOffset={14}
+                        positionerClassName="z-[99999]"
+                        className={cn(
+                          "w-80 max-w-[calc(100vw-32px)] flex flex-col gap-2 p-3.5 rounded-2xl",
+                          "border border-line bg-surface/98 backdrop-blur-xl text-text",
+                          "shadow-2xl shadow-ink/60 ring-1 ring-white/10 outline-none select-none",
+                        )}
+                      >
+                        {/* Category Header */}
+                        <div className="flex items-center justify-between pb-2.5 mb-0.5 border-b border-line/60">
+                          <div className="flex items-center gap-2 min-w-0">
+                            {group.icon && (
+                              <span className="text-signal shrink-0 [&_svg]:size-4">
+                                {group.icon}
+                              </span>
+                            )}
+                            <span className="font-heading text-sm font-semibold text-text truncate">
+                              {group.label}
+                            </span>
+                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-surface-2 border border-line text-signal font-semibold shrink-0">
+                              {group.badge ?? group.items.length}
+                            </span>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={() => setOpenPopoverGroup(null)}
+                            aria-label="Close"
+                            className="size-6 inline-flex items-center justify-center rounded-md text-muted hover:text-text hover:bg-surface-2 transition-colors cursor-pointer"
+                          >
+                            <X className="size-3.5" />
+                          </button>
+                        </div>
+
+                        {/* Task / Lesson List */}
+                        <div className="flex flex-col gap-1 max-h-[min(60vh,460px)] overflow-y-auto overflow-x-hidden pr-1">
+                          {group.items.map((item) => renderFullItem(item))}
+                        </div>
+                      </PopoverContent>
+                    </Popover>
                   </div>
                 );
-              })
-            : allItems.map((item) => renderItem(item))}
+              }
+
+              return (
+                <div key={group.key} className="flex flex-col gap-1">
+                  {gIdx > 0 && <div className="h-px bg-line/40 my-1 mx-1" />}
+                  <button
+                    type="button"
+                    onClick={() => toggleGroup(group.key)}
+                    aria-expanded={isGroupExpanded}
+                    className={cn(
+                      "flex items-center justify-between w-full px-2 py-1.5 rounded-lg text-start transition-colors cursor-pointer",
+                      "text-[11px] font-semibold tracking-wider uppercase text-muted hover:text-text hover:bg-surface-2/60",
+                      "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-signal/40",
+                    )}
+                  >
+                    <span className="flex items-center gap-1.5 truncate">
+                      {group.icon && (
+                        <span className="shrink-0 text-muted">
+                          {group.icon}
+                        </span>
+                      )}
+                      <span className="truncate">{group.label}</span>
+                      <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-surface-2 border border-line text-muted font-normal">
+                        {group.badge ?? group.items.length}
+                      </span>
+                    </span>
+                    <ChevronDown
+                      size={14}
+                      className={cn(
+                        "shrink-0 text-muted transition-transform duration-200",
+                        isGroupExpanded && "rotate-180 text-signal",
+                      )}
+                    />
+                  </button>
+
+                  {isGroupExpanded && (
+                    <div className="flex flex-col gap-1 pl-1">
+                      {group.items.map((item) => renderItem(item))}
+                    </div>
+                  )}
+                </div>
+              );
+            })
+          ) : (
+            filteredItems.map((item) => renderItem(item))
+          )}
         </nav>
 
         {/* Optional Footer */}
