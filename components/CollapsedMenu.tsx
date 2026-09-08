@@ -172,6 +172,7 @@ interface CollapsedMenuItemButtonProps {
   active: boolean;
   collapsed: boolean;
   groupLabel?: React.ReactNode;
+  tooltipSide?: "left" | "right";
   onSelect: (item: CollapsedMenuItem) => void;
 }
 
@@ -180,6 +181,7 @@ const CollapsedMenuItemButton = React.memo(function CollapsedMenuItemButton({
   active,
   collapsed,
   groupLabel,
+  tooltipSide = "right",
   onSelect,
 }: CollapsedMenuItemButtonProps) {
   const handleClick = React.useCallback(() => onSelect(item), [item, onSelect]);
@@ -246,7 +248,7 @@ const CollapsedMenuItemButton = React.memo(function CollapsedMenuItemButton({
     <Tooltip>
       <TooltipTrigger render={button} />
       <TooltipContent
-        side="right"
+        side={tooltipSide}
         sideOffset={12}
         className="flex items-center gap-2 max-w-xs"
       >
@@ -296,6 +298,7 @@ export function CollapsedMenu({
   const searchParams = useSearchParams();
 
   const menuRef = React.useRef<HTMLDivElement>(null);
+  const topActionRef = React.useRef<HTMLDivElement>(null);
   const searchInputRef = React.useRef<HTMLInputElement>(null);
   const hasAutoCollapsedOnMobileRef = React.useRef(false);
 
@@ -303,6 +306,7 @@ export function CollapsedMenu({
   const [position, setPosition] = React.useState<{
     x: number;
     y: number;
+    rightOffset?: number;
   } | null>(null);
   const [isDragging, setIsDragging] = React.useState(false);
   const dragStartRef = React.useRef<{
@@ -310,8 +314,11 @@ export function CollapsedMenu({
     startY: number;
     initialX: number;
     initialY: number;
-    maxX: number;
-    maxY: number;
+    width: number;
+    height: number;
+    topSpace: number;
+    bottomSpace: number;
+    actionWidth: number;
   } | null>(null);
   const dragFrameRef = React.useRef<number | null>(null);
   const dragPositionRef = React.useRef<{ x: number; y: number } | null>(null);
@@ -325,13 +332,26 @@ export function CollapsedMenu({
       if (!node) return;
 
       const rect = node.getBoundingClientRect();
+      const actionNode = topActionRef.current;
+      const actionRect = actionNode ? actionNode.getBoundingClientRect() : null;
+
+      // Space occupied by topAction above the menu
+      const topSpace = actionRect ? Math.max(0, rect.top - actionRect.top) : 0;
+      const bottomSpace = actionRect
+        ? Math.max(0, actionRect.bottom - rect.bottom)
+        : 0;
+      const actionWidth = actionRect ? actionRect.width : 0;
+
       dragStartRef.current = {
         startX: e.clientX,
         startY: e.clientY,
         initialX: rect.left,
         initialY: rect.top,
-        maxX: Math.max(8, window.innerWidth - rect.width - 8),
-        maxY: Math.max(8, window.innerHeight - rect.height - 8),
+        width: rect.width,
+        height: rect.height,
+        topSpace,
+        bottomSpace,
+        actionWidth,
       };
       dragPositionRef.current = { x: rect.left, y: rect.top };
 
@@ -351,21 +371,54 @@ export function CollapsedMenu({
       const node = menuRef.current;
       if (!dragStart || !isDragging || !node) return;
 
-      const targetX = Math.max(
-        8,
-        Math.min(
-          dragStart.maxX,
-          dragStart.initialX + e.clientX - dragStart.startX,
-        ),
+      const windowWidth = window.innerWidth;
+      const windowHeight = window.innerHeight;
+      const PAD = 8;
+
+      const rawX = dragStart.initialX + e.clientX - dragStart.startX;
+      const rawY = dragStart.initialY + e.clientY - dragStart.startY;
+
+      const isRight = rawX > windowWidth / 2;
+
+      // Vertical clamping: topAction above menu must not go past PAD
+      const minY = PAD + dragStart.topSpace;
+      const maxY = Math.max(
+        minY,
+        windowHeight - PAD - dragStart.height - dragStart.bottomSpace,
       );
-      const targetY = Math.max(
-        8,
-        Math.min(
-          dragStart.maxY,
-          dragStart.initialY + e.clientY - dragStart.startY,
-        ),
-      );
+      const targetY = Math.max(minY, Math.min(maxY, rawY));
+
+      // Horizontal clamping: neither menu nor topAction may exceed screen bounds
+      let minX = PAD;
+      let maxX = Math.max(PAD, windowWidth - PAD - dragStart.width);
+
+      if (isRight) {
+        // Top action aligns to right edge and extends to the left
+        minX = Math.max(PAD, PAD + (dragStart.actionWidth - dragStart.width));
+        maxX = Math.max(minX, windowWidth - PAD - dragStart.width);
+      } else {
+        // Top action aligns to left edge and extends to the right
+        minX = PAD;
+        maxX = Math.max(
+          minX,
+          windowWidth - PAD - Math.max(dragStart.width, dragStart.actionWidth),
+        );
+      }
+
+      const targetX = Math.max(minX, Math.min(maxX, rawX));
       dragPositionRef.current = { x: targetX, y: targetY };
+
+      // Update action button alignment dynamically during drag
+      const actionNode = topActionRef.current;
+      if (actionNode) {
+        if (isRight) {
+          actionNode.style.left = "auto";
+          actionNode.style.right = "0";
+        } else {
+          actionNode.style.left = "0";
+          actionNode.style.right = "auto";
+        }
+      }
 
       if (dragFrameRef.current !== null) {
         cancelAnimationFrame(dragFrameRef.current);
@@ -385,13 +438,32 @@ export function CollapsedMenu({
         dragFrameRef.current = null;
       }
       const finalPosition = dragPositionRef.current;
+      const dragStart = dragStartRef.current;
       dragStartRef.current = null;
       dragPositionRef.current = null;
+
+      const actionNode = topActionRef.current;
+      if (actionNode) {
+        actionNode.style.left = "";
+        actionNode.style.right = "";
+      }
+
       if (menuRef.current) {
         menuRef.current.style.transform = "";
       }
       if (finalPosition) {
-        setPosition(finalPosition);
+        const PAD = 8;
+        const menuWidth =
+          dragStart?.width ?? menuRef.current?.offsetWidth ?? 64;
+        const rightOffset = Math.max(
+          PAD,
+          window.innerWidth - (finalPosition.x + menuWidth),
+        );
+        setPosition({
+          x: finalPosition.x,
+          y: finalPosition.y,
+          rightOffset,
+        });
       }
       setIsDragging(false);
       try {
@@ -447,13 +519,18 @@ export function CollapsedMenu({
 
     const windowWidth =
       typeof window !== "undefined" ? window.innerWidth : 1200;
-    const estimatedWidth = Math.min(isCollapsed ? 64 : 288, windowWidth - 16);
+    const windowHeight =
+      typeof window !== "undefined" ? window.innerHeight : 800;
+
+    const PAD = 8;
+    // Constrain menu height to available space below position.y so it never goes off bottom
+    const maxMenuHeight = Math.max(160, windowHeight - position.y - PAD);
 
     if (isRightSide) {
       // Pin right edge so when it expands or opens, it expands TO THE LEFT into the viewport
       const rightDistance = Math.max(
-        8,
-        windowWidth - position.x - estimatedWidth,
+        PAD,
+        position.rightOffset ?? (windowWidth - position.x - 64),
       );
       return {
         ...style,
@@ -462,6 +539,7 @@ export function CollapsedMenu({
         left: "auto",
         top: `${position.y}px`,
         bottom: "auto",
+        maxHeight: `${maxMenuHeight}px`,
         transform: "none",
         margin: 0,
         zIndex: 9999,
@@ -472,40 +550,85 @@ export function CollapsedMenu({
     return {
       ...style,
       position: "fixed" as const,
-      left: `${Math.max(8, position.x)}px`,
+      left: `${Math.max(PAD, position.x)}px`,
       right: "auto",
       top: `${position.y}px`,
       bottom: "auto",
+      maxHeight: `${maxMenuHeight}px`,
       transform: "none",
       margin: 0,
       zIndex: 9999,
     };
-  }, [position, isRightSide, isCollapsed, style]);
+  }, [position, isRightSide, style]);
 
   // Re-clamp position within viewport on resize or collapsed toggle
   React.useEffect(() => {
     if (!position) return;
     const clampToViewport = () => {
-      if (!menuRef.current) return;
-      const rect = menuRef.current.getBoundingClientRect();
-      const maxX = Math.max(8, window.innerWidth - rect.width - 8);
-      const maxY = Math.max(8, window.innerHeight - rect.height - 8);
+      const node = menuRef.current;
+      if (!node) return;
+      const rect = node.getBoundingClientRect();
+      const actionNode = topActionRef.current;
+      const actionRect = actionNode ? actionNode.getBoundingClientRect() : null;
+
+      const PAD = 8;
+      const topSpace = actionRect ? Math.max(0, rect.top - actionRect.top) : 0;
+      const bottomSpace = actionRect
+        ? Math.max(0, actionRect.bottom - rect.bottom)
+        : 0;
+      const actionWidth = actionRect ? actionRect.width : 0;
+
+      const minY = PAD + topSpace;
+      const maxY = Math.max(
+        minY,
+        window.innerHeight - PAD - rect.height - bottomSpace,
+      );
 
       setPosition((prev) => {
         if (!prev) return null;
-        if (prev.x > maxX || prev.y > maxY || prev.x < 8 || prev.y < 8) {
+        const isRight = prev.x > window.innerWidth / 2;
+
+        let minX = PAD;
+        let maxX = Math.max(PAD, window.innerWidth - PAD - rect.width);
+        if (isRight) {
+          minX = Math.max(PAD, PAD + (actionWidth - rect.width));
+          maxX = Math.max(minX, window.innerWidth - PAD - rect.width);
+        } else {
+          minX = PAD;
+          maxX = Math.max(
+            minX,
+            window.innerWidth - PAD - Math.max(rect.width, actionWidth),
+          );
+        }
+
+        const clampedX = Math.max(minX, Math.min(maxX, prev.x));
+        const clampedY = Math.max(minY, Math.min(maxY, prev.y));
+        const rightOffset = Math.max(
+          PAD,
+          window.innerWidth - (clampedX + rect.width),
+        );
+
+        if (
+          clampedX !== prev.x ||
+          clampedY !== prev.y ||
+          rightOffset !== prev.rightOffset
+        ) {
           return {
-            x: Math.max(8, Math.min(maxX, prev.x)),
-            y: Math.max(8, Math.min(maxY, prev.y)),
+            x: clampedX,
+            y: clampedY,
+            rightOffset,
           };
         }
         return prev;
       });
     };
 
-    clampToViewport();
+    const rafId = requestAnimationFrame(clampToViewport);
     window.addEventListener("resize", clampToViewport);
-    return () => window.removeEventListener("resize", clampToViewport);
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("resize", clampToViewport);
+    };
   }, [position, isCollapsed]);
 
   // Responsive auto-collapse for tablets / mobile
@@ -677,10 +800,11 @@ export function CollapsedMenu({
         active={String(activeId) === String(item.id)}
         collapsed={isCollapsed}
         groupLabel={groupLabel}
+        tooltipSide={isRightSide ? "left" : "right"}
         onSelect={handleItemClick}
       />
     ),
-    [activeId, handleItemClick, isCollapsed],
+    [activeId, handleItemClick, isCollapsed, isRightSide],
   );
 
   return (
@@ -692,12 +816,12 @@ export function CollapsedMenu({
         data-dragging={isDragging}
         style={computedStyle}
         className={cn(
-          "relative sticky top-16 h-fit flex flex-col transition-[width] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          "relative sticky top-16 h-fit max-h-[calc(100dvh-5rem)] flex flex-col transition-[width] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)]",
           isDragging &&
             "!transition-none !backdrop-blur-none select-none shadow-2xl ring-2 ring-signal/40",
           isCollapsed ? collapsedWidthClassName : expandedWidthClassName,
-           !isCollapsed &&
-             "max-lg:fixed max-lg:top-16 max-lg:bottom-4 max-lg:end-2 max-lg:z-50 max-lg:!h-[calc(100dvh-5rem)] max-lg:w-[min(18rem,calc(100vw-1rem))] max-lg:max-w-[calc(100vw-1rem)] max-lg:overflow-hidden",
+          !isCollapsed &&
+            "max-lg:fixed max-lg:top-24 max-lg:bottom-4 max-lg:end-2 max-lg:z-50 max-lg:!h-[calc(100dvh-7rem)] max-lg:w-[min(18rem,calc(100vw-1rem))] max-lg:max-w-[calc(100vw-1rem)] max-lg:overflow-hidden",
           variant === "card" && [
             "rounded-2xl border border-line bg-surface/95 backdrop-blur-md p-2.5",
             "shadow-xl shadow-ink/30 ring-1 ring-white/5",
@@ -711,8 +835,12 @@ export function CollapsedMenu({
       >
         {topAction && (
           <div
+            ref={topActionRef}
             data-mobile-workbook
-            className="absolute bottom-full start-0 mb-3 z-10"
+            className={cn(
+              "absolute bottom-full mb-3 z-10 pointer-events-auto max-w-[calc(100vw-1rem)]",
+              isRightSide ? "right-0 left-auto" : "left-0 right-auto",
+            )}
           >
             <Tooltip>
               <TooltipTrigger
@@ -725,14 +853,14 @@ export function CollapsedMenu({
                     aria-label={topAction.label}
                     className={cn(
                       "flex min-h-11 items-center rounded-2xl border border-amber-300/40 bg-amber-950/80 px-3 text-amber-200 shadow-lg shadow-black/25 backdrop-blur-md transition-colors hover:border-amber-200/70 hover:bg-amber-900/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/60",
-                      "h-11 w-max justify-start gap-2 px-3",
+                      "h-11 w-max max-w-[calc(100vw-2rem)] justify-start gap-2 px-3",
                       "max-md:!size-10 max-md:!min-h-10 max-md:!w-10 max-md:!justify-center max-md:!gap-0 max-md:!px-0",
                     )}
                   >
                     <span className="shrink-0 [&_svg]:size-4.5">
                       {topAction.icon}
                     </span>
-                    <span className="whitespace-nowrap text-sm font-semibold max-md:!hidden">
+                    <span className="whitespace-nowrap truncate text-sm font-semibold max-md:!hidden">
                       {topAction.label}
                     </span>
                   </a>
@@ -762,7 +890,10 @@ export function CollapsedMenu({
             >
               <GripHorizontal className="size-3.5" />
             </TooltipTrigger>
-            <TooltipContent side="right" sideOffset={12}>
+            <TooltipContent
+              side={isRightSide ? "left" : "right"}
+              sideOffset={12}
+            >
               Drag to move (double-click to reset)
             </TooltipContent>
           </Tooltip>
@@ -820,7 +951,10 @@ export function CollapsedMenu({
                       <PanelLeftClose className="size-4.5" />
                     )}
                   </TooltipTrigger>
-                  <TooltipContent side="right" sideOffset={10}>
+                  <TooltipContent
+                    side={isRightSide ? "left" : "right"}
+                    sideOffset={10}
+                  >
                     {isCollapsed ? "Expand menu" : "Collapse menu"}
                   </TooltipContent>
                 </Tooltip>

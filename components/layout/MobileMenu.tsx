@@ -106,7 +106,7 @@ export default function MobileMenu({
     >
       {/* backdrop */}
       <div
-        className="absolute inset-0 bg-ink/80 backdrop-blur-sm"
+        className="absolute inset-0 bg-deep/85 backdrop-blur-sm"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -114,12 +114,12 @@ export default function MobileMenu({
       {/* slide-in panel */}
       <div
         ref={panelRef}
-        className="relative ms-auto flex h-full w-full max-w-sm flex-col bg-ink px-8 py-8"
+        className="relative ms-auto flex h-full w-full max-w-sm flex-col bg-navy px-8 py-8 border-s border-white/10"
       >
         {/* close */}
         <button
           onClick={onClose}
-          className="mb-12 flex min-h-11 min-w-11 items-center justify-center self-end text-white/50 transition-colors hover:text-white"
+          className="mb-12 flex min-h-11 min-w-11 items-center justify-center self-end text-mute transition-colors hover:text-white"
           aria-label={t("actions.close")}
         >
           <svg
@@ -161,7 +161,7 @@ export default function MobileMenu({
                     }
                   }
                 }}
-                className="font-display text-2xl text-white/80 tracking-wide transition-colors hover:text-white"
+                className="font-display text-2xl text-lbody tracking-wide transition-colors hover:text-gold"
               >
                 {item.label === "Courses" ? t("nav.courses") : labels[index]}
               </Link>
@@ -174,11 +174,11 @@ export default function MobileMenu({
           <Link
             href={alternateLocalePath}
             onClick={onClose}
-            className="font-body text-sm text-white/40 tracking-[0.15em] transition-colors hover:text-white/70"
+            className="font-body text-sm text-mute tracking-[0.15em] transition-colors hover:text-lbody"
           >
             {t("language")}
           </Link>
-          <InterestDialogTrigger className="border border-signal py-3 text-center font-body text-sm tracking-wide text-signal transition-all hover:bg-signal hover:text-ink">
+          <InterestDialogTrigger className="border border-gold py-3 text-center font-body text-sm tracking-wide text-gold transition-all hover:bg-gold hover:text-navy rounded-full">
             {t("actions.register")}
           </InterestDialogTrigger>
         </div>
