@@ -71,72 +71,68 @@ export default function InstitutionalServicesGrid({
   return (
     <section
       id="services-overview"
-      className="bg-paper py-20 lg:py-28 border-b border-white/10"
+      className="bg-white py-20 lg:py-28 text-char border-b border-hair"
       aria-labelledby="services-grid-heading"
     >
-      <div
-        className="mx-auto w-full px-6 md:px-8 lg:px-12"
-        style={{ maxWidth: "var(--content-max)" }}
-      >
+      <div className="mx-auto w-full max-w-6xl px-6 sm:px-8 lg:px-10">
         {/* Section Header */}
-        <div className="mb-14 md:mb-18 max-w-3xl">
+        <div className="mb-12 md:mb-16 max-w-3xl">
           <div className="flex items-center gap-3">
-            <span className="h-px w-8 bg-signal" aria-hidden="true" />
-            <span className="font-body text-[10px] uppercase tracking-[0.25em] text-muted font-semibold">
+            <span className="h-0.5 w-7 shrink-0 bg-gold" aria-hidden="true" />
+            <span className="font-sans text-[11px] sm:text-xs uppercase tracking-[0.25em] text-gold font-semibold">
               {t("eyebrow")}
             </span>
           </div>
           <h2
             id="services-grid-heading"
-            className="mt-4 font-display text-3xl md:text-4xl lg:text-5xl text-white font-normal leading-tight"
+            className="mt-4 font-serif text-3xl md:text-4xl lg:text-5xl text-navy! font-bold leading-tight"
           >
             {t("title")}
           </h2>
         </div>
 
-        {/* 4 Cards in 2x2 Grid with Image Cover */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+        {/* 4 Cards in Compact Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {cards.map((card, idx) => (
             <SpotlightCard
               key={idx}
-              className="group flex flex-col justify-between border border-white/10 bg-surface/70 hover:border-signal/50 transition-all duration-300"
-              spotlightColor="rgb(220 164 53 / 0.14)"
+              className="group flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white hover:border-gold/60 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 shadow-sm overflow-hidden"
+              spotlightColor="rgba(212, 175, 55, 0.12)"
             >
-              <div>
-                {/* Image Cover Container */}
-                <div className="relative h-48 sm:h-56 w-full overflow-hidden border-b border-white/10 bg-ink">
+              <div className="flex flex-col">
+                {/* Compact Image Cover Container */}
+                <div className="relative h-36 sm:h-40 w-full overflow-hidden border-b border-slate-100 bg-slate-100">
                   <Image
                     src={card.src}
                     alt={card.alt}
                     fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover object-center opacity-70 transition-transform duration-700 ease-out group-hover:scale-105 group-hover:opacity-85"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover object-center opacity-90 transition-transform duration-500 ease-out group-hover:scale-105"
                   />
-                  {/* Subtle Gradient Overlays */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-80" />
-                  <div className="absolute top-4 start-4">
-                    <span className="inline-block bg-ink/80 backdrop-blur-md border border-white/15 px-3 py-1 font-body text-[10px] font-semibold tracking-wider text-signal uppercase">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                  <div className="absolute top-3 start-3">
+                    <span className="inline-block bg-white/95 backdrop-blur-md border border-slate-200/80 px-2.5 py-0.5 font-sans text-[10px] font-semibold tracking-wider text-navy uppercase rounded-full shadow-sm">
                       {card.tag}
                     </span>
                   </div>
                 </div>
 
                 {/* Content */}
-                <div className="p-7 sm:p-8">
-                  <h3 className="font-display text-xl sm:text-2xl text-white group-hover:text-signal transition-colors font-medium">
+                <div className="p-5 sm:p-6 flex-1 flex flex-col">
+                  <h3 className="font-serif text-lg sm:text-xl text-navy group-hover:text-gold transition-colors font-bold leading-snug">
                     {card.title}
                   </h3>
-                  <p className="mt-3.5 font-body text-xs sm:text-sm text-muted leading-relaxed">
+                  <p className="mt-2.5 font-sans text-xs sm:text-sm text-slate-600 leading-relaxed">
                     {card.desc}
                   </p>
                 </div>
               </div>
 
               {/* Action Link Footer */}
-              <div className="px-7 sm:px-8 pb-7 sm:pb-8 pt-2">
+              <div className="px-5 sm:px-6 pb-5 sm:pb-6 pt-2">
                 <a
                   href={card.anchor}
-                  className="font-body text-xs font-semibold text-signal hover:text-signal-light transition-colors inline-flex items-center gap-1.5 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 duration-200"
+                  className="font-sans text-xs font-semibold text-gold hover:text-navy transition-colors inline-flex items-center gap-1.5 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 duration-200"
                 >
                   <span>{card.linkText}</span>
                   <span aria-hidden="true">{isRtl ? "←" : "→"}</span>

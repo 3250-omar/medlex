@@ -31,7 +31,7 @@ export default function ProfileHeader({
       <div className="relative z-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-5">
           {/* Avatar circle */}
-          <div className="flex size-20 shrink-0 items-center justify-center rounded-full border-2 border-signal/40 bg-signal font-display text-2xl font-bold text-ink shadow-[0_0_24px_rgba(163,230,53,0.25)]">
+          <div className="flex size-20 shrink-0 items-center justify-center rounded-full border-2 border-gold/40 bg-gold font-serif text-2xl font-bold text-navy shadow-[0_0_24px_rgba(212,175,55,0.25)]">
             {user.avatarUrl ? (
               <img
                 src={user.avatarUrl}
@@ -46,24 +46,24 @@ export default function ProfileHeader({
           {/* Name & Quick details */}
           <div>
             <div className="flex flex-wrap items-center gap-3">
-              <h1 className="font-display text-2xl font-normal sm:text-3xl">
+              <h1 className="font-serif text-2xl font-normal text-white sm:text-3xl">
                 {userName}
               </h1>
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-signal/30 bg-signal/10 px-2.5 py-0.5 font-body text-[11px] font-medium text-signal">
-                <span className="size-1.5 rounded-full bg-signal animate-pulse" />
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-gold/40 bg-gold/10 px-3 py-1 font-body text-[11px] font-semibold text-gold">
+                <span className="size-1.5 rounded-full bg-gold animate-pulse" />
                 {t("activeMember")}
               </span>
             </div>
 
-            <div className="mt-2 flex flex-wrap items-center gap-4 font-body text-xs text-white/50">
+            <div className="mt-2 flex flex-wrap items-center gap-4 font-body text-xs text-mute">
               {user.email && (
                 <span className="flex items-center gap-1.5">
-                  <Mail className="size-3.5 text-white/40" />
+                  <Mail className="size-3.5 text-mute" />
                   {user.email}
                 </span>
               )}
               {user.username && (
-                <span className="text-signal/90">@{user.username}</span>
+                <span className="text-gold font-medium">@{user.username}</span>
               )}
               {formattedJoinDate && (
                 <span className="flex items-center gap-1.5 text-white/40">

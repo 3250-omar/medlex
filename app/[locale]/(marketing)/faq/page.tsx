@@ -15,32 +15,43 @@ export default async function FAQPage({
     answer: t(`items.${i}.answer`),
   }));
   return (
-    <div className="min-h-screen bg-ink text-white">
-      <section className="pb-24 pt-32 md:pb-32 md:pt-40">
-        <Container>
-          <div className="mx-auto max-w-[855px]">
-            <div className="flex items-center gap-3">
-              <span className="h-px w-8 bg-signal" />
-              <span className="font-body text-[10px] uppercase tracking-[0.25em] text-white/60">
-                {t("eyebrow")}
-              </span>
-            </div>
-            <h1 className="mt-7 font-display text-4xl leading-[1.08] text-white md:text-6xl lg:text-[68px]">
-              {t("title")}
-            </h1>
-            <p className="mt-6 font-body text-sm leading-relaxed text-white/65 md:text-base">
-              {t("subtitle")}
-            </p>
-            <div className="mt-16 md:mt-20">
-              <FAQAccordion items={items} />
-            </div>
-            <div className="mt-8">
-              <InterestDialogTrigger className="inline-flex items-center gap-3 bg-signal px-6 py-3.5 font-body text-xs font-semibold uppercase tracking-[0.1em] text-ink transition-all hover:bg-signal-light">
-                {t("cta")} <span aria-hidden="true">→</span>
-              </InterestDialogTrigger>
-            </div>
+    <div className="min-h-screen bg-[#FAF8F5] text-char">
+      {/* FAQ Hero Header */}
+      <section className="relative overflow-hidden bg-navy pt-32 pb-20 md:pt-44 md:pb-28 on-navy text-lbody border-b border-white/10">
+        {/* Subtle decorative radial glow */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[650px] rounded-full bg-gold/5 blur-3xl" />
+        </div>
+
+        <div className="relative mx-auto w-full px-6 sm:px-10 md:px-14 lg:px-20 max-w-4xl text-center">
+          <div className="inline-flex items-center justify-center gap-3">
+            <span className="h-px w-8 bg-gold" aria-hidden="true" />
+            <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.25em] text-gold">
+              {t("eyebrow")}
+            </span>
+            <span className="h-px w-8 bg-gold" aria-hidden="true" />
           </div>
-        </Container>
+          <h1 className="mt-6 font-serif text-4xl leading-[1.12] text-white md:text-5xl lg:text-6xl font-bold">
+            {t("title")}
+          </h1>
+          <p className="mx-auto mt-5 max-w-2xl font-sans text-base leading-relaxed text-lbody md:text-lg">
+            {t("subtitle")}
+          </p>
+        </div>
+      </section>
+
+      {/* Accordion Questions List */}
+      <section className="py-20 lg:py-28 bg-[#FAF8F5] text-char">
+        <div className="mx-auto w-full px-6 sm:px-10 md:px-14 lg:px-20 max-w-3xl lg:max-w-4xl">
+          <FAQAccordion items={items} />
+
+          {/* Centered CTA */}
+          <div className="mt-12 flex flex-col items-center justify-center text-center">
+            <InterestDialogTrigger className="btn btn-navy !py-3.5 !px-8 text-sm font-semibold gap-2.5 inline-flex items-center shadow-lg shadow-navy/15 hover:shadow-xl hover:-translate-y-0.5 transition-all">
+              {t("cta")} <span aria-hidden="true" className="rtl:rotate-180">→</span>
+            </InterestDialogTrigger>
+          </div>
+        </div>
       </section>
     </div>
   );

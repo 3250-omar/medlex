@@ -28,9 +28,9 @@ export default function EnrolledCourses() {
 
   if (isLoading) {
     return (
-      <div className="grid gap-5 md:grid-cols-2" aria-label="Loading courses">
-        <div className="h-80 animate-pulse rounded-2xl border border-white/10 bg-white/[0.04]" />
-        <div className="h-80 animate-pulse rounded-2xl border border-white/10 bg-white/[0.04]" />
+      <div className="grid gap-6 md:grid-cols-2" aria-label="Loading courses">
+        <div className="h-80 animate-pulse rounded-2xl border border-white/10 bg-deep/60" />
+        <div className="h-80 animate-pulse rounded-2xl border border-white/10 bg-deep/60" />
       </div>
     );
   }
@@ -38,16 +38,16 @@ export default function EnrolledCourses() {
   if (error) {
     return (
       <SpotlightCard className="rounded-2xl">
-        <div className="border border-red-300/30 bg-red-500/10 p-6 text-white sm:p-8">
-          <p className="font-display text-2xl">
+        <div className="rounded-2xl border border-red-500/30 bg-red-950/20 p-6 text-white sm:p-8">
+          <p className="font-serif text-2xl">
             We could not load your courses.
           </p>
-          <p className="mt-2 max-w-xl font-body text-sm leading-6 text-white/65">
+          <p className="mt-2 max-w-xl font-sans text-sm leading-6 text-lbody">
             Please check your connection and try again.
           </p>
           <button
             type="button"
-            className="mt-5 inline-flex min-h-11 items-center gap-2 border border-white/20 px-4 font-body text-sm text-white transition-colors hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal"
+            className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full border border-white/20 px-5 font-body text-sm text-white transition-colors hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
             onClick={() => void refetch()}
           >
             <RotateCcw aria-hidden="true" className="size-4" />
@@ -61,16 +61,16 @@ export default function EnrolledCourses() {
   if (!courses?.length) {
     return (
       <SpotlightCard className="rounded-2xl">
-        <div className="border border-white/10 bg-white/[0.03] p-8 sm:p-10">
-          <BookOpen aria-hidden="true" className="size-8 text-signal" />
-          <h2 className="mt-5 font-display text-3xl">
+        <div className="rounded-2xl border border-white/10 bg-deep p-8 sm:p-12">
+          <BookOpen aria-hidden="true" className="size-8 text-gold" />
+          <h2 className="mt-5 font-serif text-3xl font-normal text-white">
             No enrolled courses yet.
           </h2>
-          <p className="mt-3 max-w-xl font-body leading-7 text-white/65">
+          <p className="mt-3 max-w-xl font-sans leading-7 text-lbody">
             Your active courses will appear here once you subscribe.
           </p>
           <Link
-            className="mt-6 inline-flex min-h-12 items-center gap-2 bg-signal px-6 font-body text-sm font-semibold text-ink transition-transform hover:-translate-y-0.5 hover:bg-signal-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal"
+            className="btn btn-gold !rounded-full mt-6 !min-h-12 !px-7 text-sm font-semibold text-navy inline-flex items-center gap-2"
             href={`/${locale}#pathways-heading`}
           >
             Explore pathways
@@ -82,7 +82,7 @@ export default function EnrolledCourses() {
   }
 
   return (
-    <div className="grid gap-5 md:grid-cols-2">
+    <div className="grid gap-6 md:grid-cols-2">
       {courses.map((course) => {
         const progress = Math.min(
           100,
@@ -112,32 +112,32 @@ export default function EnrolledCourses() {
 
         return (
           <SpotlightCard key={course.enrollmentId} className="rounded-2xl">
-            <article className="flex min-h-80 flex-col border border-white/10 bg-white/[0.035] p-6 sm:p-7">
+            <article className="flex min-h-80 flex-col rounded-2xl border border-white/10 bg-deep p-6 sm:p-8 transition-all duration-300 hover:border-gold/30">
               <div className="flex items-center justify-between gap-4">
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-signal/20 bg-signal/10 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-[0.16em] text-signal">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-gold/30 bg-gold/10 px-3 py-1 font-body text-[10px] font-semibold uppercase tracking-[0.16em] text-gold">
                   <CheckCircle2 aria-hidden="true" className="size-3" />
                   {course.status}
                 </span>
-                <span className="font-body text-sm font-semibold tabular-nums text-signal">
+                <span className="font-body text-sm font-semibold tabular-nums text-gold">
                   {progress}%
                 </span>
               </div>
 
-              <h2 className="mt-6 font-display text-3xl leading-tight text-white">
+              <h2 className="mt-5 font-serif text-2xl sm:text-3xl font-normal leading-tight text-white">
                 {title}
               </h2>
-              <p className="mt-3 flex-1 font-body leading-7 text-white/65">
+              <p className="mt-3 flex-1 font-sans text-sm leading-relaxed text-lbody sm:text-base">
                 {description}
               </p>
 
               <div className="mt-7 border-t border-white/10 pt-5">
-                <div className="flex items-center justify-between gap-4 font-body text-xs text-white/65">
+                <div className="flex items-center justify-between gap-4 font-body text-xs text-mute">
                   <span>
                     {locale === "ar"
                       ? `${completedUnits} من أصل ${totalUnits} درس مكتمل`
                       : `${completedUnits} of ${totalUnits} lessons completed`}
                   </span>
-                  <span className="shrink-0 text-white/45">
+                  <span className="shrink-0 text-white/50">
                     {isComplete
                       ? locale === "ar"
                         ? "مكتمل"
@@ -156,7 +156,7 @@ export default function EnrolledCourses() {
                   aria-valuenow={progress}
                 >
                   <div
-                    className="h-full rounded-full bg-signal transition-[width] duration-500 ease-out"
+                    className="h-full rounded-full bg-gold transition-[width] duration-500 ease-out"
                     style={{ width: `${progress}%` }}
                   />
                 </div>
@@ -165,7 +165,7 @@ export default function EnrolledCourses() {
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 {course.currentUnitSlug || course.firstUnitSlug ? (
                   <Link
-                    className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 bg-signal px-5 font-body text-sm font-semibold text-ink transition-transform hover:-translate-y-0.5 hover:bg-signal-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal"
+                    className="btn btn-gold !rounded-full !min-h-12 flex-1 items-center justify-center gap-2 !px-6 text-sm font-semibold text-navy inline-flex"
                     href={`/${locale}/academy/courses/${course.slug}/learn/${course.currentUnitSlug || course.firstUnitSlug}`}
                   >
                     {isComplete ? (
@@ -179,7 +179,7 @@ export default function EnrolledCourses() {
 
                 {progress >= 50 ? (
                   <Link
-                    className="inline-flex min-h-12 items-center justify-center gap-2 border border-[#d4af37]/60 bg-[#d4af37]/10 px-5 font-body text-sm font-semibold text-[#d4af37] transition-colors hover:bg-[#d4af37] hover:text-[#070e17] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d4af37]"
+                    className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-gold/60 bg-gold/10 px-5 font-body text-sm font-semibold text-gold transition-colors hover:bg-gold hover:text-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
                     href={`/${locale}/academy/courses/${course.slug}/certificate`}
                     title={
                       locale === "ar"

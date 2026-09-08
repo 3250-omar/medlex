@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { response, supabase } = createRouteClient(request);
+  const { response, supabase } = await createRouteClient(request);
   const { data, error } = await supabase.auth.signInWithPassword(payload.data);
   if (error || !data.user) {
     return NextResponse.json(
@@ -22,8 +22,9 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  return NextResponse.json(
-    { data: { userId: data.user.id } },
-    { headers: response.headers },
-  );
+  const res = NextResponse.json({ data: { userId: data.user.id } });
+  response.cookies.getAll().forEach((cookie) => {
+    res.cookies.set(cookie.name, cookie.value, cookie);
+  });
+  return res;
 }

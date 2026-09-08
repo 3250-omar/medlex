@@ -9,7 +9,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
   const { locale } = await params;
 
   return (
-    <main className="min-h-screen bg-ink text-text">
+    <main className="min-h-screen bg-navy text-lbody">
       {/* 01. Hero / Header Section */}
       <ContactHeroSection locale={locale} />
 

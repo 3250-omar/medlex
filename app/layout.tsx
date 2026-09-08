@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
-import { ovo, manrope } from "@/lib/fonts";
+import { sourceSerif4, inter } from "@/lib/fonts";
 import "./globals.css";
-import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { siteUrl } from "@/lib/seo/metadata";
-
-const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: {
@@ -28,14 +25,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn(
-        "dark",
-        ovo.variable,
-        manrope.variable,
-        "font-sans",
-        geist.variable,
-      )}
+      className={cn("dark", sourceSerif4.variable, inter.variable, "font-sans")}
       data-theme="dark"
+      data-scroll-behavior="smooth"
       style={{ colorScheme: "dark" }}
       suppressHydrationWarning
     >

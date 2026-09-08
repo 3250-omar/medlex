@@ -957,6 +957,7 @@
     "engagements": {
       "eyebrow": "MODES OF ENGAGEMENT",
       "title": "Four standard frameworks for institutional collaboration.",
+      "intro": "Flexible contractual arrangements structured around the governance and procurement requirements of ministries, tribunals, and healthcare authorities.",
       "items": [
         {
           "tag": "FRAMEWORK 01",
@@ -1044,5 +1045,14 @@
     "hoursShort": "hrs",
     "minutesShort": "min",
     "secondsShort": "sec"
+  },
+  "feedbackSection": {
+    "eyebrow": "Candidate feedback",
+    "title": "What learners say after working through the course.",
+    "learner": "MedLex learner",
+    "examDate": "Exam date",
+    "shared": "Shared",
+    "profilePhoto": "profile photo",
+    "loopLabel": "Learner feedback"
   }
 }

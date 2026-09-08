@@ -13,20 +13,20 @@ export default function LocaleError({ error, reset }: ErrorProps) {
   }, [error]);
 
   return (
-    <div className="flex min-h-[60vh] flex-col items-center justify-center gap-8 bg-paper px-6 text-center">
-      <div className="h-px w-16 bg-signal/50" />
+    <div className="flex min-h-screen flex-col items-center justify-center gap-8 bg-navy on-navy px-6 text-center text-lbody">
+      <div className="h-px w-16 bg-gold/50" />
       <div>
-        <p className="mb-2 font-body text-[9px] uppercase tracking-[0.3em] text-muted">
+        <p className="kicker text-gold mb-3">
           Something went wrong
         </p>
-        <h1 className="font-display text-3xl text-white">
+        <h1 className="font-serif text-3xl font-normal text-white sm:text-4xl">
           An unexpected error occurred.
         </h1>
-        <p className="mt-4 font-body text-sm text-muted">
+        <p className="mt-4 font-sans text-base leading-relaxed text-lbody max-w-sm mx-auto">
           Please try again. If the problem persists, contact{" "}
           <a
             href="mailto:info@medlex.academy"
-            className="text-signal underline underline-offset-2"
+            className="text-gold underline underline-offset-2 hover:text-goldd"
           >
             info@medlex.academy
           </a>
@@ -35,7 +35,7 @@ export default function LocaleError({ error, reset }: ErrorProps) {
       </div>
       <button
         onClick={reset}
-        className="bg-signal px-8 py-3 font-body text-sm font-semibold text-ink transition-colors hover:bg-signal-light"
+        className="btn btn-gold !rounded-full !px-8 !py-3.5 text-sm font-semibold text-navy inline-flex items-center justify-center"
       >
         Try again
       </button>

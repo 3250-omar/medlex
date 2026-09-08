@@ -55,13 +55,13 @@ export default function CourseLessonMenu({
       domains: {
         key: "domains",
         label: "Domains",
-        icon: <Layers size={13} className="text-signal" />,
+        icon: <Layers size={13} className="text-gold" />,
         units: [],
       },
       stations: {
         key: "stations",
         label: "Stations",
-        icon: <Stethoscope size={13} className="text-signal" />,
+        icon: <Stethoscope size={13} className="text-gold" />,
         units: [],
       },
     };
@@ -112,14 +112,14 @@ export default function CourseLessonMenu({
               </span>
             ) : isCurrent ? (
               <span
-                className="flex size-6 shrink-0 items-center justify-center rounded-full bg-signal text-ink font-bold text-xs shadow-xs shadow-signal/40"
+                className="flex size-6 shrink-0 items-center justify-center rounded-full bg-gold text-navy font-bold text-xs shadow-xs shadow-gold/40"
                 title={`Lesson ${lessonNumber} (Current)`}
               >
                 {lessonNumber}
               </span>
             ) : (
               <span
-                className="flex size-6 shrink-0 items-center justify-center rounded-full bg-surface-2 border border-line text-text group-hover:text-signal font-semibold text-xs transition-colors"
+                className="flex size-6 shrink-0 items-center justify-center rounded-full bg-surface-2 border border-line text-text group-hover:text-gold font-semibold text-xs transition-colors"
                 title={`Lesson ${lessonNumber}`}
               >
                 {lessonNumber}
@@ -130,7 +130,7 @@ export default function CourseLessonMenu({
                 <Check size={11} className="mr-0.5" /> Done
               </span>
             ) : isCurrent ? (
-              <span className="text-signal text-[10px] font-semibold">
+              <span className="text-gold text-[10px] font-semibold">
                 Active
               </span>
             ) : undefined,
@@ -171,7 +171,7 @@ export default function CourseLessonMenu({
         footer={({ isCollapsed }) =>
           isCollapsed ? (
             <span
-              className="font-body text-xs font-bold text-signal select-none"
+              className="font-body text-xs font-bold text-gold select-none"
               title={`Progress: ${progressPercent}% (${completedCount}/${outline.units.length})`}
             >
               {progressPercent}%

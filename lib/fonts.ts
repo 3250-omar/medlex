@@ -1,14 +1,21 @@
-import { Ovo, Manrope } from "next/font/google";
+import { Source_Serif_4, Inter } from "next/font/google";
 
-export const ovo = Ovo({
-  weight: "400",
+export const sourceSerif4 = Source_Serif_4({
   subsets: ["latin"],
-  variable: "--font-ovo",
+  weight: ["400", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
   display: "swap",
 });
 
-export const manrope = Manrope({
+export const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-manrope",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-sans",
   display: "swap",
 });
+
+// Backward-compatibility aliases
+export const ovo = sourceSerif4;
+export const manrope = inter;
+

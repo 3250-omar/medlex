@@ -28,7 +28,7 @@ export default function PathwayDetailPage({
   }
 
   return (
-    <main className="bg-ink text-white ">
+    <main className="bg-navy text-lbody">
       <PathwayHeroSection pathway={pathway} content={content} labels={labels} />
       <AudienceSection audience={content.audience} />
       {content.feature ? <FeatureSection feature={content.feature} /> : null}

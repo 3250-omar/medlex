@@ -71,16 +71,13 @@ function ExamCountdown({
   return (
     <section
       aria-label={t("title")}
-      className="border-b border-signal/25 bg-ink/95 text-white backdrop-blur-md"
+      className="border-b border-gold/25 bg-deep/95 text-white backdrop-blur-md"
     >
-      <div
-        className="mx-auto flex min-h-[72px] flex-wrap items-center gap-x-5 gap-y-2 px-5 py-2 sm:px-8 lg:flex-nowrap lg:px-12"
-        style={{ maxWidth: "var(--content-max)" }}
-      >
-        <div className="flex shrink-0 items-center gap-3 rounded-lg border border-signal/45 bg-signal/[0.08] px-3 py-1.5 shadow-[0_0_24px_rgba(221,178,91,0.08)]">
-          <CalendarDays className="size-4 text-signal" aria-hidden="true" />
+      <div className="mx-auto flex min-h-[72px] w-full max-w-7xl flex-wrap items-center gap-x-5 gap-y-2 px-6 sm:px-8 lg:flex-nowrap lg:px-10 py-2">
+        <div className="flex shrink-0 items-center gap-3 rounded-lg border border-gold/45 bg-gold/[0.08] px-3 py-1.5 shadow-[0_0_24px_rgba(212,175,55,0.12)]">
+          <CalendarDays className="size-4 text-gold" aria-hidden="true" />
           {isExamDay ? (
-            <p className="whitespace-nowrap px-1 text-sm font-semibold text-signal sm:text-base">
+            <p className="whitespace-nowrap px-1 text-sm font-semibold text-gold sm:text-base">
               {t("today")} —{" "}
               {locale === "ar"
                 ? "\u0628\u0627\u0644\u062a\u0648\u0641\u064a\u0642"
@@ -89,7 +86,7 @@ function ExamCountdown({
           ) : (
             <>
               <div
-                className="flex items-center overflow-hidden rounded-sm border border-white/10 bg-ink/40"
+                className="flex items-center overflow-hidden rounded-sm border border-white/10 bg-deep/60"
                 aria-hidden="true"
               >
                 {countdownUnits.map((unit) => (
@@ -103,10 +100,10 @@ function ExamCountdown({
                       padding={2}
                       gap={0}
                       horizontalPadding={0}
-                      textColor="var(--signal)"
+                      textColor="var(--gold)"
                       fontWeight="600"
                       gradientHeight={6}
-                      gradientFrom="rgba(8, 22, 38, 0.95)"
+                      gradientFrom="rgba(20, 42, 73, 0.95)"
                     />
                     <p className="mt-0.5 text-[8px] font-semibold uppercase tracking-[0.12em] text-white/45">
                       {unit.label}
@@ -120,7 +117,7 @@ function ExamCountdown({
             </>
           )}
           <div className="hidden border-s border-white/10 ps-4 leading-tight sm:block">
-            <p className="font-body text-[10px] font-semibold uppercase tracking-[0.14em] text-signal">
+            <p className="font-body text-[10px] font-semibold uppercase tracking-[0.14em] text-gold">
               {t("examDateLabel")}
             </p>
             <p className="mt-0.5 text-xs text-white/65">{formattedExamDate}</p>
@@ -142,19 +139,19 @@ function ExamCountdown({
                   aria-valuenow={course.progressPercent}
                 >
                   <div
-                    className="h-full rounded-full bg-signal transition-[width] duration-500"
+                    className="h-full rounded-full bg-gold transition-[width] duration-500"
                     style={{ width: `${course.progressPercent}%` }}
                   />
                 </div>
-                <span className="hidden text-xs font-semibold text-signal sm:inline">
+                <span className="hidden text-xs font-semibold text-gold sm:inline">
                   {course.progressPercent}%
                 </span>
                 {resumeUnit && (
                   <Link
                     href={`/${locale}/academy/courses/${course.slug}/learn/${resumeUnit}`}
-                    className="inline-flex min-h-9 shrink-0 items-center justify-center gap-1.5 bg-signal px-3.5 text-xs font-semibold text-ink transition-colors hover:bg-signal-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
+                    className="btn btn-gold !h-9 !py-1.5 !px-4 text-xs font-semibold"
                   >
-                    <Play className="size-3.5" aria-hidden="true" />
+                    <Play className="size-3.5 mr-1" aria-hidden="true" />
                     {t("continueLesson")}
                   </Link>
                 )}
@@ -162,7 +159,7 @@ function ExamCountdown({
             ) : (
               <Link
                 href={`/${locale}#pathways-heading`}
-                className="inline-flex min-h-9 shrink-0 items-center justify-center border border-signal px-3.5 text-xs font-semibold text-signal transition-colors hover:bg-signal hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
+                className="btn btn-ghost !h-9 !py-1.5 !px-4 text-xs font-semibold !text-gold !border-gold/60 hover:!bg-gold hover:!text-navy"
               >
                 {t("exploreCourses")}
               </Link>
@@ -216,6 +213,7 @@ export default function Header() {
 
   const isProtectedPath = (path: string) => {
     const cleanPath = path.replace(/^\/(en|ar)/, "");
+    if (cleanPath.startsWith("/academy/preview")) return false;
     return (
       cleanPath.startsWith("/courses") ||
       cleanPath.startsWith("/academy") ||
@@ -355,8 +353,8 @@ export default function Header() {
             ? "relative z-50 transition-all duration-300"
             : "fixed inset-x-0 top-0 z-50 transition-all duration-300",
           scrolled || pathname.includes("/learn")
-            ? "bg-ink/95 shadow-[0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-md"
-            : "bg-transparent",
+            ? "bg-navy/95 shadow-[0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-md"
+            : "bg-navy/90 backdrop-blur-md border-b border-white/[0.08]",
         ].join(" ")}
         style={{
           height: shouldShowExamCountdown ? "auto" : "var(--header-h)",
@@ -370,22 +368,20 @@ export default function Header() {
             now={now}
           />
         )}
-        <div
-          className="relative mx-auto flex h-[72px] items-center justify-between px-6 md:px-8 lg:px-12"
-          style={{ maxWidth: "var(--content-max)" }}
-        >
+        <div className="relative mx-auto flex h-[72px] w-full max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-10">
           {/* ── Logo ─────────────────────────────────────────────────── */}
           <Link
             href={`/${locale}`}
             className="group flex items-center gap-3"
             aria-label={t("brand.home")}
           >
-            <span className="flex h-8 w-10 items-center justify-center border border-signal/50 transition-colors group-hover:border-signal">
+            <span className="flex h-8 w-11 items-center justify-center overflow-hidden border border-gold/50 bg-[#1b375c]/60 p-0.5 transition-colors group-hover:border-gold">
               <Image
-                src="/images/medlex-mark.svg"
+                src="/images/new-emblem.png"
                 alt=""
-                width={28}
+                width={36}
                 height={20}
+                className="h-auto w-auto object-contain"
                 priority
                 aria-hidden="true"
               />
@@ -415,7 +411,7 @@ export default function Header() {
             {/* Locale switcher */}
             <Link
               href={alternateLocalePath}
-              className="font-body text-sm tracking-[0.15em] text-white/50 transition-colors hover:text-white"
+              className="font-body text-sm tracking-[0.15em] text-lbody transition-colors hover:text-white"
               aria-label={
                 locale === "en"
                   ? t("actions.switchToArabic")
@@ -429,7 +425,7 @@ export default function Header() {
               userMenu
             ) : (
               /* ── Guest: register button ───────────────────────────── */
-              <InterestDialogTrigger className="border border-signal px-5 py-2 font-body text-sm tracking-wide text-signal transition-all duration-200 hover:bg-signal hover:text-ink">
+              <InterestDialogTrigger className="btn btn-gold !h-9 !py-1 !px-5 text-sm font-semibold">
                 {t("actions.register")}
               </InterestDialogTrigger>
             )}

@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
   }
 
   const { fullName, username, phone, examDate, email, password } = payload.data;
-  const { response, supabase } = createRouteClient(request);
+  const { response, supabase } = await createRouteClient(request);
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -95,25 +95,41 @@ export async function POST(request: NextRequest) {
         .eq("id", data.user.id);
       if (profileError) throw profileError;
     } catch (uploadError) {
-      return NextResponse.json(
+      const res = NextResponse.json(
         {
           error:
             uploadError instanceof Error
               ? uploadError.message
               : "Your account was created, but the profile image could not be uploaded.",
         },
-        { status: 500, headers: response.headers },
+        { status: 500 },
       );
+      response.cookies.getAll().forEach((cookie) => {
+        res.cookies.set(cookie.name, cookie.value, cookie);
+      });
+      return res;
     }
   }
 
-  return NextResponse.json(
-    {
-      data: {
-        userId: data.user.id,
-        requiresEmailConfirmation: !data.session,
-      },
+  let hasSession = Boolean(data.session);
+  if (!hasSession) {
+    const signInResult = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (signInResult.data?.session) {
+      hasSession = true;
+    }
+  }
+
+  const res = NextResponse.json({
+    data: {
+      userId: data.user.id,
+      requiresEmailConfirmation: !hasSession,
     },
-    { headers: response.headers },
-  );
+  });
+  response.cookies.getAll().forEach((cookie) => {
+    res.cookies.set(cookie.name, cookie.value, cookie);
+  });
+  return res;
 }

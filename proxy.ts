@@ -8,6 +8,13 @@ const defaultLocale = "en";
 const PROTECTED_ROUTES = ["academy", "courses", "profile"] as const;
 
 function isProtectedRoute(pathname: string, locale: string): boolean {
+  if (
+    pathname === `/${locale}/academy/preview` ||
+    pathname.startsWith(`/${locale}/academy/preview/`)
+  ) {
+    return false;
+  }
+
   return PROTECTED_ROUTES.some(
     (route) =>
       pathname === `/${locale}/${route}` ||

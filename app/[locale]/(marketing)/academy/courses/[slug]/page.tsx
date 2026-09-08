@@ -12,52 +12,56 @@ export default async function AcademyCoursePage({
       ? "Forensic Psychiatry Essentials"
       : "CASC Academy";
   return (
-    <div className="min-h-full bg-paper text-text">
-      <section className="bg-ink pb-20 pt-36 text-white md:pb-28">
+    <div className="min-h-screen bg-navy text-lbody">
+      <section className="relative isolate overflow-hidden border-b border-white/10 bg-navy on-navy pb-20 pt-36 text-white md:pb-28 md:pt-44">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(212,175,55,0.08),transparent_70%)]"
+        />
         <Container>
-          <p className="font-body text-[10px] uppercase tracking-[0.24em] text-signal">
-            Academy / Course
-          </p>
-          <h1 className="mt-6 max-w-3xl font-display text-5xl leading-[0.98] md:text-7xl">
+          <p className="kicker text-gold">Academy / Course</p>
+          <h1 className="mt-6 max-w-3xl font-serif text-4xl font-normal leading-[1.05] text-white sm:text-5xl md:text-6xl">
             {title}
           </h1>
-          <p className="mt-7 max-w-2xl font-body text-base leading-8 text-white/60">
+          <p className="mt-6 max-w-2xl font-sans text-base leading-relaxed text-lbody sm:text-lg">
             A structured learning path for professionals who need their
             reasoning to remain clear when the stakes are high.
           </p>
         </Container>
       </section>
-      <section className="py-20 md:py-28">
+      <section className="border-b border-hair bg-white py-20 text-char md:py-28">
         <Container>
           <div className="grid gap-12 md:grid-cols-[1.3fr_0.7fr]">
             <div>
-              <p className="font-body text-[10px] uppercase tracking-[0.2em] text-signal">
-                Your next lesson
-              </p>
-              <h2 className="mt-4 font-display text-4xl">
+              <p className="kicker text-goldd">Your next lesson</p>
+              <h2 className="mt-4 font-serif text-3xl font-normal text-navy sm:text-4xl">
                 Writing the defensible report
               </h2>
-              <p className="mt-5 max-w-xl font-body text-sm leading-8 text-muted">
+              <p className="mt-5 max-w-xl font-sans text-base leading-relaxed text-char/80">
                 Work through the principles, examples, and decision points that
                 make a report useful to clinicians, courts, and the people it
                 describes.
               </p>
-              <Link
-                href="/academy/dashboard"
-                className="mt-8 inline-flex min-h-11 items-center bg-signal px-6 py-3 font-body text-sm text-ink transition-transform duration-300 hover:-translate-y-0.5 hover:bg-signal-light"
-              >
-                Open lesson →
-              </Link>
+              <div className="mt-8">
+                <Link
+                  href="/academy/dashboard"
+                  className="btn btn-navy !rounded-full !px-8 !py-3.5 font-body text-sm font-semibold text-white inline-flex items-center gap-2"
+                >
+                  Open lesson →
+                </Link>
+              </div>
             </div>
-            <aside className="border border-line bg-surface p-7">
-              <p className="font-body text-[10px] uppercase tracking-[0.2em] text-signal">
+            <aside className="rounded-2xl border border-hair bg-warm/30 p-8 shadow-sm">
+              <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-goldd">
                 Course progress
               </p>
-              <p className="mt-5 font-display text-5xl">42%</p>
-              <div className="mt-5 h-1 bg-line">
-                <div className="h-full w-[42%] bg-signal" />
+              <p className="mt-4 font-serif text-5xl font-normal text-navy">
+                42%
+              </p>
+              <div className="mt-5 h-2 w-full overflow-hidden rounded-full bg-hair">
+                <div className="h-full rounded-full bg-gold w-[42%]" />
               </div>
-              <p className="mt-3 font-body text-xs text-muted">
+              <p className="mt-3 font-sans text-xs text-char/70">
                 3 of 8 modules complete
               </p>
             </aside>

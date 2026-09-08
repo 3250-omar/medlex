@@ -3,57 +3,59 @@ import Container from "@/components/layout/Container";
 
 export default function AcademyDashboardPage() {
   return (
-    <div className="min-h-full bg-paper text-text">
-      <Container className="py-32 md:py-40">
-        <div className="mb-12 flex flex-col justify-between gap-5 border-b border-line pb-8 md:flex-row md:items-end">
+    <div className="min-h-screen bg-navy text-lbody">
+      <Container className="py-32 md:py-44">
+        <div className="mb-12 flex flex-col justify-between gap-5 border-b border-white/10 pb-8 md:flex-row md:items-end">
           <div>
-            <p className="font-body text-[10px] uppercase tracking-[0.24em] text-signal">
+            <p className="kicker text-gold">
               Academy / Dashboard preview
             </p>
-            <h1 className="mt-4 font-display text-5xl leading-none md:text-6xl">
+            <h1 className="mt-4 font-serif text-4xl font-normal leading-tight text-white sm:text-5xl md:text-6xl">
               Good to see you.
             </h1>
           </div>
-          <span className="font-body text-sm text-muted">
+          <span className="font-sans text-sm text-mute">
             Learner workspace
           </span>
         </div>
-        <div className="grid gap-5 md:grid-cols-[1.4fr_1fr]">
-          <div className="border border-line bg-ink p-7 text-white md:p-9">
-            <p className="font-body text-[10px] uppercase tracking-[0.2em] text-signal">
+        <div className="grid gap-6 md:grid-cols-[1.4fr_1fr]">
+          <div className="rounded-2xl border border-white/10 bg-deep p-8 shadow-sm md:p-10">
+            <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-gold">
               Continue learning
             </p>
-            <h2 className="mt-4 max-w-md font-display text-3xl">
+            <h2 className="mt-4 max-w-md font-serif text-2xl font-normal text-white sm:text-3xl">
               Forensic Psychiatry Essentials
             </h2>
-            <div className="mt-8 h-1 bg-white/10">
-              <div className="h-full w-[42%] bg-signal" />
+            <div className="mt-8 h-2 w-full overflow-hidden rounded-full bg-white/10">
+              <div className="h-full rounded-full bg-gold w-[42%]" />
             </div>
-            <div className="mt-3 flex justify-between font-body text-xs text-white/45">
+            <div className="mt-3 flex justify-between font-sans text-xs text-mute">
               <span>Module 03 of 08</span>
               <span>42%</span>
             </div>
-            <Link
-              href="/academy/courses/expert-witness-forensic-psychiatry"
-              className="mt-8 inline-flex min-h-11 items-center border border-signal px-5 py-3 font-body text-sm text-signal transition-colors hover:bg-signal hover:text-ink"
-            >
-              Continue module →
-            </Link>
+            <div className="mt-8">
+              <Link
+                href="/academy/courses/expert-witness-forensic-psychiatry"
+                className="btn btn-gold !rounded-full !px-6 !py-3 font-body text-sm font-semibold text-navy inline-flex items-center gap-2"
+              >
+                Continue module →
+              </Link>
+            </div>
           </div>
-          <div className="border border-line bg-surface p-7">
-            <p className="font-body text-[10px] uppercase tracking-[0.2em] text-signal">
+          <div className="rounded-2xl border border-white/10 bg-deep p-8 shadow-sm md:p-10">
+            <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-gold">
               Your record
             </p>
-            <div className="mt-7 grid grid-cols-2 gap-6">
+            <div className="mt-8 grid grid-cols-2 gap-6">
               <div>
-                <p className="font-display text-4xl text-text">420</p>
-                <p className="mt-1 font-body text-xs text-muted">
+                <p className="font-serif text-4xl font-normal text-white">420</p>
+                <p className="mt-2 font-sans text-xs text-mute">
                   Points earned
                 </p>
               </div>
               <div>
-                <p className="font-display text-4xl text-text">01</p>
-                <p className="mt-1 font-body text-xs text-muted">Certificate</p>
+                <p className="font-serif text-4xl font-normal text-white">01</p>
+                <p className="mt-2 font-sans text-xs text-mute">Certificate</p>
               </div>
             </div>
           </div>

@@ -29,11 +29,11 @@ const STATS = [
 export default function StatsBar() {
   return (
     <section
-      className="border-b border-line bg-surface"
+      className="border-b border-hair bg-white"
       aria-label="Key statistics"
     >
       <div className="mx-auto" style={{ maxWidth: "var(--content-max)" }}>
-        <dl className="grid grid-cols-2 divide-x divide-line md:grid-cols-3 lg:grid-cols-5">
+        <dl className="grid grid-cols-2 divide-x divide-hair md:grid-cols-3 lg:grid-cols-5">
           {STATS.map((stat, i) => (
             <div
               key={stat.label}
@@ -43,13 +43,13 @@ export default function StatsBar() {
                 i === 4 ? "col-span-2 md:col-span-1" : "",
               ].join(" ")}
             >
-              <dt className="order-2 mt-1 font-body text-[9px] uppercase tracking-[0.2em] text-muted">
+              <dt className="order-2 mt-1 font-body text-[10px] uppercase tracking-[0.2em] text-char/60 font-medium">
                 {stat.label}
               </dt>
-              <dd className="order-1 font-display text-4xl text-signal">
+              <dd className="order-1 font-serif text-4xl font-normal text-navy">
                 {stat.value}
               </dd>
-              <p className="order-3 mt-2 whitespace-pre-line font-body text-[11px] leading-relaxed text-muted/60">
+              <p className="order-3 mt-2 whitespace-pre-line font-sans text-xs leading-relaxed text-char/60">
                 {stat.detail}
               </p>
             </div>

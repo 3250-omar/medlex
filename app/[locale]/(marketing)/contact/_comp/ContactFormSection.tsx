@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { ChevronDown } from "lucide-react";
 
 interface ContactFormSectionProps {
   locale: string;
@@ -41,24 +42,18 @@ export default function ContactFormSection({
 
   return (
     <section
-      className="bg-ink py-20 lg:py-28 border-b border-white/10"
+      className="bg-[#FAF8F5] py-20 lg:py-28 text-char border-b border-slate-200/80"
       aria-labelledby="contact-form-heading"
       dir={isRtl ? "rtl" : "ltr"}
     >
-      <div
-        className="mx-auto w-full px-6 md:px-8 lg:px-12"
-        style={{ maxWidth: "var(--content-max)" }}
-      >
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_280px] xl:grid-cols-[minmax(0,1fr)_300px]">
+      <div className="mx-auto w-full max-w-6xl px-6 sm:px-8 lg:px-10">
+        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-[minmax(0,1fr)_340px] xl:grid-cols-[minmax(0,1fr)_360px]">
           {/* ── Left / Main Column ── */}
           <div>
             {/* Eyebrow */}
-            <div className="flex items-center gap-3 mb-6">
-              <span
-                className="h-0.5 w-6 shrink-0 bg-signal"
-                aria-hidden="true"
-              />
-              <span className="font-body text-[11px] sm:text-xs font-semibold uppercase tracking-[0.22em] text-white/60">
+            <div className="flex items-center gap-3 mb-5">
+              <span className="h-0.5 w-7 shrink-0 bg-gold" aria-hidden="true" />
+              <span className="font-sans text-[11px] sm:text-xs font-semibold uppercase tracking-[0.22em] text-gold">
                 {t("eyebrow")}
               </span>
             </div>
@@ -66,39 +61,44 @@ export default function ContactFormSection({
             {/* Title */}
             <h2
               id="contact-form-heading"
-              className="font-display text-3xl sm:text-4xl lg:text-[42px] font-normal leading-[1.1] tracking-tight text-white"
+              className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.12] tracking-tight text-navy!"
             >
               {t("title")}
             </h2>
 
             {/* Intro */}
-            <p className="mt-4 mb-10 font-body text-sm sm:text-base leading-relaxed text-white/65 max-w-xl">
+            <p className="mt-4 mb-10 font-sans text-base leading-relaxed text-slate-600 max-w-xl">
               {t("intro")}
             </p>
 
             {/* ── Form ── */}
             {submitted ? (
-              <div className="border border-white/15 bg-white/5 rounded px-8 py-12 text-center">
+              <div className="rounded-2xl border border-gold/30 bg-white p-8 sm:p-12 text-center shadow-lg shadow-navy/5">
                 <span
-                  className="text-signal text-3xl mb-4 block"
+                  className="text-gold text-4xl mb-4 block"
                   aria-hidden="true"
                 >
                   ✓
                 </span>
-                <p className="font-display text-xl text-white">
+                <p className="font-serif text-2xl font-bold text-navy">
                   {isRtl
-                    ? "شكرًا! سنتواصل معك قريبًا."
+                    ? "شكرًا لك — سنتواصل معك قريبًا."
                     : "Thank you — we will be in touch."}
+                </p>
+                <p className="mt-2 text-sm text-slate-600">
+                  {isRtl
+                    ? "تم استلام اهتمامك وسيقوم فريقنا بمشاركتك تفاصيل المسار."
+                    : "Your details have been received and we will share pathway updates."}
                 </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                 {/* Row 1 – Full Name & Email */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <div className="flex flex-col gap-1.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="flex flex-col gap-2">
                     <label
                       htmlFor="contact-full-name"
-                      className="font-body text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.18em] text-white/55"
+                      className="font-sans text-xs font-bold uppercase tracking-wider text-navy"
                     >
                       {t("fields.fullName")}
                     </label>
@@ -108,14 +108,17 @@ export default function ContactFormSection({
                       type="text"
                       required
                       autoComplete="name"
-                      className="w-full bg-transparent border-b border-white/20 focus:border-signal outline-none py-2.5 font-body text-sm text-white placeholder:text-white/30 transition-colors"
+                      placeholder={
+                        isRtl ? "مثال: د. أحمد محمد" : "e.g. Dr. Ahmed Mostafa"
+                      }
+                      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy placeholder:text-slate-400 focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none"
                     />
                   </div>
 
-                  <div className="flex flex-col gap-1.5">
+                  <div className="flex flex-col gap-2">
                     <label
                       htmlFor="contact-email"
-                      className="font-body text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.18em] text-white/55"
+                      className="font-sans text-xs font-bold uppercase tracking-wider text-navy"
                     >
                       {t("fields.email")}
                     </label>
@@ -125,17 +128,18 @@ export default function ContactFormSection({
                       type="email"
                       required
                       autoComplete="email"
-                      className="w-full bg-transparent border-b border-white/20 focus:border-signal outline-none py-2.5 font-body text-sm text-white placeholder:text-white/30 transition-colors"
+                      placeholder="name@example.com"
+                      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy placeholder:text-slate-400 focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none"
                     />
                   </div>
                 </div>
 
                 {/* Row 2 – Professional Role & Organisation */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <div className="flex flex-col gap-1.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="flex flex-col gap-2">
                     <label
                       htmlFor="contact-role"
-                      className="font-body text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.18em] text-white/55"
+                      className="font-sans text-xs font-bold uppercase tracking-wider text-navy"
                     >
                       {t("fields.professionalRole")}
                     </label>
@@ -144,14 +148,19 @@ export default function ContactFormSection({
                       name="professionalRole"
                       type="text"
                       required
-                      className="w-full bg-transparent border-b border-white/20 focus:border-signal outline-none py-2.5 font-body text-sm text-white placeholder:text-white/30 transition-colors"
+                      placeholder={
+                        isRtl
+                          ? "مثال: استشاري طب نفسي"
+                          : "e.g. Consultant Psychiatrist"
+                      }
+                      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy placeholder:text-slate-400 focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none"
                     />
                   </div>
 
-                  <div className="flex flex-col gap-1.5">
+                  <div className="flex flex-col gap-2">
                     <label
                       htmlFor="contact-organisation"
-                      className="font-body text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.18em] text-white/55"
+                      className="font-sans text-xs font-bold uppercase tracking-wider text-navy"
                     >
                       {t("fields.organisation")}
                     </label>
@@ -159,43 +168,50 @@ export default function ContactFormSection({
                       id="contact-organisation"
                       name="organisation"
                       type="text"
-                      className="w-full bg-transparent border-b border-white/20 focus:border-signal outline-none py-2.5 font-body text-sm text-white placeholder:text-white/30 transition-colors"
+                      placeholder={
+                        isRtl
+                          ? "مثال: وزارة العدل / جهة العمل"
+                          : "e.g. Ministry of Justice / Hospital Group"
+                      }
+                      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy placeholder:text-slate-400 focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none"
                     />
                   </div>
                 </div>
 
                 {/* Row 3 – Pathway Dropdown */}
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-2">
                   <label
                     htmlFor="contact-pathway"
-                    className="font-body text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.18em] text-white/55"
+                    className="font-sans text-xs font-bold uppercase tracking-wider text-navy"
                   >
                     {t("fields.pathway")}
                   </label>
-                  <select
-                    id="contact-pathway"
-                    name="pathway"
-                    required
-                    defaultValue=""
-                    className="w-full bg-transparent border-b border-white/20 focus:border-signal outline-none py-2.5 font-body text-sm text-white transition-colors appearance-none cursor-pointer"
-                    style={{ background: "transparent" }}
-                  >
-                    <option value="" disabled className="bg-ink text-white/50">
-                      {t("fields.pathwayPlaceholder")}
-                    </option>
-                    {pathways.map((p, i) => (
-                      <option key={i} value={p} className="bg-ink text-white">
-                        {p}
+                  <div className="relative">
+                    <select
+                      id="contact-pathway"
+                      name="pathway"
+                      required
+                      defaultValue=""
+                      className="w-full appearance-none rounded-xl border border-slate-300 bg-white px-4 py-3 pe-11 text-sm text-navy focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none cursor-pointer"
+                    >
+                      <option value="" disabled className="text-slate-400">
+                        {t("fields.pathwayPlaceholder")}
                       </option>
-                    ))}
-                  </select>
+                      {pathways.map((p, i) => (
+                        <option key={i} value={p} className="text-navy">
+                          {p}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="pointer-events-none absolute end-4 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
+                  </div>
                 </div>
 
                 {/* Row 4 – Notes Textarea */}
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-2">
                   <label
                     htmlFor="contact-notes"
-                    className="font-body text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.18em] text-white/55"
+                    className="font-sans text-xs font-bold uppercase tracking-wider text-navy"
                   >
                     {t("fields.notes")}
                   </label>
@@ -203,32 +219,39 @@ export default function ContactFormSection({
                     id="contact-notes"
                     name="notes"
                     rows={4}
-                    className="w-full bg-transparent border-b border-white/20 focus:border-signal outline-none py-2.5 font-body text-sm text-white placeholder:text-white/30 transition-colors resize-none"
+                    placeholder={
+                      isRtl
+                        ? "اكتب أي تفاصيل أو استفسارات إضافية هنا..."
+                        : "Add any questions, cohort timing, or notes..."
+                    }
+                    className="w-full rounded-xl border border-slate-300 bg-white p-4 text-sm text-navy placeholder:text-slate-400 focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none resize-none"
                   />
                 </div>
 
                 {/* Submit Row */}
-                <div className="flex flex-col gap-3 pt-2">
+                <div className="flex flex-col gap-3 pt-3">
                   <button
                     type="submit"
                     disabled={isSubmitting}
                     id="contact-submit-btn"
-                    className="inline-flex items-center gap-3 self-start bg-signal text-ink font-body text-sm font-semibold px-6 py-3 hover:bg-signal/90 active:scale-[0.98] transition-all disabled:opacity-60"
+                    className="btn btn-navy text-sm font-semibold !py-3.5 !px-8 self-start gap-2 shadow-lg shadow-navy/15 hover:shadow-xl hover:-translate-y-0.5 transition-all disabled:opacity-60"
                   >
                     {isSubmitting ? (
                       <>
-                        <span className="block h-4 w-4 rounded-full border-2 border-ink/30 border-t-ink animate-spin" />
+                        <span className="block h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
                         {isRtl ? "جارٍ الإرسال..." : "Sending..."}
                       </>
                     ) : (
                       <>
                         {t("submit")}
-                        <span aria-hidden="true">→</span>
+                        <span aria-hidden="true" className="rtl:rotate-180">
+                          →
+                        </span>
                       </>
                     )}
                   </button>
 
-                  <p className="font-body text-xs text-white/40 leading-relaxed max-w-sm">
+                  <p className="font-sans text-xs text-slate-500 leading-relaxed max-w-md">
                     {t("privacy")}
                   </p>
                 </div>
@@ -237,33 +260,34 @@ export default function ContactFormSection({
           </div>
 
           {/* ── Right / Sidebar Column ── */}
-          <div className="flex flex-col gap-5 lg:pt-14">
+          <div className="flex flex-col gap-6 lg:pt-2">
             {/* Contact Info Card */}
-            <div className="border border-white/12 bg-white/[0.03] p-6">
-              <span className="font-body text-[10px] font-semibold uppercase tracking-[0.22em] text-white/50 block mb-4">
+            <div className="rounded-2xl border border-gold/25 bg-white p-6 sm:p-7 shadow-md shadow-navy/5">
+              <span className="font-sans text-[11px] font-bold uppercase tracking-[0.22em] text-gold block mb-4">
                 {t("sidebar.contactTitle")}
               </span>
 
-              <div className="space-y-3">
-                <div className="flex items-center justify-between gap-4">
-                  <span className="font-body text-xs text-white/50">
+              <div className="space-y-4 divide-y divide-slate-100">
+                <div className="flex flex-col gap-1 pt-3 first:pt-0">
+                  <span className="font-sans text-xs text-slate-500">
                     {t("sidebar.emailLabel")}
                   </span>
                   <a
                     href={`mailto:${t("sidebar.email")}`}
-                    className="font-body text-sm text-signal hover:text-signal/80 transition-colors truncate"
+                    className="font-sans text-sm text-navy font-semibold hover:text-gold transition-colors break-all"
                   >
                     {t("sidebar.email")}
                   </a>
                 </div>
 
-                <div className="flex items-center justify-between gap-4">
-                  <span className="font-body text-xs text-white/50">
+                <div className="flex flex-col gap-1 pt-3">
+                  <span className="font-sans text-xs text-slate-500">
                     {t("sidebar.phoneLabel")}
                   </span>
                   <a
                     href={`tel:${t("sidebar.phone").replace(/\s/g, "")}`}
-                    className="font-body text-sm text-signal hover:text-signal/80 transition-colors"
+                    className="font-sans text-sm text-navy font-semibold hover:text-gold transition-colors"
+                    dir="ltr"
                   >
                     {t("sidebar.phone")}
                   </a>
@@ -272,21 +296,21 @@ export default function ContactFormSection({
             </div>
 
             {/* Audience Card */}
-            <div className="border border-white/12 bg-white/[0.03] p-6">
-              <span className="font-body text-[10px] font-semibold uppercase tracking-[0.22em] text-white/50 block mb-4">
+            <div className="rounded-2xl border border-gold/25 bg-white p-6 sm:p-7 shadow-md shadow-navy/5">
+              <span className="font-sans text-[11px] font-bold uppercase tracking-[0.22em] text-gold block mb-4">
                 {t("sidebar.audienceTitle")}
               </span>
 
-              <ul className="space-y-2.5">
+              <ul className="space-y-3">
                 {audience.map((item, i) => (
-                  <li key={i} className="flex items-start gap-2.5">
+                  <li key={i} className="flex items-start gap-3">
                     <span
-                      className="text-signal text-[10px] mt-0.5 shrink-0"
+                      className="text-gold text-xs mt-1 shrink-0"
                       aria-hidden="true"
                     >
                       ◆
                     </span>
-                    <span className="font-body text-sm text-white/70 leading-snug">
+                    <span className="font-sans text-sm text-slate-700 leading-snug">
                       {item}
                     </span>
                   </li>

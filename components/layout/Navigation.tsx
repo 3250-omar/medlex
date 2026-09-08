@@ -12,7 +12,11 @@ const NAV_ITEMS = [
   { label: "Contact", href: "/contact" },
 ] as const;
 
-export default function Navigation({ showCourses = false }: { showCourses?: boolean }) {
+export default function Navigation({
+  showCourses = false,
+}: {
+  showCourses?: boolean;
+}) {
   const locale = useLocale();
   const pathname = usePathname();
   const t = useTranslations();
@@ -59,11 +63,11 @@ export default function Navigation({ showCourses = false }: { showCourses?: bool
             href={targetPath}
             onClick={(e) => handleScroll(e, item.href)}
             aria-current={isActive ? "page" : undefined}
-            className={`group relative font-body text-sm tracking-wide transition-colors duration-200 hover:text-white ${isActive ? "text-signal" : "text-white/70"}`}
+            className={`group relative font-body text-sm tracking-wide transition-colors duration-200 hover:text-white ${isActive ? "text-gold font-semibold" : "text-lbody font-medium"}`}
           >
             {item.label === "Courses" ? t("nav.courses") : labels[index]}
             <span
-              className={`absolute -bottom-0.5 start-0 h-px bg-signal transition-all duration-300 ${isActive ? "w-full" : "w-0 group-hover:w-full"}`}
+              className={`absolute -bottom-0.5 start-0 h-px bg-gold transition-all duration-300 ${isActive ? "w-full" : "w-0 group-hover:w-full"}`}
             />
           </Link>
         );

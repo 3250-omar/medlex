@@ -61,25 +61,25 @@ export default function ProfilePage() {
   const enrolledCount = courses?.length ?? 0;
 
   return (
-    <main className="relative isolate min-h-screen overflow-hidden bg-ink pb-24 pt-28 text-white sm:pt-36">
+    <main className="relative isolate min-h-screen overflow-hidden bg-navy on-navy pb-24 pt-28 text-lbody sm:pt-36">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-80 border-b border-white/5 bg-white/[0.015]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(212,175,55,0.08),transparent_70%)]"
       />
 
       <div className="relative mx-auto w-full max-w-6xl px-6 sm:px-8 lg:px-10">
         <nav
           aria-label={t("breadcrumb.profile")}
-          className="flex items-center gap-2 font-body text-xs text-white/45"
+          className="flex items-center gap-2 font-body text-xs text-mute"
         >
           <Link
             href={`/${locale}`}
-            className="rounded-sm transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal"
+            className="rounded-sm transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
           >
             {t("breadcrumb.home")}
           </Link>
           <span aria-hidden="true">/</span>
-          <span className="font-medium text-signal">
+          <span className="font-semibold text-gold">
             {t("breadcrumb.profile")}
           </span>
         </nav>

@@ -180,28 +180,30 @@ export default function CascAcademyLanding({ content }: Props) {
     }
   }
 
-  const button =
-    "inline-flex min-h-12 items-center justify-center gap-2 bg-signal px-6 font-body text-sm font-semibold text-ink transition-colors hover:bg-signal-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal";
+  const button = "btn btn-gold !min-h-12 !px-7 font-semibold text-navy text-sm";
+  const ghostBtn =
+    "btn btn-ghost !min-h-12 !px-7 font-semibold text-white text-sm";
+  const navyBtn =
+    "btn btn-navy !min-h-12 !px-7 font-semibold text-white text-sm";
+
   return (
-    <main className="bg-ink text-white pt-16">
-      <section className="border-b border-white/10">
+    <main className="bg-navy text-lbody pt-16">
+      <section className="border-b border-white/10 bg-navy on-navy">
         <div className="mx-auto w-full px-6 py-20 sm:px-8 lg:max-w-6xl lg:px-10 lg:py-28">
           <div className="max-w-3xl">
-            <p className="font-body text-xs font-semibold uppercase tracking-[.2em] text-signal">
-              {content.eyebrow}
-            </p>
-            <h1 className="mt-6 font-display text-4xl leading-tight sm:text-6xl">
+            <p className="kicker text-gold">{content.eyebrow}</p>
+            <h1 className="mt-6 font-display text-4xl leading-tight text-white sm:text-6xl">
               {t.hero}
             </h1>
-            <p className="mt-6 max-w-2xl font-body text-lg leading-8 text-white/65">
+            <p className="mt-6 max-w-2xl font-serif text-lg leading-8 text-lbody">
               {t.intro}
             </p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
               <SubscribeButton className={button} showArrow={false}>
                 {t.enrol}
               </SubscribeButton>
               <Link
-                className="inline-flex min-h-12 items-center justify-center border border-white/30 px-6 font-body text-sm font-semibold transition-colors hover:border-signal hover:text-signal"
+                className={ghostBtn}
                 href={`/${locale}/academy/preview/station-7-2`}
               >
                 {t.free}
@@ -209,15 +211,15 @@ export default function CascAcademyLanding({ content }: Props) {
             </div>
             <div className="mt-12 grid gap-5 border-t border-white/15 pt-6 lg:grid-cols-3">
               <div className="lg:col-span-2">
-                <p className="font-body text-xs font-semibold uppercase tracking-[.18em] text-signal">
+                <p className="font-body text-xs font-semibold uppercase tracking-[.18em] text-gold">
                   Station 7.2 preview
                 </p>
-                <p className="mt-3 max-w-2xl font-body text-sm leading-6 text-white/65">
+                <p className="mt-3 max-w-2xl font-body text-sm leading-6 text-lbody">
                   Read the opening, compare two failed approaches with a pass,
                   and see the examiner&apos;s reasoning at each decision point.
                 </p>
               </div>
-              <div className="border-s-2 border-signal ps-4 font-body text-sm leading-6 text-white/75">
+              <div className="border-s-2 border-gold ps-4 font-body text-sm leading-6 text-white/85">
                 The consultation is not a script to memorise. It is a sequence
                 of decisions you can practise.
               </div>
@@ -225,43 +227,50 @@ export default function CascAcademyLanding({ content }: Props) {
           </div>
         </div>
       </section>
-      <section className="border-b border-white/10 bg-[#09192b]">
+      <section className="border-b border-hair bg-tint on-tint text-char">
         <div className="mx-auto grid w-full gap-8 px-6 py-16 sm:px-8 lg:max-w-6xl lg:grid-cols-[10rem_1fr] lg:px-10 lg:py-24">
-          <p className="font-body text-xs font-semibold uppercase tracking-[.2em] text-signal">
-            CASC
-          </p>
+          <p className="kicker">CASC</p>
           <div>
-            <h2 className="max-w-3xl font-display text-3xl leading-tight sm:text-4xl">
+            <h2 className="max-w-3xl font-display text-3xl leading-tight text-navy sm:text-4xl">
               {t.problemTitle}
             </h2>
-            <p className="mt-5 max-w-2xl font-body leading-7 text-white/65">
+            <p className="mt-5 max-w-2xl font-body leading-7 text-char/80">
               {t.problem}
             </p>
-            <blockquote className="mt-8 max-w-xl border-s-2 border-signal ps-5 font-display text-xl leading-snug text-white/90">
+            <blockquote className="pull mt-8 max-w-xl font-display text-xl leading-snug">
               Would I be confident to have this candidate as my registrar? That
               is the question behind every mark.
             </blockquote>
           </div>
         </div>
       </section>
-      <section id="station" className="border-b border-white/10">
+      <section
+        id="station"
+        className="border-b border-white/10 bg-navy on-navy"
+      >
         <div className="mx-auto w-full px-6 py-16 sm:px-8 lg:max-w-6xl lg:px-10 lg:py-24">
-          <h2 className="max-w-3xl font-display text-3xl sm:text-4xl">
+          <p className="kicker text-gold">How a station works</p>
+          <h2 className="max-w-3xl font-display text-3xl text-white sm:text-4xl">
             {t.howTitle}
           </h2>
-          <p className="mt-5 max-w-3xl font-body leading-7 text-white/65">
+          <p className="mt-4 max-w-3xl font-serif text-lg leading-7 text-lbody">
             Every station is built around one named trap: the precise error that
             costs candidates marks in that scenario. Then you make the decisions
             yourself.
           </p>
-          <div className="mt-10 grid gap-px bg-white/10 md:grid-cols-2 lg:grid-cols-5">
+          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-5">
             {t.steps.map(([title, body], index) => (
-              <article key={title} className="bg-ink p-6">
-                <p className="font-body text-xs font-semibold text-signal">
-                  0{index + 1}
+              <article
+                key={title}
+                className="rounded-xl border border-white/10 border-t-2 border-t-gold bg-deep p-6 shadow-md"
+              >
+                <p className="font-serif text-3xl font-bold text-gold">
+                  {index + 1}
                 </p>
-                <h3 className="mt-5 font-display text-xl">{title}</h3>
-                <p className="mt-3 font-body text-sm leading-6 text-white/60">
+                <h3 className="mt-3 font-display text-lg text-white">
+                  {title}
+                </h3>
+                <p className="mt-2 font-body text-sm leading-6 text-lbody">
                   {body}
                 </p>
               </article>
@@ -269,80 +278,86 @@ export default function CascAcademyLanding({ content }: Props) {
           </div>
         </div>
       </section>
-      <section className="border-b border-white/10 bg-[#09192b]">
-        <div className="mx-auto flex w-full flex-col justify-between gap-8 px-6 py-16 sm:px-8 lg:max-w-6xl lg:flex-row lg:items-end lg:px-10 lg:py-24">
+      <section className="border-b border-hair bg-tint on-tint text-char">
+        <div className="mx-auto flex w-full flex-col justify-between gap-8 px-6 py-16 sm:px-8 lg:max-w-6xl lg:flex-row lg:items-center lg:px-10 lg:py-20 bg-white rounded-2xl border border-hair my-8 shadow-sm">
           <div>
-            <h2 className="font-display text-3xl sm:text-4xl">
+            <h3 className="font-display text-2xl text-navy sm:text-3xl font-bold">
               {t.previewTitle}
-            </h2>
-            <p className="mt-4 max-w-2xl font-body leading-7 text-white/65">
+            </h3>
+            <p className="mt-2 max-w-2xl font-body leading-7 text-grey">
               {t.preview}
             </p>
           </div>
           <Link
-            className={button}
+            className={navyBtn}
             href={`/${locale}/academy/preview/station-7-2`}
           >
             {t.free}
           </Link>
         </div>
       </section>
-      <section className="border-b border-white/10">
+      <section className="border-b border-white/10 bg-navy on-navy">
         <div className="mx-auto w-full px-6 py-16 sm:px-8 lg:max-w-6xl lg:px-10 lg:py-24">
-          <h2 className="font-display text-3xl sm:text-4xl">
+          <p className="kicker text-gold">The library</p>
+          <h2 className="font-display text-3xl text-white sm:text-4xl">
             {t.domainsTitle}
           </h2>
-          <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {t.domains.map((domain, index) => (
               <div
                 key={domain}
-                className="border border-white/10 p-5 font-body text-sm"
+                className="rounded-xl border border-white/10 bg-deep p-5 font-body text-sm text-lbody transition-colors hover:border-gold/40 flex items-center"
               >
-                <span className="me-3 text-signal">0{index + 1}</span>
-                {domain}
+                <span className="me-3 font-serif text-lg font-bold text-gold">
+                  0{index + 1}
+                </span>
+                <span className="font-medium text-white">{domain}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
-      <section id="included" className="border-b border-white/10 bg-[#09192b]">
+      <section
+        id="included"
+        className="border-b border-white/10 bg-deep on-deep"
+      >
         <div className="mx-auto w-full px-6 py-16 sm:px-8 lg:max-w-6xl lg:px-10 lg:py-24">
-          <h2 className="font-display text-3xl sm:text-4xl">
+          <p className="kicker text-gold">What you get</p>
+          <h2 className="font-display text-3xl text-white sm:text-4xl">
             {t.includedTitle}
           </h2>
           <div className="mt-10 divide-y divide-white/10">
             {t.included.map(([title, body]) => (
               <article
                 key={title}
-                className="grid gap-4 py-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)]"
+                className="grid gap-4 py-7 md:grid-cols-[minmax(0,1fr)_minmax(0,1.8fr)]"
               >
-                <h3 className="font-display text-xl">{title}</h3>
-                <p className="font-body leading-7 text-white/60">{body}</p>
+                <h3 className="font-display text-xl text-white font-bold">
+                  {title}
+                </h3>
+                <p className="font-body leading-7 text-lbody">{body}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
-      <section className="border-b border-white/10 bg-[#09192b]">
+      <section className="border-b border-hair bg-white text-char">
         <div className="mx-auto grid w-full gap-8 px-6 py-16 sm:px-8 lg:max-w-6xl lg:grid-cols-[10rem_1fr] lg:px-10 lg:py-24">
-          <p className="font-body text-xs font-semibold uppercase tracking-[.2em] text-signal">
-            {content.audience.eyebrow}
-          </p>
+          <p className="kicker text-goldd">{content.audience.eyebrow}</p>
           <div>
-            <h2 className="max-w-3xl font-display text-3xl sm:text-4xl">
+            <h2 className="max-w-3xl font-serif text-3xl font-normal text-navy sm:text-4xl">
               {content.audience.title}
             </h2>
-            <p className="mt-5 max-w-2xl font-body leading-7 text-white/65">
+            <p className="mt-5 max-w-2xl font-sans leading-7 text-char/80">
               {content.audience.body}
             </p>
-            <div className="mt-10 grid gap-5 md:grid-cols-2">
+            <div className="mt-10 grid gap-6 md:grid-cols-2">
               {content.audience.items.map((item) => (
-                <article
-                  key={item.title}
-                  className="border-t border-white/10 pt-5"
-                >
-                  <h3 className="font-display text-xl">{item.title}</h3>
-                  <p className="mt-3 font-body text-sm leading-6 text-white/60">
+                <article key={item.title} className="border-t border-hair pt-6">
+                  <h3 className="font-serif text-xl font-normal text-navy">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 font-sans text-sm leading-6 text-char/70">
                     {item.body}
                   </p>
                 </article>
@@ -350,24 +365,25 @@ export default function CascAcademyLanding({ content }: Props) {
             </div>
           </div>
         </div>
-      </section>{" "}
-      <section id="about" className="border-b border-white/10">
+      </section>
+      <section
+        id="about"
+        className="border-b border-white/10 bg-navy on-navy text-lbody"
+      >
         <div className="mx-auto grid w-full gap-10 px-6 py-16 sm:px-8 lg:max-w-6xl lg:grid-cols-[10rem_minmax(0,1fr)_minmax(16rem,.65fr)] lg:px-10 lg:py-24">
-          <p className="font-body text-xs font-semibold uppercase tracking-[.2em] text-signal">
-            {content.founder.eyebrow}
-          </p>
+          <p className="kicker text-gold">{content.founder.eyebrow}</p>
           <div>
-            <h2 className="font-display text-3xl sm:text-4xl">
+            <h2 className="font-serif text-3xl font-normal text-white sm:text-4xl">
               {content.founder.title}
             </h2>
-            <p className="mt-5 max-w-2xl font-body leading-7 text-white/65">
+            <p className="mt-5 max-w-2xl font-sans leading-relaxed text-lbody">
               {content.founder.body}
             </p>
             <Link
-              className="mt-7 inline-flex border-b border-signal pb-1 font-body text-sm text-signal"
+              className="mt-7 inline-flex items-center gap-2 border-b border-gold pb-1 font-body text-sm font-semibold text-gold hover:text-goldd transition-colors"
               href="/founder"
             >
-              {content.founder.action}
+              {content.founder.action} →
             </Link>
           </div>
           <FounderPortrait
@@ -376,24 +392,24 @@ export default function CascAcademyLanding({ content }: Props) {
           />
         </div>
       </section>
-      <section id="gifts" className="border-b border-white/10 bg-[#09192b]">
+      <section id="gifts" className="border-b border-white/10 bg-navy on-navy">
         <div className="mx-auto grid w-full gap-10 px-6 py-16 sm:px-8 lg:max-w-6xl lg:grid-cols-2 lg:px-10 lg:py-24">
           <div>
-            <p className="font-body text-xs font-semibold uppercase tracking-[.2em] text-signal">
-              {t.giftsEyebrow}
-            </p>
-            <h2 className="mt-5 font-display text-3xl sm:text-4xl">
+            <p className="kicker text-gold">{t.giftsEyebrow}</p>
+            <h2 className="mt-5 font-serif text-3xl font-normal text-white sm:text-4xl">
               {t.giftsTitle}
             </h2>
-            <p className="mt-5 max-w-xl font-body leading-7 text-white/65">
+            <p className="mt-5 max-w-xl font-sans leading-7 text-lbody">
               {t.giftsBody}
             </p>
           </div>
-          <div className="border border-white/10 bg-ink p-6 sm:p-8">
+          <div className="rounded-2xl border border-white/10 bg-deep p-6 sm:p-8 shadow-sm">
             {!user ? (
               <>
-                <h3 className="font-display text-2xl">{t.giftsTitle}</h3>
-                <p className="mt-3 font-body leading-7 text-white/60">
+                <h3 className="font-serif text-2xl font-normal text-white">
+                  {t.giftsTitle}
+                </h3>
+                <p className="mt-3 font-sans leading-7 text-lbody">
                   {t.giftsBody}
                 </p>
                 <button
@@ -408,7 +424,9 @@ export default function CascAcademyLanding({ content }: Props) {
               </>
             ) : (
               <>
-                <h3 className="font-display text-2xl">{t.downloads}</h3>
+                <h3 className="font-serif text-2xl font-normal text-white">
+                  {t.downloads}
+                </h3>
                 <div className="mt-6 grid gap-3">
                   {[
                     ["1", "The Examiner's Briefing.pdf"],
@@ -424,7 +442,7 @@ export default function CascAcademyLanding({ content }: Props) {
                           `${name}${(id === "1" && giftStatus?.gift1Downloaded) || (id === "2" && giftStatus?.gift2Downloaded) ? " - downloaded" : ""}`,
                         )
                       }
-                      className="flex min-h-12 items-center justify-between border border-signal/50 px-4 text-start font-body text-sm font-semibold text-signal hover:bg-signal hover:text-ink disabled:opacity-60"
+                      className="flex min-h-12 items-center justify-between rounded-xl border border-gold/40 bg-gold/5 px-4 text-start font-body text-sm font-semibold text-gold transition-colors hover:bg-gold hover:text-navy disabled:opacity-60"
                     >
                       {downloading === id ? (
                         <Loader2 className="animate-spin" size={18} />
@@ -438,7 +456,7 @@ export default function CascAcademyLanding({ content }: Props) {
                   <button
                     type="button"
                     disabled
-                    className="flex min-h-12 items-center gap-3 border border-white/15 px-4 text-start font-body text-sm text-white/45"
+                    className="flex min-h-12 items-center gap-3 rounded-xl border border-white/10 px-4 text-start font-body text-sm text-mute"
                   >
                     <Mail size={18} />
                     {t.email}
@@ -470,85 +488,76 @@ export default function CascAcademyLanding({ content }: Props) {
           </div>
         </div>
       </section>
-      <section id="enrol" className="border-b border-white/10 bg-[#09192b]">
+      <section id="enrol" className="border-b border-white/10 bg-navy on-navy">
         <div className="mx-auto grid w-full gap-12 px-6 py-18 sm:px-8 lg:max-w-6xl lg:grid-cols-[minmax(0,1fr)_minmax(22rem,31rem)] lg:items-center lg:gap-20 lg:px-10 lg:py-28">
           <div className="max-w-xl">
-            <p className="font-body text-xs font-semibold uppercase tracking-[.2em] text-signal">
-              Enrol
-            </p>
-            <h2 className="mt-5 font-display text-4xl leading-tight sm:text-5xl">
+            <p className="kicker text-gold">Enrol</p>
+            <h2 className="mt-5 font-display text-4xl leading-tight text-white sm:text-5xl font-bold">
               The founding hundred.
             </h2>
-            <p className="mt-6 font-display text-xl leading-8 text-white/90">
-              The first hundred candidates pay GBP 147. After that the price is
-              GBP 247.
+            <p className="mt-6 font-serif text-xl leading-8 text-lbody">
+              The first hundred candidates pay £147. After that the price is
+              £247.
             </p>
-            <p className="mt-5 font-body leading-7 text-white/65">
+            <p className="mt-5 font-body leading-7 text-lbody">
               This is not a countdown timer: there are one hundred places at the
               founding price, and when they are gone, they are gone.
             </p>
-            <p className="mt-5 font-body leading-7 text-white/65">
+            <p className="mt-5 font-body leading-7 text-lbody">
               In exchange, we ask for one thing: a short piece of honest
               feedback once you have worked through the course.
             </p>
           </div>
-          <aside className="rounded-2xl border border-white/80 border-t-4 border-t-signal bg-white p-6 text-ink shadow-2xl shadow-black/20 sm:p-9">
-            <p className="font-display text-5xl leading-none sm:text-6xl">
-              GBP 147
-            </p>
-            <p className="mt-3 font-body text-sm text-ink/65">
-              For the founding hundred - then GBP 247
-            </p>
-            <ul className="mt-6 divide-y divide-ink/10 border-y border-ink/10 font-body text-sm text-ink/80">
-              <li className="flex gap-3 py-3">
-                <span className="text-signal">-</span>The full 43-station
-                library
-              </li>
-              <li className="flex gap-3 py-3">
-                <span className="text-signal">-</span>Twelve Weeks to the CASC
-                workbook
-              </li>
-              <li className="flex gap-3 py-3">
-                <span className="text-signal">-</span>The candidates&apos;
-                practice community
-              </li>
-              <li className="flex gap-3 py-3">
-                <span className="text-signal">-</span>The examiner&apos;s notes
-                by email
-              </li>
-              <li className="flex gap-3 py-3">
-                <span className="text-signal">-</span>Your certificate on
-                completion
-              </li>
-              <li className="flex gap-3 py-3">
-                <span className="text-signal">-</span>Twelve months&apos;
-                access, extended for a resit
-              </li>
+          <aside className="pricecard">
+            <p className="big">£147</p>
+            <p className="then">For the founding hundred — then £247</p>
+            <ul>
+              <li>The full 43-station library</li>
+              <li>Twelve Weeks to the CASC workbook</li>
+              <li>The candidates&apos; practice community</li>
+              <li>The examiner&apos;s notes by email</li>
+              <li>Your certificate on completion</li>
+              <li>Twelve months&apos; access, extended for a resit</li>
             </ul>
             <SubscribeButton
-              className="mt-7 flex min-h-12 w-full items-center justify-center rounded-full bg-signal px-6 font-body text-sm font-semibold text-ink transition-colors hover:bg-signal-light"
+              className="btn btn-gold !min-h-12 w-full text-center text-sm font-semibold !rounded-full"
               showArrow={false}
             >
-              Enrol now - GBP 147
+              Enrol now — £147
             </SubscribeButton>
           </aside>
         </div>
       </section>
-      <section className="border-b border-white/10">
+      <section className="border-b border-hair bg-tint on-tint text-char">
         <div className="mx-auto w-full px-6 py-16 sm:px-8 lg:max-w-6xl lg:px-10 lg:py-24">
-          <h2 className="font-display text-3xl">{t.faqTitle}</h2>
+          <h2 className="font-display text-3xl font-bold text-navy">
+            {t.faqTitle}
+          </h2>
           <div className="mt-8">
             <FAQAccordion items={referenceFaqs} />
           </div>
         </div>
       </section>
-      <section className="bg-[#09192b]">
-        <div className="mx-auto max-w-3xl px-6 py-16 text-center sm:px-8 lg:py-24">
-          <h2 className="font-display text-3xl sm:text-4xl">{t.close}</h2>
-          <div className="mt-8">
+      <section className="bg-deep on-deep">
+        <div className="mx-auto max-w-3xl px-6 py-20 text-center sm:px-8 lg:py-28">
+          <h2 className="font-display text-3xl sm:text-4xl text-white font-bold">
+            {t.close}
+          </h2>
+          <p className="mt-4 font-serif text-lg leading-7 text-lbody max-w-xl mx-auto">
+            They are the ones who practised out loud, on purpose, with someone
+            watching — and who knew, before they walked in, which four seconds
+            of each station the mark actually turns on.
+          </p>
+          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
             <SubscribeButton className={button} showArrow={false}>
-              {t.final}
+              {t.final} — £147
             </SubscribeButton>
+            <Link
+              className={ghostBtn}
+              href={`/${locale}/academy/preview/station-7-2`}
+            >
+              {t.free}
+            </Link>
           </div>
         </div>
       </section>

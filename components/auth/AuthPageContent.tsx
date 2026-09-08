@@ -58,19 +58,18 @@ export function AuthPageContent() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [examDate, setExamDate] = React.useState<Date>();
   const [profileImage, setProfileImage] = React.useState<File | null>(null);
-  const [profileImagePreviewUrl, setProfileImagePreviewUrl] =
-    React.useState<string | null>(null);
+  const profileImagePreviewUrl = React.useMemo(() => {
+    if (!profileImage) return null;
+    return URL.createObjectURL(profileImage);
+  }, [profileImage]);
 
   React.useEffect(() => {
-    if (!profileImage) {
-      setProfileImagePreviewUrl(null);
-      return;
-    }
-
-    const previewUrl = URL.createObjectURL(profileImage);
-    setProfileImagePreviewUrl(previewUrl);
-    return () => URL.revokeObjectURL(previewUrl);
-  }, [profileImage]);
+    return () => {
+      if (profileImagePreviewUrl) {
+        URL.revokeObjectURL(profileImagePreviewUrl);
+      }
+    };
+  }, [profileImagePreviewUrl]);
 
   const tab: AuthTab = localTab ?? defaultTab;
 
@@ -148,16 +147,14 @@ export function AuthPageContent() {
       queryKey: academyQueryKeys.currentUser,
     });
 
-    if (
+    const targetUrl =
       redirectParam &&
       redirectParam.startsWith("/") &&
       !redirectParam.startsWith("//")
-    ) {
-      router.push(redirectParam);
-    } else {
-      router.push(`/${locale}/courses`);
-    }
-    router.refresh();
+        ? redirectParam
+        : `/${locale}/courses`;
+
+    window.location.href = targetUrl;
   }
 
   function handleSignIn(event: React.FormEvent<HTMLFormElement>) {
@@ -559,7 +556,7 @@ export function AuthPageContent() {
                     </div>
                     {/* Inputs Grid */}
                     <div className="grid gap-4 sm:grid-cols-2">
-<div className="sm:col-span-2 rounded-2xl border border-line/70 bg-surface-2/25 p-3.5 sm:p-4">
+                      <div className="sm:col-span-2 rounded-2xl border border-line/70 bg-surface-2/25 p-3.5 sm:p-4">
                         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                           <div className="flex min-w-0 items-center gap-3">
                             {profileImagePreviewUrl ? (
@@ -570,12 +567,18 @@ export function AuthPageContent() {
                               />
                             ) : (
                               <div className="flex size-14 shrink-0 items-center justify-center rounded-xl border border-signal/25 bg-signal/10 text-signal">
-                                <ImagePlus className="size-6" aria-hidden="true" />
+                                <ImagePlus
+                                  className="size-6"
+                                  aria-hidden="true"
+                                />
                               </div>
                             )}
                             <div className="min-w-0">
                               <p className="text-sm font-semibold normal-case tracking-normal text-text">
-                                Profile image <span className="font-normal text-muted">(optional)</span>
+                                Profile image{" "}
+                                <span className="font-normal text-muted">
+                                  (optional)
+                                </span>
                               </p>
                               <p className="mt-0.5 truncate text-xs font-normal normal-case tracking-normal text-muted">
                                 {profileImage
@@ -668,9 +671,7 @@ export function AuthPageContent() {
                         <input
                           type="hidden"
                           name="exam-date"
-                          value={
-                            examDate ? formatDateForForm(examDate) : ""
-                          }
+                          value={examDate ? formatDateForForm(examDate) : ""}
                         />
                         <DatePicker
                           id="exam-date"

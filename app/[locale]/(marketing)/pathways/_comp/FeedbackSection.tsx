@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { CalendarDays, Quote } from "lucide-react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import LogoLoop, { type LogoItem } from "@/components/LogoLoop";
 import { apiRequest } from "@/lib/api/client";
 import type { PathwayKey } from "./pathwayContent";
@@ -21,43 +21,6 @@ type PublicFeedback = {
 
 type FeedbackSectionProps = {
   pathway?: FeedbackScope;
-};
-
-type FeedbackLabels = {
-  eyebrow: string;
-  title: string;
-  learner: string;
-  examDate: string;
-  shared: string;
-  profilePhoto: string;
-  loopLabel: string;
-};
-
-const copy: Record<"en" | "ar", FeedbackLabels> = {
-  en: {
-    eyebrow: "Candidate feedback",
-    title: "What learners say after working through the course.",
-    learner: "MedLex learner",
-    examDate: "Exam date",
-    shared: "Shared",
-    profilePhoto: "profile photo",
-    loopLabel: "Learner feedback",
-  },
-  ar: {
-    eyebrow:
-      "\u0622\u0631\u0627\u0621 \u0627\u0644\u0645\u062a\u062f\u0631\u0628\u064a\u0646",
-    title:
-      "\u0645\u0627 \u064a\u0642\u0648\u0644\u0647 \u0627\u0644\u0645\u062a\u062f\u0631\u0628\u0648\u0646 \u0628\u0639\u062f \u0625\u062a\u0645\u0627\u0645 \u0627\u0644\u062f\u0648\u0631\u0629.",
-    learner:
-      "\u0645\u062a\u062f\u0631\u0628 \u0645\u064a\u062f\u0644\u064a\u0643\u0633",
-    examDate:
-      "\u062a\u0627\u0631\u064a\u062e \u0627\u0644\u0627\u0645\u062a\u062d\u0627\u0646",
-    shared:
-      "\u062a\u0645\u062a \u0627\u0644\u0645\u0634\u0627\u0631\u0643\u0629",
-    profilePhoto: "\u0635\u0648\u0631\u0629 \u0634\u062e\u0635\u064a\u0629",
-    loopLabel:
-      "\u0622\u0631\u0627\u0621 \u0627\u0644\u0645\u062a\u062f\u0631\u0628\u064a\u0646",
-  },
 };
 
 function usePathwayFeedback(pathway: FeedbackScope) {
@@ -90,64 +53,74 @@ function initialsFor(name: string) {
 
 function FeedbackCard({
   feedback,
-  labels,
   locale,
 }: {
   feedback: PublicFeedback;
-  labels: FeedbackLabels;
   locale: "ar" | "en";
 }) {
-  const fullName = feedback.full_name?.trim() || labels.learner;
+  const t = useTranslations("feedbackSection");
+  const fullName = feedback.full_name?.trim() || t("learner");
   const examDate = feedback.exam_date
     ? formatDate(feedback.exam_date, locale)
     : null;
 
   return (
-    <blockquote className="flex min-h-72 flex-col border border-white/10 bg-[#09192b] p-6 transition-colors hover:border-signal/40">
-      <header className="flex items-start justify-between gap-4">
+    <blockquote className="flex h-64 sm:h-72 w-full flex-col justify-between rounded-2xl border border-white/10 bg-deep/95 p-5 sm:p-6 transition-all hover:border-gold/40 shadow-sm text-start">
+      <header className="flex items-start justify-between gap-3">
         <div className="flex min-w-0 items-center gap-3">
-          <div className="flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-signal/40 bg-signal/15 font-body text-sm font-semibold text-signal">
+          <div className="relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full border border-gold/40 bg-gold/15 font-sans text-xs font-semibold text-gold">
             {feedback.avatar_url ? (
               <img
                 src={feedback.avatar_url}
-                alt={`${fullName} ${labels.profilePhoto}`}
-                className="size-full object-cover"
+                alt={`${fullName} ${t("profilePhoto")}`}
+                className="!h-full !w-full !max-w-none rounded-full object-cover"
+                onError={(e) => {
+                  // Fallback to initials if image fails to load
+                  e.currentTarget.style.display = "none";
+                  const fallback = e.currentTarget.nextElementSibling as HTMLElement | null;
+                  if (fallback) fallback.style.display = "flex";
+                }}
               />
-            ) : (
-              <span aria-hidden="true">{initialsFor(fullName)}</span>
-            )}
+            ) : null}
+            <span
+              aria-hidden="true"
+              style={{ display: feedback.avatar_url ? "none" : "flex" }}
+              className="items-center justify-center size-full"
+            >
+              {initialsFor(fullName)}
+            </span>
           </div>
-          <cite className="truncate font-body text-sm font-semibold not-italic text-white">
+          <cite className="truncate font-serif text-sm sm:text-base font-semibold not-italic text-white">
             {fullName}
           </cite>
         </div>
         {examDate ? (
-          <div className="shrink-0 text-end font-body text-xs leading-5 text-white/60">
-            <span className="flex items-center justify-end gap-1.5 text-white/45">
-              <CalendarDays aria-hidden="true" className="size-3.5" />
-              {labels.examDate}
+          <div className="shrink-0 text-end font-sans text-xs leading-tight text-lbody">
+            <span className="flex items-center justify-end gap-1 text-[11px] text-mute">
+              <CalendarDays aria-hidden="true" className="size-3" />
+              {t("examDate")}
             </span>
             <time
               dateTime={feedback.exam_date ?? undefined}
-              className="text-signal"
+              className="text-gold font-semibold text-xs"
             >
               {examDate}
             </time>
           </div>
         ) : null}
       </header>
-      <div className="mt-7 border-t border-white/10 pt-6">
-        <Quote aria-hidden="true" className="size-5 text-signal" />
-        <p className="mt-4 font-body text-base leading-7 text-white/80">
+      <div className="mt-3.5 border-t border-white/10 pt-3.5 flex-1 min-h-0 overflow-y-auto pr-1">
+        <Quote aria-hidden="true" className="size-4 text-gold" />
+        <p className="mt-2 font-sans text-xs sm:text-sm leading-relaxed text-lbody line-clamp-4">
           {feedback.feedback}
         </p>
       </div>
-      <footer className="mt-auto pt-6">
+      <footer className="mt-3 shrink-0 pt-2 border-t border-white/5">
         <time
           dateTime={feedback.updated_at}
-          className="font-body text-xs text-white/45"
+          className="font-body text-[11px] text-mute"
         >
-          {labels.shared} {formatDate(feedback.updated_at, locale)}
+          {t("shared")} {formatDate(feedback.updated_at, locale)}
         </time>
       </footer>
     </blockquote>
@@ -161,75 +134,59 @@ function renderFeedbackItem(item: LogoItem) {
 export default function FeedbackSection({
   pathway = "all",
 }: FeedbackSectionProps) {
-  const locale = useLocale() === "ar" ? "ar" : "en";
-  const labels = copy[locale];
+  const t = useTranslations("feedbackSection");
+  const locale = useLocale() as "ar" | "en";
   const { data: feedback, isPending, isError } = usePathwayFeedback(pathway);
-  const shouldLoop = (feedback?.length ?? 0) > 4;
-  const feedbackItems = useMemo<LogoItem[]>(
-    () =>
-      (feedback ?? []).map((item) => ({
-        node: (
-          <div className="w-80 sm:w-96">
-            <FeedbackCard feedback={item} labels={labels} locale={locale} />
-          </div>
-        ),
-      })),
-    [feedback, labels, locale],
-  );
+  const feedbackItems = useMemo<LogoItem[]>(() => {
+    const raw = feedback ?? [];
+    if (raw.length === 0) return [];
+    // Ensure we have at least 4 items in the sequence so the continuous ticker loop animates smoothly
+    const items = raw.length < 4 ? [...raw, ...raw, ...raw, ...raw].slice(0, Math.max(raw.length * 2, 4)) : raw;
+    return items.map((item) => ({
+      node: (
+        <div className="w-72 sm:w-80 h-full py-1">
+          <FeedbackCard feedback={item} locale={locale} />
+        </div>
+      ),
+    }));
+  }, [feedback, locale]);
 
   if (isError || (!isPending && feedback?.length === 0)) return null;
 
   return (
     <section
       aria-labelledby="pathway-feedback-title"
-      className={
-        shouldLoop
-          ? "overflow-hidden border-b border-white/10 bg-ink text-white"
-          : "border-b border-white/10 bg-ink text-white"
-      }
+      className="overflow-hidden border-b border-white/10 bg-navy text-white on-navy py-12 sm:py-16"
     >
-      <div className="mx-auto w-full px-6 py-16 sm:px-8 lg:max-w-6xl lg:px-10 lg:py-24">
-        <p className="font-body text-xs font-semibold uppercase tracking-[.2em] text-signal">
-          {labels.eyebrow}
-        </p>
+      <div className="mx-auto w-full px-6 sm:px-8 lg:max-w-6xl lg:px-10">
+        <p className="kicker text-gold">{t("eyebrow")}</p>
         <h2
           id="pathway-feedback-title"
-          className="mt-5 max-w-3xl font-display text-3xl leading-tight sm:text-4xl"
+          className="mt-2 max-w-3xl font-serif text-2xl sm:text-3xl md:text-4xl font-normal leading-tight text-white"
         >
-          {labels.title}
+          {t("title")}
         </h2>
-        <div className="mt-10">
+        <div className="mt-8">
           {isPending ? (
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {Array.from({ length: 3 }, (_, index) => (
                 <div
                   key={index}
                   aria-hidden="true"
-                  className="h-72 animate-pulse border border-white/10 bg-white/5"
+                  className="h-48 animate-pulse rounded-2xl border border-white/10 bg-deep/50"
                 />
               ))}
             </div>
-          ) : shouldLoop ? (
+          ) : (
             <LogoLoop
               logos={feedbackItems}
               renderItem={renderFeedbackItem}
-              ariaLabel={labels.loopLabel}
+              ariaLabel={t("loopLabel")}
               speed={18}
               gap={16}
               logoHeight={1}
               pauseOnHover
             />
-          ) : (
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {feedback?.map((item) => (
-                <FeedbackCard
-                  key={`${item.course_slug}-${item.updated_at}-${item.feedback}`}
-                  feedback={item}
-                  labels={labels}
-                  locale={locale}
-                />
-              ))}
-            </div>
           )}
         </div>
       </div>

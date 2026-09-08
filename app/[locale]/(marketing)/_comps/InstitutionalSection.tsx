@@ -32,7 +32,7 @@ export default function InstitutionalSection({
 }: InstitutionalSectionProps) {
   return (
     <section
-      className="bg-paper py-24 border-b border-line"
+      className="bg-white py-24 border-b border-hair text-char"
       aria-labelledby="institutional-heading"
     >
       <div
@@ -42,19 +42,16 @@ export default function InstitutionalSection({
         {/* Section Header */}
         <div className="mb-16 grid grid-cols-1 lg:grid-cols-[180px_1fr] gap-8">
           <div className="flex items-start gap-3 pt-1">
-            <span className="h-px w-8 bg-signal mt-2" />
-            <span className="font-body text-[10px] uppercase tracking-[0.25em] text-muted font-semibold">
-              For Organizations
-            </span>
+            <span className="kicker text-goldd">For Organizations</span>
           </div>
           <div>
             <h2
               id="institutional-heading"
-              className="font-display text-3xl md:text-4xl lg:text-5xl text-white"
+              className="font-serif text-3xl md:text-4xl lg:text-5xl text-navy font-normal"
             >
               Institutional Services
             </h2>
-            <p className="mt-4 font-body text-base text-muted max-w-2xl">
+            <p className="mt-4 font-sans text-base text-char/80 max-w-2xl leading-relaxed">
               Evidence-based solutions for judicial bodies, ministries of
               health, legal chambers, and healthcare authorities seeking
               excellence in medicolegal psychiatry.
@@ -67,21 +64,21 @@ export default function InstitutionalSection({
           {SERVICES.map((srv, idx) => (
             <div
               key={idx}
-              className="bg-surface border border-line p-8 flex flex-col justify-between hover:border-signal transition-colors group"
+              className="rounded-2xl bg-warm/30 border border-hair p-8 flex flex-col justify-between hover:border-gold/40 hover:-translate-y-1 hover:shadow-md transition-all group"
             >
               <div>
                 <span className="text-3xl mb-4 block">{srv.icon}</span>
-                <h3 className="font-display text-lg text-white mb-3 group-hover:text-signal transition-colors">
+                <h3 className="font-serif text-xl text-navy mb-3 group-hover:text-goldd transition-colors font-normal">
                   {srv.title}
                 </h3>
-                <p className="font-body text-xs text-muted leading-relaxed">
+                <p className="font-sans text-sm text-char/75 leading-relaxed">
                   {srv.desc}
                 </p>
               </div>
-              <div className="pt-6 mt-6 border-t border-line">
+              <div className="pt-6 mt-6 border-t border-hair">
                 <Link
                   href={`/${locale}/institutional`}
-                  className="font-body text-xs font-semibold text-signal hover:text-signal-light transition-colors inline-flex items-center gap-1"
+                  className="font-body text-xs font-semibold text-navy hover:text-goldd transition-colors inline-flex items-center gap-1"
                 >
                   Learn More <span>→</span>
                 </Link>
@@ -91,22 +88,22 @@ export default function InstitutionalSection({
         </div>
 
         {/* Bottom Banner */}
-        <div className="mt-12 bg-ink text-white p-8 md:p-12 border border-white/10 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="mt-12 rounded-2xl bg-deep text-lbody p-8 md:p-12 border border-white/10 flex flex-col md:flex-row items-center justify-between gap-8 shadow-sm">
           <div>
-            <span className="font-body text-[10px] uppercase tracking-[0.2em] text-signal font-semibold">
+            <span className="kicker text-gold font-semibold">
               Bespoke Engagements
             </span>
-            <h3 className="font-display text-2xl text-white mt-1">
+            <h3 className="font-serif text-2xl sm:text-3xl text-white font-normal mt-2">
               Need a tailored institutional training program or consultation?
             </h3>
-            <p className="font-body text-sm text-white/60 mt-2 max-w-xl">
+            <p className="font-sans text-sm text-lbody mt-2 max-w-xl">
               Our faculty designs bespoke continuous medical and legal education
               (CME/CLE) programs aligned with your regional jurisdiction.
             </p>
           </div>
           <Link
             href={`/${locale}/contact`}
-            className="bg-signal hover:bg-signal-light text-ink font-body text-xs uppercase tracking-wider font-semibold px-8 py-4 whitespace-nowrap transition-colors"
+            className="btn btn-gold !rounded-full !px-8 !py-4 font-body text-xs uppercase tracking-wider font-semibold text-navy whitespace-nowrap"
           >
             Request Proposal →
           </Link>

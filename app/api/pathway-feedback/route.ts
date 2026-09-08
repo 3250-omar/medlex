@@ -7,6 +7,7 @@ type FeedbackRow = {
   user_id: string;
   feedback: string;
   updated_at: string;
+  is_approved?: boolean;
   courses: { slug: string; is_published: boolean } | null;
 };
 
@@ -30,10 +31,7 @@ type QueryError = { message: string } | null;
 
 type FeedbackQuery = {
   eq: (column: string, value: string | boolean) => FeedbackQuery;
-  order: (
-    column: string,
-    options: { ascending: boolean },
-  ) => FeedbackQuery;
+  order: (column: string, options: { ascending: boolean }) => FeedbackQuery;
   limit: (
     count: number,
   ) => Promise<{ data: FeedbackRow[] | null; error: QueryError }>;
@@ -88,8 +86,11 @@ export async function GET(request: NextRequest) {
   const profileDb = admin as unknown as ProfileAdminClient;
   const query = feedbackDb
     .from("feedbacks")
-    .select("user_id, feedback, updated_at, courses!inner(slug, is_published)")
-    .eq("courses.is_published", true);
+    .select(
+      "user_id, feedback, updated_at, is_approved, courses!inner(slug, is_published)",
+    )
+    .eq("courses.is_published", true)
+    .eq("is_approved", true);
   const filteredQuery =
     scope === "all" ? query : query.eq("courses.slug", scope);
   const { data: feedbackRows, error: feedbackError } = await filteredQuery
@@ -116,32 +117,35 @@ export async function GET(request: NextRequest) {
     (profileRows ?? []).map((profile) => [profile.id, profile]),
   );
   const feedback = await Promise.all(
-    (feedbackRows ?? []).filter(hasCourse).map((row) => ({
-      row,
-      profile: profilesById.get(row.user_id),
-    })).map(async ({ row, profile }) => {
-      let avatarUrl: string | null = null;
+    (feedbackRows ?? [])
+      .filter(hasCourse)
+      .map((row) => ({
+        row,
+        profile: profilesById.get(row.user_id),
+      }))
+      .map(async ({ row, profile }) => {
+        let avatarUrl: string | null = null;
 
-      if (profile?.avatar_path) {
-        try {
-          const { data: signedAvatar } = await feedbackDb.storage
-            .from("profile-images")
-            .createSignedUrl(profile.avatar_path, 60 * 60 * 24);
-          avatarUrl = signedAvatar?.signedUrl ?? null;
-        } catch {
-          avatarUrl = null;
+        if (profile?.avatar_path) {
+          try {
+            const { data: signedAvatar } = await feedbackDb.storage
+              .from("profile-images")
+              .createSignedUrl(profile.avatar_path, 60 * 60 * 24);
+            avatarUrl = signedAvatar?.signedUrl ?? null;
+          } catch {
+            avatarUrl = null;
+          }
         }
-      }
 
-      return {
-        feedback: row.feedback,
-        updated_at: row.updated_at,
-        course_slug: row.courses.slug,
-        full_name: profile?.full_name ?? null,
-        exam_date: profile?.exam_date ?? null,
-        avatar_url: avatarUrl,
-      } satisfies PublicFeedbackRow;
-    }),
+        return {
+          feedback: row.feedback,
+          updated_at: row.updated_at,
+          course_slug: row.courses.slug,
+          full_name: profile?.full_name ?? null,
+          exam_date: profile?.exam_date ?? null,
+          avatar_url: avatarUrl,
+        } satisfies PublicFeedbackRow;
+      }),
   );
 
   return NextResponse.json({ data: feedback });

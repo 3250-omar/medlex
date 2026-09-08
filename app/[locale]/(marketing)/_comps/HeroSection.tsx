@@ -1,6 +1,6 @@
 "use client";
 
-import { type PointerEvent, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { InterestDialogTrigger } from "@/components/marketing/InterestDialog";
 import { useTranslations } from "next-intl";
@@ -49,9 +49,11 @@ export default function HeroSection({ locale }: HeroSectionProps) {
       const centerX = width / 2;
       const centerY = height / 2;
       const radius = Math.min(width, height) * 0.46;
-      const accent = getComputedStyle(document.documentElement)
-        .getPropertyValue("--signal")
+      const goldVal = getComputedStyle(document.documentElement)
+        .getPropertyValue("--gold")
         .trim();
+      const accent =
+        goldVal && !goldVal.startsWith("var") ? goldVal : "#D4AF37";
       const phase = time * 0.0016;
       drawingContext.strokeStyle = accent;
       drawingContext.lineWidth = 0.7;
@@ -130,102 +132,30 @@ export default function HeroSection({ locale }: HeroSectionProps) {
       cancelAnimationFrame(frame);
     };
   }, []);
-  function handlePointerMove(event: PointerEvent<HTMLElement>) {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const bounds = event.currentTarget.getBoundingClientRect();
-    heroRef.current?.style.setProperty(
-      "--hero-x",
-      (((event.clientX - bounds.left) / bounds.width - 0.5) * 2).toFixed(3),
-    );
-    heroRef.current?.style.setProperty(
-      "--hero-y",
-      (((event.clientY - bounds.top) / bounds.height - 0.5) * 2).toFixed(3),
-    );
-  }
-
-  function resetPointer() {
-    heroRef.current?.style.setProperty("--hero-x", "0");
-    heroRef.current?.style.setProperty("--hero-y", "0");
-  }
   return (
     <section
       ref={heroRef}
-      onPointerMove={handlePointerMove}
-      onPointerLeave={resetPointer}
-      className="hero-shell relative flex min-h-screen flex-col overflow-hidden bg-[radial-gradient(circle_at_68%_42%,#17334b_0%,#0b1a2e_52%,#071525_100%)]"
+      className="hero-shell on-navy relative flex min-h-screen flex-col overflow-hidden bg-[radial-gradient(ellipse_at_75%_35%,#21436E_0%,#1A365D_50%,#142A49_100%)] text-lbody"
       aria-label="MedLex hero"
     >
-      <div
-        className="pointer-events-none absolute right-0 top-1/2 rtl:right-auto rtl:left-0 -translate-y-1/2 opacity-[0.07]"
-        aria-hidden="true"
-      >
-        <svg width="700" height="700" viewBox="0 0 700 700" fill="none">
-          {[320, 270, 210, 150].map((r) => (
-            <circle
-              key={r}
-              cx="350"
-              cy="350"
-              r={r}
-              stroke="var(--signal)"
-              strokeWidth="0.6"
-            />
-          ))}
-          <line
-            x1="350"
-            y1="30"
-            x2="350"
-            y2="670"
-            stroke="var(--signal)"
-            strokeWidth="0.4"
-          />
-          <line
-            x1="30"
-            y1="350"
-            x2="670"
-            y2="350"
-            stroke="var(--signal)"
-            strokeWidth="0.4"
-          />
-          <line
-            x1="124"
-            y1="124"
-            x2="576"
-            y2="576"
-            stroke="var(--signal)"
-            strokeWidth="0.4"
-          />
-          <line
-            x1="576"
-            y1="124"
-            x2="124"
-            y2="576"
-            stroke="var(--signal)"
-            strokeWidth="0.4"
-          />
-        </svg>
-      </div>
-
-      <div
-        className="relative mx-auto flex w-full flex-1 items-center px-6 pb-24 pt-[calc(var(--header-h)+3rem)] md:px-8 md:pb-28 md:pt-[calc(var(--header-h)+4rem)] lg:px-12"
-        style={{ maxWidth: "var(--content-max)" }}
-      >
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,.92fr)] lg:gap-14">
-          {/* ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ Left ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ */}
-          <div>
+      <div className="relative flex w-full flex-1 items-center justify-center px-6 pb-14 pt-[calc(var(--header-h)+2rem)] sm:px-10 md:px-14 lg:px-20 xl:px-24 2xl:px-28">
+        <div className="grid w-full grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,1.18fr)_minmax(0,.82fr)] lg:gap-14 xl:gap-20 2xl:gap-28">
+          {/* Left */}
+          <div className="w-full text-start max-w-3xl xl:max-w-4xl">
             {/* Eyebrow label */}
-            <div className="hero-kicker mb-7 flex items-center gap-4">
-              <span className="block h-px w-12 bg-signal opacity-70" />
-              <span className="font-body text-[10px] uppercase tracking-[0.3em] text-white/50">
+            <div className="hero-kicker mb-6 flex items-center justify-start gap-3">
+              <span className="block h-px w-10 bg-gold/70" />
+              <span className="font-sans text-[12px] uppercase tracking-[0.25em] text-gold font-semibold">
                 {t("kicker")}
               </span>
             </div>
 
             {/* Headline */}
-            <h1 className="hero-title mb-9 font-display text-[clamp(38px,5vw,64px)] leading-[1.06] tracking-[-0.012em] text-white!">
+            <h1 className="hero-title mb-7 font-serif text-[clamp(42px,4.5vw,70px)] font-bold leading-[1.08] tracking-[-0.015em] text-white">
               <span className="hero-title-line">{t("line1")}</span>
               <span className="hero-title-line">
                 {t("line2")}
-                <em className="hero-answer not-italic text-signal">
+                <em className="hero-answer not-italic text-gold">
                   {" "}
                   {t("answer")}
                 </em>
@@ -234,17 +164,17 @@ export default function HeroSection({ locale }: HeroSectionProps) {
             </h1>
 
             {/* Body */}
-            <p className="hero-lede mb-9 max-w-[52ch] font-body text-[18px] leading-[1.7] text-white/65">
+            <p className="hero-lede mb-8 max-w-[62ch] font-sans text-[18px] md:text-[20px] leading-[1.7] text-lbody">
               {t("body")}
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="flex flex-wrap items-center justify-start gap-4">
               {user ? (
                 <button
                   type="button"
                   onClick={() => router.push(`/${locale}/courses`)}
-                  className="inline-flex items-center gap-2 border border-signal px-7 py-3.5 font-body text-sm tracking-wide text-signal transition-all duration-200 hover:bg-signal hover:text-ink"
+                  className="btn btn-gold !py-3.5 !px-8 text-sm font-semibold gap-2"
                 >
                   Go to your courses
                   <svg
@@ -260,7 +190,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
                   </svg>
                 </button>
               ) : (
-                <InterestDialogTrigger className="inline-flex items-center gap-2 border border-signal px-7 py-3.5 font-body text-sm tracking-wide text-signal transition-all duration-200 hover:bg-signal hover:text-ink">
+                <InterestDialogTrigger className="btn btn-gold !py-3.5 !px-8 text-sm font-semibold gap-2">
                   {t("register")}
                   <svg
                     width="14"
@@ -283,7 +213,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
                     .getElementById("pathways-heading")
                     ?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="inline-flex items-center gap-2 border border-white/20 px-7 py-3.5 font-body text-sm tracking-wide text-white/70 transition-all duration-200 hover:border-white/50 hover:text-white"
+                className="btn btn-ghost !py-3.5 !px-8 text-sm font-semibold gap-2"
               >
                 {t("pathways")}
               </a>
@@ -291,10 +221,222 @@ export default function HeroSection({ locale }: HeroSectionProps) {
           </div>
 
           <div
-            className="hero-figure relative mx-auto w-full max-w-xl lg:ml-auto lg:max-w-xl"
+            className="hero-figure relative w-full max-w-lg md:max-w-xl lg:max-w-xl xl:max-w-2xl lg:ml-auto rtl:lg:mr-auto rtl:lg:ml-0"
             data-reveal
             style={{ "--reveal-delay": "120ms" } as React.CSSProperties}
           >
+            {/* Background compass/coordinate SVG centered directly on the image */}
+            <div
+              className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.24] z-0 select-none"
+              aria-hidden="true"
+            >
+              <svg
+                width="1100"
+                height="1100"
+                viewBox="0 0 900 900"
+                fill="none"
+                className="hero-astrolabe-spin w-[850px] h-[850px] sm:w-[980px] sm:h-[980px] md:w-[1100px] md:h-[1100px] lg:w-[1250px] lg:h-[1250px] xl:w-[1380px] xl:h-[1380px] max-w-none"
+              >
+                {/* Outermost precision tracks */}
+                <circle
+                  cx="450"
+                  cy="450"
+                  r="432"
+                  stroke="#D4AF37"
+                  strokeWidth="0.8"
+                  opacity="0.45"
+                />
+                <circle
+                  cx="450"
+                  cy="450"
+                  r="418"
+                  stroke="#D4AF37"
+                  strokeWidth="0.5"
+                  opacity="0.35"
+                />
+
+                {/* Outer bezel calibration ticks (72 ticks, every 5 degrees) */}
+                {Array.from({ length: 72 }, (_, i) => {
+                  const deg = i * 5;
+                  const isMajor = i % 6 === 0; // every 30 deg
+                  const isMedium = i % 2 === 0; // every 10 deg
+                  const len = isMajor ? 14 : isMedium ? 9 : 5;
+                  const strokeWidth = isMajor ? 1.3 : isMedium ? 0.85 : 0.55;
+                  const opacity = isMajor ? 0.65 : isMedium ? 0.45 : 0.28;
+                  return (
+                    <line
+                      key={deg}
+                      x1="450"
+                      y1={450 - 432}
+                      x2="450"
+                      y2={450 - 432 + len}
+                      stroke="#D4AF37"
+                      strokeWidth={strokeWidth}
+                      opacity={opacity}
+                      transform={`rotate(${deg} 450 450)`}
+                    />
+                  );
+                })}
+
+                {/* 4 Cardinal Diamond Markers */}
+                {[0, 90, 180, 270].map((deg) => (
+                  <polygon
+                    key={`diamond-${deg}`}
+                    points="450,8 454,16 450,24 446,16"
+                    fill="#D4AF37"
+                    opacity="0.75"
+                    transform={`rotate(${deg} 450 450)`}
+                  />
+                ))}
+
+                {/* Nested orbital measurement rings */}
+                <circle
+                  cx="450"
+                  cy="450"
+                  r="384"
+                  stroke="#D4AF37"
+                  strokeWidth="0.75"
+                  strokeDasharray="4 8"
+                  opacity="0.32"
+                />
+                <circle
+                  cx="450"
+                  cy="450"
+                  r="340"
+                  stroke="#D4AF37"
+                  strokeWidth="0.7"
+                  strokeDasharray="24 8 6 8"
+                  opacity="0.3"
+                />
+                <circle
+                  cx="450"
+                  cy="450"
+                  r="285"
+                  stroke="#D4AF37"
+                  strokeWidth="0.6"
+                  opacity="0.22"
+                />
+                <circle
+                  cx="450"
+                  cy="450"
+                  r="230"
+                  stroke="#D4AF37"
+                  strokeWidth="0.75"
+                  strokeDasharray="12 8"
+                  opacity="0.28"
+                />
+                <circle
+                  cx="450"
+                  cy="450"
+                  r="175"
+                  stroke="#D4AF37"
+                  strokeWidth="0.6"
+                  opacity="0.2"
+                />
+                <circle
+                  cx="450"
+                  cy="450"
+                  r="115"
+                  stroke="#D4AF37"
+                  strokeWidth="0.75"
+                  strokeDasharray="4 4"
+                  opacity="0.32"
+                />
+
+                {/* Major crosshairs with central aperture */}
+                <line
+                  x1="450"
+                  y1="18"
+                  x2="450"
+                  y2="360"
+                  stroke="#D4AF37"
+                  strokeWidth="0.7"
+                  opacity="0.5"
+                />
+                <line
+                  x1="450"
+                  y1="540"
+                  x2="450"
+                  y2="882"
+                  stroke="#D4AF37"
+                  strokeWidth="0.7"
+                  opacity="0.5"
+                />
+                <line
+                  x1="18"
+                  y1="450"
+                  x2="360"
+                  y2="450"
+                  stroke="#D4AF37"
+                  strokeWidth="0.7"
+                  opacity="0.5"
+                />
+                <line
+                  x1="540"
+                  y1="450"
+                  x2="882"
+                  y2="450"
+                  stroke="#D4AF37"
+                  strokeWidth="0.7"
+                  opacity="0.5"
+                />
+
+                {/* Measurement hatch marks on crosshair axes */}
+                {[200, 260, 320, 380].map((dist) => (
+                  <g
+                    key={`hatch-${dist}`}
+                    stroke="#D4AF37"
+                    strokeWidth="0.8"
+                    opacity="0.45"
+                  >
+                    <line x1="446" y1={450 - dist} x2="454" y2={450 - dist} />
+                    <line x1="446" y1={450 + dist} x2="454" y2={450 + dist} />
+                    <line x1={450 - dist} y1="446" x2={450 - dist} y2="454" />
+                    <line x1={450 + dist} y1="446" x2={450 + dist} y2="454" />
+                  </g>
+                ))}
+
+                {/* Diagonal radials (45°, 135°, 225°, 315°) */}
+                {[45, 135, 225, 315].map((deg) => (
+                  <g key={`diag-${deg}`} transform={`rotate(${deg} 450 450)`}>
+                    <line
+                      x1="450"
+                      y1="32"
+                      x2="450"
+                      y2="310"
+                      stroke="#D4AF37"
+                      strokeWidth="0.6"
+                      strokeDasharray="6 10"
+                      opacity="0.3"
+                    />
+                    <circle
+                      cx="450"
+                      cy="66"
+                      r="2"
+                      fill="#D4AF37"
+                      opacity="0.55"
+                    />
+                  </g>
+                ))}
+
+                {/* Intermediate radial indicators at 15°, 75°, 105°, etc. */}
+                {[15, 75, 105, 165, 195, 255, 285, 345].map((deg) => (
+                  <line
+                    key={`inter-${deg}`}
+                    x1="450"
+                    y1={450 - 418}
+                    x2="450"
+                    y2={450 - 375}
+                    stroke="#D4AF37"
+                    strokeWidth="0.55"
+                    strokeDasharray="2 6"
+                    opacity="0.25"
+                    transform={`rotate(${deg} 450 450)`}
+                  />
+                ))}
+              </svg>
+            </div>
+
             {/* Image frame */}
             <canvas
               ref={guillocheRef}
@@ -302,7 +444,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
               aria-hidden="true"
             />
             <div
-              className="hero-frame relative border border-white/10 bg-accent/30"
+              className="hero-frame relative z-10 overflow-hidden rounded-2xl border border-gold/30 bg-deep/80 shadow-2xl"
               style={{ aspectRatio: "4 / 3.2" }}
             >
               {/* Prototype photo treatment */}
@@ -318,14 +460,14 @@ export default function HeroSection({ locale }: HeroSectionProps) {
                 <div className="hero-evidence-tint" aria-hidden="true" />
                 <div className="hero-scan" aria-hidden="true" />
                 <div
-                  className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent"
+                  className="absolute inset-0 bg-gradient-to-t from-deep/90 via-deep/25 to-transparent"
                   aria-hidden="true"
                 />
               </div>
             </div>
 
             {/* Callout badge */}
-            <div className="hero-stamp absolute -bottom-7 left-0 z-30 rtl:left-auto rtl:right-0">
+            <div className="hero-stamp absolute -bottom-6 left-0 z-30 rtl:left-auto rtl:right-0">
               <b>3</b>
               <span>{t("badge")}</span>
             </div>
@@ -337,9 +479,9 @@ export default function HeroSection({ locale }: HeroSectionProps) {
         <MarqueeStrip />
       </div>
 
-      {/* Bottom fade-to-paper */}
+      {/* Bottom subtle transition */}
       <div
-        className="pointer-events-none absolute bottom-0 inset-x-0 z-10 h-20 bg-gradient-to-t from-ink to-transparent"
+        className="pointer-events-none absolute bottom-0 inset-x-0 z-10 h-24 bg-gradient-to-t from-deep via-deep/40 to-transparent"
         aria-hidden="true"
       />
     </section>

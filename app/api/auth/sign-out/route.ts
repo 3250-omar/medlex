@@ -2,18 +2,23 @@ import { NextResponse, type NextRequest } from "next/server";
 import { createRouteClient } from "@/lib/supabase/route";
 
 export async function POST(request: NextRequest) {
-  const { response, supabase } = createRouteClient(request);
+  const { response, supabase } = await createRouteClient(request);
   const { error } = await supabase.auth.signOut();
 
   if (error) {
-    return NextResponse.json(
+    const res = NextResponse.json(
       { error: "Unable to sign out." },
-      { status: 500, headers: response.headers },
+      { status: 500 },
     );
+    response.cookies.getAll().forEach((cookie) => {
+      res.cookies.set(cookie.name, cookie.value, cookie);
+    });
+    return res;
   }
 
-  return NextResponse.json(
-    { data: { signedOut: true } },
-    { headers: response.headers },
-  );
+  const res = NextResponse.json({ data: { signedOut: true } });
+  response.cookies.getAll().forEach((cookie) => {
+    res.cookies.set(cookie.name, cookie.value, cookie);
+  });
+  return res;
 }

@@ -12,7 +12,7 @@ export async function POST(
   { params }: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await params;
-  const { response, supabase } = createRouteClient(request);
+  const { response, supabase } = await createRouteClient(request);
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -36,10 +36,18 @@ export async function POST(
   });
   if (error || !data) {
     const status = error?.message.includes("payment_required") ? 402 : 400;
-    return NextResponse.json(
+    const res = NextResponse.json(
       { error: error?.message ?? "Unable to subscribe." },
       { status },
     );
+    response.cookies.getAll().forEach((cookie) => {
+      res.cookies.set(cookie.name, cookie.value, cookie);
+    });
+    return res;
   }
-  return NextResponse.json({ data }, { headers: response.headers });
+  const res = NextResponse.json({ data });
+  response.cookies.getAll().forEach((cookie) => {
+    res.cookies.set(cookie.name, cookie.value, cookie);
+  });
+  return res;
 }

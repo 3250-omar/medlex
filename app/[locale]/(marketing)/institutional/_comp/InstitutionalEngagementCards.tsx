@@ -37,45 +37,45 @@ export default function InstitutionalEngagementCards({
 
   return (
     <section
-      className="bg-ink py-20 lg:py-28 border-b border-white/10"
+      className="bg-navy py-20 lg:py-28 border-b border-white/10 on-navy text-lbody"
       aria-labelledby="engagements-heading"
     >
-      <div
-        className="mx-auto w-full px-6 md:px-8 lg:px-12"
-        style={{ maxWidth: "var(--content-max)" }}
-      >
+      <div className="mx-auto w-full max-w-6xl px-6 sm:px-8 lg:px-10">
         {/* Section Header */}
-        <div className="max-w-3xl mb-16 lg:mb-20">
+        <div className="max-w-3xl mb-14 lg:mb-18">
           <div className="flex items-center gap-3">
-            <span className="h-px w-8 bg-signal" aria-hidden="true" />
-            <span className="font-body text-[10px] uppercase tracking-[0.25em] text-muted font-semibold">
+            <span className="h-0.5 w-7 shrink-0 bg-gold" aria-hidden="true" />
+            <span className="font-sans text-[11px] sm:text-xs uppercase tracking-[0.22em] text-gold font-semibold">
               {t("eyebrow")}
             </span>
           </div>
           <h2
             id="engagements-heading"
-            className="mt-4 font-display text-3xl md:text-4xl lg:text-5xl text-white font-normal leading-tight"
+            className="mt-4 font-serif text-3xl md:text-4xl lg:text-5xl text-white font-bold leading-tight"
           >
             {t("title")}
           </h2>
+          <p className="mt-4 font-sans text-base text-slate-300 max-w-2xl leading-relaxed">
+            {t("intro")}
+          </p>
         </div>
 
         {/* 4 Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-7">
           {items.map((item, idx) => (
             <SpotlightCard
               key={idx}
-              className="bg-surface/80 border border-white/10 p-7 sm:p-8 flex flex-col justify-between hover:border-signal/50 transition-colors duration-300"
-              spotlightColor="rgb(220 164 53 / 0.12)"
+              className="flex flex-col justify-between rounded-2xl border border-white/12 bg-deep/90 p-8 hover:border-gold/50 transition-all duration-300 shadow-xl"
+              spotlightColor="rgba(212, 175, 55, 0.12)"
             >
               <div>
-                <span className="font-mono text-[11px] text-signal font-semibold tracking-wider block mb-4">
+                <span className="font-serif text-base font-bold text-gold">
                   {item.tag}
                 </span>
-                <h3 className="font-display text-lg sm:text-xl text-white font-medium mb-3">
+                <h3 className="mt-3 font-serif text-xl font-bold text-white leading-snug">
                   {item.title}
                 </h3>
-                <p className="font-body text-xs sm:text-sm text-muted leading-relaxed">
+                <p className="mt-3.5 font-sans text-sm text-lbody leading-relaxed">
                   {item.desc}
                 </p>
               </div>

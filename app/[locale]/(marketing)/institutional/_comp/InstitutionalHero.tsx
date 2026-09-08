@@ -30,7 +30,7 @@ export default function InstitutionalHero({ locale }: InstitutionalHeroProps) {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-ink pt-32 pb-20 md:pt-44 md:pb-28 lg:pt-48 lg:pb-32 border-b border-white/10">
+    <section className="relative overflow-hidden bg-navy pt-32 pb-20 md:pt-44 md:pb-28 lg:pt-48 lg:pb-32 border-b border-white/10 on-navy text-lbody">
       {/* Background Evidence Image & Atmosphere */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <div className="absolute right-0 top-0 h-full w-full md:w-[65%] lg:w-[55%] rtl:right-auto rtl:left-0">
@@ -42,40 +42,37 @@ export default function InstitutionalHero({ locale }: InstitutionalHeroProps) {
             sizes="(max-width: 768px) 100vw, 60vw"
             className="object-cover object-[center_30%] opacity-40 md:opacity-60 scale-105"
           />
-          {/* Subtle warm amber/signal atmospheric glow */}
-          <div className="absolute top-10 right-10 h-96 w-96 bg-signal/15 blur-3xl pointer-events-none" />
+          {/* Subtle warm amber/gold atmospheric glow */}
+          <div className="absolute top-10 right-10 h-96 w-96 bg-gold/15 blur-3xl pointer-events-none" />
         </div>
 
         {/* Directional Vignettes & Overlays for Text Contrast */}
-        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/95 via-50% to-transparent hidden md:block rtl:hidden" />
-        <div className="absolute inset-0 bg-gradient-to-l from-ink via-ink/95 via-50% to-transparent hidden rtl:md:block" />
-        <div className="absolute inset-0 bg-ink/85 md:hidden" />
+        <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/95 via-50% to-transparent hidden md:block rtl:hidden" />
+        <div className="absolute inset-0 bg-gradient-to-l from-navy via-navy/95 via-50% to-transparent hidden rtl:md:block" />
+        <div className="absolute inset-0 bg-navy/85 md:hidden" />
 
-        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ink to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-ink to-transparent" />
+        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-navy to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-navy to-transparent" />
       </div>
 
       {/* Hero Content */}
-      <div
-        className="relative z-10 mx-auto w-full px-6 md:px-8 lg:px-12"
-        style={{ maxWidth: "var(--content-max)" }}
-      >
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 sm:px-8 lg:px-10">
         <div className="max-w-3xl">
           {/* Eyebrow */}
           <div className="flex items-center gap-3">
-            <span className="h-px w-8 shrink-0 bg-signal" aria-hidden="true" />
-            <span className="font-body text-[10px] sm:text-xs font-semibold uppercase tracking-[0.24em] text-white/70">
+            <span className="h-px w-8 shrink-0 bg-gold" aria-hidden="true" />
+            <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-gold">
               {t("eyebrow")}
             </span>
           </div>
 
           {/* Main Title */}
-          <h1 className="mt-7 font-display text-4xl sm:text-5xl md:text-6xl lg:text-[62px] font-normal leading-[1.08] tracking-tight text-white whitespace-pre-line">
+          <h1 className="mt-7 font-serif text-4xl sm:text-5xl md:text-6xl lg:text-[62px] font-bold leading-[1.08] tracking-tight text-white whitespace-pre-line">
             {t("title")}
           </h1>
 
           {/* Intro Description */}
-          <p className="mt-6 max-w-2xl font-body text-base sm:text-lg leading-relaxed text-white/75 md:text-[17px] md:leading-8">
+          <p className="mt-6 max-w-2xl font-sans text-base sm:text-lg leading-relaxed text-lbody md:text-[18px] md:leading-8">
             {t("intro")}
           </p>
 
@@ -83,13 +80,13 @@ export default function InstitutionalHero({ locale }: InstitutionalHeroProps) {
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <a
               href="#institutional-inquiry"
-              className="inline-flex items-center justify-center bg-signal hover:bg-signal-light text-ink font-body text-xs uppercase tracking-wider font-semibold px-7 py-3.5 transition-all shadow-sm"
+              className="btn btn-gold !py-3.5 !px-8 text-sm font-semibold gap-2"
             >
               {isRtl ? "طلب استشارة مؤسسية ←" : "Request Institutional Consultation →"}
             </a>
             <a
               href="#services-overview"
-              className="inline-flex items-center justify-center border border-white/20 hover:border-signal/70 bg-surface/50 text-white/90 hover:text-white font-body text-xs uppercase tracking-wider font-medium px-6 py-3.5 transition-all"
+              className="btn btn-ghost !py-3.5 !px-8 text-sm font-semibold gap-2"
             >
               {isRtl ? "استكشف مجالات الممارسة ↓" : "Explore Areas of Practice ↓"}
             </a>
@@ -101,15 +98,15 @@ export default function InstitutionalHero({ locale }: InstitutionalHeroProps) {
           {metrics.map((m, idx) => (
             <div
               key={idx}
-              className="border border-white/10 bg-surface/40 backdrop-blur-sm p-5 sm:p-6 transition-all hover:border-signal/40"
+              className="rounded-2xl border border-white/12 bg-deep/90 backdrop-blur-sm p-6 transition-all hover:border-gold/40 shadow-lg"
             >
-              <div className="font-body text-[10px] uppercase tracking-[0.2em] text-signal font-semibold">
+              <div className="font-sans text-[11px] uppercase tracking-[0.2em] text-gold font-semibold">
                 {m.label}
               </div>
-              <div className="font-display text-xl sm:text-2xl text-white mt-1.5 font-medium">
+              <div className="font-serif text-2xl sm:text-3xl text-white mt-2 font-bold">
                 {m.value}
               </div>
-              <div className="font-body text-xs text-muted mt-1 leading-relaxed">
+              <div className="font-sans text-xs text-mute mt-1.5 leading-relaxed">
                 {m.detail}
               </div>
             </div>

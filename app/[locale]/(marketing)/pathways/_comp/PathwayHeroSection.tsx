@@ -119,7 +119,7 @@ export default function PathwayHeroSection({
     }
   };
   const buttonClassName =
-    "inline-flex min-h-12 items-center justify-center bg-signal px-6 font-body text-sm font-medium text-ink transition-colors hover:bg-signal-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal";
+    "btn btn-gold !rounded-full !min-h-12 !px-7 font-body text-sm font-semibold text-navy inline-flex items-center justify-center transition-transform hover:-translate-y-0.5";
 
   function renderHeroButton() {
     if (!isCascAcademy) {
@@ -168,7 +168,7 @@ export default function PathwayHeroSection({
                 type="button"
                 onClick={() => handleDownloadGift(gift.id, gift.fileName)}
                 disabled={downloadingGiftId !== null}
-                className="inline-flex min-h-12 items-center justify-center gap-2.5 border border-signal/50 bg-signal/15 px-6 font-body text-sm font-semibold text-signal transition-all hover:border-signal hover:bg-signal hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex min-h-12 items-center justify-center gap-2.5 rounded-full border border-gold/60 bg-gold/10 px-6 font-body text-sm font-semibold text-gold transition-all hover:bg-gold hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {downloadingGiftId === gift.id ? (
                   <>
@@ -194,7 +194,7 @@ export default function PathwayHeroSection({
         pathway={pathway}
         autoRedirect={false}
         onSuccess={handleSubscriptionSuccess}
-        className={`${buttonClassName} group gap-2.5 shadow-lg shadow-signal/20`}
+        className={`${buttonClassName} group gap-2.5 shadow-lg shadow-gold/10`}
         showArrow={false}
       >
         <span>Subscribe to get your gift</span>
@@ -210,7 +210,7 @@ export default function PathwayHeroSection({
   }
 
   return (
-    <section className="relative isolate overflow-hidden border-b border-white/10">
+    <section className="relative isolate overflow-hidden border-b border-white/10 bg-navy on-navy">
       {isMedicoLegal && (
         <>
           <Image
@@ -219,18 +219,18 @@ export default function PathwayHeroSection({
             fill
             priority
             sizes="100vw"
-            className="-z-20 object-cover opacity-30"
+            className="-z-20 object-cover opacity-25"
           />
-          <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(7,24,42,.97),rgba(7,24,42,.75),rgba(7,24,42,.58))]" />
+          <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(20,42,73,.96),rgba(20,42,73,.80),rgba(20,42,73,.65))]" />
         </>
       )}
-      <div className="mx-auto w-full px-6 pb-14 pt-20 sm:px-8 sm:pb-16 sm:pt-22 lg:max-w-6xl lg:px-10 lg:pb-16 lg:pt-24">
+      <div className="mx-auto w-full px-6 pb-16 pt-24 sm:px-8 sm:pb-20 sm:pt-28 lg:max-w-6xl lg:px-10 lg:pb-20 lg:pt-32">
         <div className="max-w-3xl">
           <Eyebrow>{content.eyebrow}</Eyebrow>
-          <h1 className="mt-7 max-w-3xl font-display text-4xl leading-[1.04] text-white sm:text-5xl lg:text-6xl">
+          <h1 className="mt-6 max-w-3xl font-serif text-4xl font-normal leading-[1.05] text-white sm:text-5xl lg:text-6xl">
             {content.title}
           </h1>
-          <p className="mt-6 max-w-2xl font-body text-base leading-7 text-white/65 sm:text-lg">
+          <p className="mt-6 max-w-2xl font-sans text-base leading-relaxed text-lbody sm:text-lg">
             {content.intro}
           </p>
           <dl className="mt-9 grid max-w-3xl gap-5 border-t border-white/15 pt-6 sm:grid-cols-3">
@@ -243,10 +243,10 @@ export default function PathwayHeroSection({
                 key={term}
                 className="border-s border-white/10 ps-4 first:border-s-0 first:ps-0"
               >
-                <dt className="font-body text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45">
+                <dt className="font-body text-[10px] font-semibold uppercase tracking-[0.2em] text-gold">
                   {term}
                 </dt>
-                <dd className="mt-2 font-body text-sm text-white/85">
+                <dd className="mt-2 font-body text-sm text-white/90">
                   {detail}
                 </dd>
               </div>
@@ -254,7 +254,7 @@ export default function PathwayHeroSection({
           </dl>
           <div className="mt-8">
             {justSubscribed && (!hasDownloadedGift1 || !hasDownloadedGift2) && (
-              <div className="mb-4 inline-flex items-center gap-2 rounded-md border border-signal/40 bg-signal/10 px-4 py-2 text-xs font-semibold text-signal backdrop-blur-sm">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-5 py-2 text-xs font-semibold text-gold backdrop-blur-sm">
                 <span className="text-sm">🎉</span>
                 <span>
                   You are officially enrolled! Download your gift below.

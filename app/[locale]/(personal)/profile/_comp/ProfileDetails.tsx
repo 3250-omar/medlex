@@ -20,17 +20,17 @@ export default function ProfileDetails({
     : null;
 
   return (
-    <section className="border border-white/10 bg-white/[0.02] p-6 sm:p-8">
+    <section className="rounded-2xl border border-white/10 bg-deep p-6 sm:p-8">
       <div className="flex items-center justify-between border-b border-white/10 pb-4">
         <div>
-          <p className="font-body text-[10px] uppercase tracking-[0.2em] text-signal">
+          <p className="font-body text-[10px] font-semibold uppercase tracking-[0.2em] text-gold">
             {t("eyebrow")}
           </p>
-          <h2 className="mt-1 font-display text-2xl font-normal">
+          <h2 className="mt-1 font-serif text-2xl font-normal text-white">
             {t("title")}
           </h2>
         </div>
-        <User className="size-5 text-white/30" />
+        <User className="size-5 text-gold/40" />
       </div>
 
       <dl className="mt-6 divide-y divide-white/5">
