@@ -1,0 +1,184 @@
+footer.description | Specialised training and expert consultation in forensic and medicolegal psychiatry, serving courts, institutions, and clinicians across the MENA region.
+registration.description | Choose the pathway that belongs to you — you will hear about that one alone.
+registration.guideDescription | Choose a pathway above and its guide is sent to your inbox on registration.
+registration.privacy | Your details are used only to contact you about MedLex programmes, and are never shared.
+registration.confirmedTitle | Your interest has been recorded.
+registration.confirmedDescription | We will share relevant early-access details for {pathway} when they are ready.
+faq.title | Questions asked before registering.
+faq.subtitle | General answers about the platform and its three pathways.
+faq.items[0].answer | MedLex is designed for psychiatrists, clinicians, legal professionals, and institutions working where mental health meets the law.
+faq.items[1].answer | The pathways move from foundational concepts to practical report writing and advanced professional capability, so you can begin at the right level.
+faq.items[2].answer | We will share the next available dates, course guidance, and early access information relevant to your interests.
+faq.items[3].answer | Course dates and pricing are published as each cohort opens. Register your interest to receive the announcement first.
+home.hero.line3 | to the court.
+home.hero.body | MedLex trains psychiatrists to produce evaluations that survive cross-examination, and gives courts, prosecutors, and ministries psychiatric evidence built to a documented standard.
+home.pathways.title | One platform. Three ways in.
+home.pathways.intro | Each pathway has its own audience, its own pace, and its own next step. Choose the way in that belongs to you.
+home.who.paragraphs[0] | MedLex Solutions is the first specialised forensic psychiatry training and consultation centre in the MENA region. We work along two lines that reinforce each other: structured training that equips psychiatrists with the forensic competence courts expect, and expert consultation that gives judicial and governmental institutions evaluations they can rely on.
+home.who.paragraphs[1] | The method is deliberately unglamorous — defined questions, documented reasoning, traceable sources, and conclusions stated at the confidence the evidence actually supports. That structure is what makes an opinion admissible, and it is also what protects the clinician who signed it.
+home.who.paragraphs[2] | We are not importing a model wholesale. Programmes are built around the legal frameworks practitioners here actually appear under, then aligned with international forensic standards rather than the other way round.
+home.who.quote | We’re not just training psychiatrists — we’re building the professional standard where clinical expertise becomes court-admissible evidence.
+home.who.stats[0] | Consultant training and practice in forensic psychiatry.
+home.who.stats[1] | Countries of practice: the United Kingdom, Egypt, and Qatar.
+home.who.title | A clinical opinion and a legal finding are not the same document.
+home.who.intro | Most psychiatric reports entering court were never written for court. MedLex exists to close that gap — from both ends.
+home.standards.items[0][1] | The region’s first specialised forensic psychiatry centre. We are not following a model — we are writing the one others will be measured against.
+home.standards.items[1][1] | Led by a Consultant Forensic Psychiatrist whose opinion has been examined in tribunals, Magistrates’ and Crown Courts, and before the Parole Board.
+home.standards.items[2][1] | Academic partnerships, supervision protocols, and judicial collaboration, built in sequence toward sustainable professional accreditation.
+home.standards.items[3][1] | Every module derives from actual court requirements and real legal frameworks — the failures we teach around are ones that happened in hearings.
+home.standards.title | Authority. Structure. Recognition.
+home.standards.intro | Why institutions and clinicians choose to work to our standard.
+home.flagship.body | Eight modules across two live teaching days, built on a single simulated case file (MLC-100). Participants leave having produced a complete psychiatric medico-legal report.
+home.founder.bio | His practice spans forensic psychiatry, medico-legal reporting, Mental Health Tribunals, court and Parole Board work — alongside directing specialist training and serving as an accredited MRCPsych CASC examiner for the Royal College of Psychiatrists.
+home.pathwayCards[0].description | Four progressive tracks — from single-topic masterclasses to advanced certification — home of the flagship programme, Writing Psychiatric Evidence.
+home.pathwayCards[1].description | An interactive digital preparation platform that mirrors the real examination — designed by an accredited Royal College CASC examiner.
+home.pathwayCards[2].description | Professional development beyond clinical training — opening with The Clinician’s Edge and the Clinical Leadership Programme.
+founderPage.hero.title | Built by someone who
+has been cross-examined.
+founderPage.hero.intro | MedLex is led by a UK-trained Consultant Forensic Psychiatrist working across Egypt, the United Kingdom, and Qatar - at the intersection of psychiatry, law, and institutional practice.
+founderPage.profile.paragraphs[0] | Consultant Forensic Psychiatrist, UK-trained, with broad international experience across Egypt, the United Kingdom, and Qatar. His work sits at the intersection of psychiatry, law, and institutional practice, with a focus on forensic assessment, medico-legal opinion, and the standards required in legally sensitive clinical settings.
+founderPage.profile.paragraphs[1] | As Forensic Psychiatry Training Program Director, he is actively involved in advancing specialist education and promoting high standards in forensic practice. His medico-legal experience was shaped in the United Kingdom across mental health tribunals, Magistrates' Courts, Crown Court, and the Parole Board - a practical understanding of how psychiatric opinion is examined in legal settings.
+founderPage.profile.paragraphs[2] | Alongside senior clinical and educational roles, he has contributed to professional training across the region, including consultancy work with UNICEF in Egypt supporting legal authorities. Through MedLex, he offers expert-led, court-conscious, and practice-grounded guidance in forensic and medico-legal psychiatry.
+founderPage.profile.meta[0].label | Forums.
+founderPage.profile.meta[1].label | Focus.
+founderPage.profile.meta[2].label | Teaching.
+founderPage.profile.meta[3].label | Advisory.
+founderPage.mandate.title | To establish forensic
+psychiatry as a recognised
+specialty in the MENA region.
+founderPage.mandate.subtitle | Built on scientific rigour, legal alignment, and professional protection.
+founderPage.mandate.cards[0].caption | Case review in company - an opinion tested early holds up later.
+founderPage.mandate.cards[1].caption | The paper trail is the evidence - documentation before conclusion.
+founderPage.mandate.cards[2].caption | Institutional capacity built alongside individual competence.
+founderPage.mandate.pillars[0].description | Method before conclusion. Structured instruments, documented reasoning, and opinions stated at the confidence the evidence supports.
+founderPage.mandate.pillars[1].description | Reports written to answer the legal question posed, in the framework of the jurisdiction hearing it - not a clinical summary handed to a court.
+founderPage.mandate.pillars[2].description | A defensible methodology is a clinician's protection. We teach the record-keeping and reasoning that hold up when the opinion is challenged.
+founderPage.mandate.pillars[3].description | International standards, applied to the courts and institutions practitioners here actually appear before.
+founderPage.nextStep.title | One clear step:
+register your interest.
+founderPage.nextStep.body | Choose the pathway that belongs to you and you hear about that one alone — no general mailings, no commitment.
+contactPage.hero.intro | Be first to hear when enrolment opens. Choose your pathway and you will hear about that one alone.
+contactPage.form.title | Be first to hear when enrolment opens.
+contactPage.form.intro | Choose the pathway that concerns you and we will write to you about that one alone — no general mailings.
+contactPage.form.privacy | Your details are used only to contact you about MedLex programmes, and are never shared.
+editorialPages.contact.title | Bring us the question behind the question.
+editorialPages.contact.intro | For course guidance, institutional partnerships, or speaking enquiries, send a note and our team will respond.
+editorialPages.contact.sections[0].body | For general enquiries and course support.
+editorialPages.contact.sections[1].body | Tell us about your team, audience, and the outcome you want to build.
+editorialPages.contact.sections[2].body | We aim to respond with a useful next step, not a generic inbox receipt.
+editorialPages.register.title | Be first to hear when the next cohort opens.
+editorialPages.register.intro | Leave your details and we will share course dates, pathway guidance, and early access updates.
+editorialPages.register.sections[0].body | Only the course and programme information that matches your professional interests.
+editorialPages.register.sections[1].body | Your details are used for MedLex communications and are never sold.
+editorialPages.register.sections[2].body | The full registration form and account creation flow will be connected in the authentication phase.
+editorialPages.privacy.title | Your information, handled with care.
+editorialPages.privacy.intro | This page explains the principles MedLex follows when collecting and using information through the platform.
+editorialPages.privacy.sections[0].body | We collect information required to provide course access, respond to enquiries, and improve the learning experience.
+editorialPages.privacy.sections[1].body | You can request access, correction, or deletion of your personal information by contacting the MedLex team.
+editorialPages.privacy.sections[2].body | Access controls, secure storage, and server-side authorization help protect account and learning data.
+editorialPages.terms.title | Clear terms for a serious learning platform.
+editorialPages.terms.intro | These terms set out the conditions for using MedLex courses, account services, and platform materials.
+editorialPages.terms.sections[0].body | Course access is provided to the registered learner for the period and scope described at purchase or enrolment.
+editorialPages.terms.sections[1].body | MedLex content is protected material and may not be copied, resold, or published without written permission.
+editorialPages.terms.sections[2].body | Course content supports education and professional development; it is not a substitute for case-specific legal or clinical advice.
+editorialPages.refunds.title | A straightforward approach to refunds.
+editorialPages.refunds.intro | Our refund approach is designed to be clear before you enrol and fair when circumstances change.
+editorialPages.refunds.sections[0].body | Requests made before course access begins can be reviewed for a full refund, subject to the published course terms.
+editorialPages.refunds.sections[1].body | If access has started, contact us promptly. We review exceptional circumstances individually and explain the outcome.
+editorialPages.refunds.sections[2].body | Include your order reference and registered email when contacting info@medlex.academy so we can help quickly.
+auth.description | Sign in to continue learning, or create your account to register your interest and access courses.
+auth.confirmationRequired | Check your email to confirm your account, then sign in to continue.
+auth.validation.fullName | Enter at least 2 characters.
+auth.validation.username | Username must be at least 3 characters.
+auth.validation.email | Enter a valid email address.
+auth.validation.phone | Enter at least 6 characters.
+auth.validation.password | Password must be between 8 and 72 characters.
+auth.validation.examDate | Select a valid exam date.
+pathwayPages.medico-legal.title | From a first forensic report to practice tested in court.
+pathwayPages.medico-legal.intro | For psychiatrists, psychologists and legal professionals — four progressive tracks, home of the flagship programme Writing Psychiatric Evidence.
+pathwayPages.medico-legal.audience.title | Clinical opinion and legal judgment are not one document.
+pathwayPages.medico-legal.audience.body | This pathway is for specialists who receive the questions courts ask — not for the general public.
+pathwayPages.medico-legal.audience.items[0].body | Receiving legal referrals and needing a report structure that holds up under cross-examination.
+pathwayPages.medico-legal.audience.items[1].body | Working in court-directed assessment and needing a documented methodology.
+pathwayPages.medico-legal.audience.items[2].body | Building forensic competence early, and in the right order.
+pathwayPages.medico-legal.audience.items[3].body | Reading psychiatric reports, testing them, and working with experts.
+pathwayPages.medico-legal.formats.title | One structure, three ways to take it.
+pathwayPages.medico-legal.formats.body | From a single masterclass to an extended programme — the detail page sets out all three formats in full.
+pathwayPages.medico-legal.founder.title | Built by someone who has been cross-examined.
+pathwayPages.medico-legal.founder.body | A UK-trained consultant forensic psychiatrist, with experience before Mental Health Tribunals, Magistrates’ Courts, Crown Court and the Parole Board.
+pathwayPages.casc-academy.title | The CASC, from the examiner’s chair.
+pathwayPages.casc-academy.intro | An interactive, self-paced preparation platform for the MRCPsych CASC — designed and written by a former Royal College of Psychiatrists CASC examiner.
+pathwayPages.casc-academy.audience.body | The CASC is a station-based exam: a series of timed clinical encounters, observed and marked in real time.
+pathwayPages.casc-academy.audience.items[0].body | The CASC does not test what you know on paper. It tests what you say, what you do, and what you decide — observed, against the clock, in a consultation style that examiners recognise instantly.
+pathwayPages.casc-academy.audience.items[1].body | Candidates rarely fail the CASC because they know too little psychiatry. They fail because they have never practised making the right moves, in the right order, in the way the station is designed to reward.
+pathwayPages.casc-academy.feature.title | Preparation today comes in two forms. Both are useful. Neither is enough.
+pathwayPages.casc-academy.feature.body | Recorded video courses explain concepts. Face-to-face teaching provides feedback. The missing layer is deliberate, examiner-guided practice: structured, repeatable rehearsal of the decisions each station is built to assess.
+pathwayPages.casc-academy.feature.quote | Available whenever you study, for as long as you need it — with feedback framed the way an examiner actually marks.
+pathwayPages.casc-academy.feature.stages[0].body | Realistic scenarios that unfold as the examiner would: choices and cues, not passive videos.
+pathwayPages.casc-academy.feature.stages[1].body | At the moments that matter, you choose the next move and see why each option succeeds or fails.
+pathwayPages.casc-academy.feature.stages[2].body | Every station is calibrated to what an examiner is looking for: structure, timing and clinical reasoning.
+pathwayPages.casc-academy.feature.stages[3].body | A consistent framework for judging your own performance honestly.
+pathwayPages.casc-academy.founder.title | Built by an examiner who has marked it.
+pathwayPages.casc-academy.founder.body | Dr Ahmed Abouelghit — Consultant Forensic Psychiatrist, former MRCPsych CASC examiner, Royal College of Psychiatrists.
+pathwayPages.casc-academy.sampleStation.taskLabel | Your task.
+pathwayPages.casc-academy.sampleStation.scenario | Daniel, 24, has been admitted with a first episode of psychosis. He has told the team clearly that he does not want clinical information shared with his family. His mother, distressed, has asked to speak with you. Speak with her.
+pathwayPages.casc-academy.sampleStation.options[0].examinerFeedback | The instinct to comfort is human - and it is exactly where marks leak in this station. Daniel has explicitly declined to share, and disclosing the likely diagnosis breaches that. Strong candidates hold the boundary without abandoning warmth; this option abandons the boundary to keep the warmth.
+pathwayPages.casc-academy.sampleStation.options[1].examinerFeedback | This is what the station is built to reward: the boundary is held, and the relationship is kept. You have declined to disclose, stayed with her distress, and opened a path forward - general information, support, and the possibility of Daniel choosing to involve her. The station rewards doing both at once, not choosing between them.
+pathwayPages.casc-academy.sampleStation.options[2].examinerFeedback | Technically defensible - and it stalls in the communication domain. The task was to manage this conversation, not to end it. Citing the rule and stepping back reads as dismissive, and the marks for engaging with her distress go uncollected.
+pathwayPages.casc-academy.sampleStation.testingBody | Not your knowledge of confidentiality - every candidate knows the rule. It is testing whether you can hold a boundary and a relationship at the same time, under time pressure.
+pathwayPages.casc-academy.sampleStation.disclaimer | This sample uses an original teaching scenario built on the examination's publicly defined competency domains. Select the other options to compare the examiner's view of each.
+pathwayPages.casc-academy.faqs[0].answer | No — and it does not try to. It gives the structured practice layer that most preparation is missing, so your live teaching and study partners are more useful.
+pathwayPages.casc-academy.faqs[1].answer | No. The Academy is built entirely on publicly defined competency domains and original scenarios, not recalled examination material.
+pathwayPages.casc-academy.faqs[2].answer | It was designed with international candidates foremost in mind. All material is written in clear English and reflects the consultation style the examination expects.
+pathwayPages.casc-academy.faqs[3].answer | Launch and pricing are announced to the waitlist first. Registering your interest carries no commitment.
+pathwayPages.foundations.title | Professional development beyond the clinic.
+pathwayPages.foundations.intro | The umbrella for non-clinical professional development — opening with The Clinician’s Edge and the Clinical Leadership Programme, and built to take on more.
+pathwayPages.foundations.audience.title | For clinicians building careers beyond the clinic.
+pathwayPages.foundations.audience.body | The competencies clinical training does not teach, and that a doctor needs the moment they lead a team, build a service, or negotiate a decision.
+pathwayPages.foundations.programmes.title | Professional skills for the work around medicine.
+pathwayPages.foundations.programmes.body | Focused programmes with practical tools, honest feedback, and a clear next step.
+pathwayPages.foundations.programmes.items[0].body | Essential professional competencies beyond clinical medicine, for mid-career clinicians.
+pathwayPages.foundations.programmes.items[0].status | Interest list — enrolment opens at launch, and is fully self-service after that.
+pathwayPages.foundations.programmes.items[1].body | Leadership and management for clinicians — facilitated in person, with full participant workbooks and practical exercises.
+pathwayPages.foundations.programmes.items[1].status | Waitlist — the workshop is in person with limited seats; the date and city are announced to the list first.
+pathwayPages.foundations.founder.title | A clearer way to lead beyond the consulting room.
+pathwayPages.foundations.founder.body | The programmes are built for the real decisions that arrive once clinical expertise is no longer the whole job.
+profile.courses.emptyDescription | Explore our specialised psychiatric and medico-legal training pathways to begin your learning.
+profile.sidebar.supportDescription | Our team is available to assist you with pathway registration, institutional arrangements, and academic enquiries.
+profile.guest.description | Sign in or register to access your enrolled courses, certifications, and account details in the MedLex Academy.
+institutionalPage.hero.title | Expert consultation
+& court services.
+institutionalPage.hero.intro | Independent psychiatric evaluations, clinical governance review, and capacity-building programmes built to judicial standards across the MENA region.
+institutionalPage.servicesGrid.title | Four specialised services for judicial and healthcare bodies.
+institutionalPage.servicesGrid.cards[0].desc | Independent psychiatric evaluations for courts, prosecution, and legal counsel in criminal, civil, and custodial proceedings.
+institutionalPage.servicesGrid.cards[1].desc | Development of defensible clinical governance standards, fitness-to-plead frameworks, and structured risk assessment tools.
+institutionalPage.servicesGrid.cards[2].desc | Peer review of disputed psychiatric evidence, medico-legal audit, and independent evaluation of complex court files.
+institutionalPage.servicesGrid.cards[3].desc | Bespoke forensic psychiatry curriculums and masterclasses for judges, prosecutors, hospital leadership, and legal teams.
+institutionalPage.standards.title | Built for the scrutiny of modern courts and institutions.
+institutionalPage.standards.intro | Why judicial bodies, ministries, and hospitals rely on MedLex expert consultation.
+institutionalPage.standards.pillars[0].desc | Led by a Consultant Forensic Psychiatrist with extensive practice across UK Mental Health Tribunals, Crown Courts, and regional bodies.
+institutionalPage.standards.pillars[1].desc | Method before conclusion. Defined questions, structured psychometric instruments, and opinions stated at the confidence the evidence supports.
+institutionalPage.standards.pillars[2].desc | Reports constructed around the specific statutory questions posed under your jurisdiction's penal, civil, or healthcare code.
+institutionalPage.standards.pillars[3].desc | Court-conscious methodology that protects institutional integrity, maintains strict clinician neutrality, and survives cross-examination.
+institutionalPage.details.service1.subtitle | Independent psychiatric evaluations built to evidentiary standards.
+institutionalPage.details.service1.description | We produce court-admissible psychiatric evaluations for civil and criminal cases. Our reports address specific statutory questions with rigorous documentation, diagnostic clarity, and defensible clinical reasoning that withstands cross-examination.
+institutionalPage.details.service2.subtitle | Clinical governance standards that minimise medicolegal risk.
+institutionalPage.details.service2.description | Healthcare facilities and custodial institutions operate under severe legal scrutiny. We assist leadership in drafting, auditing, and implementing protocols that meet international human rights benchmarks while aligning with local statutory frameworks.
+institutionalPage.details.service3.subtitle | Objective forensic audit of complex psychiatric evidence.
+institutionalPage.details.service3.description | When medical evidence is disputed, contradictory, or methodologically flawed, courts and legal teams require an authoritative, independent second perspective. We provide rigorous review of medical records, existing expert reports, and interview transcripts.
+institutionalPage.details.service4.subtitle | Specialised forensic curriculums for judicial and medical personnel.
+institutionalPage.details.service4.description | We bridge the cultural and intellectual divide between clinical medicine and the law. Our programmes equip judicial officers to critically appraise psychiatric evidence, and teach clinicians how to write reports that survive legal examination.
+institutionalPage.engagements.title | Four standard frameworks for institutional collaboration.
+institutionalPage.engagements.intro | Flexible contractual arrangements structured around the governance and procurement requirements of ministries, tribunals, and healthcare authorities.
+institutionalPage.engagements.items[0].desc | Direct instruction by courts, public prosecutors, or joint legal parties for expert opinion, written evaluation, and viva voce testimony in specific cases.
+institutionalPage.engagements.items[1].desc | Ongoing consultative access for ministries, correctional authorities, and judicial bodies seeking on-call forensic psychiatry expertise and legislative advice.
+institutionalPage.engagements.items[2].desc | Comprehensive forensic and medicolegal audits of inpatient facilities, secure psychiatric units, and custodial healthcare services.
+institutionalPage.engagements.items[3].desc | Multi-year curriculum design and delivery for national judicial training centres, postgraduate medical faculties, and bar associations.
+institutionalPage.form.title | Request an institutional consultation.
+institutionalPage.form.intro | Submit your institutional inquiry below. Our senior advisory team will review your mandate and respond under strict professional confidentiality.
+institutionalPage.form.successDesc | Thank you. Our institutional liaison team will review your inquiry and follow up within 1–2 business days under strict professional confidentiality.
+institutionalPage.form.confidentiality | All communications are treated with strict legal and medical confidentiality in accordance with international professional standards.
+institutionalPage.ctaBanner.desc | Our faculty designs bespoke continuous medical and legal education (CME/CLE) programs aligned with your regional jurisdiction.
+exam.subscribeMessage | Subscribe to build a focused plan before exam day.
+exam.subscribedMessage | You are making progress. Keep the momentum going.
+feedbackSection.title | What learners say after working through the course.

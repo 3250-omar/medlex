@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 
 const NAV_ITEMS = [
-  { label: "Pathways", href: "/#pathways-heading" },
+  { label: "Pathways", href: "/#pathways" },
   { label: "Founder", href: "/founder" },
   { label: "FAQ", href: "/faq" },
   { label: "Institutional", href: "/institutional" },

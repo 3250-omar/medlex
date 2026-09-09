@@ -40,7 +40,7 @@ function EnrolOrContinue({
 }: EnrolOrContinueProps) {
   return cascEnrolment && continueSlug ? (
     <Link
-      href={`/${locale}/academy/casc-academy/learn/${continueSlug}`}
+      href={`/${locale}/academy/courses/casc-academy/learn/${continueSlug}`}
       className={className}
     >
       Continue course

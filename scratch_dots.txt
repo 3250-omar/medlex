@@ -1,0 +1,378 @@
+=== EN ===
+footer.description : Specialised training and expert consultation in forensic and medicolegal psychiatry, serving courts, institutions, and clinicians across the MENA region.
+registration.description : Choose the pathway that belongs to you — you will hear about that one alone.
+registration.guideDescription : Choose a pathway above and its guide is sent to your inbox on registration.
+registration.privacy : Your details are used only to contact you about MedLex programmes, and are never shared.
+registration.confirmedTitle : Your interest has been recorded.
+registration.confirmedDescription : We will share relevant early-access details for {pathway} when they are ready.
+faq.title : Questions asked before registering.
+faq.subtitle : General answers about the platform and its three pathways.
+faq.items[0].answer : MedLex is designed for psychiatrists, clinicians, legal professionals, and institutions working where mental health meets the law.
+faq.items[1].answer : The pathways move from foundational concepts to practical report writing and advanced professional capability, so you can begin at the right level.
+faq.items[2].answer : We will share the next available dates, course guidance, and early access information relevant to your interests.
+faq.items[3].answer : Course dates and pricing are published as each cohort opens. Register your interest to receive the announcement first.
+home.hero.line3 : to the court.
+home.hero.body : MedLex trains psychiatrists to produce evaluations that survive cross-examination, and gives courts, prosecutors, and ministries psychiatric evidence built to a documented standard.
+home.pathways.title : One platform. Three ways in.
+home.pathways.intro : Each pathway has its own audience, its own pace, and its own next step. Choose the way in that belongs to you.
+home.who.paragraphs[0] : MedLex Solutions is the first specialised forensic psychiatry training and consultation centre in the MENA region. We work along two lines that reinforce each other: structured training that equips psychiatrists with the forensic competence courts expect, and expert consultation that gives judicial and governmental institutions evaluations they can rely on.
+home.who.paragraphs[1] : The method is deliberately unglamorous — defined questions, documented reasoning, traceable sources, and conclusions stated at the confidence the evidence actually supports. That structure is what makes an opinion admissible, and it is also what protects the clinician who signed it.
+home.who.paragraphs[2] : We are not importing a model wholesale. Programmes are built around the legal frameworks practitioners here actually appear under, then aligned with international forensic standards rather than the other way round.
+home.who.quote : We’re not just training psychiatrists — we’re building the professional standard where clinical expertise becomes court-admissible evidence.
+home.who.stats[0] : Consultant training and practice in forensic psychiatry.
+home.who.stats[1] : Countries of practice: the United Kingdom, Egypt, and Qatar.
+home.who.title : A clinical opinion and a legal finding are not the same document.
+home.who.intro : Most psychiatric reports entering court were never written for court. MedLex exists to close that gap — from both ends.
+home.standards.items[0][1] : The region’s first specialised forensic psychiatry centre. We are not following a model — we are writing the one others will be measured against.
+home.standards.items[1][1] : Led by a Consultant Forensic Psychiatrist whose opinion has been examined in tribunals, Magistrates’ and Crown Courts, and before the Parole Board.
+home.standards.items[2][1] : Academic partnerships, supervision protocols, and judicial collaboration, built in sequence toward sustainable professional accreditation.
+home.standards.items[3][1] : Every module derives from actual court requirements and real legal frameworks — the failures we teach around are ones that happened in hearings.
+home.standards.title : Authority. Structure. Recognition.
+home.standards.intro : Why institutions and clinicians choose to work to our standard.
+home.flagship.body : Eight modules across two live teaching days, built on a single simulated case file (MLC-100). Participants leave having produced a complete psychiatric medico-legal report.
+home.founder.bio : His practice spans forensic psychiatry, medico-legal reporting, Mental Health Tribunals, court and Parole Board work — alongside directing specialist training and serving as an accredited MRCPsych CASC examiner for the Royal College of Psychiatrists.
+home.pathwayCards[0].description : Four progressive tracks — from single-topic masterclasses to advanced certification — home of the flagship programme, Writing Psychiatric Evidence.
+home.pathwayCards[1].description : An interactive digital preparation platform that mirrors the real examination — designed by an accredited Royal College CASC examiner.
+home.pathwayCards[2].description : Professional development beyond clinical training — opening with The Clinician’s Edge and the Clinical Leadership Programme.
+founderPage.hero.title : Built by someone who
+has been cross-examined.
+founderPage.hero.intro : MedLex is led by a UK-trained Consultant Forensic Psychiatrist working across Egypt, the United Kingdom, and Qatar - at the intersection of psychiatry, law, and institutional practice.
+founderPage.profile.paragraphs[0] : Consultant Forensic Psychiatrist, UK-trained, with broad international experience across Egypt, the United Kingdom, and Qatar. His work sits at the intersection of psychiatry, law, and institutional practice, with a focus on forensic assessment, medico-legal opinion, and the standards required in legally sensitive clinical settings.
+founderPage.profile.paragraphs[1] : As Forensic Psychiatry Training Program Director, he is actively involved in advancing specialist education and promoting high standards in forensic practice. His medico-legal experience was shaped in the United Kingdom across mental health tribunals, Magistrates' Courts, Crown Court, and the Parole Board - a practical understanding of how psychiatric opinion is examined in legal settings.
+founderPage.profile.paragraphs[2] : Alongside senior clinical and educational roles, he has contributed to professional training across the region, including consultancy work with UNICEF in Egypt supporting legal authorities. Through MedLex, he offers expert-led, court-conscious, and practice-grounded guidance in forensic and medico-legal psychiatry.
+founderPage.profile.meta[0].label : Forums.
+founderPage.profile.meta[1].label : Focus.
+founderPage.profile.meta[2].label : Teaching.
+founderPage.profile.meta[3].label : Advisory.
+founderPage.mandate.title : To establish forensic
+psychiatry as a recognised
+specialty in the MENA region.
+founderPage.mandate.subtitle : Built on scientific rigour, legal alignment, and professional protection.
+founderPage.mandate.cards[0].caption : Case review in company - an opinion tested early holds up later.
+founderPage.mandate.cards[1].caption : The paper trail is the evidence - documentation before conclusion.
+founderPage.mandate.cards[2].caption : Institutional capacity built alongside individual competence.
+founderPage.mandate.pillars[0].description : Method before conclusion. Structured instruments, documented reasoning, and opinions stated at the confidence the evidence supports.
+founderPage.mandate.pillars[1].description : Reports written to answer the legal question posed, in the framework of the jurisdiction hearing it - not a clinical summary handed to a court.
+founderPage.mandate.pillars[2].description : A defensible methodology is a clinician's protection. We teach the record-keeping and reasoning that hold up when the opinion is challenged.
+founderPage.mandate.pillars[3].description : International standards, applied to the courts and institutions practitioners here actually appear before.
+founderPage.nextStep.title : One clear step:
+register your interest.
+founderPage.nextStep.body : Choose the pathway that belongs to you and you hear about that one alone — no general mailings, no commitment.
+contactPage.hero.intro : Be first to hear when enrolment opens. Choose your pathway and you will hear about that one alone.
+contactPage.form.title : Be first to hear when enrolment opens.
+contactPage.form.intro : Choose the pathway that concerns you and we will write to you about that one alone — no general mailings.
+contactPage.form.privacy : Your details are used only to contact you about MedLex programmes, and are never shared.
+editorialPages.contact.title : Bring us the question behind the question.
+editorialPages.contact.intro : For course guidance, institutional partnerships, or speaking enquiries, send a note and our team will respond.
+editorialPages.contact.sections[0].body : For general enquiries and course support.
+editorialPages.contact.sections[1].body : Tell us about your team, audience, and the outcome you want to build.
+editorialPages.contact.sections[2].body : We aim to respond with a useful next step, not a generic inbox receipt.
+editorialPages.register.title : Be first to hear when the next cohort opens.
+editorialPages.register.intro : Leave your details and we will share course dates, pathway guidance, and early access updates.
+editorialPages.register.sections[0].body : Only the course and programme information that matches your professional interests.
+editorialPages.register.sections[1].body : Your details are used for MedLex communications and are never sold.
+editorialPages.register.sections[2].body : The full registration form and account creation flow will be connected in the authentication phase.
+editorialPages.privacy.title : Your information, handled with care.
+editorialPages.privacy.intro : This page explains the principles MedLex follows when collecting and using information through the platform.
+editorialPages.privacy.sections[0].body : We collect information required to provide course access, respond to enquiries, and improve the learning experience.
+editorialPages.privacy.sections[1].body : You can request access, correction, or deletion of your personal information by contacting the MedLex team.
+editorialPages.privacy.sections[2].body : Access controls, secure storage, and server-side authorization help protect account and learning data.
+editorialPages.terms.title : Clear terms for a serious learning platform.
+editorialPages.terms.intro : These terms set out the conditions for using MedLex courses, account services, and platform materials.
+editorialPages.terms.sections[0].body : Course access is provided to the registered learner for the period and scope described at purchase or enrolment.
+editorialPages.terms.sections[1].body : MedLex content is protected material and may not be copied, resold, or published without written permission.
+editorialPages.terms.sections[2].body : Course content supports education and professional development; it is not a substitute for case-specific legal or clinical advice.
+editorialPages.refunds.title : A straightforward approach to refunds.
+editorialPages.refunds.intro : Our refund approach is designed to be clear before you enrol and fair when circumstances change.
+editorialPages.refunds.sections[0].body : Requests made before course access begins can be reviewed for a full refund, subject to the published course terms.
+editorialPages.refunds.sections[1].body : If access has started, contact us promptly. We review exceptional circumstances individually and explain the outcome.
+editorialPages.refunds.sections[2].body : Include your order reference and registered email when contacting info@medlex.academy so we can help quickly.
+auth.description : Sign in to continue learning, or create your account to register your interest and access courses.
+auth.confirmationRequired : Check your email to confirm your account, then sign in to continue.
+auth.validation.fullName : Enter at least 2 characters.
+auth.validation.username : Username must be at least 3 characters.
+auth.validation.email : Enter a valid email address.
+auth.validation.phone : Enter at least 6 characters.
+auth.validation.password : Password must be between 8 and 72 characters.
+auth.validation.examDate : Select a valid exam date.
+pathwayPages.medico-legal.title : From a first forensic report to practice tested in court.
+pathwayPages.medico-legal.intro : For psychiatrists, psychologists and legal professionals — four progressive tracks, home of the flagship programme Writing Psychiatric Evidence.
+pathwayPages.medico-legal.audience.title : Clinical opinion and legal judgment are not one document.
+pathwayPages.medico-legal.audience.body : This pathway is for specialists who receive the questions courts ask — not for the general public.
+pathwayPages.medico-legal.audience.items[0].body : Receiving legal referrals and needing a report structure that holds up under cross-examination.
+pathwayPages.medico-legal.audience.items[1].body : Working in court-directed assessment and needing a documented methodology.
+pathwayPages.medico-legal.audience.items[2].body : Building forensic competence early, and in the right order.
+pathwayPages.medico-legal.audience.items[3].body : Reading psychiatric reports, testing them, and working with experts.
+pathwayPages.medico-legal.formats.title : One structure, three ways to take it.
+pathwayPages.medico-legal.formats.body : From a single masterclass to an extended programme — the detail page sets out all three formats in full.
+pathwayPages.medico-legal.founder.title : Built by someone who has been cross-examined.
+pathwayPages.medico-legal.founder.body : A UK-trained consultant forensic psychiatrist, with experience before Mental Health Tribunals, Magistrates’ Courts, Crown Court and the Parole Board.
+pathwayPages.casc-academy.title : The CASC, from the examiner’s chair.
+pathwayPages.casc-academy.intro : An interactive, self-paced preparation platform for the MRCPsych CASC — designed and written by a former Royal College of Psychiatrists CASC examiner.
+pathwayPages.casc-academy.audience.body : The CASC is a station-based exam: a series of timed clinical encounters, observed and marked in real time.
+pathwayPages.casc-academy.audience.items[0].body : The CASC does not test what you know on paper. It tests what you say, what you do, and what you decide — observed, against the clock, in a consultation style that examiners recognise instantly.
+pathwayPages.casc-academy.audience.items[1].body : Candidates rarely fail the CASC because they know too little psychiatry. They fail because they have never practised making the right moves, in the right order, in the way the station is designed to reward.
+pathwayPages.casc-academy.feature.title : Preparation today comes in two forms. Both are useful. Neither is enough.
+pathwayPages.casc-academy.feature.body : Recorded video courses explain concepts. Face-to-face teaching provides feedback. The missing layer is deliberate, examiner-guided practice: structured, repeatable rehearsal of the decisions each station is built to assess.
+pathwayPages.casc-academy.feature.quote : Available whenever you study, for as long as you need it — with feedback framed the way an examiner actually marks.
+pathwayPages.casc-academy.feature.stages[0].body : Realistic scenarios that unfold as the examiner would: choices and cues, not passive videos.
+pathwayPages.casc-academy.feature.stages[1].body : At the moments that matter, you choose the next move and see why each option succeeds or fails.
+pathwayPages.casc-academy.feature.stages[2].body : Every station is calibrated to what an examiner is looking for: structure, timing and clinical reasoning.
+pathwayPages.casc-academy.feature.stages[3].body : A consistent framework for judging your own performance honestly.
+pathwayPages.casc-academy.founder.title : Built by an examiner who has marked it.
+pathwayPages.casc-academy.founder.body : Dr Ahmed Abouelghit — Consultant Forensic Psychiatrist, former MRCPsych CASC examiner, Royal College of Psychiatrists.
+pathwayPages.casc-academy.sampleStation.taskLabel : Your task.
+pathwayPages.casc-academy.sampleStation.scenario : Daniel, 24, has been admitted with a first episode of psychosis. He has told the team clearly that he does not want clinical information shared with his family. His mother, distressed, has asked to speak with you. Speak with her.
+pathwayPages.casc-academy.sampleStation.options[0].examinerFeedback : The instinct to comfort is human - and it is exactly where marks leak in this station. Daniel has explicitly declined to share, and disclosing the likely diagnosis breaches that. Strong candidates hold the boundary without abandoning warmth; this option abandons the boundary to keep the warmth.
+pathwayPages.casc-academy.sampleStation.options[1].examinerFeedback : This is what the station is built to reward: the boundary is held, and the relationship is kept. You have declined to disclose, stayed with her distress, and opened a path forward - general information, support, and the possibility of Daniel choosing to involve her. The station rewards doing both at once, not choosing between them.
+pathwayPages.casc-academy.sampleStation.options[2].examinerFeedback : Technically defensible - and it stalls in the communication domain. The task was to manage this conversation, not to end it. Citing the rule and stepping back reads as dismissive, and the marks for engaging with her distress go uncollected.
+pathwayPages.casc-academy.sampleStation.testingBody : Not your knowledge of confidentiality - every candidate knows the rule. It is testing whether you can hold a boundary and a relationship at the same time, under time pressure.
+pathwayPages.casc-academy.sampleStation.disclaimer : This sample uses an original teaching scenario built on the examination's publicly defined competency domains. Select the other options to compare the examiner's view of each.
+pathwayPages.casc-academy.faqs[0].answer : No — and it does not try to. It gives the structured practice layer that most preparation is missing, so your live teaching and study partners are more useful.
+pathwayPages.casc-academy.faqs[1].answer : No. The Academy is built entirely on publicly defined competency domains and original scenarios, not recalled examination material.
+pathwayPages.casc-academy.faqs[2].answer : It was designed with international candidates foremost in mind. All material is written in clear English and reflects the consultation style the examination expects.
+pathwayPages.casc-academy.faqs[3].answer : Launch and pricing are announced to the waitlist first. Registering your interest carries no commitment.
+pathwayPages.foundations.title : Professional development beyond the clinic.
+pathwayPages.foundations.intro : The umbrella for non-clinical professional development — opening with The Clinician’s Edge and the Clinical Leadership Programme, and built to take on more.
+pathwayPages.foundations.audience.title : For clinicians building careers beyond the clinic.
+pathwayPages.foundations.audience.body : The competencies clinical training does not teach, and that a doctor needs the moment they lead a team, build a service, or negotiate a decision.
+pathwayPages.foundations.programmes.title : Professional skills for the work around medicine.
+pathwayPages.foundations.programmes.body : Focused programmes with practical tools, honest feedback, and a clear next step.
+pathwayPages.foundations.programmes.items[0].body : Essential professional competencies beyond clinical medicine, for mid-career clinicians.
+pathwayPages.foundations.programmes.items[0].status : Interest list — enrolment opens at launch, and is fully self-service after that.
+pathwayPages.foundations.programmes.items[1].body : Leadership and management for clinicians — facilitated in person, with full participant workbooks and practical exercises.
+pathwayPages.foundations.programmes.items[1].status : Waitlist — the workshop is in person with limited seats; the date and city are announced to the list first.
+pathwayPages.foundations.founder.title : A clearer way to lead beyond the consulting room.
+pathwayPages.foundations.founder.body : The programmes are built for the real decisions that arrive once clinical expertise is no longer the whole job.
+profile.courses.emptyDescription : Explore our specialised psychiatric and medico-legal training pathways to begin your learning.
+profile.sidebar.supportDescription : Our team is available to assist you with pathway registration, institutional arrangements, and academic enquiries.
+profile.guest.description : Sign in or register to access your enrolled courses, certifications, and account details in the MedLex Academy.
+institutionalPage.hero.title : Expert consultation
+& court services.
+institutionalPage.hero.intro : Independent psychiatric evaluations, clinical governance review, and capacity-building programmes built to judicial standards across the MENA region.
+institutionalPage.servicesGrid.title : Four specialised services for judicial and healthcare bodies.
+institutionalPage.servicesGrid.cards[0].desc : Independent psychiatric evaluations for courts, prosecution, and legal counsel in criminal, civil, and custodial proceedings.
+institutionalPage.servicesGrid.cards[1].desc : Development of defensible clinical governance standards, fitness-to-plead frameworks, and structured risk assessment tools.
+institutionalPage.servicesGrid.cards[2].desc : Peer review of disputed psychiatric evidence, medico-legal audit, and independent evaluation of complex court files.
+institutionalPage.servicesGrid.cards[3].desc : Bespoke forensic psychiatry curriculums and masterclasses for judges, prosecutors, hospital leadership, and legal teams.
+institutionalPage.standards.title : Built for the scrutiny of modern courts and institutions.
+institutionalPage.standards.intro : Why judicial bodies, ministries, and hospitals rely on MedLex expert consultation.
+institutionalPage.standards.pillars[0].desc : Led by a Consultant Forensic Psychiatrist with extensive practice across UK Mental Health Tribunals, Crown Courts, and regional bodies.
+institutionalPage.standards.pillars[1].desc : Method before conclusion. Defined questions, structured psychometric instruments, and opinions stated at the confidence the evidence supports.
+institutionalPage.standards.pillars[2].desc : Reports constructed around the specific statutory questions posed under your jurisdiction's penal, civil, or healthcare code.
+institutionalPage.standards.pillars[3].desc : Court-conscious methodology that protects institutional integrity, maintains strict clinician neutrality, and survives cross-examination.
+institutionalPage.details.service1.subtitle : Independent psychiatric evaluations built to evidentiary standards.
+institutionalPage.details.service1.description : We produce court-admissible psychiatric evaluations for civil and criminal cases. Our reports address specific statutory questions with rigorous documentation, diagnostic clarity, and defensible clinical reasoning that withstands cross-examination.
+institutionalPage.details.service2.subtitle : Clinical governance standards that minimise medicolegal risk.
+institutionalPage.details.service2.description : Healthcare facilities and custodial institutions operate under severe legal scrutiny. We assist leadership in drafting, auditing, and implementing protocols that meet international human rights benchmarks while aligning with local statutory frameworks.
+institutionalPage.details.service3.subtitle : Objective forensic audit of complex psychiatric evidence.
+institutionalPage.details.service3.description : When medical evidence is disputed, contradictory, or methodologically flawed, courts and legal teams require an authoritative, independent second perspective. We provide rigorous review of medical records, existing expert reports, and interview transcripts.
+institutionalPage.details.service4.subtitle : Specialised forensic curriculums for judicial and medical personnel.
+institutionalPage.details.service4.description : We bridge the cultural and intellectual divide between clinical medicine and the law. Our programmes equip judicial officers to critically appraise psychiatric evidence, and teach clinicians how to write reports that survive legal examination.
+institutionalPage.engagements.title : Four standard frameworks for institutional collaboration.
+institutionalPage.engagements.intro : Flexible contractual arrangements structured around the governance and procurement requirements of ministries, tribunals, and healthcare authorities.
+institutionalPage.engagements.items[0].desc : Direct instruction by courts, public prosecutors, or joint legal parties for expert opinion, written evaluation, and viva voce testimony in specific cases.
+institutionalPage.engagements.items[1].desc : Ongoing consultative access for ministries, correctional authorities, and judicial bodies seeking on-call forensic psychiatry expertise and legislative advice.
+institutionalPage.engagements.items[2].desc : Comprehensive forensic and medicolegal audits of inpatient facilities, secure psychiatric units, and custodial healthcare services.
+institutionalPage.engagements.items[3].desc : Multi-year curriculum design and delivery for national judicial training centres, postgraduate medical faculties, and bar associations.
+institutionalPage.form.title : Request an institutional consultation.
+institutionalPage.form.intro : Submit your institutional inquiry below. Our senior advisory team will review your mandate and respond under strict professional confidentiality.
+institutionalPage.form.successDesc : Thank you. Our institutional liaison team will review your inquiry and follow up within 1–2 business days under strict professional confidentiality.
+institutionalPage.form.confidentiality : All communications are treated with strict legal and medical confidentiality in accordance with international professional standards.
+institutionalPage.ctaBanner.desc : Our faculty designs bespoke continuous medical and legal education (CME/CLE) programs aligned with your regional jurisdiction.
+exam.subscribeMessage : Subscribe to build a focused plan before exam day.
+exam.subscribedMessage : You are making progress. Keep the momentum going.
+feedbackSection.title : What learners say after working through the course.
+
+=== AR ===
+footer.description : تدريب متخصص واستشارات خبرة في الطب النفسي الشرعي والقانوني، لخدمة المحاكم والمؤسسات والأطباء في منطقة الشرق الأوسط وشمال أفريقيا.
+registration.description : اختر المسار الذي يخصك، وسنشاركك أخباره وحده.
+registration.guideDescription : اختر مسارًا أعلاه، وسيُرسل دليله إلى بريدك عند التسجيل.
+registration.privacy : تُستخدم بياناتك للتواصل معك بشأن برامج مِدلكس فقط، ولا تُشارك مع أي طرف آخر.
+registration.confirmedTitle : تم تسجيل اهتمامك.
+registration.confirmedDescription : سنشاركك تفاصيل الوصول المبكر المتعلقة بـ {pathway} عند جاهزيتها.
+faq.title : أسئلة تُطرح قبل التسجيل.
+faq.subtitle : إجابات عامة عن المنصة ومساراتها الثلاثة.
+faq.items[0].answer : صُممت مِدلكس للأطباء النفسيين والأطباء والمتخصصين القانونيين والمؤسسات العاملة عند تقاطع الصحة النفسية والقانون.
+faq.items[1].answer : تنتقل المسارات من المفاهيم التأسيسية إلى كتابة التقارير العملية والقدرة المهنية المتقدمة، لتبدأ من المستوى المناسب لك.
+faq.items[2].answer : سنشاركك المواعيد المتاحة وإرشادات الدورة ومعلومات الوصول المبكر التي تناسب اهتماماتك.
+faq.items[3].answer : تُنشر مواعيد الدورات وأسعارها عند فتح كل مجموعة. سجّل اهتمامك لتصلك الأخبار أولًا.
+home.hero.line3 : أمام المحكمة.
+home.hero.body : ندرّب أطباء النفس على إعداد تقييمات تصمد أمام الاستجواب، ونمدّ المحاكم والنيابات والجهات الحكومية بأدلة نفسية مبنية على منهجية موثّقة.
+home.pathways.title : منصة واحدة… وثلاثة مداخل.
+home.pathways.intro : لكل مسار جمهوره ووتيرته وخطوته التالية. اختر المدخل الذي يخصك.
+home.who.paragraphs[0] : مِدلكس سوليوشنز هو أول مركز متخصص في تدريب واستشارات الطب النفسي الشرعي في منطقة الشرق الأوسط وشمال أفريقيا. نعمل على مسارين يعزّز كل منهما الآخر: تدريب منظّم يمنح أطباء النفس الكفاءة الشرعية التي تتوقعها المحاكم، واستشارات خبرة تمنح الجهات القضائية والحكومية تقييمات يمكن الاعتماد عليها.
+home.who.paragraphs[1] : المنهج متقشّف عن قصد: أسئلة محدّدة، واستدلال موثّق، ومصادر يمكن تتبّعها، ونتائج تُذكر بالقدر الذي تدعمه الأدلة فعلًا. هذا البناء هو ما يجعل الرأي مقبولًا أمام المحكمة، وهو أيضًا ما يحمي الطبيب الذي وقّعه.
+home.who.paragraphs[2] : نحن لا ننقل نموذجًا جاهزًا. تُبنى البرامج حول الأطر القانونية التي يمثُل أمامها الممارسون هنا فعليًا، ثم تُواءَم مع المعايير الدولية، لا العكس.
+home.who.quote : نحن لا ندرّب أطباء النفس فحسب — بل نبني المعيار المهني الذي تتحوّل عنده الخبرة الإكلينيكية إلى دليل مقبول أمام القضاء.
+home.who.stats[0] : تدريب وممارسة استشارية في الطب النفسي الشرعي.
+home.who.stats[1] : بلدان الممارسة: المملكة المتحدة ومصر وقطر.
+home.who.title : الرأي الإكلينيكي والحكم القانوني ليسا وثيقة واحدة.
+home.who.intro : معظم التقارير النفسية التي تصل إلى المحكمة لم تُكتب أصلًا للمحكمة. وُجد مِدلكس لسد هذه الفجوة من طرفيها.
+home.standards.items[0][1] : أول مركز متخصص في الطب النفسي الشرعي بالمنطقة. نحن لا نتبع نموذجًا — بل نكتب النموذج الذي سيُقاس عليه غيرنا.
+home.standards.items[1][1] : يقودنا استشاري طب نفسي شرعي خضع رأيه للفحص أمام المحاكم والهيئات القضائية ومجلس الإفراج المشروط.
+home.standards.items[2][1] : شراكات أكاديمية، وبروتوكولات إشراف، وتعاون قضائي، مبنية بالتتابع نحو اعتماد مهني مستدام.
+home.standards.items[3][1] : كل وحدة تدريبية مستمدة من متطلبات محاكم فعلية وأطر قانونية حقيقية — والأخطاء التي ندرّب على تفاديها وقعت بالفعل في جلسات.
+home.standards.title : مرجعية. بناء. اعتراف.
+home.standards.intro : لماذا تختار المؤسسات والأطباء العمل وفق معيارنا.
+home.flagship.body : ثمانية محاور عبر جلستين مباشرتين، على ملف قضية واحد (MLC-100). يغادر المشارك وقد أعدّ تقريرًا طبيًا قانونيًا متكاملًا.
+home.founder.bio : تمتد خبرته عبر الطب النفسي الشرعي وإعداد التقارير الطبية القانونية وهيئات مراجعة الصحة النفسية والعمل أمام المحاكم ومجلس الإفراج المشروط، إلى جانب إدارة التدريب التخصصي والعمل ممتحنًا معتمدًا لاختبار MRCPsych CASC لدى الكلية الملكية للأطباء النفسيين.
+home.pathwayCards[0].description : أربعة مستويات متدرجة — من الماستر كلاس التأسيسية إلى الاعتماد المتقدم — وفيه يقع البرنامج الرئيس كتابة الدليل النفسي.
+home.pathwayCards[1].description : منصة رقمية تفاعلية تحاكي الامتحان الحقيقي — من تصميم ممتحن معتمد لدى الكلية الملكية للأطباء النفسيين.
+home.pathwayCards[2].description : تطوير مهني يتجاوز التدريب السريري — يفتتحه برنامج حافة الممارس وبرنامج القيادة السريرية.
+founderPage.hero.title : رؤية تنطلق من منصة
+الاستجواب القضائي.
+founderPage.hero.intro : يقود مِدلكس استشاري طب نفسي شرعي مدرّب في المملكة المتحدة ويعمل عبر مصر والمملكة المتحدة وقطر — عند ملتقى الطب النفسي والقانون والممارسة المؤسسية.
+founderPage.profile.paragraphs[0] : استشاري الطب النفسي الشرعي، مدرّب في المملكة المتحدة، ويمتلك خبرة دولية واسعة تمتد عبر مصر والمملكة المتحدة وقطر. يرتكز عمله عند ملتقى الطب النفسي والقانون والممارسة المؤسسية، مع التركيز على التقييم الشرعي، وإعداد الرأي الطبي القانوني، والمعايير المطلوبة في البيئات السريرية الحساسة قانونيًا.
+founderPage.profile.paragraphs[1] : بصفته مدير برنامج التدريب على الطب النفسي الشرعي، يشارك بنشاط في تطوير التعليم التخصصي وتعزيز المعايير الرفيعة في الممارسة الشرعية. تشكلت خبرته الطبية القانونية في المملكة المتحدة عبر هيئات مراجعة الصحة النفسية ومحاكم الصلح ومحكمة التاج ومجلس الإفراج المشروط — مما منحه فهمًا عمليًا عميقًا لكيفية فحص الرأي النفسي في السياقات القضائية.
+founderPage.profile.paragraphs[2] : إلى جانب أدواره السريرية والأكاديمية الرفيعة، ساهم في التدريب المهني في جميع أنحاء المنطقة، بما في ذلك تقديم خدمات استشارية لمنظمة اليونيسف في مصر لدعم الهيئات القضائية والقانونية. ومن خلال مِدلكس، يقدّم توجيهًا يقوده الخبراء ومبنيًا على الممارسة الواقعية مع مراعاة متطلبات المحاكم في الطب النفسي الشرعي والطبي القانوني.
+founderPage.profile.meta[0].label : الهيئات القضائية.
+founderPage.profile.meta[1].label : مجالات التركيز.
+founderPage.profile.meta[2].label : التدريب والتعليم.
+founderPage.profile.meta[3].label : الاستشارات.
+founderPage.mandate.title : ترسيخ الطب النفسي الشرعي
+كتخصص معترف به في منطقة
+الشرق الأوسط وشمال أفريقيا.
+founderPage.mandate.subtitle : مبني على الرصانة العلمية، والمواءمة القانونية، والحماية المهنية.
+founderPage.mandate.cards[0].caption : مراجعة القضايا جماعيًا — الرأي المختبر مبكرًا يصمد لاحقًا أمام القضاء.
+founderPage.mandate.cards[1].caption : التوثيق الكتابي هو الدليل — توثيق المسار قبل استخلاص النتائج.
+founderPage.mandate.cards[2].caption : بناء القدرات المؤسسية جنبًا إلى جنب مع الكفاءة الفردية.
+founderPage.mandate.pillars[0].description : المنهج قبل النتيجة. أدوات تقييم مقننة، استدلال موثق، وآراء مصاغة وفق مستوى اليقين الذي يدعمه الدليل.
+founderPage.mandate.pillars[1].description : تقارير تصاغ للإجابة المباشرة عن السؤال القانوني المطروح، وضمن الإطار التشريعي للمحكمة الناظرة — لا مجرد ملخص سريري يُسلّم للمحكمة.
+founderPage.mandate.pillars[2].description : المنهجية القابلة للدفاع هي درع الطبيب. نعلّم التوثيق والاستدلال الذي يصمد عند مناقشة الرأي واستجوابه.
+founderPage.mandate.pillars[3].description : معايير دولية رفيعة مطبقة على الواقع العملي للمحاكم والمؤسسات التي يمثل أمامها الممارسون في منطقتنا.
+founderPage.nextStep.title : خطوة واحدة واضحة:
+سجّل اهتمامك.
+founderPage.nextStep.body : اختر المسار الذي يناسبك وستسمع عنه وحده — لا رسائل عامة، ولا التزامات.
+contactPage.hero.intro : كن أول من يعلم عند فتح باب التسجيل. اختر مسارك لتصلك التحديثات الخاصة به فقط.
+contactPage.form.title : كن أول من يعلم عند فتح باب التسجيل.
+contactPage.form.intro : اختر المسار الذي يعنيك وسنكتب إليك عنه وحده — لا رسائل عامة.
+contactPage.form.privacy : تُستخدم بياناتك فقط للتواصل معك بشأن برامج مِدلكس، ولن تُشارَك مع أي جهة.
+editorialPages.contact.title : شاركنا السؤال الذي وراء السؤال.
+editorialPages.contact.intro : لإرشاد الدورات، أو الشراكات المؤسسية، أو الاستفسارات المتعلقة بالحديث، أرسل لنا رسالة وسيرد فريقنا.
+editorialPages.contact.sections[0].body : للاستفسارات العامة ودعم الدورات.
+editorialPages.contact.sections[1].body : أخبرنا عن فريقك وجمهورك والنتيجة التي ترغب في بنائها.
+editorialPages.contact.sections[2].body : نهدف إلى الرد بخطوة تالية مفيدة، لا برسالة وارد عامة.
+editorialPages.register.title : كن أول من يعلم عند فتح الدفعة القادمة.
+editorialPages.register.intro : اترك بياناتك وسنشاركك مواعيد الدورات وإرشاد المسارات وتحديثات الوصول المبكر.
+editorialPages.register.sections[0].body : فقط معلومات الدورات والبرامج التي تناسب اهتماماتك المهنية.
+editorialPages.register.sections[1].body : تُستخدم بياناتك للتواصل بشأن برامج مِدلكس ولا تُباع أبداً.
+editorialPages.register.sections[2].body : سيُربط نموذج التسجيل الكامل وإنشاء الحساب في مرحلة المصادقة.
+editorialPages.privacy.title : معلوماتك، بعناية.
+editorialPages.privacy.intro : تشرح هذه الصفحة المبادئ التي تتبعها مِدلكس عند جمع المعلومات واستخدامها عبر المنصة.
+editorialPages.privacy.sections[0].body : نجمع المعلومات اللازمة لتقديم الوصول إلى الدورات والرد على الاستفسارات وتحسين تجربة التعلم.
+editorialPages.privacy.sections[1].body : يمكنك طلب الوصول إلى معلوماتك أو تصحيحها أو حذفها عبر التواصل مع فريق مِدلكس.
+editorialPages.privacy.sections[2].body : تساعد ضوابط الوصول والتخزين الآمن والتفويض من جانب الخادم في حماية بيانات الحساب والتعلم.
+editorialPages.terms.title : شروط واضحة لمنصة تعلم جادة.
+editorialPages.terms.intro : توضح هذه الشروط أحكام استخدام دورات مِدلكس وخدمات الحساب ومواد المنصة.
+editorialPages.terms.sections[0].body : يُمنح الوصول إلى الدورة للمتعلم المسجل خلال المدة والنطاق الموضحين عند الشراء أو التسجيل.
+editorialPages.terms.sections[1].body : محتوى مِدلكس مادة محمية ولا يجوز نسخه أو إعادة بيعه أو نشره من دون إذن كتابي.
+editorialPages.terms.sections[2].body : يدعم محتوى الدورة التعليم والتطوير المهني، ولا يحل محل المشورة القانونية أو السريرية الخاصة بكل حالة.
+editorialPages.refunds.title : نهج مباشر للاسترداد.
+editorialPages.refunds.intro : صُمم نهجنا للاسترداد ليكون واضحاً قبل التسجيل ومنصفاً عند تغير الظروف.
+editorialPages.refunds.sections[0].body : يمكن مراجعة الطلبات المقدمة قبل بدء الوصول إلى الدورة لاسترداد كامل، وفقاً لشروط الدورة المنشورة.
+editorialPages.refunds.sections[1].body : إذا بدأ الوصول، تواصل معنا سريعاً. نراجع الظروف الاستثنائية بشكل فردي ونوضح النتيجة.
+editorialPages.refunds.sections[2].body : أدرج مرجع طلبك وبريدك الإلكتروني المسجل عند التواصل عبر info@medlex.academy لنتمكن من المساعدة بسرعة.
+auth.description : سجّل الدخول لمتابعة التعلم، أو أنشئ حسابك لتسجيل اهتمامك والوصول إلى الدورات.
+auth.confirmationRequired : راجع بريدك الإلكتروني لتأكيد حسابك، ثم سجّل الدخول للمتابعة.
+auth.validation.fullName : أدخل حرفين على الأقل.
+auth.validation.username : يجب أن يتكون اسم المستخدم من 3 أحرف على الأقل.
+auth.validation.email : أدخل بريدًا إلكترونيًا صحيحًا.
+auth.validation.phone : أدخل 6 أحرف على الأقل.
+auth.validation.password : يجب أن تتكون كلمة المرور من 8 إلى 72 حرفًا.
+auth.validation.examDate : اختر تاريخ امتحان صالحًا.
+pathwayPages.labels.faqTitle : أسئلة تُطرح قبل التسجيل.
+pathwayPages.medico-legal.intro : أربعة مستويات متدرجة — من الماستر كلاس التأسيسية إلى الاعتماد المتقدم — وفيه يقع البرنامج الرئيس كتابة الدليل النفسي.
+pathwayPages.medico-legal.audience.body : منصة رقمية تفاعلية تحاكي الامتحان الحقيقي — من تصميم ممتحن معتمد لدى الكلية الملكية للأطباء النفسيين.
+pathwayPages.medico-legal.audience.items[0].body : تطوير مهني يتجاوز التدريب السريري — يفتتحه برنامج حافة الممارس وبرنامج القيادة السريرية.
+pathwayPages.medico-legal.audience.items[1].title : الرأي الإكلينيكي والحكم القانوني ليسا وثيقة واحدة.
+pathwayPages.medico-legal.audience.items[1].body : معظم التقارير النفسية التي تصل إلى المحكمة لم تُكتب أصلًا للمحكمة. وُجد مِدلكس لسد هذه الفجوة من طرفيها.
+pathwayPages.medico-legal.audience.items[2].title : رؤية تنطلق من منصة
+الاستجواب القضائي.
+pathwayPages.medico-legal.audience.items[2].body : مِدلكس سوليوشنز هو أول مركز متخصص في تدريب واستشارات الطب النفسي الشرعي في منطقة الشرق الأوسط وشمال أفريقيا. نعمل على مسارين يعزّز كل منهما الآخر: تدريب منظّم يمنح أطباء النفس الكفاءة الشرعية التي تتوقعها المحاكم، واستشارات خبرة تمنح الجهات القضائية والحكومية تقييمات يمكن الاعتماد عليها.
+pathwayPages.medico-legal.audience.items[3].body : المنهج متقشّف عن قصد: أسئلة محدّدة، واستدلال موثّق، ومصادر يمكن تتبّعها، ونتائج تُذكر بالقدر الذي تدعمه الأدلة فعلًا. هذا البناء هو ما يجعل الرأي مقبولًا أمام المحكمة، وهو أيضًا ما يحمي الطبيب الذي وقّعه.
+pathwayPages.medico-legal.formats.body : نحن لا ننقل نموذجًا جاهزًا. تُبنى البرامج حول الأطر القانونية التي يمثُل أمامها الممارسون هنا فعليًا، ثم تُواءَم مع المعايير الدولية، لا العكس.
+pathwayPages.medico-legal.formats.items[0].body : يقود مِدلكس استشاري طب نفسي شرعي مدرّب في المملكة المتحدة ويعمل عبر مصر والمملكة المتحدة وقطر — عند ملتقى الطب النفسي والقانون والممارسة المؤسسية.
+pathwayPages.medico-legal.formats.items[1].title : الرأي الإكلينيكي والحكم القانوني ليسا وثيقة واحدة.
+pathwayPages.medico-legal.formats.items[1].body : أربعة مستويات متدرجة — من الماستر كلاس التأسيسية إلى الاعتماد المتقدم — وفيه يقع البرنامج الرئيس كتابة الدليل النفسي.
+pathwayPages.medico-legal.formats.items[2].title : رؤية تنطلق من منصة
+الاستجواب القضائي.
+pathwayPages.medico-legal.formats.items[2].body : منصة رقمية تفاعلية تحاكي الامتحان الحقيقي — من تصميم ممتحن معتمد لدى الكلية الملكية للأطباء النفسيين.
+pathwayPages.medico-legal.founder.body : تطوير مهني يتجاوز التدريب السريري — يفتتحه برنامج حافة الممارس وبرنامج القيادة السريرية.
+pathwayPages.casc-academy.intro : معظم التقارير النفسية التي تصل إلى المحكمة لم تُكتب أصلًا للمحكمة. وُجد مِدلكس لسد هذه الفجوة من طرفيها.
+pathwayPages.casc-academy.audience.body : مِدلكس سوليوشنز هو أول مركز متخصص في تدريب واستشارات الطب النفسي الشرعي في منطقة الشرق الأوسط وشمال أفريقيا. نعمل على مسارين يعزّز كل منهما الآخر: تدريب منظّم يمنح أطباء النفس الكفاءة الشرعية التي تتوقعها المحاكم، واستشارات خبرة تمنح الجهات القضائية والحكومية تقييمات يمكن الاعتماد عليها.
+pathwayPages.casc-academy.audience.items[0].title : الرأي الإكلينيكي والحكم القانوني ليسا وثيقة واحدة.
+pathwayPages.casc-academy.audience.items[0].body : المنهج متقشّف عن قصد: أسئلة محدّدة، واستدلال موثّق، ومصادر يمكن تتبّعها، ونتائج تُذكر بالقدر الذي تدعمه الأدلة فعلًا. هذا البناء هو ما يجعل الرأي مقبولًا أمام المحكمة، وهو أيضًا ما يحمي الطبيب الذي وقّعه.
+pathwayPages.casc-academy.audience.items[1].title : رؤية تنطلق من منصة
+الاستجواب القضائي.
+pathwayPages.casc-academy.audience.items[1].body : نحن لا ننقل نموذجًا جاهزًا. تُبنى البرامج حول الأطر القانونية التي يمثُل أمامها الممارسون هنا فعليًا، ثم تُواءَم مع المعايير الدولية، لا العكس.
+pathwayPages.casc-academy.feature.body : يقود مِدلكس استشاري طب نفسي شرعي مدرّب في المملكة المتحدة ويعمل عبر مصر والمملكة المتحدة وقطر — عند ملتقى الطب النفسي والقانون والممارسة المؤسسية.
+pathwayPages.casc-academy.feature.quote : أربعة مستويات متدرجة — من الماستر كلاس التأسيسية إلى الاعتماد المتقدم — وفيه يقع البرنامج الرئيس كتابة الدليل النفسي.
+pathwayPages.casc-academy.feature.stages[0].body : منصة رقمية تفاعلية تحاكي الامتحان الحقيقي — من تصميم ممتحن معتمد لدى الكلية الملكية للأطباء النفسيين.
+pathwayPages.casc-academy.feature.stages[1].body : تطوير مهني يتجاوز التدريب السريري — يفتتحه برنامج حافة الممارس وبرنامج القيادة السريرية.
+pathwayPages.casc-academy.feature.stages[2].title : الرأي الإكلينيكي والحكم القانوني ليسا وثيقة واحدة.
+pathwayPages.casc-academy.feature.stages[2].body : معظم التقارير النفسية التي تصل إلى المحكمة لم تُكتب أصلًا للمحكمة. وُجد مِدلكس لسد هذه الفجوة من طرفيها.
+pathwayPages.casc-academy.feature.stages[3].title : رؤية تنطلق من منصة
+الاستجواب القضائي.
+pathwayPages.casc-academy.feature.stages[3].body : مِدلكس سوليوشنز هو أول مركز متخصص في تدريب واستشارات الطب النفسي الشرعي في منطقة الشرق الأوسط وشمال أفريقيا. نعمل على مسارين يعزّز كل منهما الآخر: تدريب منظّم يمنح أطباء النفس الكفاءة الشرعية التي تتوقعها المحاكم، واستشارات خبرة تمنح الجهات القضائية والحكومية تقييمات يمكن الاعتماد عليها.
+pathwayPages.casc-academy.founder.body : المنهج متقشّف عن قصد: أسئلة محدّدة، واستدلال موثّق، ومصادر يمكن تتبّعها، ونتائج تُذكر بالقدر الذي تدعمه الأدلة فعلًا. هذا البناء هو ما يجعل الرأي مقبولًا أمام المحكمة، وهو أيضًا ما يحمي الطبيب الذي وقّعه.
+pathwayPages.casc-academy.sampleStation.subtitle : نموذج مصغر يوضح كيفية عمل محطات الأكاديمية. تتطور المحطات الكاملة عبر عدة نقاط اتخاذ قرار - بينما تمنحك هذه المحطة لحظة واحدة، مع رؤية الممتحن وتقييمه لها.
+pathwayPages.casc-academy.sampleStation.taskLabel : مهمتك.
+pathwayPages.casc-academy.sampleStation.scenario : دانيال، 24 عاماً، تم تنويمه إثر نوبة ذهان أولى. وقد أبلغ الفريق بوضوح تام أنه لا يرغب في مشاركة أي معلومات سريرية مع عائلته. طلبت والدته المتأثرة والمضطربة التحدث معك. تحدث معها.
+pathwayPages.casc-academy.sampleStation.options[0].examinerFeedback : إن الرغبة الفطرية في طمأنة الأهل أمر إنساني - وهو تحديداً النقطة التي تُهدر فيها الدرجات في هذه المحطة. لقد رفض دانيال صراحة مشاركة معلوماته، والإفصاح عن التشخيص المحتمل يُعد خرقاً واضحاً للسرية. المرشح المتميز يتمسك بالحدود المهنية دون التخلي عن الدفء والتعاطف؛ بينما هذا الخيار يتخلى عن الحدود المهنية للحفاظ على التعاطف فقط.
+pathwayPages.casc-academy.sampleStation.options[1].examinerFeedback : هذا بالضبط ما صُممت المحطة لمكافأته: الحفاظ على الحدود المهنية مع الإبقاء على العلاقة الإنسانية. لقد امتنعت عن إفشاء السر، واحتويت مشاعر قلقها، وفتحت مساراً بنّاءً للمستقبل - بتقديم معلومات عامة، ودعم نفسي، وبحث إمكانية موافقة دانيال على إشراكها لاحقاً. المحطة تكافئ تحقيق الأمرين معاً، لا التضحية بأحدهما لصالح الآخر.
+pathwayPages.casc-academy.sampleStation.options[2].examinerFeedback : موقف يمكن تبريره نظامياً - لكنه يتعثر في نطاق مهارات التواصل. كانت المهمة هي إدارة هذه المحادثة وليس إنهاؤها أو قطعها. التذرع بالقواعد والانسحاب يبدو موقفاً متجاهلاً وفضاً، مما يؤدي إلى خسارة الدرجات المخصصة للتفاعل الإيجابي مع قلق الأهل.
+pathwayPages.casc-academy.sampleStation.testingBody : ليس مجرد معرفتك بقواعد السرية الطبية - فكل مرشح يعرف القاعدة النظرية جيداً. المحطة تختبر قدرتك على الالتزام بالحدود المهنية وبناء علاقة تواصل إنسانية في الوقت ذاته، تحت ضغط الوقت.
+pathwayPages.casc-academy.sampleStation.disclaimer : يعتمد هذا النموذج على سيناريو تعليمي أصلي مبني على مجالات الكفاءة المعتمدة رسمياً في الامتحان. اختر الخيارات الأخرى لمقارنة وجهة نظر الممتحن في كل منها.
+pathwayPages.casc-academy.faqs[0].answer : سنشاركك المواعيد المتاحة وإرشادات الدورة ومعلومات الوصول المبكر التي تناسب اهتماماتك.
+pathwayPages.casc-academy.faqs[1].answer : تُنشر مواعيد الدورات وأسعارها عند فتح كل مجموعة. سجّل اهتمامك لتصلك الأخبار أولًا.
+pathwayPages.casc-academy.faqs[2].answer : صُممت مِدلكس للأطباء النفسيين والأطباء والمتخصصين القانونيين والمؤسسات العاملة عند تقاطع الصحة النفسية والقانون.
+pathwayPages.casc-academy.faqs[3].answer : تنتقل المسارات من المفاهيم التأسيسية إلى كتابة التقارير العملية والقدرة المهنية المتقدمة، لتبدأ من المستوى المناسب لك.
+pathwayPages.foundations.intro : تطوير مهني يتجاوز التدريب السريري — يفتتحه برنامج حافة الممارس وبرنامج القيادة السريرية.
+pathwayPages.foundations.audience.body : معظم التقارير النفسية التي تصل إلى المحكمة لم تُكتب أصلًا للمحكمة. وُجد مِدلكس لسد هذه الفجوة من طرفيها.
+pathwayPages.foundations.programmes.body : مِدلكس سوليوشنز هو أول مركز متخصص في تدريب واستشارات الطب النفسي الشرعي في منطقة الشرق الأوسط وشمال أفريقيا. نعمل على مسارين يعزّز كل منهما الآخر: تدريب منظّم يمنح أطباء النفس الكفاءة الشرعية التي تتوقعها المحاكم، واستشارات خبرة تمنح الجهات القضائية والحكومية تقييمات يمكن الاعتماد عليها.
+pathwayPages.foundations.programmes.items[0].title : الرأي الإكلينيكي والحكم القانوني ليسا وثيقة واحدة.
+pathwayPages.foundations.programmes.items[0].body : المنهج متقشّف عن قصد: أسئلة محدّدة، واستدلال موثّق، ومصادر يمكن تتبّعها، ونتائج تُذكر بالقدر الذي تدعمه الأدلة فعلًا. هذا البناء هو ما يجعل الرأي مقبولًا أمام المحكمة، وهو أيضًا ما يحمي الطبيب الذي وقّعه.
+pathwayPages.foundations.programmes.items[1].title : رؤية تنطلق من منصة
+الاستجواب القضائي.
+pathwayPages.foundations.programmes.items[1].body : نحن لا ننقل نموذجًا جاهزًا. تُبنى البرامج حول الأطر القانونية التي يمثُل أمامها الممارسون هنا فعليًا، ثم تُواءَم مع المعايير الدولية، لا العكس.
+pathwayPages.foundations.founder.body : يقود مِدلكس استشاري طب نفسي شرعي مدرّب في المملكة المتحدة ويعمل عبر مصر والمملكة المتحدة وقطر — عند ملتقى الطب النفسي والقانون والممارسة المؤسسية.
+profile.courses.emptyDescription : استكشف مساراتنا التخصصية في الطب النفسي الشرعي والقانوني لبدء رحلتك التعليمية.
+profile.sidebar.supportDescription : فريق مِدلكس متاح للإجابة على استفسارات التسجيل ومتابعة الدورات المتخصصة.
+profile.guest.description : سجّل الدخول للوصول إلى دوراتك المسجلة وتفاصيل حسابك في أكاديمية مِدلكس.
+institutionalPage.hero.title : استشارات خبرة
+وخدمات المحاكم.
+institutionalPage.hero.intro : تقييمات نفسية شرعية مستقلة، ومراجعة الحوكمة السريرية، وبرامج بناء القدرات المصممة وفق المعايير القضائية في منطقة الشرق الأوسط وشمال أفريقيا.
+institutionalPage.servicesGrid.title : أربع خدمات تخصصية للجهات القضائية ومؤسسات الرعاية الصحية.
+institutionalPage.servicesGrid.cards[0].desc : تقييمات نفسية شرعية مستقلة للمحاكم والنيابات وهيئات الدفاع في الدعاوى الجنائية والمدنية وقضايا الاحتجاز.
+institutionalPage.servicesGrid.cards[1].desc : تطوير معايير الحوكمة السريرية القابلة للدفاع، وأطر الأهلية للمحاكمة، وأدوات تقييم المخاطر المقننة.
+institutionalPage.servicesGrid.cards[2].desc : مراجعة الأقران للأدلة النفسية المتنازع عليها، والتدقيق الطبي القانوني، والتقييم المستقل لملفات القضايا المعقدة.
+institutionalPage.servicesGrid.cards[3].desc : مناهج تدريبية متخصصة في الطب النفسي الشرعي للقضاة وأعضاء النيابة والقيادات الطبية والفرق القانونية.
+institutionalPage.standards.title : مبنية لتصمد أمام تدقيق المحاكم والمؤسسات الحديثة.
+institutionalPage.standards.intro : لماذا تعتمد الهيئات القضائية والوزارات والمستشفيات على استشارات مِدلكس الخبيرة.
+institutionalPage.standards.pillars[0].desc : يقود العمل استشاري طب نفسي شرعي ذو خبرة واسعة أمام هيئات مراجعة الصحة النفسية ومحكمة التاج بالمملكة المتحدة والهيئات الإقليمية.
+institutionalPage.standards.pillars[1].desc : المنهج قبل النتيجة. أسئلة محددة، وأدوات قياس مقننة، وآراء مصاغة وفق مستوى اليقين الذي يدعمه الدليل الفعلي.
+institutionalPage.standards.pillars[2].desc : تقارير تصاغ للإجابة المباشرة عن الأسئلة النظامية المطروحة وفق قوانين العقوبات أو الإجراءات المدنية في اختصاصكم.
+institutionalPage.standards.pillars[3].desc : منهجية موضوعية مدركة لمتطلبات المحاكم تصون سمعة المؤسسة، وتحفظ حياد الطبيب، وتصمد أمام أصعب مناقشات الاستجواب.
+institutionalPage.details.service1.subtitle : تقارير نفسية شرعية شاملة مبنية وفق معايير الإثبات القضائي.
+institutionalPage.details.service1.description : نعدّ تقارير تقييم نفسي مقبولة قضائيًا للدعاوى الجنائية والمدنية. تعالج تقاريرنا الأسئلة القانونية المحددة بتوثيق صارم، ووضوح تشخيصي، واستدلال سريري قابل للدفاع يصمد أمام مناقشة الخبراء في قاعة المحكمة.
+institutionalPage.details.service2.subtitle : معايير حوكمة سريرية تقلل من المخاطر الطبية القانونية.
+institutionalPage.details.service2.description : تعمل المنشآت الصحية والمؤسسات الإصلاحية تحت رقابة قانونية وحقوقية دقيقة. نساعد الإدارات في صياغة وتدقيق وتنفيذ بروتوكولات تتوافق مع المعايير الدولية لحقوق الإنسان وتنسجم تمامًا مع التشريعات المحلية.
+institutionalPage.details.service3.subtitle : تدقيق شرعي موضوعي للأدلة الطبية النفسية المتنازع عليها.
+institutionalPage.details.service3.description : عندما تكون الأدلة الطبية محل نزاع أو متناقضة أو تفتقر إلى الرصانة المنهجية، تحتاج المحاكم والفرق القانونية إلى رأي ثانٍ مستقل وموثوق. نقدّم فحصًا منهجيًا دقيقًا للسجلات الطبية وتقارير الخبراء السابقة ومحاضر الاستجواب.
+institutionalPage.details.service4.subtitle : مناهج تدريبية تخصصية للكوادر القضائية والطبية.
+institutionalPage.details.service4.description : نسد الفجوة المعرفية بين الممارسة الطبية السريرية وأروقة القضاء. برامجنا تمكّن السادة القضاة وأعضاء النيابة من الفحص الناقد للأدلة النفسية، وتدرّب الأطباء على كتابة تقارير تصمد أمام الاستجواب القضائي.
+institutionalPage.engagements.title : أربعة أطر للتعاون والعمل المؤسسي مع مِدلكس.
+institutionalPage.engagements.intro : أطر تعاقدية مرنة مصممة للتوافق مع متطلبات الحوكمة والتعاقد لدى الوزارات والهيئات القضائية والمؤسسات الصحية.
+institutionalPage.engagements.items[0].desc : الندب المباشر من المحاكم أو النيابة العامة أو بتوكيل مشترك من الأطراف لإبداء الرأي التخصصي، وإعداد التقرير المكتوب، وتقديم الشهادة الشفوية.
+institutionalPage.engagements.items[1].desc : عقود استشارية مستمرة للوزارات والمؤسسات الإصلاحية والهيئات القضائية للاستفادة من استشارات الطب النفسي الشرعي وصياغة التشريعات.
+institutionalPage.engagements.items[2].desc : تدقيق شامل للجوانب الطبية القانونية بالمستشفيات، ووحدات الطب النفسي الشرعي، والخدمات الصحية داخل مرافق الاحتجاز.
+institutionalPage.engagements.items[3].desc : تصميم وتنفيذ برامج تدريبية ومناهج طويلة الأجل للمعاهد القضائية الوطنية، وكليات الدراسات العليا الطبية، ونقابات المحامين.
+institutionalPage.form.title : اطلب استشارة مؤسسية متخصصة.
+institutionalPage.form.intro : قدّم استفسارك المؤسسي أدناه. سيقوم فريقنا الاستشاري بمراجعة متطلباتكم والتواصل معكم في سرية مهنية تامة.
+institutionalPage.form.successDesc : شكرًا لك. سيقوم فريق الاتصال المؤسسي بمراجعة طلبكم والتواصل خلال يوم إلى يومي عمل في سرية مهنية تامة.
+institutionalPage.form.confidentiality : تُعامل جميع المراسلات بسرية تامة ومصانة وفق أعلى المعايير الأخلاقية والقانونية لحفظ الأسرار المهنية.
+institutionalPage.ctaBanner.desc : يصمم خبراؤنا برامج تعليم طبي وقانوني مستمر مخصصة ومتوافقة تماماً مع الأطر التشريعية في منطقتك.
+exam.subscribeMessage : اشترك الآن لتبني خطة مركزة قبل يوم الامتحان.
+exam.subscribedMessage : أنت تحرز تقدمًا. حافظ على هذا الزخم.
+feedbackSection.title : ما يقوله المتدربون بعد إتمام الدورة.
