@@ -44,18 +44,21 @@
 .casc-experience h1,
 .casc-experience h2,
 .casc-experience h3,
-.casc-experience h4,
-html.dark .casc-experience h1,
-html.dark .casc-experience h2,
-html.dark .casc-experience h3,
-html[data-theme="dark"] .casc-experience h1,
-html[data-theme="dark"] .casc-experience h2,
-html[data-theme="dark"] .casc-experience h3 {
+.casc-experience h4 {
   font-family: var(--serif) !important;
-  color: var(--navy) !important;
   line-height: 1.15;
 }
 
+.casc-experience h2,
+.casc-experience h3,
+.casc-experience h4,
+html.dark .casc-experience h2,
+html.dark .casc-experience h3,
+html[data-theme="dark"] .casc-experience h2,
+html[data-theme="dark"] .casc-experience h3 {
+  color: var(--navy) !important;
+}
+  
 .casc-experience p,
 .casc-experience li {
   color: var(--char);
@@ -149,7 +152,9 @@ html[data-theme="dark"] .casc-experience h3 {
   font-weight: 700;
 }
 
-.casc-experience header h1 {
+.casc-experience header h1,
+html.dark .casc-experience header h1,
+html[data-theme="dark"] .casc-experience header h1 {
   color: #ffffff !important;
   font-size: 36px;
   margin: 6px 0 6px;
