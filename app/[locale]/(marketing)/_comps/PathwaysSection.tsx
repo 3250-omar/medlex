@@ -41,18 +41,17 @@ export default function PathwaysSection() {
 
   useEffect(() => {
     const scrollToTarget = () => {
-      const hash = window.location.hash;
-      if (
-        hash === "#pathways" ||
-        hash === "#pathways-heading" ||
-        hash === "#threepathways"
-      ) {
-        const elem =
-          document.getElementById("pathways") ||
-          document.getElementById("pathways-heading");
+      const hash = window.location.hash.replace("#", "");
+      if (hash === "pathways" || hash === "pathways-heading") {
+        const elem = document.getElementById(hash);
         if (elem) {
           setTimeout(() => {
-            elem.scrollIntoView({ behavior: "smooth" });
+            if (hash === "pathways") {
+              const top = elem.getBoundingClientRect().top + window.scrollY;
+              window.scrollTo({ top, behavior: "smooth" });
+            } else {
+              elem.scrollIntoView({ behavior: "smooth" });
+            }
           }, 120);
         }
       }
@@ -66,7 +65,8 @@ export default function PathwaysSection() {
   return (
     <section
       id="pathways"
-      className="scroll-mt-20 bg-navy py-20 lg:py-28 on-navy text-lbody"
+      style={{ scrollMarginTop: "calc(-1 * (var(--header-h)))" }}
+      className="bg-navy py-20 lg:py-28 on-navy text-lbody"
       aria-labelledby="pathways-heading"
     >
       <div

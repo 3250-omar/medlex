@@ -36,12 +36,12 @@
     "contact": "Contact & register interest",
     "privacy": "Privacy",
     "terms": "Terms",
-    "description": "Specialised training and expert consultation in forensic and medicolegal psychiatry, serving courts, institutions, and clinicians across the MENA region.",
+    "description": "Specialised training and expert consultation in forensic and medicolegal psychiatry, serving courts, institutions, and clinicians across the MENA region",
     "disclaimer": "Consultation is not a substitute for legal representation"
   },
   "registration": {
     "title": "Register your interest",
-    "description": "Choose the pathway that belongs to you — you will hear about that one alone.",
+    "description": "Choose the pathway that belongs to you — you will hear about that one alone",
     "choosePathway": "Choose a pathway",
     "medicoLegal": "Medico-Legal",
     "academy": "The CASC Academy",
@@ -53,37 +53,37 @@
     "password": "Password",
     "free": "Free on registration",
     "guide": "The MedLex guide (PDF)",
-    "guideDescription": "Choose a pathway above and its guide is sent to your inbox on registration.",
+    "guideDescription": "Choose a pathway above and its guide is sent to your inbox on registration",
     "file": "[FILE: supplied by MedLex]",
     "account": "[ACCOUNT: pending membership layer]",
     "submit": "Register your interest",
-    "privacy": "Your details are used only to contact you about MedLex programmes, and are never shared.",
+    "privacy": "Your details are used only to contact you about MedLex programmes, and are never shared",
     "confirmedLabel": "Registration confirmed",
-    "confirmedTitle": "Your interest has been recorded.",
-    "confirmedDescription": "We will share relevant early-access details for {pathway} when they are ready.",
+    "confirmedTitle": "Your interest has been recorded",
+    "confirmedDescription": "We will share relevant early-access details for {pathway} when they are ready",
     "done": "Done"
   },
   "faq": {
     "eyebrow": "MEDLEX FAQ",
-    "title": "Questions asked before registering.",
-    "subtitle": "General answers about the platform and its three pathways.",
+    "title": "Questions asked before registering",
+    "subtitle": "General answers about the platform and its three pathways",
     "cta": "Register your interest",
     "items": [
       {
         "question": "Who is this platform for?",
-        "answer": "MedLex is designed for psychiatrists, clinicians, legal professionals, and institutions working where mental health meets the law."
+        "answer": "MedLex is designed for psychiatrists, clinicians, legal professionals, and institutions working where mental health meets the law"
       },
       {
         "question": "What is the difference between the three pathways?",
-        "answer": "The pathways move from foundational concepts to practical report writing and advanced professional capability, so you can begin at the right level."
+        "answer": "The pathways move from foundational concepts to practical report writing and advanced professional capability, so you can begin at the right level"
       },
       {
         "question": "What happens after I register my interest?",
-        "answer": "We will share the next available dates, course guidance, and early access information relevant to your interests."
+        "answer": "We will share the next available dates, course guidance, and early access information relevant to your interests"
       },
       {
         "question": "Are prices and dates published?",
-        "answer": "Course dates and pricing are published as each cohort opens. Register your interest to receive the announcement first."
+        "answer": "Course dates and pricing are published as each cohort opens. Register your interest to receive the announcement first"
       }
     ]
   },
@@ -93,8 +93,8 @@
       "line1": "Where medicine",
       "line2": "is asked to",
       "answer": "answer",
-      "line3": "to the court.",
-      "body": "MedLex trains psychiatrists to produce evaluations that survive cross-examination, and gives courts, prosecutors, and ministries psychiatric evidence built to a documented standard.",
+      "line3": "to the court",
+      "body": "MedLex trains psychiatrists to produce evaluations that survive cross-examination, and gives courts, prosecutors, and ministries psychiatric evidence built to a documented standard",
       "register": "Register your interest",
       "pathways": "The three pathways",
       "badge": "Educational pathways, one for each professional audience"
@@ -102,8 +102,8 @@
     "pathways": {
       "enrolled": "Enrolled",
       "eyebrow": "Three Educational Pathways",
-      "title": "One platform. Three ways in.",
-      "intro": "Each pathway has its own audience, its own pace, and its own next step. Choose the way in that belongs to you."
+      "title": "One platform. Three ways in",
+      "intro": "Each pathway has its own audience, its own pace, and its own next step. Choose the way in that belongs to you"
     },
     "who": {
       "audiences": [
@@ -114,47 +114,47 @@
         "Legal counsel"
       ],
       "paragraphs": [
-        "MedLex Solutions is the first specialised forensic psychiatry training and consultation centre in the MENA region. We work along two lines that reinforce each other: structured training that equips psychiatrists with the forensic competence courts expect, and expert consultation that gives judicial and governmental institutions evaluations they can rely on.",
-        "The method is deliberately unglamorous — defined questions, documented reasoning, traceable sources, and conclusions stated at the confidence the evidence actually supports. That structure is what makes an opinion admissible, and it is also what protects the clinician who signed it.",
-        "We are not importing a model wholesale. Programmes are built around the legal frameworks practitioners here actually appear under, then aligned with international forensic standards rather than the other way round."
+        "MedLex Solutions is the first specialised forensic psychiatry training and consultation centre in the MENA region. We work along two lines that reinforce each other: structured training that equips psychiatrists with the forensic competence courts expect, and expert consultation that gives judicial and governmental institutions evaluations they can rely on",
+        "The method is deliberately unglamorous — defined questions, documented reasoning, traceable sources, and conclusions stated at the confidence the evidence actually supports. That structure is what makes an opinion admissible, and it is also what protects the clinician who signed it",
+        "We are not importing a model wholesale. Programmes are built around the legal frameworks practitioners here actually appear under, then aligned with international forensic standards rather than the other way round"
       ],
-      "quote": "We’re not just training psychiatrists — we’re building the professional standard where clinical expertise becomes court-admissible evidence.",
+      "quote": "We’re not just training psychiatrists — we’re building the professional standard where clinical expertise becomes court-admissible evidence",
       "mission": "Mission · MedLex Solutions",
       "stats": [
-        "Consultant training and practice in forensic psychiatry.",
-        "Countries of practice: the United Kingdom, Egypt, and Qatar."
+        "Consultant training and practice in forensic psychiatry",
+        "Countries of practice: the United Kingdom, Egypt, and Qatar"
       ],
       "imageAlt": "A caduceus joined with the scales of justice",
       "eyebrow": "Who We Are",
-      "title": "A clinical opinion and a legal finding are not the same document.",
-      "intro": "Most psychiatric reports entering court were never written for court. MedLex exists to close that gap — from both ends."
+      "title": "A clinical opinion and a legal finding are not the same document",
+      "intro": "Most psychiatric reports entering court were never written for court. MedLex exists to close that gap — from both ends"
     },
     "standards": {
       "items": [
         [
           "First-mover, by construction",
-          "The region’s first specialised forensic psychiatry centre. We are not following a model — we are writing the one others will be measured against."
+          "The region’s first specialised forensic psychiatry centre. We are not following a model — we are writing the one others will be measured against"
         ],
         [
           "UK-trained, court-tested leadership",
-          "Led by a Consultant Forensic Psychiatrist whose opinion has been examined in tribunals, Magistrates’ and Crown Courts, and before the Parole Board."
+          "Led by a Consultant Forensic Psychiatrist whose opinion has been examined in tribunals, Magistrates’ and Crown Courts, and before the Parole Board"
         ],
         [
           "A recognition pathway, not a certificate",
-          "Academic partnerships, supervision protocols, and judicial collaboration, built in sequence toward sustainable professional accreditation."
+          "Academic partnerships, supervision protocols, and judicial collaboration, built in sequence toward sustainable professional accreditation"
         ],
         [
           "Built from live cases",
-          "Every module derives from actual court requirements and real legal frameworks — the failures we teach around are ones that happened in hearings."
+          "Every module derives from actual court requirements and real legal frameworks — the failures we teach around are ones that happened in hearings"
         ]
       ],
-      "title": "Authority. Structure. Recognition.",
+      "title": "Authority. Structure. Recognition",
       "eyebrow": "Standards",
-      "intro": "Why institutions and clinicians choose to work to our standard."
+      "intro": "Why institutions and clinicians choose to work to our standard"
     },
     "flagship": {
       "alt": "",
-      "body": "Eight modules across two live teaching days, built on a single simulated case file (MLC-100). Participants leave having produced a complete psychiatric medico-legal report.",
+      "body": "Eight modules across two live teaching days, built on a single simulated case file (MLC-100). Participants leave having produced a complete psychiatric medico-legal report",
       "eyebrow": "Flagship Programme",
       "register": "Register your interest",
       "title": "Writing Psychiatric Evidence"
@@ -162,7 +162,7 @@
     "founder": {
       "name": "Dr Ahmed Abouelghit",
       "role": "UK-trained Consultant Forensic Psychiatrist",
-      "bio": "His practice spans forensic psychiatry, medico-legal reporting, Mental Health Tribunals, court and Parole Board work — alongside directing specialist training and serving as an accredited MRCPsych CASC examiner for the Royal College of Psychiatrists.",
+      "bio": "His practice spans forensic psychiatry, medico-legal reporting, Mental Health Tribunals, court and Parole Board work — alongside directing specialist training and serving as an accredited MRCPsych CASC examiner for the Royal College of Psychiatrists",
       "caption": "Dr. Ahmed Abouelghit · Consultant",
       "imageAlt": "Dr. Ahmed Abouelghit, Consultant Forensic Psychiatrist",
       "eyebrow": "The Founder",
@@ -172,7 +172,7 @@
       {
         "title": "Medico-Legal Education",
         "audience": "For psychiatrists, psychologists & legal professionals",
-        "description": "Four progressive tracks — from single-topic masterclasses to advanced certification — home of the flagship programme, Writing Psychiatric Evidence.",
+        "description": "Four progressive tracks — from single-topic masterclasses to advanced certification — home of the flagship programme, Writing Psychiatric Evidence",
         "features": [
           "Live interactive online",
           "Bilingual EN · AR",
@@ -183,7 +183,7 @@
       {
         "title": "The CASC Academy",
         "audience": "For MRCPsych CASC candidates worldwide",
-        "description": "An interactive digital preparation platform that mirrors the real examination — designed by an accredited Royal College CASC examiner.",
+        "description": "An interactive digital preparation platform that mirrors the real examination — designed by an accredited Royal College CASC examiner",
         "features": [
           "Self-paced online",
           "English only",
@@ -194,7 +194,7 @@
       {
         "title": "MedLex Foundations",
         "audience": "For clinicians building careers beyond the clinic",
-        "description": "Professional development beyond clinical training — opening with The Clinician’s Edge and the Clinical Leadership Programme.",
+        "description": "Professional development beyond clinical training — opening with The Clinician’s Edge and the Clinical Leadership Programme",
         "features": [
           "Online & face-to-face",
           "Bilingual EN · AR",
@@ -207,8 +207,8 @@
   "founderPage": {
     "hero": {
       "eyebrow": "THE FOUNDER",
-      "title": "Built by someone who\nhas been cross-examined.",
-      "intro": "MedLex is led by a UK-trained Consultant Forensic Psychiatrist working across Egypt, the United Kingdom, and Qatar - at the intersection of psychiatry, law, and institutional practice."
+      "title": "Built by someone who\nhas been cross-examined",
+      "intro": "MedLex is led by a UK-trained Consultant Forensic Psychiatrist working across Egypt, the United Kingdom, and Qatar - at the intersection of psychiatry, law, and institutional practice"
     },
     "profile": {
       "eyebrow": "FOUNDER & PROGRAMME DIRECTOR",
@@ -225,70 +225,70 @@
         }
       ],
       "paragraphs": [
-        "Consultant Forensic Psychiatrist, UK-trained, with broad international experience across Egypt, the United Kingdom, and Qatar. His work sits at the intersection of psychiatry, law, and institutional practice, with a focus on forensic assessment, medico-legal opinion, and the standards required in legally sensitive clinical settings.",
-        "As Forensic Psychiatry Training Program Director, he is actively involved in advancing specialist education and promoting high standards in forensic practice. His medico-legal experience was shaped in the United Kingdom across mental health tribunals, Magistrates' Courts, Crown Court, and the Parole Board - a practical understanding of how psychiatric opinion is examined in legal settings.",
-        "Alongside senior clinical and educational roles, he has contributed to professional training across the region, including consultancy work with UNICEF in Egypt supporting legal authorities. Through MedLex, he offers expert-led, court-conscious, and practice-grounded guidance in forensic and medico-legal psychiatry."
+        "Consultant Forensic Psychiatrist, UK-trained, with broad international experience across Egypt, the United Kingdom, and Qatar. His work sits at the intersection of psychiatry, law, and institutional practice, with a focus on forensic assessment, medico-legal opinion, and the standards required in legally sensitive clinical settings",
+        "As Forensic Psychiatry Training Program Director, he is actively involved in advancing specialist education and promoting high standards in forensic practice. His medico-legal experience was shaped in the United Kingdom across mental health tribunals, Magistrates' Courts, Crown Court, and the Parole Board - a practical understanding of how psychiatric opinion is examined in legal settings",
+        "Alongside senior clinical and educational roles, he has contributed to professional training across the region, including consultancy work with UNICEF in Egypt supporting legal authorities. Through MedLex, he offers expert-led, court-conscious, and practice-grounded guidance in forensic and medico-legal psychiatry"
       ],
       "meta": [
         {
-          "label": "Forums.",
+          "label": "Forums",
           "value": "Mental health tribunals · Magistrates' Court · Crown Court · Parole Board"
         },
         {
-          "label": "Focus.",
+          "label": "Focus",
           "value": "Forensic assessment, medico-legal opinion, standards in legally sensitive settings"
         },
         {
-          "label": "Teaching.",
+          "label": "Teaching",
           "value": "Forensic Psychiatry Training Program Director; regional professional training"
         },
         {
-          "label": "Advisory.",
+          "label": "Advisory",
           "value": "UNICEF Egypt - consultancy supporting legal authorities"
         }
       ]
     },
     "mandate": {
       "eyebrow": "MANDATE",
-      "title": "To establish forensic\npsychiatry as a recognised\nspecialty in the MENA region.",
-      "subtitle": "Built on scientific rigour, legal alignment, and professional protection.",
+      "title": "To establish forensic\npsychiatry as a recognised\nspecialty in the MENA region",
+      "subtitle": "Built on scientific rigour, legal alignment, and professional protection",
       "cards": [
         {
           "image": "/images/mandate-case-review.jpg",
-          "caption": "Case review in company - an opinion tested early holds up later."
+          "caption": "Case review in company - an opinion tested early holds up later"
         },
         {
           "image": "/images/mandate-evidence.jpg",
-          "caption": "The paper trail is the evidence - documentation before conclusion."
+          "caption": "The paper trail is the evidence - documentation before conclusion"
         },
         {
           "image": "/images/mandate-leadership.jpg",
-          "caption": "Institutional capacity built alongside individual competence."
+          "caption": "Institutional capacity built alongside individual competence"
         }
       ],
       "pillars": [
         {
           "title": "Scientific rigour",
-          "description": "Method before conclusion. Structured instruments, documented reasoning, and opinions stated at the confidence the evidence supports."
+          "description": "Method before conclusion. Structured instruments, documented reasoning, and opinions stated at the confidence the evidence supports"
         },
         {
           "title": "Legal alignment",
-          "description": "Reports written to answer the legal question posed, in the framework of the jurisdiction hearing it - not a clinical summary handed to a court."
+          "description": "Reports written to answer the legal question posed, in the framework of the jurisdiction hearing it - not a clinical summary handed to a court"
         },
         {
           "title": "Professional protection",
-          "description": "A defensible methodology is a clinician's protection. We teach the record-keeping and reasoning that hold up when the opinion is challenged."
+          "description": "A defensible methodology is a clinician's protection. We teach the record-keeping and reasoning that hold up when the opinion is challenged"
         },
         {
           "title": "Regional relevance",
-          "description": "International standards, applied to the courts and institutions practitioners here actually appear before."
+          "description": "International standards, applied to the courts and institutions practitioners here actually appear before"
         }
       ]
     },
     "nextStep": {
       "eyebrow": "NEXT STEP",
-      "title": "One clear step:\nregister your interest.",
-      "body": "Choose the pathway that belongs to you and you hear about that one alone — no general mailings, no commitment.",
+      "title": "One clear step:\nregister your interest",
+      "body": "Choose the pathway that belongs to you and you hear about that one alone — no general mailings, no commitment",
       "cardEyebrow": "THE THREE PATHWAYS",
       "pathways": [
         {
@@ -311,12 +311,12 @@
     "hero": {
       "eyebrow": "CONTACT",
       "title": "Register your interest",
-      "intro": "Be first to hear when enrolment opens. Choose your pathway and you will hear about that one alone."
+      "intro": "Be first to hear when enrolment opens. Choose your pathway and you will hear about that one alone"
     },
     "form": {
       "eyebrow": "REGISTER YOUR INTEREST",
-      "title": "Be first to hear when enrolment opens.",
-      "intro": "Choose the pathway that concerns you and we will write to you about that one alone — no general mailings.",
+      "title": "Be first to hear when enrolment opens",
+      "intro": "Choose the pathway that concerns you and we will write to you about that one alone — no general mailings",
       "fields": {
         "fullName": "Full Name",
         "email": "Email",
@@ -334,7 +334,7 @@
         "Other"
       ],
       "submit": "Register interest",
-      "privacy": "Your details are used only to contact you about MedLex programmes, and are never shared.",
+      "privacy": "Your details are used only to contact you about MedLex programmes, and are never shared",
       "sidebar": {
         "contactTitle": "CONTACT",
         "email": "info@medlexsolutions.com",
@@ -353,132 +353,132 @@
   "editorialPages": {
     "contact": {
       "eyebrow": "Contact MedLex",
-      "title": "Bring us the question behind the question.",
-      "intro": "For course guidance, institutional partnerships, or speaking enquiries, send a note and our team will respond.",
+      "title": "Bring us the question behind the question",
+      "intro": "For course guidance, institutional partnerships, or speaking enquiries, send a note and our team will respond",
       "cta": "Register your interest",
       "sections": [
         {
           "eyebrow": "Email",
           "title": "info@medlex.academy",
-          "body": "For general enquiries and course support."
+          "body": "For general enquiries and course support"
         },
         {
           "eyebrow": "Institutions",
           "title": "Partnership enquiries",
-          "body": "Tell us about your team, audience, and the outcome you want to build."
+          "body": "Tell us about your team, audience, and the outcome you want to build"
         },
         {
           "eyebrow": "Response",
           "title": "A considered reply",
-          "body": "We aim to respond with a useful next step, not a generic inbox receipt."
+          "body": "We aim to respond with a useful next step, not a generic inbox receipt"
         }
       ]
     },
     "register": {
       "eyebrow": "Register your interest",
-      "title": "Be first to hear when the next cohort opens.",
-      "intro": "Leave your details and we will share course dates, pathway guidance, and early access updates.",
+      "title": "Be first to hear when the next cohort opens",
+      "intro": "Leave your details and we will share course dates, pathway guidance, and early access updates",
       "sections": [
         {
           "eyebrow": "What you receive",
           "title": "Relevant updates",
-          "body": "Only the course and programme information that matches your professional interests."
+          "body": "Only the course and programme information that matches your professional interests"
         },
         {
           "eyebrow": "Your privacy",
           "title": "Respect by default",
-          "body": "Your details are used for MedLex communications and are never sold."
+          "body": "Your details are used for MedLex communications and are never sold"
         },
         {
           "eyebrow": "Next step",
           "title": "A thoughtful welcome",
-          "body": "The full registration form and account creation flow will be connected in the authentication phase."
+          "body": "The full registration form and account creation flow will be connected in the authentication phase"
         }
       ]
     },
     "privacy": {
       "eyebrow": "Legal / Privacy",
-      "title": "Your information, handled with care.",
-      "intro": "This page explains the principles MedLex follows when collecting and using information through the platform.",
+      "title": "Your information, handled with care",
+      "intro": "This page explains the principles MedLex follows when collecting and using information through the platform",
       "sections": [
         {
           "eyebrow": "Collection",
           "title": "Only what we need",
-          "body": "We collect information required to provide course access, respond to enquiries, and improve the learning experience."
+          "body": "We collect information required to provide course access, respond to enquiries, and improve the learning experience"
         },
         {
           "eyebrow": "Control",
           "title": "Your choices matter",
-          "body": "You can request access, correction, or deletion of your personal information by contacting the MedLex team."
+          "body": "You can request access, correction, or deletion of your personal information by contacting the MedLex team"
         },
         {
           "eyebrow": "Protection",
           "title": "Designed for trust",
-          "body": "Access controls, secure storage, and server-side authorization help protect account and learning data."
+          "body": "Access controls, secure storage, and server-side authorization help protect account and learning data"
         }
       ]
     },
     "terms": {
       "eyebrow": "Legal / Terms",
-      "title": "Clear terms for a serious learning platform.",
-      "intro": "These terms set out the conditions for using MedLex courses, account services, and platform materials.",
+      "title": "Clear terms for a serious learning platform",
+      "intro": "These terms set out the conditions for using MedLex courses, account services, and platform materials",
       "sections": [
         {
           "eyebrow": "Access",
           "title": "Personal and considered",
-          "body": "Course access is provided to the registered learner for the period and scope described at purchase or enrolment."
+          "body": "Course access is provided to the registered learner for the period and scope described at purchase or enrolment"
         },
         {
           "eyebrow": "Materials",
           "title": "Learn, don't redistribute",
-          "body": "MedLex content is protected material and may not be copied, resold, or published without written permission."
+          "body": "MedLex content is protected material and may not be copied, resold, or published without written permission"
         },
         {
           "eyebrow": "Standards",
           "title": "Professional use",
-          "body": "Course content supports education and professional development; it is not a substitute for case-specific legal or clinical advice."
+          "body": "Course content supports education and professional development; it is not a substitute for case-specific legal or clinical advice"
         }
       ]
     },
     "refunds": {
       "eyebrow": "Legal / Refunds",
-      "title": "A straightforward approach to refunds.",
-      "intro": "Our refund approach is designed to be clear before you enrol and fair when circumstances change.",
+      "title": "A straightforward approach to refunds",
+      "intro": "Our refund approach is designed to be clear before you enrol and fair when circumstances change",
       "sections": [
         {
           "eyebrow": "Before access",
           "title": "Cancel with clarity",
-          "body": "Requests made before course access begins can be reviewed for a full refund, subject to the published course terms."
+          "body": "Requests made before course access begins can be reviewed for a full refund, subject to the published course terms"
         },
         {
           "eyebrow": "After access",
           "title": "Talk to the team",
-          "body": "If access has started, contact us promptly. We review exceptional circumstances individually and explain the outcome."
+          "body": "If access has started, contact us promptly. We review exceptional circumstances individually and explain the outcome"
         },
         {
           "eyebrow": "Contact",
           "title": "Keep your receipt",
-          "body": "Include your order reference and registered email when contacting info@medlex.academy so we can help quickly."
+          "body": "Include your order reference and registered email when contacting info@medlex.academy so we can help quickly"
         }
       ]
     }
   },
   "auth": {
     "title": "Continue with MedLex",
-    "description": "Sign in to continue learning, or create your account to register your interest and access courses.",
+    "description": "Sign in to continue learning, or create your account to register your interest and access courses",
     "tabsLabel": "Authentication options",
     "signIn": "Sign in",
     "register": "Register",
     "password": "Password",
     "createAccount": "Create account",
-    "confirmationRequired": "Check your email to confirm your account, then sign in to continue.",
+    "confirmationRequired": "Check your email to confirm your account, then sign in to continue",
     "validation": {
-      "fullName": "Enter at least 2 characters.",
-      "username": "Username must be at least 3 characters.",
-      "email": "Enter a valid email address.",
-      "phone": "Enter at least 6 characters.",
-      "password": "Password must be between 8 and 72 characters.",
-      "examDate": "Select a valid exam date."
+      "fullName": "Enter at least 2 characters",
+      "username": "Username must be at least 3 characters",
+      "email": "Enter a valid email address",
+      "phone": "Enter at least 6 characters",
+      "password": "Password must be between 8 and 72 characters",
+      "examDate": "Select a valid exam date"
     },
     "examDate": "Exam date",
     "examDatePlaceholder": "Select your exam date"
@@ -495,38 +495,38 @@
     },
     "medico-legal": {
       "eyebrow": "MEDLEX · PATHWAY 01 · MEDICO-LEGAL EDUCATION",
-      "title": "From a first forensic report to practice tested in court.",
-      "intro": "For psychiatrists, psychologists and legal professionals — four progressive tracks, home of the flagship programme Writing Psychiatric Evidence.",
+      "title": "From a first forensic report to practice tested in court",
+      "intro": "For psychiatrists, psychologists and legal professionals — four progressive tracks, home of the flagship programme Writing Psychiatric Evidence",
       "delivery": "Live interactive online",
       "languages": "Arabic · English",
       "status": "Waitlist open",
       "audience": {
         "eyebrow": "WHO THIS IS FOR",
-        "title": "Clinical opinion and legal judgment are not one document.",
-        "body": "This pathway is for specialists who receive the questions courts ask — not for the general public.",
+        "title": "Clinical opinion and legal judgment are not one document",
+        "body": "This pathway is for specialists who receive the questions courts ask — not for the general public",
         "items": [
           {
             "title": "Psychiatrists",
-            "body": "Receiving legal referrals and needing a report structure that holds up under cross-examination."
+            "body": "Receiving legal referrals and needing a report structure that holds up under cross-examination"
           },
           {
             "title": "Psychologists",
-            "body": "Working in court-directed assessment and needing a documented methodology."
+            "body": "Working in court-directed assessment and needing a documented methodology"
           },
           {
             "title": "Trainees",
-            "body": "Building forensic competence early, and in the right order."
+            "body": "Building forensic competence early, and in the right order"
           },
           {
             "title": "Legal professionals",
-            "body": "Reading psychiatric reports, testing them, and working with experts."
+            "body": "Reading psychiatric reports, testing them, and working with experts"
           }
         ]
       },
       "formats": {
         "eyebrow": "WHAT IT INCLUDES",
-        "title": "One structure, three ways to take it.",
-        "body": "From a single masterclass to an extended programme — the detail page sets out all three formats in full.",
+        "title": "One structure, three ways to take it",
+        "body": "From a single masterclass to an extended programme — the detail page sets out all three formats in full",
         "items": [
           {
             "eyebrow": "FORMAT 01",
@@ -547,61 +547,61 @@
       },
       "founder": {
         "eyebrow": "WHY THIS TEACHER",
-        "title": "Built by someone who has been cross-examined.",
-        "body": "A UK-trained consultant forensic psychiatrist, with experience before Mental Health Tribunals, Magistrates’ Courts, Crown Court and the Parole Board.",
+        "title": "Built by someone who has been cross-examined",
+        "body": "A UK-trained consultant forensic psychiatrist, with experience before Mental Health Tribunals, Magistrates’ Courts, Crown Court and the Parole Board",
         "action": "About the founder"
       }
     },
     "casc-academy": {
       "eyebrow": "MEDLEX · THE CASC ACADEMY",
-      "title": "The CASC, from the examiner’s chair.",
-      "intro": "An interactive, self-paced preparation platform for the MRCPsych CASC — designed and written by a former Royal College of Psychiatrists CASC examiner.",
+      "title": "The CASC, from the examiner’s chair",
+      "intro": "An interactive, self-paced preparation platform for the MRCPsych CASC — designed and written by a former Royal College of Psychiatrists CASC examiner",
       "delivery": "Self-paced online",
       "languages": "English only",
       "status": "First to launch — ready",
       "audience": {
         "eyebrow": "THE EXAMINATION",
         "title": "What the CASC really tests",
-        "body": "The CASC is a station-based exam: a series of timed clinical encounters, observed and marked in real time.",
+        "body": "The CASC is a station-based exam: a series of timed clinical encounters, observed and marked in real time",
         "items": [
           {
             "title": "Knowledge under pressure",
-            "body": "The CASC does not test what you know on paper. It tests what you say, what you do, and what you decide — observed, against the clock, in a consultation style that examiners recognise instantly."
+            "body": "The CASC does not test what you know on paper. It tests what you say, what you do, and what you decide — observed, against the clock, in a consultation style that examiners recognise instantly"
           },
           {
             "title": "A designed assessment",
-            "body": "Candidates rarely fail the CASC because they know too little psychiatry. They fail because they have never practised making the right moves, in the right order, in the way the station is designed to reward."
+            "body": "Candidates rarely fail the CASC because they know too little psychiatry. They fail because they have never practised making the right moves, in the right order, in the way the station is designed to reward"
           }
         ]
       },
       "feature": {
         "eyebrow": "THE GAP",
-        "title": "Preparation today comes in two forms. Both are useful. Neither is enough.",
-        "body": "Recorded video courses explain concepts. Face-to-face teaching provides feedback. The missing layer is deliberate, examiner-guided practice: structured, repeatable rehearsal of the decisions each station is built to assess.",
-        "quote": "Available whenever you study, for as long as you need it — with feedback framed the way an examiner actually marks.",
+        "title": "Preparation today comes in two forms. Both are useful. Neither is enough",
+        "body": "Recorded video courses explain concepts. Face-to-face teaching provides feedback. The missing layer is deliberate, examiner-guided practice: structured, repeatable rehearsal of the decisions each station is built to assess",
+        "quote": "Available whenever you study, for as long as you need it — with feedback framed the way an examiner actually marks",
         "stages": [
           {
             "title": "Interactive stations",
-            "body": "Realistic scenarios that unfold as the examiner would: choices and cues, not passive videos."
+            "body": "Realistic scenarios that unfold as the examiner would: choices and cues, not passive videos"
           },
           {
             "title": "Decision points",
-            "body": "At the moments that matter, you choose the next move and see why each option succeeds or fails."
+            "body": "At the moments that matter, you choose the next move and see why each option succeeds or fails"
           },
           {
             "title": "Examiner perspective feedback",
-            "body": "Every station is calibrated to what an examiner is looking for: structure, timing and clinical reasoning."
+            "body": "Every station is calibrated to what an examiner is looking for: structure, timing and clinical reasoning"
           },
           {
             "title": "Structured self-assessment",
-            "body": "A consistent framework for judging your own performance honestly."
+            "body": "A consistent framework for judging your own performance honestly"
           }
         ]
       },
       "founder": {
         "eyebrow": "FIRST-HAND, NOT SECOND-HAND",
-        "title": "Built by an examiner who has marked it.",
-        "body": "Dr Ahmed Abouelghit — Consultant Forensic Psychiatrist, former MRCPsych CASC examiner, Royal College of Psychiatrists.",
+        "title": "Built by an examiner who has marked it",
+        "body": "Dr Ahmed Abouelghit — Consultant Forensic Psychiatrist, former MRCPsych CASC examiner, Royal College of Psychiatrists",
         "action": "About the founder"
       },
       "sampleStation": {
@@ -609,102 +609,102 @@
         "badge": "TRY IT",
         "subtitle": "A shortened taster of how Academy stations work. Full stations unfold over several decision points - this one gives you a single moment, and the examiner's view of it",
         "meta": "SAMPLE STATION - SPEAKING WITH A RELATIVE - COMMUNICATION & CONFIDENTIALITY",
-        "taskLabel": "Your task.",
-        "scenario": "Daniel, 24, has been admitted with a first episode of psychosis. He has told the team clearly that he does not want clinical information shared with his family. His mother, distressed, has asked to speak with you. Speak with her.",
+        "taskLabel": "Your task",
+        "scenario": "Daniel, 24, has been admitted with a first episode of psychosis. He has told the team clearly that he does not want clinical information shared with his family. His mother, distressed, has asked to speak with you. Speak with her",
         "question": "She asks you directly: \"Just tell me - is it schizophrenia?\" What do you do first?",
         "options": [
           {
             "id": "A",
             "text": "Reassure her by sharing the likely diagnosis - she is his mother, and she clearly cares about him",
             "examinerTitle": "THE EXAMINER'S VIEW",
-            "examinerFeedback": "The instinct to comfort is human - and it is exactly where marks leak in this station. Daniel has explicitly declined to share, and disclosing the likely diagnosis breaches that. Strong candidates hold the boundary without abandoning warmth; this option abandons the boundary to keep the warmth."
+            "examinerFeedback": "The instinct to comfort is human - and it is exactly where marks leak in this station. Daniel has explicitly declined to share, and disclosing the likely diagnosis breaches that. Strong candidates hold the boundary without abandoning warmth; this option abandons the boundary to keep the warmth"
           },
           {
             "id": "B",
             "text": "Explain warmly that you cannot share Daniel's clinical information without his agreement - then explore her concerns, and offer what you can: general information, support for her, and a way forward",
             "examinerTitle": "THE EXAMINER'S VIEW",
             "scoringMove": "THE SCORING MOVE",
-            "examinerFeedback": "This is what the station is built to reward: the boundary is held, and the relationship is kept. You have declined to disclose, stayed with her distress, and opened a path forward - general information, support, and the possibility of Daniel choosing to involve her. The station rewards doing both at once, not choosing between them."
+            "examinerFeedback": "This is what the station is built to reward: the boundary is held, and the relationship is kept. You have declined to disclose, stayed with her distress, and opened a path forward - general information, support, and the possibility of Daniel choosing to involve her. The station rewards doing both at once, not choosing between them"
           },
           {
             "id": "C",
             "text": "Tell her that confidentiality rules prevent you discussing anything, and suggest she raises her questions with Daniel himself",
             "examinerTitle": "THE EXAMINER'S VIEW",
-            "examinerFeedback": "Technically defensible - and it stalls in the communication domain. The task was to manage this conversation, not to end it. Citing the rule and stepping back reads as dismissive, and the marks for engaging with her distress go uncollected."
+            "examinerFeedback": "Technically defensible - and it stalls in the communication domain. The task was to manage this conversation, not to end it. Citing the rule and stepping back reads as dismissive, and the marks for engaging with her distress go uncollected"
           }
         ],
         "testingTitle": "WHAT THIS STATION IS REALLY TESTING",
-        "testingBody": "Not your knowledge of confidentiality - every candidate knows the rule. It is testing whether you can hold a boundary and a relationship at the same time, under time pressure.",
-        "disclaimer": "This sample uses an original teaching scenario built on the examination's publicly defined competency domains. Select the other options to compare the examiner's view of each.",
+        "testingBody": "Not your knowledge of confidentiality - every candidate knows the rule. It is testing whether you can hold a boundary and a relationship at the same time, under time pressure",
+        "disclaimer": "This sample uses an original teaching scenario built on the examination's publicly defined competency domains. Select the other options to compare the examiner's view of each",
         "cta": "Register your interest - get the free guide"
       },
       "faqs": [
         {
           "question": "Does the Academy replace a live course or my study group?",
-          "answer": "No — and it does not try to. It gives the structured practice layer that most preparation is missing, so your live teaching and study partners are more useful."
+          "answer": "No — and it does not try to. It gives the structured practice layer that most preparation is missing, so your live teaching and study partners are more useful"
         },
         {
           "question": "Does it reveal real examination content?",
-          "answer": "No. The Academy is built entirely on publicly defined competency domains and original scenarios, not recalled examination material."
+          "answer": "No. The Academy is built entirely on publicly defined competency domains and original scenarios, not recalled examination material"
         },
         {
           "question": "Is it suitable for international medical graduates?",
-          "answer": "It was designed with international candidates foremost in mind. All material is written in clear English and reflects the consultation style the examination expects."
+          "answer": "It was designed with international candidates foremost in mind. All material is written in clear English and reflects the consultation style the examination expects"
         },
         {
           "question": "When does it launch, and what does it cost?",
-          "answer": "Launch and pricing are announced to the waitlist first. Registering your interest carries no commitment."
+          "answer": "Launch and pricing are announced to the waitlist first. Registering your interest carries no commitment"
         }
       ]
     },
     "foundations": {
       "eyebrow": "MEDLEX · PATHWAY 03 · MEDLEX FOUNDATIONS",
-      "title": "Professional development beyond the clinic.",
-      "intro": "The umbrella for non-clinical professional development — opening with The Clinician’s Edge and the Clinical Leadership Programme, and built to take on more.",
+      "title": "Professional development beyond the clinic",
+      "intro": "The umbrella for non-clinical professional development — opening with The Clinician’s Edge and the Clinical Leadership Programme, and built to take on more",
       "delivery": "Online & face-to-face",
       "languages": "Bilingual EN · AR",
       "status": "First programmes launching",
       "audience": {
         "eyebrow": "WHO THIS IS FOR",
-        "title": "For clinicians building careers beyond the clinic.",
-        "body": "The competencies clinical training does not teach, and that a doctor needs the moment they lead a team, build a service, or negotiate a decision.",
+        "title": "For clinicians building careers beyond the clinic",
+        "body": "The competencies clinical training does not teach, and that a doctor needs the moment they lead a team, build a service, or negotiate a decision",
         "items": []
       },
       "programmes": {
         "eyebrow": "PROGRAMMES",
-        "title": "Professional skills for the work around medicine.",
-        "body": "Focused programmes with practical tools, honest feedback, and a clear next step.",
+        "title": "Professional skills for the work around medicine",
+        "body": "Focused programmes with practical tools, honest feedback, and a clear next step",
         "items": [
           {
             "title": "The Clinician’s Edge",
-            "body": "Essential professional competencies beyond clinical medicine, for mid-career clinicians.",
+            "body": "Essential professional competencies beyond clinical medicine, for mid-career clinicians",
             "details": [
               "8 modules",
               "Self-paced online",
               "Short recorded videos in an interactive style",
               "In Arabic, for mid-career clinicians in the region"
             ],
-            "status": "Interest list — enrolment opens at launch, and is fully self-service after that.",
+            "status": "Interest list — enrolment opens at launch, and is fully self-service after that",
             "action": "Register your interest"
           },
           {
             "title": "Clinical Leadership Programme",
-            "body": "Leadership and management for clinicians — facilitated in person, with full participant workbooks and practical exercises.",
+            "body": "Leadership and management for clinicians — facilitated in person, with full participant workbooks and practical exercises",
             "details": [
               "6 units",
               "Face-to-face delivery",
               "Facilitated in person by the founder",
               "Full participant workbooks and practical exercises"
             ],
-            "status": "Waitlist — the workshop is in person with limited seats; the date and city are announced to the list first.",
+            "status": "Waitlist — the workshop is in person with limited seats; the date and city are announced to the list first",
             "action": "Register your interest in the workshop"
           }
         ]
       },
       "founder": {
         "eyebrow": "MEDLEX FOUNDATIONS",
-        "title": "A clearer way to lead beyond the consulting room.",
-        "body": "The programmes are built for the real decisions that arrive once clinical expertise is no longer the whole job.",
+        "title": "A clearer way to lead beyond the consulting room",
+        "body": "The programmes are built for the real decisions that arrive once clinical expertise is no longer the whole job",
         "action": "About the founder"
       }
     }
@@ -749,7 +749,7 @@
       "expires": "Expires",
       "continueCourse": "Continue Course",
       "emptyTitle": "No enrolled courses yet",
-      "emptyDescription": "Explore our specialised psychiatric and medico-legal training pathways to begin your learning.",
+      "emptyDescription": "Explore our specialised psychiatric and medico-legal training pathways to begin your learning",
       "explorePathways": "Explore Pathways",
       "courseCatalogue": "Course Catalogue"
     },
@@ -761,13 +761,13 @@
       "aboutAcademy": "About MedLex Academy",
       "support": "Support",
       "needAssistance": "Need assistance?",
-      "supportDescription": "Our team is available to assist you with pathway registration, institutional arrangements, and academic enquiries.",
+      "supportDescription": "Our team is available to assist you with pathway registration, institutional arrangements, and academic enquiries",
       "contactSupport": "Contact MedLex Support"
     },
     "guest": {
       "eyebrow": "Personal Profile",
       "title": "Please sign in to view your profile",
-      "description": "Sign in or register to access your enrolled courses, certifications, and account details in the MedLex Academy.",
+      "description": "Sign in or register to access your enrolled courses, certifications, and account details in the MedLex Academy",
       "signIn": "Sign in / Register",
       "returnHome": "Return to Home"
     }
@@ -775,8 +775,8 @@
   "institutionalPage": {
     "hero": {
       "eyebrow": "FOR INSTITUTIONS",
-      "title": "Expert consultation\n& court services.",
-      "intro": "Independent psychiatric evaluations, clinical governance review, and capacity-building programmes built to judicial standards across the MENA region.",
+      "title": "Expert consultation\n& court services",
+      "intro": "Independent psychiatric evaluations, clinical governance review, and capacity-building programmes built to judicial standards across the MENA region",
       "metrics": [
         {
           "label": "Jurisdictions",
@@ -797,54 +797,54 @@
     },
     "servicesGrid": {
       "eyebrow": "AREAS OF PRACTICE",
-      "title": "Four specialised services for judicial and healthcare bodies.",
+      "title": "Four specialised services for judicial and healthcare bodies",
       "cards": [
         {
           "tag": "01 · ASSESSMENTS",
           "title": "Clinical Forensic Assessment",
-          "desc": "Independent psychiatric evaluations for courts, prosecution, and legal counsel in criminal, civil, and custodial proceedings.",
+          "desc": "Independent psychiatric evaluations for courts, prosecution, and legal counsel in criminal, civil, and custodial proceedings",
           "linkText": "Explore Service"
         },
         {
           "tag": "02 · PROTOCOLS",
           "title": "Institutional Policy & Protocols",
-          "desc": "Development of defensible clinical governance standards, fitness-to-plead frameworks, and structured risk assessment tools.",
+          "desc": "Development of defensible clinical governance standards, fitness-to-plead frameworks, and structured risk assessment tools",
           "linkText": "Explore Service"
         },
         {
           "tag": "03 · CASE REVIEW",
           "title": "Case Review & Second Opinions",
-          "desc": "Peer review of disputed psychiatric evidence, medico-legal audit, and independent evaluation of complex court files.",
+          "desc": "Peer review of disputed psychiatric evidence, medico-legal audit, and independent evaluation of complex court files",
           "linkText": "Explore Service"
         },
         {
           "tag": "04 · TRAINING",
           "title": "Capacity Building & Training",
-          "desc": "Bespoke forensic psychiatry curriculums and masterclasses for judges, prosecutors, hospital leadership, and legal teams.",
+          "desc": "Bespoke forensic psychiatry curriculums and masterclasses for judges, prosecutors, hospital leadership, and legal teams",
           "linkText": "Explore Service"
         }
       ]
     },
     "standards": {
       "eyebrow": "STANDARDS & INTEGRITY",
-      "title": "Built for the scrutiny of modern courts and institutions.",
-      "intro": "Why judicial bodies, ministries, and hospitals rely on MedLex expert consultation.",
+      "title": "Built for the scrutiny of modern courts and institutions",
+      "intro": "Why judicial bodies, ministries, and hospitals rely on MedLex expert consultation",
       "pillars": [
         {
           "title": "UK-Trained Consultant Leadership",
-          "desc": "Led by a Consultant Forensic Psychiatrist with extensive practice across UK Mental Health Tribunals, Crown Courts, and regional bodies."
+          "desc": "Led by a Consultant Forensic Psychiatrist with extensive practice across UK Mental Health Tribunals, Crown Courts, and regional bodies"
         },
         {
           "title": "Evidence Before Opinion",
-          "desc": "Method before conclusion. Defined questions, structured psychometric instruments, and opinions stated at the confidence the evidence supports."
+          "desc": "Method before conclusion. Defined questions, structured psychometric instruments, and opinions stated at the confidence the evidence supports"
         },
         {
           "title": "Jurisdictional Alignment",
-          "desc": "Reports constructed around the specific statutory questions posed under your jurisdiction's penal, civil, or healthcare code."
+          "desc": "Reports constructed around the specific statutory questions posed under your jurisdiction's penal, civil, or healthcare code"
         },
         {
           "title": "Professional Protection",
-          "desc": "Court-conscious methodology that protects institutional integrity, maintains strict clinician neutrality, and survives cross-examination."
+          "desc": "Court-conscious methodology that protects institutional integrity, maintains strict clinician neutrality, and survives cross-examination"
         }
       ]
     },
@@ -853,8 +853,8 @@
         "number": "01",
         "eyebrow": "ASSESSMENT & EVALUATION",
         "title": "Clinical Forensic Assessment",
-        "subtitle": "Independent psychiatric evaluations built to evidentiary standards.",
-        "description": "We produce court-admissible psychiatric evaluations for civil and criminal cases. Our reports address specific statutory questions with rigorous documentation, diagnostic clarity, and defensible clinical reasoning that withstands cross-examination.",
+        "subtitle": "Independent psychiatric evaluations built to evidentiary standards",
+        "description": "We produce court-admissible psychiatric evaluations for civil and criminal cases. Our reports address specific statutory questions with rigorous documentation, diagnostic clarity, and defensible clinical reasoning that withstands cross-examination",
         "features": [
           "Criminal responsibility, sanity, and diminished capacity",
           "Fitness to plead and stand trial",
@@ -879,8 +879,8 @@
         "number": "02",
         "eyebrow": "GOVERNANCE & SAFETY",
         "title": "Institutional Policy & Protocols",
-        "subtitle": "Clinical governance standards that minimise medicolegal risk.",
-        "description": "Healthcare facilities and custodial institutions operate under severe legal scrutiny. We assist leadership in drafting, auditing, and implementing protocols that meet international human rights benchmarks while aligning with local statutory frameworks.",
+        "subtitle": "Clinical governance standards that minimise medicolegal risk",
+        "description": "Healthcare facilities and custodial institutions operate under severe legal scrutiny. We assist leadership in drafting, auditing, and implementing protocols that meet international human rights benchmarks while aligning with local statutory frameworks",
         "features": [
           "Involuntary admission & detention compliance frameworks",
           "Seclusion, physical restraint, and de-escalation governance",
@@ -905,8 +905,8 @@
         "number": "03",
         "eyebrow": "AUDIT & SECOND OPINION",
         "title": "Case Review & Second Opinions",
-        "subtitle": "Objective forensic audit of complex psychiatric evidence.",
-        "description": "When medical evidence is disputed, contradictory, or methodologically flawed, courts and legal teams require an authoritative, independent second perspective. We provide rigorous review of medical records, existing expert reports, and interview transcripts.",
+        "subtitle": "Objective forensic audit of complex psychiatric evidence",
+        "description": "When medical evidence is disputed, contradictory, or methodologically flawed, courts and legal teams require an authoritative, independent second perspective. We provide rigorous review of medical records, existing expert reports, and interview transcripts",
         "features": [
           "Evidentiary audit of prior psychiatric expert reports",
           "Identification of cognitive bias, diagnostic overreach, or procedural flaws",
@@ -931,8 +931,8 @@
         "number": "04",
         "eyebrow": "EDUCATION & CAPACITY",
         "title": "Capacity Building & Training",
-        "subtitle": "Specialised forensic curriculums for judicial and medical personnel.",
-        "description": "We bridge the cultural and intellectual divide between clinical medicine and the law. Our programmes equip judicial officers to critically appraise psychiatric evidence, and teach clinicians how to write reports that survive legal examination.",
+        "subtitle": "Specialised forensic curriculums for judicial and medical personnel",
+        "description": "We bridge the cultural and intellectual divide between clinical medicine and the law. Our programmes equip judicial officers to critically appraise psychiatric evidence, and teach clinicians how to write reports that survive legal examination",
         "features": [
           "Forensic mental health literacy for judges and prosecutors",
           "Accredited medicolegal report writing masterclasses for psychiatrists",
@@ -956,35 +956,35 @@
     },
     "engagements": {
       "eyebrow": "MODES OF ENGAGEMENT",
-      "title": "Four standard frameworks for institutional collaboration.",
-      "intro": "Flexible contractual arrangements structured around the governance and procurement requirements of ministries, tribunals, and healthcare authorities.",
+      "title": "Four standard frameworks for institutional collaboration",
+      "intro": "Flexible contractual arrangements structured around the governance and procurement requirements of ministries, tribunals, and healthcare authorities",
       "items": [
         {
           "tag": "FRAMEWORK 01",
           "title": "Single-Case Expert Instruction",
-          "desc": "Direct instruction by courts, public prosecutors, or joint legal parties for expert opinion, written evaluation, and viva voce testimony in specific cases."
+          "desc": "Direct instruction by courts, public prosecutors, or joint legal parties for expert opinion, written evaluation, and viva voce testimony in specific cases"
         },
         {
           "tag": "FRAMEWORK 02",
           "title": "Advisory Retainer & Council",
-          "desc": "Ongoing consultative access for ministries, correctional authorities, and judicial bodies seeking on-call forensic psychiatry expertise and legislative advice."
+          "desc": "Ongoing consultative access for ministries, correctional authorities, and judicial bodies seeking on-call forensic psychiatry expertise and legislative advice"
         },
         {
           "tag": "FRAMEWORK 03",
           "title": "Clinical Governance Review",
-          "desc": "Comprehensive forensic and medicolegal audits of inpatient facilities, secure psychiatric units, and custodial healthcare services."
+          "desc": "Comprehensive forensic and medicolegal audits of inpatient facilities, secure psychiatric units, and custodial healthcare services"
         },
         {
           "tag": "FRAMEWORK 04",
           "title": "Institutional Training Partnerships",
-          "desc": "Multi-year curriculum design and delivery for national judicial training centres, postgraduate medical faculties, and bar associations."
+          "desc": "Multi-year curriculum design and delivery for national judicial training centres, postgraduate medical faculties, and bar associations"
         }
       ]
     },
     "form": {
       "eyebrow": "DIRECT INQUIRY",
-      "title": "Request an institutional consultation.",
-      "intro": "Submit your institutional inquiry below. Our senior advisory team will review your mandate and respond under strict professional confidentiality.",
+      "title": "Request an institutional consultation",
+      "intro": "Submit your institutional inquiry below. Our senior advisory team will review your mandate and respond under strict professional confidentiality",
       "fields": {
         "orgName": "Organisation / Institutional Body",
         "orgNamePlaceholder": "e.g. Ministry of Justice, Hospital Group, Law Firm",
@@ -1020,21 +1020,21 @@
       "submit": "Submit Institutional Inquiry",
       "submitting": "Submitting Inquiry...",
       "successTitle": "Inquiry Received",
-      "successDesc": "Thank you. Our institutional liaison team will review your inquiry and follow up within 1–2 business days under strict professional confidentiality.",
-      "confidentiality": "All communications are treated with strict legal and medical confidentiality in accordance with international professional standards."
+      "successDesc": "Thank you. Our institutional liaison team will review your inquiry and follow up within 1–2 business days under strict professional confidentiality",
+      "confidentiality": "All communications are treated with strict legal and medical confidentiality in accordance with international professional standards"
     },
     "ctaBanner": {
       "eyebrow": "BESPOKE ENGAGEMENTS",
       "title": "Need a tailored institutional training program or consultation?",
-      "desc": "Our faculty designs bespoke continuous medical and legal education (CME/CLE) programs aligned with your regional jurisdiction.",
+      "desc": "Our faculty designs bespoke continuous medical and legal education (CME/CLE) programs aligned with your regional jurisdiction",
       "action": "Request Proposal"
     }
   },
   "exam": {
     "today": "Your exam is today",
     "daysRemaining": "{count} days to your exam",
-    "subscribeMessage": "Subscribe to build a focused plan before exam day.",
-    "subscribedMessage": "You are making progress. Keep the momentum going.",
+    "subscribeMessage": "Subscribe to build a focused plan before exam day",
+    "subscribedMessage": "You are making progress. Keep the momentum going",
     "progress": "Course progress: {count}%",
     "continueLesson": "Continue current lesson",
     "exploreCourses": "Explore courses",
@@ -1048,7 +1048,7 @@
   },
   "feedbackSection": {
     "eyebrow": "Candidate feedback",
-    "title": "What learners say after working through the course.",
+    "title": "What learners say after working through the course",
     "learner": "MedLex learner",
     "examDate": "Exam date",
     "shared": "Shared",

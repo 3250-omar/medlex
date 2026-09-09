@@ -40,7 +40,8 @@ export default function Navigation({
       const elem = document.getElementById(targetId);
       if (elem) {
         e.preventDefault();
-        elem.scrollIntoView({ behavior: "smooth" });
+        const top = elem.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top, behavior: "smooth" });
         window.history.pushState(null, "", `/${locale}#${targetId}`);
       }
     }
