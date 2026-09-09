@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { CalendarDays, Quote } from "lucide-react";
+import { Award, BookOpen, CalendarDays, Quote } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import LogoLoop, { type LogoItem } from "@/components/LogoLoop";
 import { apiRequest } from "@/lib/api/client";
@@ -14,6 +14,9 @@ type PublicFeedback = {
   feedback: string;
   updated_at: string;
   course_slug: string;
+  course_name: string | null;
+  course_name_ar: string | null;
+  certificate_date: string | null;
   full_name: string | null;
   exam_date: string | null;
   avatar_url: string | null;
@@ -60,24 +63,33 @@ function FeedbackCard({
 }) {
   const t = useTranslations("feedbackSection");
   const fullName = feedback.full_name?.trim() || t("learner");
+  const courseName =
+    (locale === "ar" && feedback.course_name_ar
+      ? feedback.course_name_ar
+      : feedback.course_name) || null;
+  const certificateDate = feedback.certificate_date
+    ? formatDate(feedback.certificate_date, locale)
+    : null;
   const examDate = feedback.exam_date
     ? formatDate(feedback.exam_date, locale)
     : null;
 
   return (
-    <blockquote className="flex h-64 sm:h-72 w-full flex-col justify-between rounded-2xl border border-white/10 bg-deep/95 p-5 sm:p-6 transition-all hover:border-gold/40 shadow-sm text-start">
+    <blockquote className="group relative flex h-[270px] sm:h-[285px] w-full flex-col justify-between rounded-2xl border border-white/10 bg-gradient-to-b from-deep/95 via-[#11233d]/90 to-deep/95 p-5 sm:p-6 text-start shadow-md transition-all duration-300 hover:border-gold/40 hover:shadow-[0_8px_30px_rgba(212,175,55,0.08)]">
+      {/* Header: Candidate Identity, Credentials & Quote Accent */}
       <header className="flex items-start justify-between gap-3">
-        <div className="flex min-w-0 items-center gap-3">
-          <div className="relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full border border-gold/40 bg-gold/15 font-sans text-xs font-semibold text-gold">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="relative flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-full border border-gold/30 bg-gold/10 font-sans text-xs font-semibold text-gold shadow-sm">
             {feedback.avatar_url ? (
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={feedback.avatar_url}
                 alt={`${fullName} ${t("profilePhoto")}`}
-                className="!h-full !w-full !max-w-none rounded-full object-cover"
+                className="size-full object-cover"
                 onError={(e) => {
-                  // Fallback to initials if image fails to load
                   e.currentTarget.style.display = "none";
-                  const fallback = e.currentTarget.nextElementSibling as HTMLElement | null;
+                  const fallback = e.currentTarget
+                    .nextElementSibling as HTMLElement | null;
                   if (fallback) fallback.style.display = "flex";
                 }}
               />
@@ -85,40 +97,97 @@ function FeedbackCard({
             <span
               aria-hidden="true"
               style={{ display: feedback.avatar_url ? "none" : "flex" }}
-              className="items-center justify-center size-full"
+              className="items-center justify-center size-full font-serif"
             >
               {initialsFor(fullName)}
             </span>
           </div>
-          <cite className="truncate font-serif text-sm sm:text-base font-semibold not-italic text-white">
-            {fullName}
-          </cite>
-        </div>
-        {examDate ? (
-          <div className="shrink-0 text-end font-sans text-xs leading-tight text-lbody">
-            <span className="flex items-center justify-end gap-1 text-[11px] text-mute">
-              <CalendarDays aria-hidden="true" className="size-3" />
-              {t("examDate")}
-            </span>
-            <time
-              dateTime={feedback.exam_date ?? undefined}
-              className="text-gold font-semibold text-xs"
-            >
-              {examDate}
-            </time>
+
+          <div className="min-w-0 flex-1">
+            <cite className="block truncate font-serif text-sm sm:text-base font-semibold not-italic text-white">
+              {fullName}
+            </cite>
+            <div className="mt-1 flex flex-col gap-0.5 font-sans text-[11px]">
+              {examDate ? (
+                <div className="flex items-center gap-1.5 text-mute">
+                  <CalendarDays
+                    aria-hidden="true"
+                    className="size-3 shrink-0 text-mute/80"
+                  />
+                  <span className="truncate">
+                    {t("examDate")}:{" "}
+                    <time
+                      dateTime={feedback.exam_date ?? undefined}
+                      className="text-lbody font-medium"
+                    >
+                      {examDate}
+                    </time>
+                  </span>
+                </div>
+              ) : null}
+
+              {certificateDate ? (
+                <div className="flex items-center gap-1.5 text-gold font-medium">
+                  <Award
+                    aria-hidden="true"
+                    className="size-3.5 shrink-0 text-gold"
+                  />
+                  <span className="truncate">
+                    {t("certificateDate")}:{" "}
+                    <time
+                      dateTime={feedback.certificate_date ?? undefined}
+                      className="text-lbody/90 font-normal"
+                    >
+                      {certificateDate}
+                    </time>
+                  </span>
+                </div>
+              ) : null}
+
+              {!examDate && !certificateDate ? (
+                <div className="text-mute truncate">
+                  {courseName || t("learner")}
+                </div>
+              ) : null}
+            </div>
           </div>
-        ) : null}
+        </div>
+
+        <Quote
+          aria-hidden="true"
+          className="size-5 shrink-0 text-gold/30 transition-colors duration-300 group-hover:text-gold/60"
+        />
       </header>
-      <div className="mt-3.5 border-t border-white/10 pt-3.5 flex-1 min-h-0 overflow-y-auto pr-1">
-        <Quote aria-hidden="true" className="size-4 text-gold" />
-        <p className="mt-2 font-sans text-xs sm:text-sm leading-relaxed text-lbody line-clamp-4">
-          {feedback.feedback}
+
+      {/* Quote Body */}
+      <div className="my-auto py-2 flex-1 flex items-center">
+        <p
+          className="font-sans text-xs sm:text-sm leading-relaxed text-lbody/95 line-clamp-4 font-normal"
+          title={feedback.feedback}
+        >
+          &ldquo;{feedback.feedback}&rdquo;
         </p>
       </div>
-      <footer className="mt-3 shrink-0 pt-2 border-t border-white/5">
+
+      {/* Footer: Course Context & Shared Date */}
+      <footer className="mt-auto pt-3 border-t border-white/[0.08] flex items-center justify-between gap-2 text-xs text-mute font-sans">
+        {courseName ? (
+          <div
+            className="flex items-center gap-1.5 min-w-0 max-w-[62%]"
+            title={courseName}
+          >
+            <BookOpen aria-hidden="true" className="size-3.5 text-gold/80 shrink-0" />
+            <span className="truncate text-lbody/90 font-medium">
+              {courseName}
+            </span>
+          </div>
+        ) : (
+          <div />
+        )}
+
         <time
           dateTime={feedback.updated_at}
-          className="font-body text-[11px] text-mute"
+          className="shrink-0 text-[11px] text-mute/80"
         >
           {t("shared")} {formatDate(feedback.updated_at, locale)}
         </time>
@@ -141,10 +210,13 @@ export default function FeedbackSection({
     const raw = feedback ?? [];
     if (raw.length === 0) return [];
     // Ensure we have at least 4 items in the sequence so the continuous ticker loop animates smoothly
-    const items = raw.length < 4 ? [...raw, ...raw, ...raw, ...raw].slice(0, Math.max(raw.length * 2, 4)) : raw;
+    const items =
+      raw.length < 4
+        ? [...raw, ...raw, ...raw, ...raw].slice(0, Math.max(raw.length * 2, 4))
+        : raw;
     return items.map((item) => ({
       node: (
-        <div className="w-72 sm:w-80 h-full py-1">
+        <div className="w-[320px] sm:w-[360px] h-full py-1.5">
           <FeedbackCard feedback={item} locale={locale} />
         </div>
       ),
@@ -173,7 +245,7 @@ export default function FeedbackSection({
                 <div
                   key={index}
                   aria-hidden="true"
-                  className="h-48 animate-pulse rounded-2xl border border-white/10 bg-deep/50"
+                  className="h-[270px] sm:h-[285px] animate-pulse rounded-2xl border border-white/10 bg-deep/50"
                 />
               ))}
             </div>

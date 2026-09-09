@@ -1063,6 +1063,9 @@
     "title": "What learners say after working through the course",
     "learner": "MedLex learner",
     "examDate": "Exam date",
+    "certificateDate": "Certificate date",
+    "certified": "Certified",
+    "course": "Course",
     "shared": "Shared",
     "profilePhoto": "profile photo",
     "loopLabel": "Learner feedback"

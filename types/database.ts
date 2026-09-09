@@ -255,6 +255,23 @@ export interface Database {
         };
         Returns: Json;
       };
+      get_pathway_feedback: {
+        Args: {
+          target_scope?: string;
+          feedback_limit?: number;
+        };
+        Returns: {
+          feedback: string;
+          updated_at: string;
+          course_slug: string;
+          course_name: string | null;
+          course_name_ar: string | null;
+          certificate_date: string | null;
+          full_name: string | null;
+          exam_date: string | null;
+          avatar_path: string | null;
+        }[];
+      };
     };
     Enums: Record<string, never>;
     CompositeTypes: Record<string, never>;
