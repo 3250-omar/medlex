@@ -27,7 +27,7 @@ const FOCUSABLE_SELECTOR = [
 
 export default function MobileMenu({
   open,
-  onClose,
+  onClose,  
   returnFocusRef,
   showCourses = false,
 }: MobileMenuProps) {
