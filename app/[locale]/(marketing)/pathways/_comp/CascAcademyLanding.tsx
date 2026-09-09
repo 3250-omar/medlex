@@ -903,10 +903,10 @@ export default function CascAcademyLanding(_props: Props) {
           ========================================================================= */}
       <section className="py-20 lg:py-24 border-b border-hair bg-white text-char">
         <div className="mx-auto w-full px-6 sm:px-8 lg:max-w-6xl lg:px-10">
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-[40px] font-bold text-navy!">
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-[40px] font-bold text-navy! text-center">
             Questions.
           </h2>
-          <div className="mt-8 max-w-3xl">
+          <div className="mt-8 max-w-3xl mx-auto">
             <FAQAccordion items={referenceFaqs} />
           </div>
         </div>
