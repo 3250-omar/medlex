@@ -908,3 +908,11 @@ html.dark h6 {
   margin-right: 6px;
   font-weight: bold;
 }
+
+@media print {
+  footer,
+  .print\:hidden {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}

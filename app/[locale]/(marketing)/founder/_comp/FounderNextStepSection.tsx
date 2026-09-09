@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { useCurrentUser } from "../../_apiCalls/academyQueries";
 
 interface FounderNextStepSectionProps {
   locale: string;
@@ -9,6 +12,7 @@ export default function FounderNextStepSection({
   locale,
 }: FounderNextStepSectionProps) {
   const t = useTranslations("founderPage.nextStep");
+  const { data: user } = useCurrentUser();
 
   const pathways = [
     {
@@ -99,11 +103,11 @@ export default function FounderNextStepSection({
 
             {/* CTA Button */}
             <Link
-              href={`/${locale}/contact`}
+              href={user ? `/${locale}/courses` : `/${locale}/contact`}
               id="founder-next-step-cta"
               className="btn btn-gold mt-6 w-full text-center !py-3.5 text-sm font-semibold"
             >
-              {t("cta")}
+              {user ? t("ctaLoggedIn") : t("cta")}
             </Link>
           </div>
         </div>

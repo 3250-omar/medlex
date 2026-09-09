@@ -176,7 +176,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
                   onClick={() => router.push(`/${locale}/courses`)}
                   className="btn btn-gold !py-3.5 !px-8 text-sm font-semibold gap-2"
                 >
-                  Go to your courses
+                  {t("goToCourses")}
                   <svg
                     width="14"
                     height="14"

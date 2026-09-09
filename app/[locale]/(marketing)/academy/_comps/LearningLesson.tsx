@@ -54,7 +54,7 @@ export default function LearningLesson({
   // Hide marketing footer during lesson to keep sticky navigation clean
   useEffect(() => {
     const siteFooter = document.querySelector(
-      "body > footer:not(.casc-experience footer)",
+      "footer:not(.casc-experience footer)",
     ) as HTMLElement | null;
     const prevFooterDisplay = siteFooter?.style.display;
     if (siteFooter) siteFooter.style.display = "none";
@@ -178,6 +178,36 @@ export default function LearningLesson({
     };
 
     checkUnlockStatus();
+
+    // Ensure Practice Pack has casc-packs-section class and printrow exists in all 43 stations
+    const packsEl = root.querySelector<HTMLElement>("#packs, .pack");
+    if (packsEl) {
+      const section = packsEl.closest("section");
+      if (section) section.classList.add("casc-packs-section");
+
+      let printRow = section
+        ? section.querySelector<HTMLElement>(".printrow")
+        : root.querySelector<HTMLElement>(".printrow");
+
+      if (!printRow) {
+        printRow = document.createElement("div");
+        printRow.className = "printrow";
+        printRow.innerHTML = `
+          <button type="button" class="btn ghost">Print all cards</button>
+          <button type="button" class="btn ghost">Candidate only</button>
+          <button type="button" class="btn ghost">Role-player only</button>
+          <button type="button" class="btn ghost">Observer only</button>
+        `;
+        if (packsEl.nextElementSibling) {
+          packsEl.parentElement?.insertBefore(
+            printRow,
+            packsEl.nextElementSibling,
+          );
+        } else {
+          packsEl.parentElement?.appendChild(printRow);
+        }
+      }
+    }
 
     // 3. Delegate Clicks across the lesson
     const handleLessonClicks = (event: MouseEvent) => {
@@ -311,16 +341,32 @@ export default function LearningLesson({
       if (printBtn) {
         event.preventDefault();
         const text = printBtn.textContent?.toLowerCase() || "";
-        let modeClass = "";
+        let modeClass = "pr-all";
         if (text.includes("candidate")) modeClass = "pr-cand";
         else if (text.includes("role")) modeClass = "pr-role";
         else if (text.includes("obs")) modeClass = "pr-obs";
 
-        if (modeClass) document.body.classList.add(modeClass);
+        document.body.classList.remove(
+          "pr-cand",
+          "pr-role",
+          "pr-obs",
+          "pr-all",
+        );
+        document.body.classList.add(modeClass);
+
+        const cleanup = () => {
+          document.body.classList.remove(
+            "pr-cand",
+            "pr-role",
+            "pr-obs",
+            "pr-all",
+          );
+          window.removeEventListener("afterprint", cleanup);
+        };
+
+        window.addEventListener("afterprint", cleanup);
         window.print();
-        setTimeout(() => {
-          document.body.classList.remove("pr-cand", "pr-role", "pr-obs");
-        }, 800);
+        setTimeout(cleanup, 2500);
         return;
       }
 
@@ -724,6 +770,7 @@ export default function LearningLesson({
         clearInterval(timerRef.current);
         timerRef.current = null;
       }
+      document.body.classList.remove("pr-cand", "pr-role", "pr-obs", "pr-all");
     };
   }, [unit, courseSlug, locale, router, nextUnit]);
 

@@ -16,7 +16,8 @@
     "skipToContent": "Skip to content",
     "switchToArabic": "Switch to Arabic",
     "switchToEnglish": "Switch to English",
-    "logout": "Log out"
+    "logout": "Log out",
+    "goToCourses": "Go to your courses"
   },
   "brand": {
     "name": "MEDLEX",
@@ -68,6 +69,7 @@
     "title": "Questions asked before registering",
     "subtitle": "General answers about the platform and its three pathways",
     "cta": "Register your interest",
+    "ctaLoggedIn": "Go to your courses",
     "items": [
       {
         "question": "Who is this platform for?",
@@ -96,6 +98,7 @@
       "line3": "to the court",
       "body": "MedLex trains psychiatrists to produce evaluations that survive cross-examination, and gives courts, prosecutors, and ministries psychiatric evidence built to a documented standard",
       "register": "Register your interest",
+      "goToCourses": "Go to your courses",
       "pathways": "The three pathways",
       "badge": "Educational pathways, one for each professional audience"
     },
@@ -157,6 +160,7 @@
       "body": "Eight modules across two live teaching days, built on a single simulated case file (MLC-100). Participants leave having produced a complete psychiatric medico-legal report",
       "eyebrow": "Flagship Programme",
       "register": "Register your interest",
+      "goToCourses": "Go to your courses",
       "title": "Writing Psychiatric Evidence"
     },
     "founder": {
@@ -304,7 +308,8 @@
           "status": "Launching"
         }
       ],
-      "cta": "Register your interest"
+      "cta": "Register your interest",
+      "ctaLoggedIn": "Go to your courses"
     }
   },
   "contactPage": {

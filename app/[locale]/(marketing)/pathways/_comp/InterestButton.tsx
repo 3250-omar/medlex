@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { InterestDialogTrigger } from "@/components/marketing/InterestDialog";
 import { useCurrentUser } from "../../_apiCalls/academyQueries";
@@ -25,13 +25,25 @@ export default function InterestButton({
   children,
 }: InterestButtonProps) {
   const locale = useLocale();
+  const t = useTranslations("actions");
   const router = useRouter();
   const { data: user } = useCurrentUser();
   const className =
     "btn btn-gold !rounded-full !min-h-12 !px-7 font-body text-sm font-semibold text-navy inline-flex items-center justify-center transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60";
 
   if (user) {
-    return <button type="button" className={className} onClick={() => router.push(`/${locale}/courses`)}>Go to your courses <span className="ms-3" aria-hidden="true">â†’</span></button>;
+    return (
+      <button
+        type="button"
+        className={className}
+        onClick={() => router.push(`/${locale}/courses`)}
+      >
+        {t("goToCourses")}{" "}
+        <span className="ms-3" aria-hidden="true">
+          →
+        </span>
+      </button>
+    );
   }
   return (
     <InterestDialogTrigger

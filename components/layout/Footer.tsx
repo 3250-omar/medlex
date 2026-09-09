@@ -19,7 +19,7 @@ const MEDLEX_LINKS = [
 export default async function Footer({ locale }: { locale: string }) {
   const t = await getTranslations({ locale, namespace: "footer" });
   return (
-    <footer className="border-t border-white/10 bg-deep text-mute">
+    <footer className="print:hidden border-t border-white/10 bg-deep text-mute">
       <div className="mx-auto w-full max-w-7xl px-6 sm:px-10 md:px-14 lg:px-20 py-16 lg:py-20">
         <div className="grid grid-cols-1 gap-14 md:grid-cols-[minmax(0,1.35fr)_minmax(180px,.8fr)_minmax(180px,.8fr)] md:gap-10 lg:gap-20">
           <div className="max-w-sm">

@@ -36,7 +36,7 @@ export default function FlagshipCourseSection({
                 onClick={() => router.push(`/${locale}/courses`)}
                 className="btn btn-navy mt-8 py-3.5! px-7 text-sm font-semibold gap-2 inline-flex items-center shadow-md"
               >
-                Go to your courses
+                {t("flagship.goToCourses")}
                 <span aria-hidden="true">→</span>
               </button>
             ) : (

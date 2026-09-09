@@ -1,7 +1,7 @@
-import Container from "@/components/layout/Container";
-import { InterestDialogTrigger } from "@/components/marketing/InterestDialog";
 import { getTranslations } from "next-intl/server";
+import Container from "@/components/layout/Container";
 import FAQAccordion from "../_comps/FAQAccordion";
+import FaqCtaButton from "./_comp/FaqCtaButton";
 
 export default async function FAQPage({
   params,
@@ -47,9 +47,7 @@ export default async function FAQPage({
 
           {/* Centered CTA */}
           <div className="mt-12 flex flex-col items-center justify-center text-center">
-            <InterestDialogTrigger className="btn btn-navy !py-3.5 !px-8 text-sm font-semibold gap-2.5 inline-flex items-center shadow-lg shadow-navy/15 hover:shadow-xl hover:-translate-y-0.5 transition-all">
-              {t("cta")} <span aria-hidden="true" className="rtl:rotate-180">→</span>
-            </InterestDialogTrigger>
+            <FaqCtaButton />
           </div>
         </div>
       </section>

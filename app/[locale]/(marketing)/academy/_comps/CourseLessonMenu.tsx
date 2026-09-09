@@ -154,13 +154,13 @@ export default function CourseLessonMenu({
 
   return (
     <aside
-      className="casc-lesson-menu !p-0 !border-0 !bg-transparent !shadow-none"
+      className="casc-lesson-menu print:hidden !p-0 !border-0 !bg-transparent !shadow-none"
       aria-label="Course lessons navigation"
     >
       <CollapsedMenu
         groups={menuGroups}
         topAction={{
-          label: "View workbook",
+          label: "View your workbook",
           href: "/gifts/Twelve%20Weeks%20to%20the%20CASC.pdf",
           icon: <FileText size={16} />,
         }}
