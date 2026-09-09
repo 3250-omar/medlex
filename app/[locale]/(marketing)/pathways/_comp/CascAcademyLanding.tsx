@@ -141,10 +141,14 @@ export default function CascAcademyLanding(_props: Props) {
     try {
       const response = await fetch(`/api/gifts/download?gift=${id}`);
       if (!response.ok) throw new Error("Gift download failed");
+      const cleanFileName =
+        fileName
+          .replace(/(\s*-\s*downloaded.*)+/gi, "")
+          .replace(/\.pdf$/i, "") + ".pdf";
       const url = URL.createObjectURL(await response.blob());
       const anchor = document.createElement("a");
       anchor.href = url;
-      anchor.download = fileName;
+      anchor.download = cleanFileName;
       anchor.click();
       URL.revokeObjectURL(url);
       triggerCelebration();
@@ -743,12 +747,7 @@ export default function CascAcademyLanding(_props: Props) {
                     key={id}
                     type="button"
                     disabled={downloading !== null}
-                    onClick={() =>
-                      void downloadGift(
-                        id as "1" | "2",
-                        `${name}${isDownloaded ? " - downloaded" : ""}`,
-                      )
-                    }
+                    onClick={() => void downloadGift(id as "1" | "2", name)}
                     className="flex min-h-12 items-center justify-between rounded-xl border border-gold bg-tint px-4 py-3 text-start font-sans text-sm font-semibold text-navy! transition-colors hover:bg-gold hover:text-navy! disabled:opacity-60 shadow-xs cursor-pointer"
                   >
                     <span className="flex items-center gap-2.5">

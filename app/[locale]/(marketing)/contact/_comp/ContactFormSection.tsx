@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useTranslations } from "next-intl";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, CheckCircle2, AlertCircle } from "lucide-react";
 
 interface ContactFormSectionProps {
   locale: string;
@@ -12,8 +12,11 @@ export default function ContactFormSection({
   locale,
 }: ContactFormSectionProps) {
   const t = useTranslations("contactPage.form");
+  const formRef = useRef<HTMLFormElement>(null);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const pathways: string[] = [
     t("pathways.0"),
@@ -34,10 +37,55 @@ export default function ContactFormSection({
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate async submission; replace with real API call later
-    await new Promise((r) => setTimeout(r, 1000));
-    setIsSubmitting(false);
-    setSubmitted(true);
+    setErrorMessage(null);
+
+    const formData = new FormData(e.currentTarget);
+    const payload = {
+      fullName: String(formData.get("fullName") || "").trim(),
+      email: String(formData.get("email") || "").trim(),
+      professionalRole: String(formData.get("professionalRole") || "").trim(),
+      organisation: String(formData.get("organisation") || "").trim(),
+      pathway: String(formData.get("pathway") || "").trim(),
+      notes: String(formData.get("notes") || "").trim(),
+      _hp: String(formData.get("_hp") || "").trim(),
+      locale,
+    };
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        let msg = t("errorGeneric");
+        if (response.status === 503) {
+          msg = t("errorConfig");
+        } else if (data?.error) {
+          msg = data.error;
+        }
+        throw new Error(msg);
+      }
+
+      setSubmitted(true);
+      formRef.current?.reset();
+    } catch (err: unknown) {
+      const msg =
+        err instanceof Error ? err.message : t("errorGeneric");
+      setErrorMessage(msg);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
+  function handleReset() {
+    setSubmitted(false);
+    setErrorMessage(null);
   }
 
   return (
@@ -71,28 +119,50 @@ export default function ContactFormSection({
               {t("intro")}
             </p>
 
-            {/* ── Form ── */}
+            {/* ── Form or Success State ── */}
             {submitted ? (
-              <div className="rounded-2xl border border-gold/30 bg-white p-8 sm:p-12 text-center shadow-lg shadow-navy/5">
-                <span
-                  className="text-gold text-4xl mb-4 block"
-                  aria-hidden="true"
+              <div
+                role="status"
+                aria-live="polite"
+                className="rounded-2xl border border-gold/30 bg-white p-8 sm:p-12 text-center shadow-lg shadow-navy/5 animate-fade-in"
+              >
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gold/10 text-gold mb-5">
+                  <CheckCircle2 className="size-8" />
+                </div>
+                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-navy">
+                  {t("successTitle")}
+                </h3>
+                <p className="mt-3 text-sm sm:text-base text-slate-600 max-w-md mx-auto leading-relaxed">
+                  {t("successSubtitle")}
+                </p>
+                <button
+                  type="button"
+                  onClick={handleReset}
+                  className="mt-8 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-gold hover:text-gold/80 transition-colors cursor-pointer"
                 >
-                  ✓
-                </span>
-                <p className="font-serif text-2xl font-bold text-navy">
-                  {isRtl
-                    ? "شكرًا لك — سنتواصل معك قريبًا."
-                    : "Thank you — we will be in touch."}
-                </p>
-                <p className="mt-2 text-sm text-slate-600">
-                  {isRtl
-                    ? "تم استلام اهتمامك وسيقوم فريقنا بمشاركتك تفاصيل المسار."
-                    : "Your details have been received and we will share pathway updates."}
-                </p>
+                  {t("submitAnother")}
+                </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+              <form
+                ref={formRef}
+                onSubmit={handleSubmit}
+                className="space-y-6"
+                noValidate
+                aria-busy={isSubmitting}
+              >
+                {/* Honeypot field for bot prevention */}
+                <div className="hidden" aria-hidden="true">
+                  <label htmlFor="contact-hp">Leave this field blank</label>
+                  <input
+                    id="contact-hp"
+                    type="text"
+                    name="_hp"
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
+
                 {/* Row 1 – Full Name & Email */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="flex flex-col gap-2">
@@ -107,11 +177,12 @@ export default function ContactFormSection({
                       name="fullName"
                       type="text"
                       required
+                      disabled={isSubmitting}
                       autoComplete="name"
                       placeholder={
                         isRtl ? "مثال: د. أحمد محمد" : "e.g. Dr. Ahmed Mostafa"
                       }
-                      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy placeholder:text-slate-400 focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none"
+                      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy placeholder:text-slate-400 focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none disabled:opacity-60 disabled:bg-slate-50"
                     />
                   </div>
 
@@ -127,9 +198,10 @@ export default function ContactFormSection({
                       name="email"
                       type="email"
                       required
+                      disabled={isSubmitting}
                       autoComplete="email"
                       placeholder="name@example.com"
-                      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy placeholder:text-slate-400 focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none"
+                      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy placeholder:text-slate-400 focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none disabled:opacity-60 disabled:bg-slate-50"
                     />
                   </div>
                 </div>
@@ -148,12 +220,13 @@ export default function ContactFormSection({
                       name="professionalRole"
                       type="text"
                       required
+                      disabled={isSubmitting}
                       placeholder={
                         isRtl
                           ? "مثال: استشاري طب نفسي"
                           : "e.g. Consultant Psychiatrist"
                       }
-                      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy placeholder:text-slate-400 focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none"
+                      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy placeholder:text-slate-400 focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none disabled:opacity-60 disabled:bg-slate-50"
                     />
                   </div>
 
@@ -168,12 +241,13 @@ export default function ContactFormSection({
                       id="contact-organisation"
                       name="organisation"
                       type="text"
+                      disabled={isSubmitting}
                       placeholder={
                         isRtl
                           ? "مثال: وزارة العدل / جهة العمل"
                           : "e.g. Ministry of Justice / Hospital Group"
                       }
-                      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy placeholder:text-slate-400 focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none"
+                      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy placeholder:text-slate-400 focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none disabled:opacity-60 disabled:bg-slate-50"
                     />
                   </div>
                 </div>
@@ -191,8 +265,9 @@ export default function ContactFormSection({
                       id="contact-pathway"
                       name="pathway"
                       required
+                      disabled={isSubmitting}
                       defaultValue=""
-                      className="w-full appearance-none rounded-xl border border-slate-300 bg-white px-4 py-3 pe-11 text-sm text-navy focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none cursor-pointer"
+                      className="w-full appearance-none rounded-xl border border-slate-300 bg-white px-4 py-3 pe-11 text-sm text-navy focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none cursor-pointer disabled:opacity-60 disabled:bg-slate-50"
                     >
                       <option value="" disabled className="text-slate-400">
                         {t("fields.pathwayPlaceholder")}
@@ -219,14 +294,37 @@ export default function ContactFormSection({
                     id="contact-notes"
                     name="notes"
                     rows={4}
+                    disabled={isSubmitting}
                     placeholder={
                       isRtl
                         ? "اكتب أي تفاصيل أو استفسارات إضافية هنا..."
                         : "Add any questions, cohort timing, or notes..."
                     }
-                    className="w-full rounded-xl border border-slate-300 bg-white p-4 text-sm text-navy placeholder:text-slate-400 focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none resize-none"
+                    className="w-full rounded-xl border border-slate-300 bg-white p-4 text-sm text-navy placeholder:text-slate-400 focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none resize-none disabled:opacity-60 disabled:bg-slate-50"
                   />
                 </div>
+
+                {/* Error Banner */}
+                {errorMessage && (
+                  <div
+                    role="alert"
+                    aria-live="assertive"
+                    className="rounded-xl border border-red-200 bg-red-50/95 p-4 text-sm text-red-800 flex items-start gap-3 animate-fade-in"
+                  >
+                    <AlertCircle
+                      className="text-red-500 shrink-0 size-5 mt-0.5"
+                      aria-hidden="true"
+                    />
+                    <div className="flex-1">
+                      <p className="font-semibold text-red-900">
+                        {t("errorTitle")}
+                      </p>
+                      <p className="mt-0.5 text-xs text-red-700 leading-relaxed">
+                        {errorMessage}
+                      </p>
+                    </div>
+                  </div>
+                )}
 
                 {/* Submit Row */}
                 <div className="flex flex-col gap-3 pt-3">
@@ -234,12 +332,12 @@ export default function ContactFormSection({
                     type="submit"
                     disabled={isSubmitting}
                     id="contact-submit-btn"
-                    className="btn btn-navy text-sm font-semibold !py-3.5 !px-8 self-start gap-2 shadow-lg shadow-navy/15 hover:shadow-xl hover:-translate-y-0.5 transition-all disabled:opacity-60"
+                    className="btn btn-navy text-sm font-semibold !py-3.5 !px-8 self-start gap-2 shadow-lg shadow-navy/15 hover:shadow-xl hover:-translate-y-0.5 transition-all disabled:opacity-60 cursor-pointer disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? (
                       <>
                         <span className="block h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
-                        {isRtl ? "جارٍ الإرسال..." : "Sending..."}
+                        {t("submitting")}
                       </>
                     ) : (
                       <>

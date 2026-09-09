@@ -334,6 +334,13 @@
         "Other"
       ],
       "submit": "Register interest",
+      "submitting": "Sending...",
+      "successTitle": "Thank you — we will be in touch",
+      "successSubtitle": "Your details have been received and we will share pathway updates",
+      "submitAnother": "Submit another inquiry →",
+      "errorTitle": "Submission Failed",
+      "errorGeneric": "Failed to send message, please try again later",
+      "errorConfig": "Mail service is temporarily unconfigured, please email us directly",
       "privacy": "Your details are used only to contact you about MedLex programmes, and are never shared",
       "sidebar": {
         "contactTitle": "CONTACT",

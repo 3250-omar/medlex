@@ -5,18 +5,18 @@
      The CASC Academy / MedLex Foundations Editorial Design Tokens
      Exact Match with Domain Prototype (media_1788906958554.html)
      ========================================================================== */
-  --navy: #1A365D;
-  --navy2: #21436E;
-  --deep: #142A49;
-  --gold: #D4AF37;
-  --goldd: #B08D2A;
-  --lgold: #E8D4A0;
-  --tint: #F6F2E6;
+  --navy: #1a365d;
+  --navy2: #21436e;
+  --deep: #142a49;
+  --gold: #d4af37;
+  --goldd: #b08d2a;
+  --lgold: #e8d4a0;
+  --tint: #f6f2e6;
   --char: #313538;
-  --grey: #5C636C;
-  --lbody: #D7DEE8;
-  --mute: #9DB0C7;
-  --hair: #E6E6E0;
+  --grey: #5c636c;
+  --lbody: #d7dee8;
+  --mute: #9db0c7;
+  --hair: #e6e6e0;
 
   --red: #ef4444;
   --red-bg: #faf1f1;
@@ -67,7 +67,7 @@ html[data-theme="dark"] .casc-experience h3 {
 }
 
 .casc-experience .wrap {
-  max-width: 880px;
+  max-width: 1020px;
   margin: 0 auto;
   padding: 0 24px;
 }
@@ -158,7 +158,7 @@ html[data-theme="dark"] .casc-experience h3 {
 
 .casc-experience header .sub {
   color: var(--lbody);
-  max-width: 62ch;
+  max-width: 80ch;
   line-height: 1.65;
 }
 
@@ -173,7 +173,6 @@ html[data-theme="dark"] .casc-experience h3 {
   font-style: italic;
   font-size: 16.5px;
   color: #ffffff;
-  max-width: 66ch;
   box-shadow: none;
 }
 
@@ -314,7 +313,7 @@ html[data-theme="dark"] .casc-experience section h2 {
 }
 
 .casc-experience .intro {
-  max-width: 68ch;
+  max-width: 82ch;
   font-size: 16.5px;
   line-height: 1.65;
   color: var(--char);
@@ -326,7 +325,6 @@ html[data-theme="dark"] .casc-experience section h2 {
   border-radius: 10px;
   padding: 16px 18px;
   margin-top: 18px;
-  max-width: 72ch;
   font-size: 15px;
   color: var(--char);
 }
@@ -507,7 +505,6 @@ html[data-theme="dark"] .casc-experience section h2 {
   margin-top: 16px;
   font-size: 14.5px;
   color: var(--grey);
-  max-width: 72ch;
 }
 
 .casc-experience .also b {
@@ -693,7 +690,6 @@ html[data-theme="dark"] .casc-experience section h2 {
 .casc-experience .q .stem {
   font-size: 15.5px;
   margin-bottom: 12px;
-  max-width: 68ch;
   color: var(--char);
 }
 
@@ -854,7 +850,6 @@ html[data-theme="dark"] .casc-experience section h2 {
 
 .casc-experience .takes {
   margin-top: 14px;
-  max-width: 72ch;
 }
 
 .casc-experience .takes li {
@@ -918,12 +913,10 @@ html[data-theme="dark"] .casc-experience section h2 {
   color: var(--char);
   font-size: 16.5px;
   margin: 14px 0 0;
-  max-width: 66ch;
 }
 
 .casc-experience .steps {
   margin-top: 14px;
-  max-width: 72ch;
 }
 
 .casc-experience .steps li {
@@ -1283,7 +1276,7 @@ html[data-theme="dark"] .casc-experience .done h2 {
 }
 
 .casc-bottom-nav .nav-inner {
-  max-width: 880px;
+  max-width: 1020px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
