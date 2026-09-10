@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
@@ -12,7 +13,7 @@ const NAV_ITEMS = [
   { label: "Contact", href: "/contact" },
 ] as const;
 
-export default function Navigation({
+const Navigation = memo(function Navigation({
   showCourses = false,
 }: {
   showCourses?: boolean;
@@ -75,6 +76,7 @@ export default function Navigation({
       })}
     </nav>
   );
-}
+});
 
+export default Navigation;
 export { NAV_ITEMS };

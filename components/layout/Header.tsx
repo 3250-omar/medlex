@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback, memo } from "react";
 import { CalendarDays, Play } from "lucide-react";
 import Counter from "@/components/Counter";
 import { useQueryClient } from "@tanstack/react-query";
@@ -19,6 +19,7 @@ import {
   academyQueryKeys,
   useCurrentUser,
   useEnrolledCourses,
+  type CurrentUser,
   type EnrolledCourse,
 } from "@/app/[locale]/(marketing)/_apiCalls/academyQueries";
 import {
@@ -29,19 +30,107 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-function ExamCountdown({
+interface UserAccountMenuProps {
+  user: CurrentUser;
+  locale: string;
+  onSignOut: () => void;
+  profileLabel: string;
+  logoutLabel: string;
+}
+
+const UserAccountMenu = memo(function UserAccountMenu({
+  user,
+  locale,
+  onSignOut,
+  profileLabel,
+  logoutLabel,
+}: UserAccountMenuProps) {
+  const userName = user.fullName ?? user.email ?? "User";
+  const initials = userName.charAt(0).toUpperCase();
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={
+          <button
+            type="button"
+            aria-label={`${userName} - open account menu`}
+            className="flex size-9 items-center justify-center rounded-full bg-signal font-body text-sm font-semibold text-ink transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
+          >
+            {user.avatarUrl ? (
+              <img
+                src={user.avatarUrl}
+                alt=""
+                className="size-full rounded-full object-cover"
+              />
+            ) : (
+              initials
+            )}
+          </button>
+        }
+      />
+
+      <DropdownMenuContent
+        side="bottom"
+        align="end"
+        sideOffset={8}
+        className="min-w-[180px] rounded-none border border-white/10 bg-ink p-1 text-sm text-white shadow-xl"
+      >
+        {/* User info */}
+        <div className="px-3 py-2">
+          <p className="truncate font-body text-xs font-semibold text-white">
+            {userName}
+          </p>
+          <p className="truncate font-body text-[11px] text-white/45">
+            {user.email}
+          </p>
+        </div>
+
+        <DropdownMenuSeparator className="bg-white/10" />
+
+        <DropdownMenuItem
+          className="cursor-pointer rounded-none px-3 py-2 font-body text-sm text-white/75 hover:bg-white/6 hover:text-white focus:bg-white/8 focus:text-white"
+          render={
+            <Link
+              href={`/${locale}/profile`}
+              className="flex w-full items-center gap-2"
+            >
+              {profileLabel}
+            </Link>
+          }
+        />
+
+        <DropdownMenuSeparator className="bg-white/10" />
+
+        <DropdownMenuItem
+          onClick={onSignOut}
+          className="cursor-pointer rounded-none px-3 py-2 font-body text-sm text-destructive hover:bg-destructive/10 focus:bg-destructive/10 focus:text-destructive"
+        >
+          {logoutLabel}
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+});
+
+const ExamCountdown = memo(function ExamCountdown({
   examDate,
   course,
   isLoading,
-  now,
   containerRef,
 }: {
   examDate: string;
   course: EnrolledCourse | null | undefined;
   isLoading: boolean;
-  now: number;
   containerRef?: React.RefObject<HTMLElement | null>;
 }) {
+  const [now, setNow] = useState(() => Date.now());
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(Date.now()), 1_000);
+    return () => window.clearInterval(timer);
+  }, []);
+
   const t = useTranslations("exam");
   const locale = useLocale();
   const examTime = new Date(`${examDate}T00:00:00`).getTime();
@@ -184,7 +273,8 @@ function ExamCountdown({
       </div>
     </section>
   );
-}
+});
+
 export default function Header() {
   const locale = useLocale();
   const pathname = usePathname();
@@ -218,13 +308,6 @@ export default function Header() {
     !pathname.includes("/academy/preview");
 
   useEffect(() => {
-    if (!user?.examDate) return;
-
-    const timer = window.setInterval(() => setNow(Date.now()), 1_000);
-    return () => window.clearInterval(timer);
-  }, [user?.examDate]);
-
-  useEffect(() => {
     if (!shouldShowExamCountdown) return;
     const el = countdownRef.current;
     if (!el) return;
@@ -232,7 +315,9 @@ export default function Header() {
     const updateH = () => {
       if (countdownRef.current) {
         const h = countdownRef.current.offsetHeight;
-        if (h > 0) setCountdownH(h);
+        if (h > 0) {
+          setCountdownH((prev) => (prev !== h ? h : prev));
+        }
       }
     };
 
@@ -250,7 +335,7 @@ export default function Header() {
     document.documentElement.style.setProperty("--header-h", `${totalH}px`);
   }, [shouldShowExamCountdown, countdownH]);
 
-  const isProtectedPath = (path: string) => {
+  const isProtectedPath = useCallback((path: string) => {
     const cleanPath = path.replace(/^\/(en|ar)/, "");
     if (cleanPath.startsWith("/academy/preview")) return false;
     return (
@@ -258,10 +343,20 @@ export default function Header() {
       cleanPath.startsWith("/academy") ||
       cleanPath.startsWith("/profile")
     );
-  };
+  }, []);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const isScrolled = window.scrollY > 20;
+          setScrolled((prev) => (prev !== isScrolled ? isScrolled : prev));
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -279,16 +374,12 @@ export default function Header() {
         }
         router.refresh();
       }
-
-      // void queryClient.invalidateQueries({
-      //   queryKey: academyQueryKeys.currentUser,
-      // });
     });
 
     return () => subscription.unsubscribe();
-  }, [queryClient, pathname, locale, router]);
+  }, [queryClient, pathname, locale, router, isProtectedPath]);
 
-  async function handleSignOut() {
+  const handleSignOut = useCallback(async () => {
     try {
       await apiRequest<{ signedOut: boolean }>("/api/auth/sign-out", {
         method: "POST",
@@ -308,74 +399,7 @@ export default function Header() {
       router.push(`/${locale}`);
       router.refresh();
     }
-  }
-
-  const userName = user?.fullName ?? user?.email ?? "User";
-  const initials = user ? userName.charAt(0).toUpperCase() : "";
-
-  const userMenu = user ? (
-    <DropdownMenu>
-      <DropdownMenuTrigger
-        render={
-          <button
-            type="button"
-            aria-label={`${userName} - open account menu`}
-            className="flex size-9 items-center justify-center rounded-full bg-signal font-body text-sm font-semibold text-ink transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
-          >
-            {user.avatarUrl ? (
-              <img
-                src={user.avatarUrl}
-                alt=""
-                className="size-full rounded-full object-cover"
-              />
-            ) : (
-              initials
-            )}
-          </button>
-        }
-      />
-
-      <DropdownMenuContent
-        side="bottom"
-        align="end"
-        sideOffset={8}
-        className="min-w-[180px] rounded-none border border-white/10 bg-ink p-1 text-sm text-white shadow-xl"
-      >
-        {/* User info */}
-        <div className="px-3 py-2">
-          <p className="truncate font-body text-xs font-semibold text-white">
-            {userName}
-          </p>
-          <p className="truncate font-body text-[11px] text-white/45">
-            {user.email}
-          </p>
-        </div>
-
-        <DropdownMenuSeparator className="bg-white/10" />
-
-        <DropdownMenuItem
-          className="cursor-pointer rounded-none px-3 py-2 font-body text-sm text-white/75 hover:bg-white/6 hover:text-white focus:bg-white/8 focus:text-white"
-          render={
-            <Link
-              href={`/${locale}/profile`}
-              className="flex w-full items-center gap-2"
-            >
-              {t("nav.profile")}
-            </Link>
-          }
-        />
-
-        <DropdownMenuSeparator className="bg-white/10" />
-
-        <DropdownMenuItem
-          onClick={handleSignOut}
-          className="cursor-pointer rounded-none px-3 py-2 font-body text-sm text-destructive hover:bg-destructive/10 focus:bg-destructive/10 focus:text-destructive"
-        >
-          {t("actions.logout")}
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  ) : null;
+  }, [queryClient, pathname, locale, router, isProtectedPath]);
 
   return (
     <>
@@ -406,7 +430,6 @@ export default function Header() {
             examDate={user.examDate}
             course={coursesLoading ? undefined : currentCourse}
             isLoading={coursesLoading}
-            now={now}
           />
         )}
         <div className="relative mx-auto flex h-[72px] w-full max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-10">
@@ -440,7 +463,13 @@ export default function Header() {
           {/* ── Mobile user menu (centered between logo and hamburger) ── */}
           {user && (
             <div className="absolute left-1/2 -translate-x-1/2 lg:hidden">
-              {userMenu}
+              <UserAccountMenu
+                user={user}
+                locale={locale}
+                onSignOut={handleSignOut}
+                profileLabel={t("nav.profile")}
+                logoutLabel={t("actions.logout")}
+              />
             </div>
           )}
 
@@ -463,7 +492,13 @@ export default function Header() {
             </Link>
 
             {user ? (
-              userMenu
+              <UserAccountMenu
+                user={user}
+                locale={locale}
+                onSignOut={handleSignOut}
+                profileLabel={t("nav.profile")}
+                logoutLabel={t("actions.logout")}
+              />
             ) : (
               /* ── Guest: register button ───────────────────────────── */
               <InterestDialogTrigger className="btn btn-gold !h-9 !py-1 !px-5 text-sm font-semibold">
