@@ -21,7 +21,7 @@ export default function CascWhoItIsForSection() {
       <div className="relative z-10 mx-auto w-full px-6 sm:px-8 lg:max-w-6xl lg:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-0 items-start">
           {/* Left Column: Who it is for & Quote */}
-          <div className="lg:pr-12 xl:pr-16 flex flex-col justify-between">
+          <div className="lg:pr-12 xl:pr-16 flex flex-col justify-between border-r-[2px] border-gray-300">
             <div>
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-[40px] font-bold leading-tight text-navy! mb-6">
                 Who it is for
@@ -35,7 +35,7 @@ export default function CascWhoItIsForSection() {
             </div>
 
             {/* Quote callout with gold left border */}
-            <div className="mt-10 sm:mt-14 border-l-[3px] border-gold pl-5 sm:pl-6 py-1">
+            <div className="mt-10 sm:mt-14 border-l-8 border-gold pl-5 sm:pl-6 py-1">
               <p className="font-serif italic text-lg sm:text-xl text-navy/90 leading-relaxed">
                 The exam is not judged on what you know. It is judged on what
                 the examiner watches you do with it.
@@ -61,7 +61,7 @@ export default function CascWhoItIsForSection() {
             </div>
 
             {/* Thin horizontal divider */}
-            <div className="w-full h-px bg-hair my-8 sm:my-10" />
+            <div className="w-full h-[2px] bg-gray-300 my-8 sm:my-10 " />
 
             {/* Not for. */}
             <div>

@@ -96,7 +96,7 @@ export default function CascGiftsSection() {
           src="/images/sectionImages/gift_section.jpg"
           alt="The Examiner's Briefing and Error Log preparation resources"
           fill
-          className="object-cover object-center opacity-35"
+          className="object-cover object-center opacity-80"
           sizes="100vw"
         />
         {/* Soft tint gradient overlays to ensure text legibility while revealing the desk and gift booklets */}

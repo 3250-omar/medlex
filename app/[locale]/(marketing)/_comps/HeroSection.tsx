@@ -5,7 +5,10 @@ import Image from "next/image";
 import { InterestDialogTrigger } from "@/components/marketing/InterestDialog";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useCurrentUser } from "../_apiCalls/academyQueries";
+import {
+  useCurrentUser,
+  useEnrolledCourses,
+} from "../_apiCalls/academyQueries";
 import MarqueeStrip from "./MarqueeStrip";
 
 interface HeroSectionProps {
@@ -16,6 +19,8 @@ export default function HeroSection({ locale }: HeroSectionProps) {
   const t = useTranslations("home.hero");
   const router = useRouter();
   const { data: user } = useCurrentUser();
+  const { data: enrolledCourses = [] } = useEnrolledCourses(Boolean(user));
+  const hasEnrolledCourses = enrolledCourses.length > 0;
   const heroRef = useRef<HTMLElement>(null);
   const guillocheRef = useRef<HTMLCanvasElement>(null);
 
@@ -138,7 +143,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
       className="hero-shell on-navy relative flex min-h-screen flex-col overflow-hidden bg-[radial-gradient(ellipse_at_75%_35%,#21436E_0%,#1A365D_50%,#142A49_100%)] text-lbody"
       aria-label="MedLex hero"
     >
-      <div className="relative flex w-full flex-1 items-center justify-center px-6 pb-14 pt-[calc(var(--header-h)+2rem)] sm:px-10 md:px-14 lg:px-20 xl:px-24 2xl:px-28">
+      <div className="relative flex w-full flex-1 items-center justify-center px-6 pb-14 pt-24 sm:pt-28 lg:pt-32 sm:px-10 md:px-14 lg:px-20 xl:px-24 2xl:px-28">
         <div className="grid w-full grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,1.18fr)_minmax(0,.82fr)] lg:gap-14 xl:gap-20 2xl:gap-28">
           {/* Left */}
           <div className="w-full text-start max-w-3xl xl:max-w-4xl">
@@ -171,24 +176,50 @@ export default function HeroSection({ locale }: HeroSectionProps) {
             {/* CTAs */}
             <div className="flex flex-wrap items-center justify-start gap-4">
               {user ? (
-                <button
-                  type="button"
-                  onClick={() => router.push(`/${locale}/courses`)}
-                  className="btn btn-gold !py-3.5 !px-8 text-sm font-semibold gap-2"
-                >
-                  {t("goToCourses")}
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    aria-hidden="true"
+                hasEnrolledCourses ? (
+                  <button
+                    type="button"
+                    onClick={() => router.push(`/${locale}/courses`)}
+                    className="btn btn-gold !py-3.5 !px-8 text-sm font-semibold gap-2"
                   >
-                    <path d="M2.5 7h9M8.5 3.5L12 7l-3.5 3.5" />
-                  </svg>
-                </button>
+                    {t("goToCourses")}
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      aria-hidden="true"
+                    >
+                      <path d="M2.5 7h9M8.5 3.5L12 7l-3.5 3.5" />
+                    </svg>
+                  </button>
+                ) : (
+                  <a
+                    href="#pathways-heading"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document
+                        .getElementById("pathways-heading")
+                        ?.scrollIntoView({ behavior: "smooth" });
+                    }}
+                    className="btn btn-gold !py-3.5 !px-8 text-sm font-semibold gap-2"
+                  >
+                    {t("joinCourses")}
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      aria-hidden="true"
+                    >
+                      <path d="M2.5 7h9M8.5 3.5L12 7l-3.5 3.5" />
+                    </svg>
+                  </a>
+                )
               ) : (
                 <InterestDialogTrigger className="btn btn-gold !py-3.5 !px-8 text-sm font-semibold gap-2">
                   {t("register")}

@@ -10,6 +10,7 @@ export type CurrentUser = {
   username?: string | null;
   phone?: string | null;
   examDate?: string | null;
+  role?: "learner" | "admin" | string | null;
   avatarPath?: string | null;
   avatarUrl?: string | null;
   createdAt?: string | null;

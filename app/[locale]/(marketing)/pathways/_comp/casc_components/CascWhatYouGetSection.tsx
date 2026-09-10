@@ -5,7 +5,7 @@ const whatYouGetItems = [
     title: "The station library",
     how: "Online · phone, tablet, desktop",
     desc: "43 stations across 8 domains, each with two failing takes, a passing take, the examiner's reasoning, seven decision points, take-home principles, a timed Exam Mode and a three-person practice pack.",
-    image: "/images/sectionImages/libirary_section.jpeg",
+    image: "/images/sectionImages/station_section.png",
   },
   {
     title: "Twelve weeks to the CASC",

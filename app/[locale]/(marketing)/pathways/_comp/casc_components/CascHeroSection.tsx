@@ -83,16 +83,14 @@ export default function CascHeroSection({
                 &ldquo;Mr Boyd, I’ll stop you there, because nothing improper
                 has happened. Libby was assessed as Gillick competent. Her
                 mother attended with her. Fluoxetine is the recommended first
-                line — and with respect, that printout misreads the
-                data.&rdquo;
+                line — and with respect, that printout misreads the data.&rdquo;
               </p>
               <div className="border-l-2 border-gold pl-3 text-[13.5px] leading-relaxed text-lbody">
                 <b className="text-lgold font-semibold block mb-1">
                   What the examiner is thinking
                 </b>
                 Six sentences, six accurate facts — and the station is already
-                lost. Every word answered the armour; not one answered the
-                man.
+                lost. Every word answered the armour; not one answered the man.
               </div>
             </div>
 
@@ -102,10 +100,10 @@ export default function CascHeroSection({
                 Fail 2 — the surrender
               </p>
               <p className="font-serif text-[15.5px] sm:text-base leading-relaxed text-white mb-4">
-                &ldquo;Mr Boyd — I can see why you’re angry, and I’m sorry.
-                You should have been consulted, absolutely. Look — if you’re
-                not comfortable with Libby being on it, we can stop the
-                fluoxetine today and think again.&rdquo;
+                &ldquo;Mr Boyd — I can see why you’re angry, and I’m sorry. You
+                should have been consulted, absolutely. Look — if you’re not
+                comfortable with Libby being on it, we can stop the fluoxetine
+                today and think again.&rdquo;
               </p>
               <div className="border-l-2 border-gold pl-3 text-[13.5px] leading-relaxed text-lbody">
                 <b className="text-lgold font-semibold block mb-1">
@@ -114,8 +112,7 @@ export default function CascHeroSection({
                 The room is quieter already — and everything paying for the
                 quiet was never this doctor’s to spend. A fault conceded that
                 did not occur, and a fifteen-year-old’s working treatment
-                offered to her father, in her absence, as the price of his
-                calm.
+                offered to her father, in her absence, as the price of his calm.
               </div>
             </div>
 
@@ -137,8 +134,7 @@ export default function CascHeroSection({
                 </b>
                 Not one fact corrected, not one protocol cited — and the
                 temperature has already dropped. The corrections can all wait.
-                They will land later precisely because they were not fired
-                now.
+                They will land later precisely because they were not fired now.
               </div>
             </div>
           </div>

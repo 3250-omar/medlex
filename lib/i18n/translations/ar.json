@@ -17,7 +17,8 @@
     "switchToArabic": "التبديل إلى العربية",
     "switchToEnglish": "التبديل إلى الإنجليزية",
     "logout": "تسجيل الخروج",
-    "goToCourses": "الانتقال إلى دوراتك"
+    "goToCourses": "الانتقال إلى دوراتك",
+    "joinCourses": "انضم إلى دوراتنا"
   },
   "brand": {
     "name": "مِدلكس",
@@ -99,6 +100,7 @@
       "body": "ندرّب أطباء النفس على إعداد تقييمات تصمد أمام الاستجواب، ونمدّ المحاكم والنيابات والجهات الحكومية بأدلة نفسية مبنية على منهجية موثّقة",
       "register": "سجّل اهتمامك",
       "goToCourses": "الانتقال إلى دوراتك",
+      "joinCourses": "انضم إلى دوراتنا",
       "pathways": "المسارات الثلاثة",
       "badge": "مسارات تعليمية متخصصة، مسار لكل جمهور مهني"
     },
@@ -1050,13 +1052,13 @@
     "progress": "تقدم الدورة: {count}%",
     "continueLesson": "تابع الدرس الحالي",
     "exploreCourses": "استكشف الدورات",
-    "title": "???? ???????? ????????",
-    "daysLabel": "????? ???????",
-    "examDateLabel": "????? ????????",
-    "daysShort": "???",
-    "hoursShort": "????",
-    "minutesShort": "?????",
-    "secondsShort": "?????"
+    "title": "العد التنازلي للاختبار",
+    "daysLabel": "أيام متبقية",
+    "examDateLabel": "موعد الاختبار",
+    "daysShort": "يوم",
+    "hoursShort": "ساعة",
+    "minutesShort": "دقيقة",
+    "secondsShort": "ثانية"
   },
   "feedbackSection": {
     "eyebrow": "آراء المتدربين",

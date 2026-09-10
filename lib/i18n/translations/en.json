@@ -17,7 +17,8 @@
     "switchToArabic": "Switch to Arabic",
     "switchToEnglish": "Switch to English",
     "logout": "Log out",
-    "goToCourses": "Go to your courses"
+    "goToCourses": "Go to your courses",
+    "joinCourses": "Join our courses"
   },
   "brand": {
     "name": "MEDLEX",
@@ -99,6 +100,7 @@
       "body": "MedLex trains psychiatrists to produce evaluations that survive cross-examination, and gives courts, prosecutors, and ministries psychiatric evidence built to a documented standard",
       "register": "Register your interest",
       "goToCourses": "Go to your courses",
+      "joinCourses": "Join our courses",
       "pathways": "The three pathways",
       "badge": "Educational pathways, one for each professional audience"
     },

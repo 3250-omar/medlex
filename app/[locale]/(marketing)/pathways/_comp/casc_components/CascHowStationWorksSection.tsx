@@ -16,13 +16,26 @@ export default function CascHowStationWorksSection() {
                 Not lectures. Not model answers. Stations, taken apart.
               </h2>
               <p className="mt-4 max-w-3xl font-serif text-lg sm:text-xl leading-relaxed text-char">
-                Every station is built the same way, around a single named trap —
-                the specific error that costs candidates the mark in that
+                Every station is built the same way, around a single named trap
+                — the specific error that costs candidates the mark in that
                 scenario. Then you make the decisions yourself.
               </p>
             </div>
 
-            <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+            {/* Mobile Image (shown before step 1 on responsive) */}
+            <div className="mt-8 block lg:hidden">
+              <div className="relative w-full h-[280px] xs:h-[340px] sm:h-[420px] rounded-2xl overflow-hidden border border-hair shadow-xl bg-white">
+                <Image
+                  src="/images/sectionImages/How_station_works_section.jpg"
+                  alt="How a station works — clinical consultation"
+                  fill
+                  className="object-cover object-center"
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                />
+              </div>
+            </div>
+
+            <div className="mt-8 lg:mt-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
               {[
                 {
                   num: "1",
@@ -68,8 +81,8 @@ export default function CascHowStationWorksSection() {
             </div>
           </div>
 
-          {/* Stretched Image Column */}
-          <div className="w-full lg:w-2/5 xl:w-[40%] flex">
+          {/* Stretched Image Column (Desktop) */}
+          <div className="hidden lg:flex lg:w-2/5 xl:w-[40%]">
             <div className="relative w-full h-full min-h-[380px] sm:min-h-[460px] lg:min-h-full rounded-2xl overflow-hidden border border-hair shadow-xl bg-white">
               <Image
                 src="/images/sectionImages/How_station_works_section.jpg"

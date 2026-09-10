@@ -34,14 +34,18 @@ export default function FounderPortrait({
           className="object-cover object-top"
         />
 
-        {/* MedLex Monogram Seal Badge */}
+        {/* MedLex Emblem Badge */}
         <span
-          className="absolute right-3 top-3 grid size-11 place-items-center rounded-full border border-white/45 bg-ink/30 font-body text-[8.5px] leading-3 text-white backdrop-blur-sm rtl:right-auto rtl:left-3 md:right-4 md:top-4 md:size-12 md:text-[9px] md:rtl:right-auto md:rtl:left-4"
+          className="absolute right-3 top-3 flex size-11 items-center justify-center overflow-hidden rounded-full border border-white/45 bg-[#1b375c] p-1.5 shadow-sm backdrop-blur-sm rtl:right-auto rtl:left-3 md:right-4 md:top-4 md:size-12 md:p-2 md:rtl:right-auto md:rtl:left-4"
           aria-hidden="true"
         >
-          MED
-          <br />
-          LEX
+          <Image
+            src="/images/new-emblem.png"
+            alt=""
+            width={48}
+            height={48}
+            className="h-auto w-full object-contain"
+          />
         </span>
 
         {/* Caption Overlay */}
