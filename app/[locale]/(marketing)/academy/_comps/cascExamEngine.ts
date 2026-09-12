@@ -250,11 +250,15 @@ export function initCascInteractiveEngine({
     if (host) {
       host.innerHTML = "";
       host.style.display = "block";
+      const sec = host.closest("section");
+      if (sec) sec.classList.add("casc-questions-section");
 
       activeQuestions.forEach((q, qi) => {
         const d = document.createElement("div");
-        d.className = "q";
+        d.className = `q ${qi % 2 === 0 ? "q-odd" : "q-even"}`;
         d.dataset.qi = String(qi);
+        d.dataset.seq = qi % 2 === 0 ? "odd" : "even";
+        d.dataset.qnum = String(qi + 1);
         let h = `<h3>${q.stem}</h3>`;
         const order = q.opts.map((_, i) => i);
         for (let i = order.length - 1; i > 0; i--) {

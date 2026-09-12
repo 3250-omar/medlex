@@ -129,9 +129,19 @@ export default function LearningLesson({
     const root = containerRef.current;
     if (!root || !unit) return;
 
-    // 1. Shuffling Learn Mode quiz options once (matching prototype behavior)
+    // Tag question sections for distinctive backdrop
+    root.querySelectorAll<HTMLElement>("section").forEach((sec) => {
+      if (sec.querySelector("[data-q], .q")) {
+        sec.classList.add("casc-questions-section");
+      }
+    });
+
+    // 1. Shuffling Learn Mode quiz options once & tagging alternating sequence
     root.querySelectorAll<HTMLElement>("[data-q]").forEach((q, idx) => {
       q.dataset.qi = String(idx);
+      q.classList.add(idx % 2 === 0 ? "q-odd" : "q-even");
+      q.dataset.seq = idx % 2 === 0 ? "odd" : "even";
+      q.dataset.qnum = String(idx + 1);
       const opts = Array.from(q.querySelectorAll<HTMLButtonElement>(".opt"));
       const fbs = q.querySelector(".fbs");
       if (fbs && opts.length > 1 && !q.dataset.shuffled) {
@@ -523,7 +533,7 @@ export default function LearningLesson({
         if (match) {
           event.preventDefault();
           const slug = match[1]
-            .replace(/^\d{2}_/, "")
+            .replace(/^(?:\d{2}_|casc_academy_\d+_)/i, "")
             .toLowerCase()
             .replace(/_/g, "-");
           router.push(`/${locale}/academy/courses/${courseSlug}/learn/${slug}`);
@@ -541,7 +551,7 @@ export default function LearningLesson({
         );
         if (match) {
           const slug = match[1]
-            .replace(/^\d{2}_/, "")
+            .replace(/^(?:\d{2}_|casc_academy_\d+_)/i, "")
             .toLowerCase()
             .replace(/_/g, "-");
           router.push(`/${locale}/academy/courses/${courseSlug}/learn/${slug}`);

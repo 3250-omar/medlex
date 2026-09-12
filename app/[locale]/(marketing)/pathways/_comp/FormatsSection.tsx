@@ -10,7 +10,7 @@ export default function FormatsSection({ formats }: FormatsSectionProps) {
       <div className="mx-auto grid w-full gap-10 px-6 py-20 sm:px-8 lg:max-w-6xl lg:grid-cols-[10rem_1fr] lg:gap-8 lg:px-10 lg:py-28">
         <p className="kicker text-goldd">{formats.eyebrow}</p>
         <div>
-          <h2 className="max-w-2xl font-serif text-3xl font-normal leading-tight text-navy sm:text-4xl">
+          <h2 className="max-w-2xl font-serif text-3xl font-normal leading-tight text-navy! sm:text-4xl">
             {formats.title}
           </h2>
           <p className="mt-5 max-w-2xl font-sans text-base leading-relaxed text-char/80 sm:text-lg">

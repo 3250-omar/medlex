@@ -96,12 +96,12 @@ export default function CascGiftsSection() {
           src="/images/sectionImages/gift_section.jpg"
           alt="The Examiner's Briefing and Error Log preparation resources"
           fill
-          className="object-cover object-center opacity-80"
+          className="object-cover object-center opacity-100"
           sizes="100vw"
         />
         {/* Soft tint gradient overlays to ensure text legibility while revealing the desk and gift booklets */}
-        <div className="absolute inset-0 bg-gradient-to-r from-tint/95 via-tint/80 to-tint/70" />
-        <div className="absolute inset-0 bg-gradient-to-b from-tint/70 via-transparent to-tint/70" />
+        <div className="absolute inset-0 bg-gradient-to-r from-tint/95 via-tint/70 to-tint/60" />
+        {/* <div className="absolute inset-0 bg-gradient-to-b from-tint/70 via-transparent to-tint/40" /> */}
       </div>
 
       <div className="relative z-10 mx-auto w-full px-6 sm:px-8 lg:max-w-6xl lg:px-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -160,10 +160,10 @@ export default function CascGiftsSection() {
             below to download:
           </p>
 
-          <div className="grid gap-3.5">
+          <div className="flex flex-col sm:flex-row items-center gap-3">
             {[
-              ["1", "The Examiner's Briefing.pdf"],
-              ["2", "The Examiner's Error Log.pdf"],
+              ["1", "The Examiner's Briefing"],
+              ["2", "The Examiner's Error Log"],
             ].map(([id, name]) => {
               return (
                 <button
@@ -171,27 +171,36 @@ export default function CascGiftsSection() {
                   type="button"
                   disabled={downloading !== null}
                   onClick={() => void downloadGift(id as "1" | "2", name)}
-                  className="flex min-h-12 items-center justify-between rounded-xl border border-gold bg-tint px-4 py-3 text-start font-sans text-sm font-semibold text-navy! transition-colors hover:bg-gold hover:text-navy! disabled:opacity-60 shadow-xs cursor-pointer"
+                  className="group inline-flex min-h-11 items-center gap-3 rounded-xl border border-gold bg-tint px-4 py-2.5 text-start font-sans text-sm font-semibold text-navy! transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold hover:border-goldd hover:shadow-md active:translate-y-0 active:scale-[0.98] disabled:opacity-60 shadow-xs cursor-pointer w-auto "
                 >
-                  <span className="flex items-center gap-2.5">
+                  <span className="flex items-center gap-2">
                     {downloading === id ? (
-                      <Loader2 className="animate-spin text-navy!" size={18} />
+                      <Loader2
+                        className="animate-spin text-navy! shrink-0"
+                        size={17}
+                      />
                     ) : (
-                      <Gift className="text-navy!" size={18} />
+                      <Gift
+                        className="text-navy! shrink-0 transition-transform duration-300 group-hover:animate-gift-wiggle group-hover:text-navy!"
+                        size={17}
+                      />
                     )}
                     <span className="font-medium text-navy!">{name}</span>
                   </span>
-                  <Download className="text-navy!" size={16} />
+                  <Download
+                    className="text-navy! shrink-0 transition-transform duration-300 group-hover:translate-y-0.5"
+                    size={15}
+                  />
                 </button>
               );
             })}
-
-            {downloadError ? (
-              <p role="alert" className="text-xs text-red-600 mt-1">
-                Unable to download the resource. Please try again.
-              </p>
-            ) : null}
           </div>
+
+          {downloadError ? (
+            <p role="alert" className="text-xs text-red-600 mt-2">
+              Unable to download the resource. Please try again.
+            </p>
+          ) : null}
 
           <small className="block mt-5 text-xs leading-relaxed text-grey">
             You will get immediate access to the PDF. After that, occasional

@@ -51,11 +51,7 @@
 
 .casc-experience h2,
 .casc-experience h3,
-.casc-experience h4,
-html.dark .casc-experience h2,
-html.dark .casc-experience h3,
-html[data-theme="dark"] .casc-experience h2,
-html[data-theme="dark"] .casc-experience h3 {
+.casc-experience h4 {
   color: var(--navy) !important;
 }
 
@@ -303,25 +299,82 @@ html[data-theme="dark"] .casc-experience header h1 {
 }
 
 /* ==========================================================================
-   Sections
+   Sections & Scrolling Rhythm
    ========================================================================== */
 .casc-experience section {
-  padding: 52px 0;
+  padding: 56px 0;
   border-bottom: 1px solid var(--hair);
+  background: #ffffff;
+  position: relative;
+  transition: background-color 0.25s ease;
+}
+
+/* Subtle Rhythm for alternating sections across the lesson */
+.casc-experience section#s2,
+.casc-experience section:has(.player) {
+  background: #f8fafc;
+}
+
+.casc-experience section#s4 {
   background: #ffffff;
 }
 
+.casc-experience section#s5,
+.casc-experience section:has(.takes) {
+  background: #faf8f5;
+}
+
+/* Dedicated Questions Section Canvas (The Interactive Arena) */
+.casc-experience .casc-questions-section,
+.casc-experience section#s3,
+.casc-experience section:has(.q),
+.casc-experience section:has([data-q]),
+.casc-experience #examPanel section {
+  background: linear-gradient(
+    180deg,
+    #f8fafc 0%,
+    #edf2f7 50%,
+    #f8fafc 100%
+  ) !important;
+  border-top: 2px solid rgba(212, 175, 55, 0.35);
+  border-bottom: 2px solid rgba(26, 54, 93, 0.12);
+  position: relative;
+}
+
+.casc-experience .casc-questions-section::before,
+.casc-experience section#s3::before,
+.casc-experience #examPanel section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--gold) 50%,
+    transparent 100%
+  );
+  opacity: 0.85;
+}
+
 .casc-experience .stepnum {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-weight: 700;
-  color: var(--gold);
-  font-size: 15px;
+  color: #ffffff;
+  background: var(--navy);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: 6px;
+  display: inline-block;
+  vertical-align: middle;
+  box-shadow: 0 2px 5px rgba(26, 54, 93, 0.2);
 }
 
 .casc-experience h2,
-.casc-experience section h2,
-html.dark .casc-experience section h2,
-html[data-theme="dark"] .casc-experience section h2 {
+.casc-experience section h2 {
   font-size: 26px;
   margin: 6px 0 12px;
   color: var(--navy) !important;
@@ -706,51 +759,146 @@ html[data-theme="dark"] .casc-experience section h2 {
 }
 
 /* ==========================================================================
-   Question & Interactive Decision Boxes (.q)
+   Question & Interactive Decision Boxes (.q) - Alternating Sequential Styling
    ========================================================================== */
 .casc-experience .q {
-  margin-top: 24px;
-  border: 1px solid var(--hair);
-  border-radius: 12px;
-  padding: 20px;
+  margin-top: 28px;
+  border-radius: 14px;
+  padding: 24px 26px;
+  position: relative;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+/* Sequence 1: Odd Questions (1, 3, 5, 7...) - Crisp White Surface + Royal Navy Spine */
+.casc-experience .q:nth-of-type(odd),
+.casc-experience .q.q-odd,
+.casc-experience .q[data-seq="odd"] {
   background: #ffffff;
+  border: 1.5px solid #dbe3eb;
+  border-left: 6px solid var(--navy);
+  box-shadow:
+    0 4px 18px -2px rgba(20, 42, 73, 0.06),
+    0 2px 6px -1px rgba(20, 42, 73, 0.03);
+}
+
+.casc-experience .q:nth-of-type(odd):hover,
+.casc-experience .q.q-odd:hover,
+.casc-experience .q[data-seq="odd"]:hover {
+  box-shadow:
+    0 8px 24px -4px rgba(20, 42, 73, 0.1),
+    0 2px 8px -1px rgba(20, 42, 73, 0.04);
+  border-color: #cbd5e1;
+}
+
+/* Sequence 2: Even Questions (2, 4, 6, 8...) - Warm Editorial Tint + Lustrous Gold Spine */
+.casc-experience .q:nth-of-type(even),
+.casc-experience .q.q-even,
+.casc-experience .q[data-seq="even"] {
+  background: #fbf9f4;
+  border: 1.5px solid #e2d9c4;
+  border-left: 6px solid var(--gold);
+  box-shadow:
+    0 4px 18px -2px rgba(176, 141, 42, 0.08),
+    0 2px 6px -1px rgba(20, 42, 73, 0.03);
+}
+
+.casc-experience .q:nth-of-type(even):hover,
+.casc-experience .q.q-even:hover,
+.casc-experience .q[data-seq="even"]:hover {
+  box-shadow:
+    0 8px 24px -4px rgba(176, 141, 42, 0.15),
+    0 2px 8px -1px rgba(20, 42, 73, 0.04);
+  border-color: #d6c7a4;
+}
+
+/* Completed decision state indicator */
+.casc-experience .q[data-done="1"] {
+  border-left-color: #10b981 !important;
 }
 
 .casc-experience .q h3 {
-  font-size: 18.5px;
-  margin-bottom: 4px;
+  font-family: var(--serif) !important;
+  font-size: 19px;
+  font-weight: 700;
+  margin-bottom: 8px;
   color: var(--navy) !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .casc-experience .q .stem {
-  font-size: 15.5px;
-  margin-bottom: 12px;
-  color: var(--char);
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 14px;
+  color: #1e293b;
+  font-weight: 500;
 }
 
 .casc-experience .q .hint {
-  font-size: 13px;
-  color: var(--grey);
-  margin-bottom: 8px;
+  font-size: 13.5px;
+  color: #64748b;
+  margin-bottom: 12px;
+  font-style: italic;
 }
 
+/* Option Buttons (.opt) */
 .casc-experience .opt {
   display: block;
   width: 100%;
   text-align: left;
-  background: #ffffff;
-  border: 1.5px solid var(--hair);
-  border-radius: 9px;
-  padding: 12px 14px;
-  margin: 8px 0;
+  border-radius: 10px;
+  padding: 13px 16px;
+  margin: 9px 0;
   font-size: 15px;
-  color: var(--char);
+  color: #1e293b;
+  font-weight: 500;
   cursor: pointer;
-  transition: border-color 0.15s;
+  line-height: 1.55;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
 }
 
-.casc-experience .opt:hover:not(:disabled) {
-  border-color: var(--gold);
+/* Options on Odd (White) Question Cards */
+.casc-experience .q:nth-of-type(odd) .opt,
+.casc-experience .q.q-odd .opt,
+.casc-experience .q[data-seq="odd"] .opt {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  color: #1e293b;
+}
+
+.casc-experience .q:nth-of-type(odd) .opt:hover:not(:disabled),
+.casc-experience .q.q-odd .opt:hover:not(:disabled),
+.casc-experience .q[data-seq="odd"] .opt:hover:not(:disabled) {
+  border-color: var(--navy);
+  background: #f1f5f9;
+  color: #0f172a;
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(26, 54, 93, 0.08);
+}
+
+/* Options on Even (Tinted) Question Cards - Crisp Pure White Card Contrast */
+.casc-experience .q:nth-of-type(even) .opt,
+.casc-experience .q.q-even .opt,
+.casc-experience .q[data-seq="even"] .opt {
+  background: #ffffff;
+  border: 1.5px solid #dfd7c5;
+  color: #1e293b;
+}
+
+.casc-experience .q:nth-of-type(even) .opt:hover:not(:disabled),
+.casc-experience .q.q-even .opt:hover:not(:disabled),
+.casc-experience .q[data-seq="even"] .opt:hover:not(:disabled) {
+  border-color: var(--goldd);
+  background: #ffffff;
+  color: #0f172a;
+  transform: translateX(4px);
+  box-shadow: 0 3px 12px rgba(176, 141, 42, 0.16);
 }
 
 .casc-experience .opt.correct,
@@ -758,20 +906,28 @@ html[data-theme="dark"] .casc-experience section h2 {
   border-color: #10b981 !important;
   background: #ecfdf5 !important;
   color: #065f46 !important;
-  font-weight: 600;
+  font-weight: 600 !important;
+  box-shadow:
+    0 0 0 1px #10b981,
+    0 2px 8px rgba(16, 185, 129, 0.15) !important;
 }
 
 .casc-experience .opt.wrong,
 .casc-experience .opt.picked.wrong {
-  border-color: #c96e6e !important;
-  background: #faf1f1 !important;
-  color: #5d3535 !important;
+  border-color: #ef4444 !important;
+  background: #fef2f2 !important;
+  color: #991b1b !important;
+  font-weight: 500 !important;
+  box-shadow:
+    0 0 0 1px #ef4444,
+    0 2px 8px rgba(239, 68, 68, 0.12) !important;
 }
 
 .casc-experience .opt.picked {
-  border-color: var(--gold);
-  background: var(--tint);
-  color: var(--navy);
+  border-color: var(--navy);
+  background: var(--navy2);
+  color: #ffffff !important;
+  font-weight: 600;
 }
 
 .casc-experience .opt:disabled,
@@ -781,20 +937,34 @@ html[data-theme="dark"] .casc-experience section h2 {
 }
 
 #examQs .opt:disabled:not(.picked) {
-  opacity: 0.55;
+  opacity: 0.6;
 }
 
 .casc-experience .fb {
-  margin-top: 10px;
-  border-radius: 8px;
-  padding: 12px 14px;
+  margin-top: 14px;
+  border-radius: 10px;
+  padding: 14px 18px;
   font-size: 14.5px;
+  line-height: 1.55;
+  animation: casc-fb-appear 0.25s ease-out;
+}
+
+@keyframes casc-fb-appear {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .casc-experience .fb.good {
-  background: var(--navy);
+  background: linear-gradient(135deg, #1a365d 0%, #142a49 100%);
   color: #ffffff;
-  border: 0;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 4px 16px rgba(20, 42, 73, 0.18);
 }
 
 .casc-experience .fb.good b {
@@ -802,20 +972,55 @@ html[data-theme="dark"] .casc-experience section h2 {
 }
 
 .casc-experience .fb.bad {
-  background: #f7ecec;
-  color: #5d3535;
-  border: 1px solid #d9b8b8;
+  background: #fef2f2;
+  color: #7f1d1d;
+  border: 1.5px solid #fecaca;
+  border-left: 5px solid #ef4444;
 }
 
 .casc-experience .fb.bad b {
-  color: #8c3b3b;
+  color: #991b1b;
 }
 
 .casc-experience .fb b {
   display: block;
-  font-size: 10.5px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   margin-bottom: 4px;
+}
+
+/* Consistent Light Theme Interactive Arena Styling */
+.casc-experience .casc-questions-section,
+.casc-experience section#s3,
+.casc-experience #examPanel section {
+  background: linear-gradient(
+    180deg,
+    #fbfaf8 0%,
+    #f4f0e6 50%,
+    #fbfaf8 100%
+  ) !important;
+}
+
+.casc-experience .q:nth-of-type(odd),
+.casc-experience .q.q-odd,
+.casc-experience .q[data-seq="odd"] {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-left: 4px solid var(--navy) !important;
+}
+
+.casc-experience .q:nth-of-type(even),
+.casc-experience .q.q-even,
+.casc-experience .q[data-seq="even"] {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-left: 4px solid var(--gold) !important;
+}
+
+.casc-experience .opt {
+  background: #ffffff !important;
+  color: #1e293b !important;
+  border: 1.5px solid #cbd5e1 !important;
 }
 
 /* ==========================================================================

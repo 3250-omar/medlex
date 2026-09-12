@@ -1,7 +1,10 @@
 "use client";
 
 import { useLocale } from "next-intl";
-import { useCurrentUser, useEnrolledCourses } from "../../_apiCalls/academyQueries";
+import {
+  useCurrentUser,
+  useEnrolledCourses,
+} from "../../_apiCalls/academyQueries";
 import FeedbackSection from "./FeedbackSection";
 import type { PathwayContent, PathwayLabels } from "./pathwayContent";
 import {
@@ -42,13 +45,15 @@ export default function CascAcademyLanding(_props: Props) {
         cascEnrolment={cascEnrolment}
         continueSlug={continueSlug}
       />
-
+      {/* 9. BEFORE YOU ENROL (GIFTS) */}
+      <CascGiftsSection />
       {/* 2. PROBLEM SECTION */}
       <CascProblemSection />
 
       {/* 3. HOW A STATION WORKS (ANATOMY) */}
       <CascHowStationWorksSection />
-
+      {/* 11. COACHING */}
+      <CascCoachingSection locale={locale} />
       {/* 4. FREE STATION PREVIEW CALLOUT */}
       <CascFreeStationPreviewSection locale={locale} />
 
@@ -64,14 +69,8 @@ export default function CascAcademyLanding(_props: Props) {
       {/* 8. THE EXAMINER (ABOUT) */}
       <CascExaminerSection />
 
-      {/* 9. BEFORE YOU ENROL (GIFTS) */}
-      <CascGiftsSection />
-
       {/* 10. FEEDBACK SECTION */}
       <FeedbackSection pathway="casc-academy" />
-
-      {/* 11. COACHING */}
-      <CascCoachingSection locale={locale} />
 
       {/* 12. PRICING & ENROL */}
       <CascPricingSection
