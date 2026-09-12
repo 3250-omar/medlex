@@ -322,6 +322,31 @@ export function CollapsedMenu({
   } | null>(null);
   const dragFrameRef = React.useRef<number | null>(null);
   const dragPositionRef = React.useRef<{ x: number; y: number } | null>(null);
+  const hasDraggedRef = React.useRef(false);
+  const lastClickTimeRef = React.useRef(0);
+  const pointerCapturedRef = React.useRef(false);
+  const activePointerIdRef = React.useRef<number | null>(null);
+  const activeTargetRef = React.useRef<HTMLElement | null>(null);
+
+  const handleResetPosition = React.useCallback(() => {
+    if (dragFrameRef.current !== null) {
+      cancelAnimationFrame(dragFrameRef.current);
+      dragFrameRef.current = null;
+    }
+    const actionNode = topActionRef.current;
+    if (actionNode) {
+      actionNode.style.left = "";
+      actionNode.style.right = "";
+    }
+    if (menuRef.current) {
+      menuRef.current.style.transform = "";
+    }
+    dragStartRef.current = null;
+    dragPositionRef.current = null;
+    hasDraggedRef.current = false;
+    setIsDragging(false);
+    setPosition(null);
+  }, []);
 
   const handlePointerDown = React.useCallback(
     (e: React.PointerEvent<HTMLElement>) => {
@@ -354,13 +379,9 @@ export function CollapsedMenu({
         actionWidth,
       };
       dragPositionRef.current = { x: rect.left, y: rect.top };
-
-      try {
-        e.currentTarget.setPointerCapture(e.pointerId);
-      } catch {
-        // pointer capture fallback
-      }
-      setIsDragging(true);
+      hasDraggedRef.current = false;
+      activePointerIdRef.current = e.pointerId;
+      activeTargetRef.current = e.currentTarget;
     },
     [movable],
   );
@@ -369,22 +390,42 @@ export function CollapsedMenu({
     (e: React.PointerEvent<HTMLElement>) => {
       const dragStart = dragStartRef.current;
       const node = menuRef.current;
-      if (!dragStart || !isDragging || !node) return;
+      if (!dragStart || !node) return;
+
+      const deltaX = e.clientX - dragStart.startX;
+      const deltaY = e.clientY - dragStart.startY;
+      const distance = Math.hypot(deltaX, deltaY);
+
+      // Ignore micro-movements / trackpad subpixel jitter during a tap or click
+      if (!hasDraggedRef.current) {
+        if (distance < 5) return;
+        hasDraggedRef.current = true;
+        setIsDragging(true);
+        if (activeTargetRef.current && activePointerIdRef.current !== null) {
+          try {
+            activeTargetRef.current.setPointerCapture(activePointerIdRef.current);
+            pointerCapturedRef.current = true;
+          } catch {
+            // pointer capture fallback
+          }
+        }
+      }
 
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
       const PAD = 8;
 
-      const rawX = dragStart.initialX + e.clientX - dragStart.startX;
-      const rawY = dragStart.initialY + e.clientY - dragStart.startY;
+      const rawX = dragStart.initialX + deltaX;
+      const rawY = dragStart.initialY + deltaY;
 
       const isRight = rawX > windowWidth / 2;
 
       // Vertical clamping: topAction above menu must not go past PAD
       const minY = PAD + dragStart.topSpace;
+      // Allow moving even on compact laptop displays while ensuring the grip remains visible
       const maxY = Math.max(
         minY,
-        windowHeight - PAD - dragStart.height - dragStart.bottomSpace,
+        windowHeight - PAD - Math.min(dragStart.height, 80) - dragStart.bottomSpace,
       );
       const targetY = Math.max(minY, Math.min(maxY, rawY));
 
@@ -428,7 +469,7 @@ export function CollapsedMenu({
         dragFrameRef.current = null;
       });
     },
-    [isDragging],
+    [],
   );
 
   const handlePointerUp = React.useCallback(
@@ -437,6 +478,25 @@ export function CollapsedMenu({
         cancelAnimationFrame(dragFrameRef.current);
         dragFrameRef.current = null;
       }
+
+      if (
+        pointerCapturedRef.current &&
+        activeTargetRef.current &&
+        activePointerIdRef.current !== null
+      ) {
+        try {
+          activeTargetRef.current.releasePointerCapture(activePointerIdRef.current);
+        } catch {
+          // pointer may have already been released
+        }
+        pointerCapturedRef.current = false;
+      }
+      activePointerIdRef.current = null;
+      activeTargetRef.current = null;
+
+      const wasDragged = hasDraggedRef.current;
+      hasDraggedRef.current = false;
+
       const finalPosition = dragPositionRef.current;
       const dragStart = dragStartRef.current;
       dragStartRef.current = null;
@@ -451,6 +511,22 @@ export function CollapsedMenu({
       if (menuRef.current) {
         menuRef.current.style.transform = "";
       }
+
+      setIsDragging(false);
+
+      // If this was a click/tap without dragging, detect double-click / double-tap
+      if (!wasDragged) {
+        const now = Date.now();
+        if (now - lastClickTimeRef.current < 400) {
+          lastClickTimeRef.current = 0;
+          handleResetPosition();
+          return;
+        }
+        lastClickTimeRef.current = now;
+        return; // Do NOT commit position on a simple click/tap!
+      }
+
+      // If it WAS dragged, commit final position
       if (finalPosition) {
         const PAD = 8;
         const menuWidth =
@@ -465,19 +541,9 @@ export function CollapsedMenu({
           rightOffset,
         });
       }
-      setIsDragging(false);
-      try {
-        e.currentTarget.releasePointerCapture(e.pointerId);
-      } catch {
-        // pointer may have already been released
-      }
     },
-    [],
+    [handleResetPosition],
   );
-
-  const handleResetPosition = React.useCallback(() => {
-    setPosition(null);
-  }, []);
 
   const [searchQuery, setSearchQuery] = React.useState("");
   // Check if menu is placed on right half of viewport
@@ -581,7 +647,7 @@ export function CollapsedMenu({
       const minY = PAD + topSpace;
       const maxY = Math.max(
         minY,
-        window.innerHeight - PAD - rect.height - bottomSpace,
+        window.innerHeight - PAD - Math.min(rect.height, 80) - bottomSpace,
       );
 
       setPosition((prev) => {
@@ -901,6 +967,7 @@ export function CollapsedMenu({
 
         {(collapsible || header || allItems.length > 0) && (
           <div
+            onDoubleClick={handleResetPosition}
             className={cn(
               "flex items-center pb-2.5 mb-2 border-b border-line/60 transition-all duration-200",
               isCollapsed

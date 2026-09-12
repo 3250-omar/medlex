@@ -126,7 +126,8 @@ export function extractExamQuestions(
   if (!examAssessment?.assessment_questions?.length) return [];
 
   const sortedQuestions = [...examAssessment.assessment_questions].sort(
-    (a: RawQuestion, b: RawQuestion) => (a.sort_order ?? 0) - (b.sort_order ?? 0),
+    (a: RawQuestion, b: RawQuestion) =>
+      (a.sort_order ?? 0) - (b.sort_order ?? 0),
   );
 
   return sortedQuestions.map((q: RawQuestion) => {
@@ -139,7 +140,9 @@ export function extractExamQuestions(
     }
     if (okIndex === -1) {
       // Check if source_key indicates option-X
-      const match = opts.findIndex((o: RawOption) => o.source_key === "option-0");
+      const match = opts.findIndex(
+        (o: RawOption) => o.source_key === "option-0",
+      );
       okIndex = match >= 0 ? match : 0;
     }
 
@@ -169,9 +172,14 @@ export function initCascInteractiveEngine({
   onExamComplete,
   onProgress,
 }: ExamEngineConfig): () => void {
+  const activeQuestions =
+    questions && questions.length > 0 ? questions : STATION_7_2_EXAM;
+
   let timerId: NodeJS.Timeout | null = null;
   let timeLeft = 420;
-  let examAnswers: Array<number | null> = new Array(questions.length).fill(null);
+  let examAnswers: Array<number | null> = new Array(
+    activeQuestions.length,
+  ).fill(null);
   let blankOk = false;
   let firstExamScore: number | null = null;
   let examAttempts = 0;
@@ -185,8 +193,12 @@ export function initCascInteractiveEngine({
   const switchMode = (m: "learn" | "exam") => {
     const learnPanel = root.querySelector<HTMLElement>("#learnPanel");
     const examPanel = root.querySelector<HTMLElement>("#examPanel");
-    const mLearn = root.querySelector<HTMLElement>("#mLearn, .mtoggle button:first-child");
-    const mExam = root.querySelector<HTMLElement>("#mExam, .mtoggle button:last-child");
+    const mLearn = root.querySelector<HTMLElement>(
+      "#mLearn, .mtoggle button:first-child",
+    );
+    const mExam = root.querySelector<HTMLElement>(
+      "#mExam, .mtoggle button:last-child",
+    );
     const timer = root.querySelector<HTMLElement>("#timer");
 
     if (learnPanel) learnPanel.style.display = m === "learn" ? "block" : "none";
@@ -202,9 +214,6 @@ export function initCascInteractiveEngine({
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const activeQuestions =
-    questions && questions.length > 0 ? questions : STATION_7_2_EXAM;
-
   const startExam = () => {
     examAnswers = new Array(activeQuestions.length).fill(null);
     timeLeft = 420;
@@ -213,14 +222,20 @@ export function initCascInteractiveEngine({
     // Ensure Exam Panel is visible and Learn Panel is hidden
     const learnPanel = root.querySelector<HTMLElement>("#learnPanel");
     const examPanel = root.querySelector<HTMLElement>("#examPanel");
-    const mLearn = root.querySelector<HTMLElement>("#mLearn, .mtoggle button:first-child");
-    const mExam = root.querySelector<HTMLElement>("#mExam, .mtoggle button:last-child");
+    const mLearn = root.querySelector<HTMLElement>(
+      "#mLearn, .mtoggle button:first-child",
+    );
+    const mExam = root.querySelector<HTMLElement>(
+      "#mExam, .mtoggle button:last-child",
+    );
     if (learnPanel) learnPanel.style.display = "none";
     if (examPanel) examPanel.style.display = "block";
     if (mLearn) mLearn.classList.remove("active");
     if (mExam) mExam.classList.add("active");
 
-    const sb = root.querySelector<HTMLButtonElement>("#examSubmitRow .btn, #examSubmitRow button");
+    const sb = root.querySelector<HTMLButtonElement>(
+      "#examSubmitRow .btn, #examSubmitRow button",
+    );
     if (sb) sb.textContent = "Submit answers";
 
     const examStart = root.querySelector<HTMLElement>("#examStart");
@@ -241,7 +256,7 @@ export function initCascInteractiveEngine({
         d.className = "q";
         d.dataset.qi = String(qi);
         let h = `<h3>${q.stem}</h3>`;
-        const order = [0, 1, 2];
+        const order = q.opts.map((_, i) => i);
         for (let i = order.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
           const temp = order[i];
@@ -293,51 +308,67 @@ export function initCascInteractiveEngine({
 
   const pick = (btn: HTMLButtonElement, qi: number, oi: number) => {
     if (btn.disabled) return;
-    const qDiv = btn.closest<HTMLElement>(".q, [data-qi]");
-    if (!qDiv) return;
+    const qDiv = (btn.parentElement?.closest<HTMLElement>(".q") ||
+      btn.parentElement) as HTMLElement | null;
+    if (!qDiv || qDiv === btn) return;
+
+    // Prevent selecting another answer if question is already answered
+    if (qDiv.dataset.done === "1") return;
 
     const q = activeQuestions[qi];
-    const isCorrect = Boolean(btn.hasAttribute("data-ok") || (q && oi === q.ok));
+    const isCorrect = Boolean(
+      btn.hasAttribute("data-ok") || (q && oi === q.ok),
+    );
 
-    // Record the user's answer
+    // Record the user's single chosen answer
     examAnswers[qi] = oi;
+    qDiv.dataset.done = "1";
+
+    // Disable ALL options for this question so no more can be selected
+    qDiv.querySelectorAll<HTMLButtonElement>(".opt").forEach((o) => {
+      o.disabled = true;
+      o.style.cursor = "default";
+      o.style.pointerEvents = "none";
+    });
+
+    btn.classList.add("picked");
 
     // Remove any previous feedback element in this question
     qDiv.querySelector(".fb")?.remove();
     const fb = document.createElement("div");
 
     if (isCorrect) {
-      qDiv.dataset.done = "1";
       btn.classList.remove("wrong");
       btn.classList.add("correct");
-      btn.classList.add("picked");
-
-      // Disable other options in this question once correct choice is made
-      qDiv.querySelectorAll<HTMLButtonElement>(".opt").forEach((o) => {
-        o.disabled = true;
-      });
 
       fb.className = "fb good";
       fb.style.display = "block";
       const rationale = q?.why ? ` ${q.why}` : " Correct decision.";
       fb.innerHTML = `<b>THE EXAMINER AGREES</b>${rationale}`;
-      qDiv.appendChild(fb);
     } else {
+      btn.classList.remove("correct");
       btn.classList.add("wrong");
-      btn.disabled = true;
 
       fb.className = "fb bad";
       fb.style.display = "block";
-      fb.innerHTML = `<b>THE EXAMINER’S VIEW</b> Not this one — try again.`;
-      qDiv.appendChild(fb);
+      const passMove =
+        q && q.opts[q.ok] ? ` The pass move: “${q.opts[q.ok]}”` : "";
+      const rationale = q?.why ? ` ${q.why}` : " Not the pass move.";
+      fb.innerHTML = `<b>THE EXAMINER’S VIEW</b>${rationale}${passMove}`;
     }
+
+    qDiv.appendChild(fb);
   };
 
   const submitExam = () => {
     if (examAnswers.indexOf(null) > -1 && !blankOk && timeLeft > 0) {
       blankOk = true;
-      const sb = root.querySelector<HTMLButtonElement>("#examSubmitRow .btn");
-      if (sb) sb.textContent = "Some answers are blank — press again to submit anyway";
+      const sb = root.querySelector<HTMLButtonElement>(
+        "#examSubmitRow .btn, #examSubmitRow button",
+      );
+      if (sb)
+        sb.textContent =
+          "Some answers are blank — press again to submit anyway";
       return;
     }
 
@@ -348,7 +379,7 @@ export function initCascInteractiveEngine({
 
     let right = 0;
     const critMiss: string[] = [];
-    questions.forEach((q, qi) => {
+    activeQuestions.forEach((q, qi) => {
       if (examAnswers[qi] === q.ok) {
         right++;
       } else if (q.crit) {
@@ -356,7 +387,9 @@ export function initCascInteractiveEngine({
       }
     });
 
-    const pass = right >= 5 && critMiss.length === 0;
+    const passThreshold = Math.floor(activeQuestions.length * 0.5) + 1;
+    const isPassedScore = right > activeQuestions.length * 0.5;
+    const pass = isPassedScore && critMiss.length === 0;
     examAttempts++;
     if (firstExamScore === null) firstExamScore = right;
 
@@ -372,7 +405,8 @@ export function initCascInteractiveEngine({
     if (examSubmitRow) examSubmitRow.style.display = "none";
     if (res) res.style.display = "block";
 
-    if (scoreLine) scoreLine.textContent = `${right} / ${questions.length}`;
+    if (scoreLine)
+      scoreLine.textContent = `${right} / ${activeQuestions.length}`;
 
     if (verdictLine) {
       let v = pass
@@ -383,7 +417,7 @@ export function initCascInteractiveEngine({
         v += ` Critical decision missed: <b>${critMiss.join("</b>, <b>")}</b>.`;
       }
       if (examAttempts > 1 && firstExamScore !== null) {
-        v += ` <span style="color:var(--grey)">(First attempt: ${firstExamScore} / ${questions.length}.)</span>`;
+        v += ` <span style="color:var(--grey)">(First attempt: ${firstExamScore} / ${activeQuestions.length}.)</span>`;
       }
       verdictLine.innerHTML = v;
     }
@@ -393,7 +427,9 @@ export function initCascInteractiveEngine({
         const existingList = cb.querySelector("ul")?.innerHTML;
         if (existingList) cb.dataset.origList = existingList;
       }
-      const listHtml = cb.dataset.origList || `
+      const listHtml =
+        cb.dataset.origList ||
+        `
         <li>The fear, heard before the facts</li>
         <li>The true fault, owned precisely</li>
         <li>The relative, brought inside</li>
@@ -401,13 +437,14 @@ export function initCascInteractiveEngine({
       cb.innerHTML = `
         <b>${pass ? "CONSTRUCTS — RECOGNISED UNDER EXAM CONDITIONS" : "CONSTRUCTS — EXPLORED, NOT YET RECOGNISED"}</b>
         <ul>${listHtml}</ul>
-        ${pass ? "" : "<p style='margin-top:8px'>These mark as recognised at 5 of 7 or more with all critical decisions correct.</p>"}
+        ${pass ? "" : `<p style='margin-top:8px'>These mark as recognised at more than 50% (${passThreshold} of ${activeQuestions.length}) with all critical decisions correct.</p>`}
       `;
     }
 
     if (rv) {
-      rv.innerHTML = '<h3 style="font-size:19px; margin-bottom:6px">The examiner’s analysis</h3>';
-      questions.forEach((q, qi) => {
+      rv.innerHTML =
+        '<h3 style="font-size:19px; margin-bottom:6px">The examiner’s analysis</h3>';
+      activeQuestions.forEach((q, qi) => {
         const mine = examAnswers[qi];
         const good = mine === q.ok;
         const d = document.createElement("div");
@@ -417,7 +454,7 @@ export function initCascInteractiveEngine({
           <p class="stem">Your answer: ${mine === null ? "<em>none</em>" : `“${q.opts[mine]}”`}
           ${good ? ' — <b style="color:var(--goldd)">correct</b>' : ' — <b style="color:var(--red)">not the pass move</b>'}</p>
           <div class="fb ${good ? "good" : "bad"}" style="display:block">
-            <b>${good ? "THE EXAMINER AGREES" : "THE EXAMINER’S VIEW"}</b>${q.why}
+            <b>${good ? "THE EXAMINER AGREES" : "THE EXAMINER’S VIEW"}</b>${q.why ? ` ${q.why}` : ""}
             ${good ? "" : ` The pass move: “${q.opts[q.ok]}”`}
           </div>
         `;
@@ -425,7 +462,26 @@ export function initCascInteractiveEngine({
       });
     }
 
-    if (onExamComplete) onExamComplete(right, questions.length, pass);
+    const retakeBtn = res?.querySelector("#retakeBtn");
+    let nextExamBtn = res?.querySelector<HTMLAnchorElement>("#examNextBtn");
+    if (isPassedScore && retakeBtn) {
+      if (!nextExamBtn) {
+        nextExamBtn = document.createElement("a");
+        nextExamBtn.id = "examNextBtn";
+        nextExamBtn.className = "btn";
+        nextExamBtn.style.marginLeft = "10px";
+        nextExamBtn.style.background = "var(--gold)";
+        nextExamBtn.style.color = "var(--navy)";
+        nextExamBtn.style.textDecoration = "none";
+        nextExamBtn.style.display = "inline-block";
+        nextExamBtn.textContent = "Next Lesson →";
+        retakeBtn.parentElement?.appendChild(nextExamBtn);
+      }
+    } else if (!isPassedScore && nextExamBtn) {
+      nextExamBtn.remove();
+    }
+
+    if (onExamComplete) onExamComplete(right, activeQuestions.length, pass);
     if (onProgress) onProgress();
 
     if (res) {
@@ -468,7 +524,8 @@ export function initCascInteractiveEngine({
         pd.style.marginTop = "8px";
         pd.style.fontWeight = "700";
         pd.style.color = "var(--goldd)";
-        pd.innerHTML = "+ Demonstrated (self-checked): the hard answer — your own words, against the principles.";
+        pd.innerHTML =
+          "+ Demonstrated (self-checked): the hard answer — your own words, against the principles.";
         cb.appendChild(pd);
       }
     }
@@ -527,7 +584,8 @@ export function initCascInteractiveEngine({
         }
       });
       if (tot === n) {
-        v.textContent = "every domain covered — this is the station the examiner remembers.";
+        v.textContent =
+          "every domain covered — this is the station the examiner remembers.";
       } else {
         v.textContent = `weakest domain: ${names[weak] || weak} — start the feedback there.`;
       }
@@ -540,19 +598,36 @@ export function initCascInteractiveEngine({
     if (!target) return;
 
     // 1. Mode Switcher
-    const modeBtn = target.closest<HTMLButtonElement>("#mLearn, #mExam, .mtoggle button");
+    const modeBtn = target.closest<HTMLButtonElement>(
+      "#mLearn, #mExam, .mtoggle button",
+    );
     if (modeBtn) {
       event.preventDefault();
-      const isExam = modeBtn.id === "mExam" || modeBtn.textContent?.includes("Exam");
+      const isExam =
+        modeBtn.id === "mExam" || modeBtn.textContent?.includes("Exam");
       switchMode(isExam ? "exam" : "learn");
       return;
     }
 
     // 2. Start Exam or Retake Exam
     const isStartExamBtn =
-      Boolean(target.closest("#examStart button, #retakeBtn, button[onclick*='startExam'], .exambox button")) ||
-      Boolean(target.closest("button")?.textContent?.toLowerCase().includes("start exam")) ||
-      Boolean(target.closest("button")?.textContent?.toLowerCase().includes("retake exam"));
+      Boolean(
+        target.closest(
+          "#examStart button, #retakeBtn, button[onclick*='startExam'], .exambox button",
+        ),
+      ) ||
+      Boolean(
+        target
+          .closest("button")
+          ?.textContent?.toLowerCase()
+          .includes("start exam"),
+      ) ||
+      Boolean(
+        target
+          .closest("button")
+          ?.textContent?.toLowerCase()
+          .includes("retake exam"),
+      );
 
     if (isStartExamBtn) {
       event.preventDefault();
@@ -561,8 +636,14 @@ export function initCascInteractiveEngine({
     }
 
     // 3. Return to Learn Mode inside Results
-    const returnLearnBtn = target.closest<HTMLButtonElement>("#results .btn.ghost");
-    if (returnLearnBtn && (returnLearnBtn.textContent?.includes("Learn") || returnLearnBtn.id === "mLearn")) {
+    const returnLearnBtn = target.closest<HTMLButtonElement>(
+      "#results .btn.ghost",
+    );
+    if (
+      returnLearnBtn &&
+      (returnLearnBtn.textContent?.includes("Learn") ||
+        returnLearnBtn.id === "mLearn")
+    ) {
       event.preventDefault();
       switchMode("learn");
       return;
@@ -572,6 +653,11 @@ export function initCascInteractiveEngine({
     const examOpt = target.closest<HTMLButtonElement>("#examQs .opt");
     if (examOpt) {
       event.preventDefault();
+      if (examOpt.disabled) return;
+      const qDiv = (examOpt.parentElement?.closest<HTMLElement>(".q") ||
+        examOpt.parentElement) as HTMLElement | null;
+      if (qDiv?.dataset.done === "1") return;
+
       const qi = Number(examOpt.dataset.qi ?? "-1");
       const oi = Number(examOpt.dataset.oi ?? "-1");
       if (qi >= 0 && oi >= 0) {
@@ -581,7 +667,9 @@ export function initCascInteractiveEngine({
     }
 
     // 5. Submit Exam Answers
-    const submitBtn = target.closest<HTMLButtonElement>("#examSubmitRow .btn, #examSubmitRow button, button[onclick*='submitExam']");
+    const submitBtn = target.closest<HTMLButtonElement>(
+      "#examSubmitRow .btn, #examSubmitRow button, button[onclick*='submitExam']",
+    );
     if (submitBtn) {
       event.preventDefault();
       submitExam();
@@ -589,7 +677,9 @@ export function initCascInteractiveEngine({
     }
 
     // 6. Produce wording check button
-    const ftBtn = target.closest<HTMLButtonElement>("#ftbtn, button[onclick*='ftCheck']");
+    const ftBtn = target.closest<HTMLButtonElement>(
+      "#ftbtn, button[onclick*='ftCheck']",
+    );
     if (ftBtn) {
       event.preventDefault();
       ftCheck();
@@ -597,18 +687,24 @@ export function initCascInteractiveEngine({
     }
 
     // 7. Practice Pack Overall Judgement
-    const judgOpt = target.closest<HTMLButtonElement>(".pcard .pb .opt:not([data-oi])");
+    const judgOpt = target.closest<HTMLButtonElement>(
+      ".pcard .pb .opt:not([data-oi])",
+    );
     if (judgOpt) {
       event.preventDefault();
-      judgOpt.parentElement?.querySelectorAll<HTMLButtonElement>(".opt").forEach((b) => {
-        b.classList.remove("picked");
-      });
+      judgOpt.parentElement
+        ?.querySelectorAll<HTMLButtonElement>(".opt")
+        .forEach((b) => {
+          b.classList.remove("picked");
+        });
       judgOpt.classList.add("picked");
       return;
     }
 
     // 8. Print Pack Cards (PDF)
-    const printBtn = target.closest<HTMLButtonElement>(".printrow .btn, button[onclick*='printCard']");
+    const printBtn = target.closest<HTMLButtonElement>(
+      ".printrow .btn, button[onclick*='printCard']",
+    );
     if (printBtn) {
       event.preventDefault();
       const text = printBtn.textContent?.toLowerCase() || "";
@@ -660,8 +756,18 @@ export function initCascInteractiveEngine({
     if (!target) return;
 
     const isStartBtn =
-      Boolean(target.closest("#examStart button, #retakeBtn, button[onclick*='startExam'], .exambox button")) ||
-      Boolean(target.closest("button")?.textContent?.trim().toLowerCase().startsWith("start exam"));
+      Boolean(
+        target.closest(
+          "#examStart button, #retakeBtn, button[onclick*='startExam'], .exambox button",
+        ),
+      ) ||
+      Boolean(
+        target
+          .closest("button")
+          ?.textContent?.trim()
+          .toLowerCase()
+          .startsWith("start exam"),
+      );
 
     if (isStartBtn) {
       event.preventDefault();
@@ -712,8 +818,8 @@ export function initCascInteractiveEngine({
       const fb = document.createElement("div");
       fb.className = "fb good";
       fb.innerHTML =
-        q.querySelector<HTMLTemplateElement>('template[data-fb="ok"]')?.innerHTML ||
-        "<b>THE EXAMINER AGREES</b> Correct decision.";
+        q.querySelector<HTMLTemplateElement>('template[data-fb="ok"]')
+          ?.innerHTML || "<b>THE EXAMINER AGREES</b> Correct decision.";
       q.appendChild(fb);
     };
     win.rev = (btn: HTMLButtonElement) => {
@@ -727,11 +833,14 @@ export function initCascInteractiveEngine({
       const player = btn.closest(".player");
       const take = btn.dataset.t;
       if (player && take) {
-        player.querySelectorAll<HTMLButtonElement>(".toggle button").forEach((b) => {
-          b.classList.toggle("active", b === btn);
-        });
+        player
+          .querySelectorAll<HTMLButtonElement>(".toggle button")
+          .forEach((b) => {
+            b.classList.toggle("active", b === btn);
+          });
         player.querySelectorAll<HTMLElement>(".script").forEach((s) => {
-          s.style.display = s.id === `tk-${take}` || s.id === `d-${take}` ? "block" : "none";
+          s.style.display =
+            s.id === `tk-${take}` || s.id === `d-${take}` ? "block" : "none";
         });
       }
     };

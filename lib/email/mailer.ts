@@ -1,4 +1,6 @@
 import nodemailer from "nodemailer";
+import fs from "fs";
+import path from "path";
 
 interface SendPasswordResetEmailParams {
   to: string;
@@ -6,17 +8,50 @@ interface SendPasswordResetEmailParams {
   fullName?: string | null;
 }
 
+function getEnvVar(name: string): string | undefined {
+  if (process.env[name]) return process.env[name];
+  try {
+    const envPath = path.resolve(process.cwd(), ".env");
+    if (fs.existsSync(envPath)) {
+      const content = fs.readFileSync(envPath, "utf-8");
+      for (const line of content.split("\n")) {
+        const trimmed = line.trim();
+        if (!trimmed || trimmed.startsWith("#")) continue;
+        const [key, ...vals] = trimmed.split("=");
+        if (key.trim() === name) {
+          return vals.join("=").trim().replace(/^["']|["']$/g, "");
+        }
+      }
+    }
+  } catch {}
+  return undefined;
+}
+
 export async function sendPasswordResetEmail({
   to,
   code,
   fullName,
 }: SendPasswordResetEmailParams): Promise<{ sent: boolean; simulated?: boolean; error?: string }> {
-  const host = process.env.SMTP_HOST?.trim();
-  const user = process.env.SMTP_USER?.trim();
-  const pass = process.env.SMTP_PASS?.trim();
-  const port = Number(process.env.SMTP_PORT) || 587;
-  const secure = process.env.SMTP_SECURE === "true" || port === 465;
-  const from = process.env.SMTP_FROM?.trim() || "MedLex System <noreply@medlexsolutions.com>";
+  const host = (getEnvVar("SMTP_HOST") || process.env.SMTP_HOST)?.trim();
+  const user = (getEnvVar("SMTP_USER") || process.env.SMTP_USER)?.trim();
+  const rawPass = (getEnvVar("SMTP_PASS") || process.env.SMTP_PASS);
+  const pass = rawPass?.replace(/\s+/g, "").trim();
+
+  let port = Number(getEnvVar("SMTP_PORT") || process.env.SMTP_PORT) || 465;
+  const secureEnv = getEnvVar("SMTP_SECURE") || process.env.SMTP_SECURE;
+  let secure = secureEnv === "true" || port === 465;
+
+  if (host?.includes("gmail.com") && port === 587 && secure) {
+    port = 465;
+  } else if (port === 587) {
+    secure = false;
+  } else if (port === 465) {
+    secure = true;
+  }
+
+  const from =
+    (getEnvVar("SMTP_FROM") || process.env.SMTP_FROM)?.trim() ||
+    `MedLex System <${user || "noreply@medlexsolutions.com"}>`;
 
   const displayName = fullName?.trim() || "Valued Colleague";
 
@@ -116,6 +151,9 @@ The MedLex Team
         user,
         pass,
       },
+      connectionTimeout: 10000,
+      greetingTimeout: 10000,
+      socketTimeout: 15000,
     });
 
     await transporter.sendMail({

@@ -753,17 +753,19 @@ html[data-theme="dark"] .casc-experience section h2 {
   border-color: var(--gold);
 }
 
-.casc-experience .opt.correct {
-  border-color: #10b981;
-  background: #ecfdf5;
-  color: #065f46;
+.casc-experience .opt.correct,
+.casc-experience .opt.picked.correct {
+  border-color: #10b981 !important;
+  background: #ecfdf5 !important;
+  color: #065f46 !important;
   font-weight: 600;
 }
 
-.casc-experience .opt.wrong {
-  border-color: #c96e6e;
-  background: #faf1f1;
-  color: #5d3535;
+.casc-experience .opt.wrong,
+.casc-experience .opt.picked.wrong {
+  border-color: #c96e6e !important;
+  background: #faf1f1 !important;
+  color: #5d3535 !important;
 }
 
 .casc-experience .opt.picked {
@@ -772,8 +774,14 @@ html[data-theme="dark"] .casc-experience section h2 {
   color: var(--navy);
 }
 
-.casc-experience .opt:disabled {
-  cursor: default;
+.casc-experience .opt:disabled,
+#examQs .q[data-done="1"] .opt {
+  cursor: default !important;
+  pointer-events: none !important;
+}
+
+#examQs .opt:disabled:not(.picked) {
+  opacity: 0.55;
 }
 
 .casc-experience .fb {
@@ -1238,12 +1246,72 @@ html[data-theme="dark"] .casc-experience .done h2 {
    ========================================================================== */
 .casc-experience .done a.btn.casc-btn-locked,
 .casc-experience a.btn.casc-btn-locked {
-  opacity: 0.45 !important;
-  filter: grayscale(0.8);
+  position: relative !important;
   cursor: not-allowed !important;
-  border: 1.5px dashed var(--gold) !important;
+  border: 1.5px dashed rgba(212, 175, 55, 0.45) !important;
   background: transparent !important;
-  color: var(--lgold) !important;
+  color: rgba(252, 225, 130, 0.45) !important;
+}
+
+/* In-content locked button floating tooltip (100% solid black & opaque) */
+.casc-experience a.btn.casc-btn-locked[data-locked-tooltip]::after,
+.casc-experience .done a.btn.casc-btn-locked[data-locked-tooltip]::after {
+  content: attr(data-locked-tooltip);
+  position: absolute;
+  bottom: calc(100% + 11px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  padding: 8px 16px !important;
+  border-radius: 8px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  white-space: nowrap !important;
+  pointer-events: none !important;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.95),
+    0 0 0 1px rgba(255, 255, 255, 0.15) !important;
+  z-index: 99999 !important;
+  letter-spacing: 0.02em;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  text-transform: none;
+}
+
+.casc-experience a.btn.casc-btn-locked[data-locked-tooltip]::before,
+.casc-experience .done a.btn.casc-btn-locked[data-locked-tooltip]::before {
+  content: "";
+  position: absolute;
+  bottom: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  border-width: 6px 6px 0 6px;
+  border-style: solid;
+  border-color: #000000 transparent transparent transparent !important;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100000 !important;
+}
+
+.casc-experience a.btn.casc-btn-locked[data-locked-tooltip]:hover::after,
+.casc-experience a.btn.casc-btn-locked[data-locked-tooltip]:hover::before,
+.casc-experience .done a.btn.casc-btn-locked[data-locked-tooltip]:hover::after,
+.casc-experience
+  .done
+  a.btn.casc-btn-locked[data-locked-tooltip]:hover::before {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateX(-50%) translateY(0);
 }
 
 .casc-experience .done a.btn.casc-btn-unlocked,
@@ -1353,6 +1421,61 @@ html[data-theme="dark"] .casc-experience .done h2 {
   border-style: dashed;
   color: var(--mute);
   border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Bottom Nav Locked Button Tooltip Wrapper */
+.casc-locked-tooltip-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: not-allowed;
+}
+
+.casc-locked-tooltip-wrap .casc-tooltip-popup {
+  position: absolute;
+  bottom: calc(100% + 11px);
+  right: 0;
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition:
+    opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow:
+    0 10px 25px -4px rgba(0, 0, 0, 0.8),
+    0 0 1px 1px rgba(255, 255, 255, 0.1);
+  z-index: 100;
+  letter-spacing: 0.02em;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  text-transform: none;
+}
+
+.casc-locked-tooltip-wrap .casc-tooltip-popup::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  right: 20px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #000000;
+}
+
+.casc-locked-tooltip-wrap:hover .casc-tooltip-popup {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
 .casc-bottom-nav a.casc-nav-next-active {

@@ -82,7 +82,9 @@ export default function LearningLesson({
   const containerRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [answeredAllQuestions, setAnsweredAllQuestions] = useState(false);
+  const [canProceed, setCanProceed] = useState(false);
   const [remainingQuestions, setRemainingQuestions] = useState(0);
+  const examResultRef = useRef<{ score: number; total: number } | null>(null);
 
   const { mutate: completeUnit } = useCompleteUnit();
   const { mutate: openUnit } = useOpenUnit();
@@ -186,7 +188,10 @@ export default function LearningLesson({
     updateProgress();
 
     // Check unlocking status of the next button and completion button
-    const checkUnlockStatus = () => {
+    const checkUnlockStatus = (
+      currentExamScore?: number | null,
+      currentExamTotal?: number | null,
+    ) => {
       const allQuestions = Array.from(
         root.querySelectorAll<HTMLElement>(
           "[data-q], #learnPanel .q, section .q",
@@ -197,8 +202,23 @@ export default function LearningLesson({
       const remaining = Math.max(0, total - done);
       const isComplete = total === 0 || remaining === 0;
 
+      const examResult =
+        currentExamScore !== undefined && currentExamTotal !== undefined
+          ? currentExamScore !== null && currentExamTotal !== null
+            ? { score: currentExamScore, total: currentExamTotal }
+            : null
+          : examResultRef.current;
+
+      const passedExam =
+        examResult !== null && examResult.total > 0
+          ? examResult.score > examResult.total * 0.5
+          : false;
+
+      const unlocked = isComplete || passedExam;
+
       setRemainingQuestions(remaining);
       setAnsweredAllQuestions(isComplete);
+      setCanProceed(unlocked);
 
       const nextSlug = nextUnit?.slug;
       const nextUrl = nextSlug
@@ -217,22 +237,33 @@ export default function LearningLesson({
           doneBtn.parentElement?.appendChild(hintEl);
         }
 
-        if (isComplete) {
+        if (unlocked) {
           doneBtn.classList.remove("casc-btn-locked");
           doneBtn.classList.add("casc-btn-unlocked");
           doneBtn.removeAttribute("aria-disabled");
+          doneBtn.removeAttribute("data-locked-tooltip");
           hintEl.className = "casc-lock-hint unlocked";
-          hintEl.textContent =
-            "✓ All decisions completed. You can continue to the next lesson.";
+          hintEl.textContent = passedExam
+            ? `✓ Exam passed with score ${examResult?.score}/${examResult?.total} (> 50%). You can continue to the next lesson.`
+            : "✓ All decisions completed. You can continue to the next lesson.";
         } else {
           doneBtn.classList.add("casc-btn-locked");
           doneBtn.classList.remove("casc-btn-unlocked");
           doneBtn.setAttribute("aria-disabled", "true");
+          doneBtn.setAttribute(
+            "data-locked-tooltip",
+            `Please complete the questions (${remaining} remaining) or score > 50% in Exam Mode`,
+          );
           hintEl.className = "casc-lock-hint";
           hintEl.textContent = `Answer all ${remaining} decision${
             remaining > 1 ? "s" : ""
-          } above to unlock this next step.`;
+          } or score > 50% in Exam Mode to unlock this next step.`;
         }
+      }
+
+      const examNextBtn = root.querySelector<HTMLAnchorElement>("#examNextBtn");
+      if (examNextBtn) {
+        examNextBtn.setAttribute("href", nextUrl);
       }
     };
 
@@ -314,7 +345,7 @@ export default function LearningLesson({
 
       // D. Learn Mode Decision Option (.opt inside [data-q])
       const learnOpt = target.closest<HTMLButtonElement>("[data-q] .opt");
-      if (learnOpt && !learnOpt.disabled) {
+      if (learnOpt && !learnOpt.disabled && !learnOpt.closest("#examQs")) {
         event.preventDefault();
         const q = learnOpt.closest<HTMLElement>("[data-q]");
         if (!q || q.dataset.done) return;
@@ -464,6 +495,20 @@ export default function LearningLesson({
         completeUnit({ courseSlug, unitSlug });
 
         const destUrl = finishLink.getAttribute("href");
+        if (destUrl && destUrl !== "#") {
+          router.push(destUrl);
+        }
+        return;
+      }
+
+      // H2. Exam Mode Results Next button (#examNextBtn)
+      const examNextLink = target.closest<HTMLAnchorElement>("#examNextBtn");
+      if (examNextLink) {
+        event.preventDefault();
+        acts.finish = 1;
+        updateProgress();
+        completeUnit({ courseSlug, unitSlug });
+        const destUrl = examNextLink.getAttribute("href");
         if (destUrl && destUrl !== "#") {
           router.push(destUrl);
         }
@@ -689,9 +734,14 @@ export default function LearningLesson({
       root,
       questions: extractedQuestions,
       stationTitle: unit.title || "CASC Station",
-      onExamComplete: () => {
+      onExamComplete: (score: number, total: number) => {
         acts.exam = 1;
+        examResultRef.current = { score, total };
         updateProgress();
+        checkUnlockStatus(score, total);
+        if (total > 0 && score > total * 0.5) {
+          completeUnit({ courseSlug, unitSlug });
+        }
       },
       onProgress: updateProgress,
     });
@@ -806,6 +856,24 @@ export default function LearningLesson({
     .filter(Boolean)
     .join("\n");
 
+  const scrollToFirstUnanswered = () => {
+    const root = containerRef.current;
+    if (!root) return;
+    const firstUnanswered = root.querySelector<HTMLElement>(
+      "[data-q]:not([data-done='1']), #learnPanel .q:not([data-done='1']), section .q:not([data-done='1'])",
+    );
+    if (firstUnanswered && !firstUnanswered.closest("#examQs")) {
+      firstUnanswered.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+      firstUnanswered.classList.add("casc-highlight-unanswered");
+      setTimeout(() => {
+        firstUnanswered.classList.remove("casc-highlight-unanswered");
+      }, 2500);
+    }
+  };
+
   return (
     <div className="casc-experience" dir="ltr" lang="en">
       {/* Complete unit HTML mount point (contains the full authentic page from the database) */}
@@ -838,7 +906,7 @@ export default function LearningLesson({
           </span>
 
           {nextUnit ? (
-            answeredAllQuestions ? (
+            canProceed ? (
               <Link
                 href={`/${locale}/academy/courses/${courseSlug}/learn/${nextUnit.slug}`}
                 title={nextUnit.title}
@@ -850,16 +918,27 @@ export default function LearningLesson({
                 Next <ChevronRight size={16} />
               </Link>
             ) : (
-              <button
-                type="button"
-                disabled
-                className="casc-nav-next-disabled"
-                title={`Answer all questions to unlock next lesson (${remainingQuestions} remaining)`}
+              <div
+                className="casc-locked-tooltip-wrap"
+                onClick={scrollToFirstUnanswered}
               >
-                Next (Locked) <ChevronRight size={16} />
-              </button>
+                <button
+                  type="button"
+                  disabled
+                  className="casc-nav-next-disabled"
+                >
+                  Next (Locked) <ChevronRight size={16} />
+                </button>
+                <span className="casc-tooltip-popup" role="tooltip">
+                  Please complete the questions
+                  {remainingQuestions > 0
+                    ? ` (${remainingQuestions} remaining)`
+                    : ""}{" "}
+                  or score &gt; 50% in Exam Mode
+                </span>
+              </div>
             )
-          ) : answeredAllQuestions ? (
+          ) : canProceed ? (
             <Link
               href={`/${locale}/academy/courses/${courseSlug}/completion`}
               style={{ background: "var(--gold)", color: "var(--navy)" }}
@@ -871,14 +950,21 @@ export default function LearningLesson({
               Complete Course & Continue
             </Link>
           ) : (
-            <button
-              type="button"
-              disabled
-              className="casc-nav-next-disabled"
-              title={`Answer all questions to complete course (${remainingQuestions} remaining)`}
+            <div
+              className="casc-locked-tooltip-wrap"
+              onClick={scrollToFirstUnanswered}
             >
-              Complete Course (Locked)
-            </button>
+              <button type="button" disabled className="casc-nav-next-disabled">
+                Complete Course (Locked)
+              </button>
+              <span className="casc-tooltip-popup" role="tooltip">
+                Please complete the questions
+                {remainingQuestions > 0
+                  ? ` (${remainingQuestions} remaining)`
+                  : ""}{" "}
+                or score &gt; 50% in Exam Mode
+              </span>
+            </div>
           )}
         </div>
       </nav>
