@@ -43,6 +43,7 @@ export default function ContactFormSection({
     const payload = {
       fullName: String(formData.get("fullName") || "").trim(),
       email: String(formData.get("email") || "").trim(),
+      phone: String(formData.get("phone") || "").trim(),
       professionalRole: String(formData.get("professionalRole") || "").trim(),
       organisation: String(formData.get("organisation") || "").trim(),
       pathway: String(formData.get("pathway") || "").trim(),
@@ -129,7 +130,7 @@ export default function ContactFormSection({
                 <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gold/10 text-gold mb-5">
                   <CheckCircle2 className="size-8" />
                 </div>
-                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-navy">
+                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-navy!">
                   {t("successTitle")}
                 </h3>
                 <p className="mt-3 text-sm sm:text-base text-slate-600 max-w-md mx-auto leading-relaxed">
@@ -206,8 +207,28 @@ export default function ContactFormSection({
                   </div>
                 </div>
 
-                {/* Row 2 – Professional Role & Organisation */}
+                {/* Row 2 – Phone Number & Professional Role */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="flex flex-col gap-2">
+                    <label
+                      htmlFor="contact-phone"
+                      className="font-sans text-xs font-bold uppercase tracking-wider text-navy"
+                    >
+                      {t("fields.phone")}
+                    </label>
+                    <input
+                      id="contact-phone"
+                      name="phone"
+                      type="tel"
+                      required
+                      disabled={isSubmitting}
+                      autoComplete="tel"
+                      placeholder={t("fields.phonePlaceholder")}
+                      dir="ltr"
+                      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy placeholder:text-slate-400 focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none disabled:opacity-60 disabled:bg-slate-50 text-start"
+                    />
+                  </div>
+
                   <div className="flex flex-col gap-2">
                     <label
                       htmlFor="contact-role"
@@ -229,7 +250,10 @@ export default function ContactFormSection({
                       className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy placeholder:text-slate-400 focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none disabled:opacity-60 disabled:bg-slate-50"
                     />
                   </div>
+                </div>
 
+                {/* Row 3 – Organisation & Pathway Dropdown */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="flex flex-col gap-2">
                     <label
                       htmlFor="contact-organisation"
@@ -250,35 +274,34 @@ export default function ContactFormSection({
                       className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy placeholder:text-slate-400 focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none disabled:opacity-60 disabled:bg-slate-50"
                     />
                   </div>
-                </div>
 
-                {/* Row 3 – Pathway Dropdown */}
-                <div className="flex flex-col gap-2">
-                  <label
-                    htmlFor="contact-pathway"
-                    className="font-sans text-xs font-bold uppercase tracking-wider text-navy"
-                  >
-                    {t("fields.pathway")}
-                  </label>
-                  <div className="relative">
-                    <select
-                      id="contact-pathway"
-                      name="pathway"
-                      required
-                      disabled={isSubmitting}
-                      defaultValue=""
-                      className="w-full appearance-none rounded-xl border border-slate-300 bg-white px-4 py-3 pe-11 text-sm text-navy focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none cursor-pointer disabled:opacity-60 disabled:bg-slate-50"
+                  <div className="flex flex-col gap-2">
+                    <label
+                      htmlFor="contact-pathway"
+                      className="font-sans text-xs font-bold uppercase tracking-wider text-navy"
                     >
-                      <option value="" disabled className="text-slate-400">
-                        {t("fields.pathwayPlaceholder")}
-                      </option>
-                      {pathways.map((p, i) => (
-                        <option key={i} value={p} className="text-navy">
-                          {p}
+                      {t("fields.pathway")}
+                    </label>
+                    <div className="relative">
+                      <select
+                        id="contact-pathway"
+                        name="pathway"
+                        required
+                        disabled={isSubmitting}
+                        defaultValue=""
+                        className="w-full appearance-none rounded-xl border border-slate-300 bg-white px-4 py-3 pe-11 text-sm text-navy focus:border-gold focus:ring-2 focus:ring-gold/20 shadow-sm transition-all outline-none cursor-pointer disabled:opacity-60 disabled:bg-slate-50"
+                      >
+                        <option value="" disabled className="text-slate-400">
+                          {t("fields.pathwayPlaceholder")}
                         </option>
-                      ))}
-                    </select>
-                    <ChevronDown className="pointer-events-none absolute end-4 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
+                        {pathways.map((p, i) => (
+                          <option key={i} value={p} className="text-navy">
+                            {p}
+                          </option>
+                        ))}
+                      </select>
+                      <ChevronDown className="pointer-events-none absolute end-4 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
+                    </div>
                   </div>
                 </div>
 

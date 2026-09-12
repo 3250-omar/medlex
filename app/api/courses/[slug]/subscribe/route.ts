@@ -35,9 +35,24 @@ export async function POST(
     target_course_slug: slug,
   });
   if (error || !data) {
-    const status = error?.message.includes("payment_required") ? 402 : 400;
+    const isAlreadySubscribed =
+      error?.message?.includes("already_subscribed") ||
+      error?.message?.includes("23505") ||
+      error?.message?.includes("enrollments_user_course_unique");
+    const status = error?.message.includes("payment_required")
+      ? 402
+      : isAlreadySubscribed
+        ? 409
+        : 400;
     const res = NextResponse.json(
-      { error: error?.message ?? "Unable to subscribe." },
+      {
+        error: isAlreadySubscribed
+          ? "already_subscribed"
+          : (error?.message ?? "Unable to subscribe."),
+        message: isAlreadySubscribed
+          ? "You are already subscribed to this course."
+          : undefined,
+      },
       { status },
     );
     response.cookies.getAll().forEach((cookie) => {

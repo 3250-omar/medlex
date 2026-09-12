@@ -22,6 +22,8 @@ import {
 import { cn } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
+  useResetPasswordMutation,
+  useSendOtpMutation,
   useSignInMutation,
   useSignUpMutation,
 } from "@/components/marketing/authMutations";
@@ -29,7 +31,8 @@ import { academyQueryKeys } from "@/app/[locale]/(marketing)/_apiCalls/academyQu
 import { signInSchema, signUpSchema } from "@/lib/auth/validation";
 import { DatePicker } from "@/components/ui/datePicker";
 
-export type AuthTab = "sign-in" | "register";
+export type AuthTab = "sign-in" | "register" | "forgot-password";
+
 type AuthField = keyof typeof signUpSchema.shape;
 
 function formatDateForForm(date: Date) {
@@ -49,7 +52,12 @@ export function AuthPageContent() {
 
   // Read query params
   const tabParam = searchParams.get("tab");
-  const defaultTab: AuthTab = tabParam === "sign-in" ? "sign-in" : "register";
+  const defaultTab: AuthTab =
+    tabParam === "sign-in"
+      ? "sign-in"
+      : tabParam === "forgot-password"
+        ? "forgot-password"
+        : "register";
 
   const redirectParam = searchParams.get("redirect");
 
@@ -58,6 +66,21 @@ export function AuthPageContent() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [examDate, setExamDate] = React.useState<Date>();
   const [profileImage, setProfileImage] = React.useState<File | null>(null);
+  const [resetEmail, setResetEmail] = React.useState<string>("");
+  const [confirmPasswordError, setConfirmPasswordError] = React.useState<
+    string | null
+  >(null);
+  const [recoveryStep, setRecoveryStep] = React.useState<"request" | "verify">(
+    "request",
+  );
+  const [recoveryPhone, setRecoveryPhone] = React.useState<string>("");
+  const [recoveryIdentifier, setRecoveryIdentifier] =
+    React.useState<string>("");
+  const [recoveryMaskedEmail, setRecoveryMaskedEmail] =
+    React.useState<string>("");
+  const [recoveryCode, setRecoveryCode] = React.useState<string>("");
+  const [otpSentNotice, setOtpSentNotice] = React.useState<string | null>(null);
+
   const profileImagePreviewUrl = React.useMemo(() => {
     if (!profileImage) return null;
     return URL.createObjectURL(profileImage);
@@ -81,6 +104,8 @@ export function AuthPageContent() {
 
   const signIn = useSignInMutation();
   const signUp = useSignUpMutation();
+  const sendOtp = useSendOtpMutation();
+  const resetPassword = useResetPasswordMutation();
 
   const validationMessages: Record<AuthField, string> = {
     fullName: auth("validation.fullName"),
@@ -124,7 +149,11 @@ export function AuthPageContent() {
     setLocalTab(resolved);
     setFormError(null);
     setSuccessNotice(null);
+    setOtpSentNotice(null);
     setFieldErrors({});
+    if (resolved === "sign-in") {
+      setRecoveryStep("request");
+    }
 
     const currentParams = new URLSearchParams(searchParams.toString());
     currentParams.delete("pathway");
@@ -215,7 +244,99 @@ export function AuthPageContent() {
     });
   }
 
-  const isSubmitting = signIn.isPending || signUp.isPending;
+  function handleSendOtp(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setFormError(null);
+    setSuccessNotice(null);
+    setOtpSentNotice(null);
+
+    const formData = new FormData(event.currentTarget);
+    const phone = String(formData.get("phone") ?? "").trim();
+    const emailOrUsername = String(
+      formData.get("emailOrUsername") ?? "",
+    ).trim();
+
+    if (!phone || !emailOrUsername) {
+      setFormError(
+        "Please enter both your phone number and email or username.",
+      );
+      return;
+    }
+
+    sendOtp.mutate(
+      { phone, emailOrUsername },
+      {
+        onSuccess: (data) => {
+          setRecoveryPhone(phone);
+          setRecoveryIdentifier(emailOrUsername);
+          setRecoveryMaskedEmail(data.email || "");
+          setRecoveryCode(data.code || "");
+          setRecoveryStep("verify");
+          setOtpSentNotice(
+            `A 6-digit verification code has been sent to ${data.email}. Please check your inbox and spam folder.`,
+          );
+        },
+        onError: (err) => {
+          setFormError(err.message);
+        },
+      },
+    );
+  }
+
+  function handleResetPassword(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setFormError(null);
+    setSuccessNotice(null);
+    setConfirmPasswordError(null);
+
+    const formData = new FormData(event.currentTarget);
+    const code = String(formData.get("code") ?? "").trim();
+    const newPassword = String(formData.get("newPassword") ?? "");
+    const confirmPassword = String(formData.get("confirmPassword") ?? "");
+
+    if (!code || !newPassword) {
+      setFormError("Please fill in all required fields.");
+      return;
+    }
+
+    if (newPassword.length < 8 || newPassword.length > 72) {
+      setFormError(auth("validation.password"));
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      setConfirmPasswordError("Passwords do not match.");
+      return;
+    }
+
+    resetPassword.mutate(
+      {
+        phone: recoveryPhone,
+        emailOrUsername: recoveryIdentifier,
+        code,
+        newPassword,
+      },
+      {
+        onSuccess: (result) => {
+          setSuccessNotice(auth("resetSuccess"));
+          setFormError(null);
+          setOtpSentNotice(null);
+          setRecoveryStep("request");
+          if (result.email) {
+            setResetEmail(result.email);
+          }
+          handleTabChange("sign-in");
+        },
+        onError: (error) => setFormError(error.message),
+      },
+    );
+  }
+
+  const isSubmitting =
+    signIn.isPending ||
+    signUp.isPending ||
+    sendOtp.isPending ||
+    resetPassword.isPending;
 
   return (
     <div className="relative flex min-h-[calc(100vh-140px)] items-center justify-center overflow-hidden px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
@@ -356,17 +477,25 @@ export function AuthPageContent() {
 
               <div className="mb-7">
                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-signal">
-                  {tab === "sign-in" ? "Welcome back" : "New to MedLex"}
+                  {tab === "sign-in"
+                    ? "Welcome back"
+                    : tab === "forgot-password"
+                      ? "Account Recovery"
+                      : "New to MedLex"}
                 </p>
                 <h2 className="mt-2 font-display text-2xl font-normal tracking-tight text-text sm:text-[1.75rem]">
                   {tab === "sign-in"
                     ? "Continue your professional learning"
-                    : "Create your MedLex account"}
+                    : tab === "forgot-password"
+                      ? auth("resetPassword")
+                      : "Create your MedLex account"}
                 </h2>
                 <p className="mt-2 max-w-[52ch] text-sm leading-relaxed text-muted">
                   {tab === "sign-in"
                     ? "Sign in to pick up your courses, progress, and certificates."
-                    : "Set up one secure profile to keep your learning records together."}
+                    : tab === "forgot-password"
+                      ? auth("resetPasswordDescription")
+                      : "Set up one secure profile to keep your learning records together."}
                 </p>
               </div>
 
@@ -378,7 +507,10 @@ export function AuthPageContent() {
               >
                 <TabsList
                   aria-label={auth("tabsLabel")}
-                  className="grid w-full grid-cols-2 rounded-2xl border border-line bg-surface-2/70 p-1.5"
+                  className={cn(
+                    "grid w-full rounded-2xl border border-line bg-surface-2/70 p-1.5",
+                    tab === "forgot-password" ? "grid-cols-3" : "grid-cols-2",
+                  )}
                 >
                   <TabsTrigger
                     value="sign-in"
@@ -400,6 +532,17 @@ export function AuthPageContent() {
                   >
                     {auth("register")}
                   </TabsTrigger>
+                  {tab === "forgot-password" && (
+                    <TabsTrigger
+                      value="forgot-password"
+                      className={cn(
+                        "min-h-11 rounded-xl px-3 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal/60",
+                        "data-[state=active]:bg-surface data-[state=active]:text-signal data-[state=active]:shadow-md data-[state=active]:border data-[state=active]:border-line",
+                      )}
+                    >
+                      {auth("resetPassword")}
+                    </TabsTrigger>
+                  )}
                 </TabsList>
 
                 {/* Success Alert Banner */}
@@ -444,6 +587,8 @@ export function AuthPageContent() {
                       label={t("email")}
                       name="email"
                       field="email"
+                      key={resetEmail || "email-input"}
+                      defaultValue={resetEmail || undefined}
                       icon={<Mail className="size-4 text-muted" />}
                       error={fieldErrors.email}
                       onBlur={(event) =>
@@ -457,6 +602,15 @@ export function AuthPageContent() {
 
                     <AuthInputField
                       label={auth("password")}
+                      labelRight={
+                        <button
+                          type="button"
+                          onClick={() => handleTabChange("forgot-password")}
+                          className="text-[11px] font-semibold text-signal transition-colors hover:text-signal-light hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal/50 cursor-pointer"
+                        >
+                          {auth("forgotPassword")}
+                        </button>
+                      }
                       name="password"
                       field="password"
                       icon={<Lock className="size-4 text-muted" />}
@@ -520,6 +674,198 @@ export function AuthPageContent() {
                       </button>
                     </div>
                   </form>
+                </TabsContent>
+
+                {/* ====================================================== */}
+                {/* FORGOT PASSWORD TAB CONTENT                            */}
+                {/* ====================================================== */}
+                <TabsContent
+                  value="forgot-password"
+                  className="mt-7 focus-visible:outline-none"
+                >
+                  {recoveryStep === "request" ? (
+                    <form
+                      className="grid gap-5"
+                      noValidate
+                      onSubmit={handleSendOtp}
+                    >
+                      <AuthInputField
+                        label={auth("registeredPhone")}
+                        name="phone"
+                        field="phone"
+                        defaultValue={recoveryPhone}
+                        icon={<Phone className="size-4 text-muted" />}
+                        type="tel"
+                        autoComplete="tel"
+                        placeholder="+44 7000 000000"
+                      />
+
+                      <AuthInputField
+                        label={auth("accountIdentifier")}
+                        name="emailOrUsername"
+                        field="emailOrUsername"
+                        defaultValue={recoveryIdentifier}
+                        icon={<Mail className="size-4 text-muted" />}
+                        type="text"
+                        autoComplete="username"
+                        placeholder="name@institution.com or username"
+                      />
+
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={cn(
+                          "group relative mt-2 flex min-h-12 w-full items-center justify-center gap-2.5 rounded-xl bg-signal px-6 font-body text-sm font-semibold text-ink shadow-lg shadow-signal/20 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-surface cursor-pointer",
+                          "hover:bg-signal-light hover:shadow-xl hover:shadow-signal/25 active:bg-signal",
+                          "disabled:cursor-not-allowed disabled:opacity-60",
+                        )}
+                      >
+                        {sendOtp.isPending ? (
+                          <span className="flex items-center gap-2">
+                            <span className="size-4 animate-spin rounded-full border-2 border-ink border-t-transparent" />
+                            <span>Sending code...</span>
+                          </span>
+                        ) : (
+                          <>
+                            <Mail className="size-4" />
+                            <span>{auth("sendOtpCode")}</span>
+                            <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-1" />
+                          </>
+                        )}
+                      </button>
+
+                      {/* Switcher Footer */}
+                      <div className="flex flex-col items-start gap-2 border-t border-line/60 pt-4 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
+                        <span>Remember your password?</span>
+                        <button
+                          type="button"
+                          onClick={() => handleTabChange("sign-in")}
+                          className="rounded-md font-semibold text-signal transition-colors hover:text-signal-light hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal/50 cursor-pointer"
+                        >
+                          {auth("backToSignIn")}
+                        </button>
+                      </div>
+                    </form>
+                  ) : (
+                    <form
+                      className="grid gap-5"
+                      noValidate
+                      onSubmit={handleResetPassword}
+                    >
+                      {/* Email Notice Card */}
+                      <div className="rounded-2xl border border-line/70 bg-surface-2/35 p-4 text-xs text-text space-y-2">
+                        <div className="flex items-start gap-2.5">
+                          <Mail className="size-4 text-signal shrink-0 mt-0.5" />
+                          <div className="min-w-0">
+                            <p className="font-semibold text-text">
+                              Verification code sent to {recoveryMaskedEmail || "your email"}
+                            </p>
+                            <p className="mt-1 text-[11.5px] leading-relaxed text-muted">
+                              {otpSentNotice ||
+                                "Please check your email inbox and spam folder for the 6-digit code."}
+                            </p>
+                            {recoveryCode && (
+                              <div className="mt-2.5 flex items-center gap-2">
+                                <span className="text-[11px] text-muted">Dev code:</span>
+                                <span className="font-mono text-sm font-bold tracking-widest text-signal bg-signal/15 border border-signal/30 rounded px-2 py-0.5">
+                                  {recoveryCode}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      <AuthInputField
+                        label={auth("verificationCode")}
+                        name="code"
+                        field="code"
+                        key={recoveryCode || "code-input"}
+                        defaultValue={recoveryCode || undefined}
+                        icon={<ShieldCheck className="size-4 text-muted" />}
+                        type="text"
+                        autoComplete="one-time-code"
+                        placeholder={auth("verificationCodePlaceholder")}
+                      />
+
+                      <AuthInputField
+                        label={auth("newPassword")}
+                        name="newPassword"
+                        field="newPassword"
+                        icon={<Lock className="size-4 text-muted" />}
+                        type={showPassword ? "text" : "password"}
+                        autoComplete="new-password"
+                        placeholder="••••••••"
+                        trailing={
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword((prev) => !prev)}
+                            className="rounded-md p-2 text-muted transition-colors hover:text-signal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal/50"
+                            aria-label={
+                              showPassword ? "Hide password" : "Show password"
+                            }
+                          >
+                            {showPassword ? (
+                              <EyeOff className="size-4" />
+                            ) : (
+                              <Eye className="size-4" />
+                            )}
+                          </button>
+                        }
+                      />
+
+                      <AuthInputField
+                        label={auth("confirmPassword")}
+                        name="confirmPassword"
+                        field="confirmPassword"
+                        error={confirmPasswordError ?? undefined}
+                        icon={<Lock className="size-4 text-muted" />}
+                        type={showPassword ? "text" : "password"}
+                        autoComplete="new-password"
+                        placeholder="••••••••"
+                      />
+
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={cn(
+                          "group relative mt-2 flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-signal px-6 font-body text-sm font-semibold text-ink shadow-lg shadow-signal/20 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-surface cursor-pointer",
+                          "hover:bg-signal-light hover:shadow-xl hover:shadow-signal/25 active:bg-signal",
+                          "disabled:cursor-not-allowed disabled:opacity-60",
+                        )}
+                      >
+                        {resetPassword.isPending ? (
+                          <span className="flex items-center gap-2">
+                            <span className="size-4 animate-spin rounded-full border-2 border-ink border-t-transparent" />
+                            <span>Updating password...</span>
+                          </span>
+                        ) : (
+                          <>
+                            <span>{auth("resetSubmit")}</span>
+                            <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-1" />
+                          </>
+                        )}
+                      </button>
+
+                      {/* Navigation links */}
+                      <div className="flex flex-col items-start gap-2 border-t border-line/60 pt-4 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
+                        <button
+                          type="button"
+                          onClick={() => setRecoveryStep("request")}
+                          className="rounded-md font-medium text-muted hover:text-signal transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal/50 cursor-pointer"
+                        >
+                          ← {auth("resendOtpCode")}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleTabChange("sign-in")}
+                          className="rounded-md font-semibold text-signal transition-colors hover:text-signal-light hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal/50 cursor-pointer"
+                        >
+                          {auth("backToSignIn")}
+                        </button>
+                      </div>
+                    </form>
+                  )}
                 </TabsContent>
 
                 {/* ====================================================== */}
@@ -790,6 +1136,7 @@ export function AuthPageContent() {
 
 function AuthInputField({
   label,
+  labelRight,
   name,
   field,
   type = "text",
@@ -799,12 +1146,16 @@ function AuthInputField({
   icon,
   trailing,
   placeholder,
+  defaultValue,
+  value,
+  required = true,
   onBlur,
   onChange,
 }: {
   label: string;
+  labelRight?: React.ReactNode;
   name: string;
-  field: AuthField;
+  field?: string;
   type?: string;
   autoComplete?: string;
   className?: string;
@@ -812,20 +1163,25 @@ function AuthInputField({
   icon?: React.ReactNode;
   trailing?: React.ReactNode;
   placeholder?: string;
+  defaultValue?: string;
+  value?: string;
+  required?: boolean;
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
-  const errorId = `${field}-error`;
+  const errorId = field ? `${field}-error` : undefined;
 
   return (
-    <label
+    <div
       className={cn(
         "flex flex-col gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted",
         className,
       )}
-      htmlFor={name}
     >
-      <span>{label}</span>
+      <div className="flex items-center justify-between">
+        <label htmlFor={name}>{label}</label>
+        {labelRight}
+      </div>
       <div className="relative flex items-center rounded-xl transition-shadow focus-within:ring-2 focus-within:ring-signal/20">
         {icon && (
           <span
@@ -841,7 +1197,9 @@ function AuthInputField({
           type={type}
           autoComplete={autoComplete}
           placeholder={placeholder}
-          required
+          defaultValue={defaultValue}
+          value={value}
+          required={required}
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? errorId : undefined}
           onBlur={onBlur}
@@ -871,7 +1229,7 @@ function AuthInputField({
           {error}
         </span>
       )}
-    </label>
+    </div>
   );
 }
 

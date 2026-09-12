@@ -327,6 +327,8 @@
       "fields": {
         "fullName": "الاسم الكامل",
         "email": "البريد الإلكتروني",
+        "phone": "رقم الهاتف",
+        "phonePlaceholder": "مثال: 5678 234 101 20+",
         "professionalRole": "الدور المهني",
         "organisation": "الجهة (اختياري)",
         "pathway": "المسار المطلوب",
@@ -495,7 +497,24 @@
       "examDate": "اختر تاريخ امتحان صالحًا"
     },
     "examDate": "تاريخ الامتحان",
-    "examDatePlaceholder": "اختر تاريخ امتحانك"
+    "examDatePlaceholder": "اختر تاريخ امتحانك",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "resetPassword": "إعادة تعيين كلمة المرور",
+    "resetPasswordDescription": "أكّد رقم هاتفك وبيانات حسابك المسجلة لاستلام رمز التحقق الآمن عبر البريد الإلكتروني.",
+    "registeredPhone": "رقم الهاتف المسجل",
+    "accountIdentifier": "البريد الإلكتروني أو اسم المستخدم",
+    "sendOtpCode": "إرسال رمز التحقق",
+    "sendWhatsAppCode": "إرسال رمز التحقق",
+    "verificationCode": "رمز التحقق من البريد الإلكتروني",
+    "verificationCodePlaceholder": "رمز مكوّن من 6 أرقام (مثال: 123456)",
+    "openWhatsApp": "فتح المحادثة",
+    "resendOtpCode": "إعادة إرسال الرمز",
+    "resendWhatsAppCode": "إعادة إرسال الرمز",
+    "newPassword": "كلمة المرور الجديدة",
+    "confirmPassword": "تأكيد كلمة المرور الجديدة",
+    "resetSubmit": "التحقق وتحديث كلمة المرور",
+    "resetSuccess": "تمت إعادة تعيين كلمة المرور بنجاح. يرجى تسجيل الدخول بكلمة المرور الجديدة.",
+    "backToSignIn": "العودة لتسجيل الدخول"
   },
   "pathwayPages": {
     "labels": {

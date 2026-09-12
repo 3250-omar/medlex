@@ -23,7 +23,7 @@ const whatYouGetItems = [
     title: "The examiner's notes",
     how: "By email · through your preparation",
     desc: "Short notes from the examiner's side of the table, sent as you work through the library: one thing examiners see, one thing to practise this week, and the station it lives in.",
-    image: "/images/sectionImages/notes_section.jpeg",
+    image: "/images/sectionImages/new.jpg",
   },
   {
     title: "Your certificate",

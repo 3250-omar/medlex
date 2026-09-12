@@ -16,7 +16,7 @@ function Text([string]$Html) {
   [regex]::Replace($value, '\s+', ' ').Trim()
 }
 function Sql([string]$Value) { "'" + $Value.Replace("'", "''") + "'" }
-function Parse-Exam([string]$Html) {
+function Parse-Exam([string]$Html) {  
   $match = [regex]::Match($Html, '(?is)var EXAM\s*=\s*(\[.*?\])\s*;\s*var examAnswers')
   if (-not $match.Success) { return @() }
   $encoded = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($match.Groups[1].Value))

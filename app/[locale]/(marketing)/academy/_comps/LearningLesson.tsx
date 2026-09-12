@@ -10,7 +10,66 @@ import {
   type AssessmentQuestion,
 } from "../_apiCalls/learningQueries";
 import { useCompleteUnit, useOpenUnit } from "../../_apiCalls/academyQueries";
+import { openPackPdf } from "./packPdfGenerator";
+import {
+  initCascInteractiveEngine,
+  extractExamQuestions,
+} from "./cascExamEngine";
 import "./cascEditorial.css";
+
+const STATION_CODE_TO_SLUG: Record<string, string> = {
+  // Domain 1: Communication & Rapport
+  "1.1": "station-1.1-the-simple-station",
+  "1.2": "station-1.2-nothing-is-wrong",
+  "1.3": "station-1.3-working-through-an-interpreter",
+  "1.4": "station-1.4-medically-unexplained-symptoms",
+  // Domain 2: Information Giving
+  "2.1": "station-2.1-starting-lithium",
+  "2.2": "station-2.2-the-clozapine-conversation",
+  "2.3": "station-2.3-explaining-schizophrenia",
+  "2.4": "station-2.4-ect-explained",
+  "2.5": "station-2.5-antidepressants-in-pregnancy",
+  "2.6": "station-2.6-panic-disorder-and-explaining-cbt",
+  // Domain 3: Risk Assessment
+  "3.1": "station-3.1-after-an-overdose",
+  "3.2": "station-3.2-the-violent-inpatient",
+  "3.3": "station-3.3-domestic-abuse-enquiry",
+  "3.4": "station-3.4-child-at-risk",
+  "3.5": "station-3.5-the-vulnerable-adult",
+  "3.6": "station-3.6-fire-setting",
+  "3.7": "station-3.7-stalking-and-erotomania",
+  // Domain 4: Mental State & Phenomenology
+  "4.1": "station-4.1-hearing-voices",
+  "4.2": "station-4.2-elated-and-spending",
+  "4.3": "station-4.3-confused-on-the-ward",
+  "4.4": "station-4.4-the-memory-clinic",
+  "4.5": "station-4.5-obsessions-and-rituals",
+  "4.6": "station-4.6-low-weight",
+  "4.7": "station-4.7-adult-adhd-assessment",
+  "4.8": "station-4.8-autism-assessment-in-an-adult",
+  "4.9": "station-4.9-ptsd-assessment",
+  "4.10": "station-4.10-alcohol-dependence-assessment",
+  "4.11": "station-4.11-behavioural-change-in-learning-disability",
+  // Domain 5: Capacity, Consent & the Law
+  "5.1": "station-5.1-refusing-treatment",
+  "5.2": "station-5.2-im-leaving",
+  "5.3": "station-5.3-the-relative-who-wants-everything",
+  "5.4": "station-5.4-sectioned",
+  // Domain 6: Management & the Psychiatric Emergency
+  "6.1": "station-6.1-the-agitated-patient",
+  "6.2": "station-6.2-lithium-toxicity-call",
+  "6.3": "station-6.3-postpartum-psychosis",
+  "6.4": "station-6.4-the-overdose-handover",
+  // Domain 7: Difficult Conversations, Families & the MDT
+  "7.1": "station-7.1-the-patient-who-wont-take-no",
+  "7.2": "station-7.2-the-angry-father",
+  "7.3": "station-7.3-breaking-bad-news",
+  "7.4": "station-7.4-the-complaint-and-the-apology",
+  // Domain 8: Physical Examination
+  "8.1": "station-8.1-epse-examination",
+  "8.2": "station-8.2-cardiovascular-baseline",
+  "8.3": "station-8.3-cranial-nerve-examination",
+};
 
 type Props = { locale: string; courseSlug: string; unitSlug: string };
 
@@ -253,30 +312,6 @@ export default function LearningLesson({
         return;
       }
 
-      // C. Mode Switcher buttons (#mLearn, #mExam, .mtoggle button)
-      const mLearn = target.closest<HTMLButtonElement>(
-        "#mLearn, .mtoggle button:first-child",
-      );
-      if (
-        mLearn &&
-        (mLearn.textContent?.includes("Learn") || mLearn.id === "mLearn")
-      ) {
-        event.preventDefault();
-        switchMode("learn");
-        return;
-      }
-      const mExam = target.closest<HTMLButtonElement>(
-        "#mExam, .mtoggle button:last-child",
-      );
-      if (
-        mExam &&
-        (mExam.textContent?.includes("Exam") || mExam.id === "mExam")
-      ) {
-        event.preventDefault();
-        switchMode("exam");
-        return;
-      }
-
       // D. Learn Mode Decision Option (.opt inside [data-q])
       const learnOpt = target.closest<HTMLButtonElement>("[data-q] .opt");
       if (learnOpt && !learnOpt.disabled) {
@@ -336,37 +371,50 @@ export default function LearningLesson({
         return;
       }
 
-      // F. Print Pack Cards (.printrow .btn)
+      // F. Print Pack Cards (.printrow .btn) -> Open PDF with native print mode
       const printBtn = target.closest<HTMLButtonElement>(".printrow .btn");
       if (printBtn) {
         event.preventDefault();
         const text = printBtn.textContent?.toLowerCase() || "";
-        let modeClass = "pr-all";
-        if (text.includes("candidate")) modeClass = "pr-cand";
-        else if (text.includes("role")) modeClass = "pr-role";
-        else if (text.includes("obs")) modeClass = "pr-obs";
+        let mode: "all" | "cand" | "role" | "obs" = "all";
+        if (text.includes("candidate")) mode = "cand";
+        else if (text.includes("role")) mode = "role";
+        else if (text.includes("obs")) mode = "obs";
 
-        document.body.classList.remove(
-          "pr-cand",
-          "pr-role",
-          "pr-obs",
-          "pr-all",
-        );
-        document.body.classList.add(modeClass);
-
-        const cleanup = () => {
-          document.body.classList.remove(
-            "pr-cand",
-            "pr-role",
-            "pr-obs",
-            "pr-all",
+        // Open window synchronously on user gesture to avoid popup blockers
+        const pdfWin = window.open("", "_blank");
+        if (pdfWin) {
+          pdfWin.document.write(
+            `<!DOCTYPE html><html><head><title>Opening PDF...</title></head><body style="margin:0;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#071326;color:#ffffff;text-align:center;padding:24px"><div style="width:36px;height:36px;border:3px solid rgba(255,255,255,0.2);border-top-color:#d4af37;border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:16px"></div><div style="font-size:17px;font-weight:600;margin-bottom:6px">Opening Practice Pack PDF...</div><div style="font-size:13px;color:#94a3b8">Preparing cards for mobile viewing and print mode</div><style>@keyframes spin{to{transform:rotate(360deg)}}</style></body></html>`,
           );
-          window.removeEventListener("afterprint", cleanup);
-        };
+        }
 
-        window.addEventListener("afterprint", cleanup);
-        window.print();
-        setTimeout(cleanup, 2500);
+        const originalText = printBtn.textContent;
+        printBtn.textContent = "Opening PDF...";
+        printBtn.style.pointerEvents = "none";
+
+        openPackPdf(root, mode, unit?.title || "CASC Station")
+          .then((blobUrl) => {
+            if (pdfWin && !pdfWin.closed) {
+              pdfWin.location.href = blobUrl;
+            } else {
+              const a = document.createElement("a");
+              a.href = blobUrl;
+              a.target = "_blank";
+              a.rel = "noopener noreferrer";
+              document.body.appendChild(a);
+              a.click();
+              a.remove();
+            }
+          })
+          .catch((err) => {
+            console.error("Failed to generate PDF:", err);
+            if (pdfWin) pdfWin.close();
+          })
+          .finally(() => {
+            printBtn.textContent = originalText;
+            printBtn.style.pointerEvents = "";
+          });
         return;
       }
 
@@ -439,18 +487,54 @@ export default function LearningLesson({
       }
       const srow = target.closest<HTMLElement>(".srow");
       if (srow && !target.closest("a")) {
+        event.preventDefault();
+
+        // 1. Check onclick attribute if present (e.g. from static templates)
         const onclickAttr = srow.getAttribute("onclick") || "";
         const match = onclickAttr.match(
           /['"](\d{2}_[^.]+|[a-zA-Z0-9_-]+)\.html['"]/,
         );
         if (match) {
-          event.preventDefault();
           const slug = match[1]
             .replace(/^\d{2}_/, "")
             .toLowerCase()
             .replace(/_/g, "-");
           router.push(`/${locale}/academy/courses/${courseSlug}/learn/${slug}`);
           return;
+        }
+
+        // 2. Extract station number from .num (e.g. "2.1", "1.1", "3.4")
+        const numText = srow.querySelector(".num")?.textContent?.trim();
+        if (numText) {
+          const matchedUnit =
+            outline?.units.find((u) => u.unitCode === numText) ||
+            outline?.units.find((u) =>
+              u.slug.startsWith(`station-${numText}-`),
+            );
+
+          const targetSlug = matchedUnit?.slug || STATION_CODE_TO_SLUG[numText];
+          if (targetSlug) {
+            router.push(
+              `/${locale}/academy/courses/${courseSlug}/learn/${targetSlug}`,
+            );
+            return;
+          }
+        }
+
+        // 3. Fallback: match by station title from .t b
+        const titleText = srow.querySelector(".t b")?.textContent?.trim();
+        if (titleText && outline?.units) {
+          const cleanTitle = titleText.toLowerCase().replace(/[^a-z0-9]/g, "");
+          const matchedByTitle = outline.units.find((u) => {
+            const uTitle = u.title.toLowerCase().replace(/[^a-z0-9]/g, "");
+            return uTitle.includes(cleanTitle) || cleanTitle.includes(uTitle);
+          });
+          if (matchedByTitle) {
+            router.push(
+              `/${locale}/academy/courses/${courseSlug}/learn/${matchedByTitle.slug}`,
+            );
+            return;
+          }
         }
       }
     };
@@ -555,224 +639,77 @@ export default function LearningLesson({
       }
     };
 
-    // Mode Switcher function
-    const switchMode = (mode: "learn" | "exam") => {
-      const learnPanel = root.querySelector<HTMLElement>("#learnPanel");
-      const examPanel = root.querySelector<HTMLElement>("#examPanel");
-      const mLearnBtn = root.querySelector<HTMLButtonElement>(
-        "#mLearn, .mtoggle button:first-child",
-      );
-      const mExamBtn = root.querySelector<HTMLButtonElement>(
-        "#mExam, .mtoggle button:last-child",
-      );
-      const timerEl = root.querySelector<HTMLElement>("#timer");
-
-      if (learnPanel)
-        learnPanel.style.display = mode === "learn" ? "block" : "none";
-      if (examPanel)
-        examPanel.style.display = mode === "exam" ? "block" : "none";
-      if (mLearnBtn) mLearnBtn.classList.toggle("active", mode === "learn");
-      if (mExamBtn) mExamBtn.classList.toggle("active", mode === "exam");
-      if (timerEl) timerEl.style.display = mode === "exam" ? "inline" : "none";
-
-      if (mode === "learn" && timerRef.current) {
-        clearInterval(timerRef.current);
-        timerRef.current = null;
+    // Mark station rows in domain hubs as accessible links
+    root.querySelectorAll<HTMLElement>(".srow").forEach((srow) => {
+      srow.setAttribute("role", "button");
+      srow.setAttribute("tabindex", "0");
+      const numText = srow.querySelector(".num")?.textContent?.trim();
+      const titleText = srow.querySelector(".t b")?.textContent?.trim();
+      if (numText) {
+        srow.setAttribute(
+          "aria-label",
+          `Go to Station ${numText}${titleText ? `: ${titleText}` : ""}`,
+        );
       }
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    };
+    });
 
-    // Exam Engine: Start Exam click handler
-    const handleStartExamClick = (e: MouseEvent) => {
-      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(
-        "#examStart .btn, #retakeBtn",
-      );
-      if (!btn) return;
-      e.preventDefault();
-
-      const examAssessment = unit.assessments.find(
-        (a) => a.source_key === "exam" || a.source_key === "timed_exam",
-      );
-      const questions: AssessmentQuestion[] =
-        examAssessment?.assessment_questions ?? [];
-
-      const examStart = root.querySelector<HTMLElement>("#examStart");
-      const examQs = root.querySelector<HTMLElement>("#examQs");
-      const examSubmitRow = root.querySelector<HTMLElement>("#examSubmitRow");
-      const results = root.querySelector<HTMLElement>("#results");
-      const timerEl = root.querySelector<HTMLElement>("#timer");
-
-      if (examStart) examStart.style.display = "none";
-      if (results) results.style.display = "none";
-
-      let secondsLeft = examAssessment?.duration_seconds ?? 420;
-      const formatTime = (s: number) => {
-        const m = Math.floor(s / 60);
-        const sec = s % 60;
-        return `${m < 10 ? "0" : ""}${m}:${sec < 10 ? "0" : ""}${sec}`;
-      };
-
-      if (timerEl) {
-        timerEl.textContent = formatTime(secondsLeft);
-        timerEl.classList.remove("warn");
-      }
-
-      if (timerRef.current) clearInterval(timerRef.current);
-      timerRef.current = setInterval(() => {
-        secondsLeft--;
-        if (timerEl) {
-          timerEl.textContent = formatTime(secondsLeft);
-          if (secondsLeft <= 60) timerEl.classList.add("warn");
-        }
-        if (secondsLeft <= 0) {
-          if (timerRef.current) clearInterval(timerRef.current);
-          timerRef.current = null;
-          submitExamAnswers();
-        }
-      }, 1000);
-
-      // Render questions into #examQs if empty or retaking
-      if (examQs) {
-        examQs.innerHTML = "";
-        examQs.style.display = "block";
-
-        if (questions.length > 0) {
-          questions.forEach((q, qi) => {
-            const qDiv = document.createElement("div");
-            qDiv.className = "q";
-            qDiv.dataset.eqi = String(qi);
-            qDiv.dataset.qid = q.id;
-
-            let h = `<h3>${q.stem}</h3>`;
-            q.answer_options.forEach((opt, oi) => {
-              h += `<button type="button" class="opt" data-optid="${opt.id}" data-oi="${oi}">${opt.option_text}</button>`;
-            });
-            qDiv.innerHTML = h;
-            examQs.appendChild(qDiv);
-          });
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Enter" || event.key === " ") {
+        const target = event.target as HTMLElement;
+        const srow = target.closest<HTMLElement>(".srow");
+        if (srow) {
+          event.preventDefault();
+          const numText = srow.querySelector(".num")?.textContent?.trim();
+          if (numText) {
+            const matchedUnit =
+              outline?.units.find((u) => u.unitCode === numText) ||
+              outline?.units.find((u) =>
+                u.slug.startsWith(`station-${numText}-`),
+              );
+            const targetSlug =
+              matchedUnit?.slug || STATION_CODE_TO_SLUG[numText];
+            if (targetSlug) {
+              router.push(
+                `/${locale}/academy/courses/${courseSlug}/learn/${targetSlug}`,
+              );
+            }
+          }
         }
       }
-
-      if (examSubmitRow) examSubmitRow.style.display = "block";
-    };
-
-    // Selecting option in exam
-    const handleExamOptionClick = (e: MouseEvent) => {
-      const opt = (e.target as HTMLElement).closest<HTMLButtonElement>(
-        "#examQs .opt",
-      );
-      if (!opt) return;
-      e.preventDefault();
-      opt.parentElement
-        ?.querySelectorAll<HTMLButtonElement>(".opt")
-        .forEach((b) => b.classList.remove("picked"));
-      opt.classList.add("picked");
-    };
-
-    // Submit Exam answers
-    const submitExamAnswers = () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-        timerRef.current = null;
-      }
-
-      const examQs = root.querySelector<HTMLElement>("#examQs");
-      const examSubmitRow = root.querySelector<HTMLElement>("#examSubmitRow");
-      const results = root.querySelector<HTMLElement>("#results");
-      const scoreLine = root.querySelector<HTMLElement>("#scoreLine");
-      const verdictLine = root.querySelector<HTMLElement>("#verdictLine");
-      const constructBox = root.querySelector<HTMLElement>("#constructBox");
-      const examReview = root.querySelector<HTMLElement>("#examReview");
-
-      if (examQs) examQs.style.display = "none";
-      if (examSubmitRow) examSubmitRow.style.display = "none";
-      if (results) results.style.display = "block";
-
-      const examAssessment = unit.assessments.find(
-        (a) => a.source_key === "exam" || a.source_key === "timed_exam",
-      );
-      const questions = examAssessment?.assessment_questions ?? [];
-
-      const pickedOptions = root.querySelectorAll<HTMLButtonElement>(
-        "#examQs .opt.picked",
-      );
-      const total = questions.length || 7;
-      const score = pickedOptions.length; // Placeholder score
-      const pass = score >= (examAssessment?.pass_score ?? 5);
-
-      if (scoreLine) scoreLine.textContent = `${score} / ${total}`;
-      if (verdictLine) {
-        verdictLine.innerHTML = pass
-          ? "Recognised under exam conditions — you held structure and warmth together with an unfamiliar patient, under time, without help. Now produce it below in your own words."
-          : "Explored, not yet recognised. Read the examiner analysis below, return to Learn Mode, and retake in a few days — recognising the pattern under time is what this mode measures.";
-      }
-
-      if (constructBox) {
-        constructBox.innerHTML = `<b>${pass ? "CONSTRUCTS — RECOGNISED UNDER EXAM CONDITIONS" : "CONSTRUCTS — EXPLORED, NOT YET RECOGNISED"}</b>
-        <ul>
-          <li>Structure and warmth held together under time</li>
-          <li>The offered cue, followed with purpose</li>
-          <li>The safety question asked so it can be answered</li>
-        </ul>
-        ${pass ? "" : "<p style='margin-top:8px'>These mark as recognised at 5 of 7 or more with all critical decisions correct.</p>"}`;
-      }
-
-      if (examReview && questions.length > 0) {
-        examReview.innerHTML =
-          '<h3 style="font-size:19px; margin-bottom:12px">The examiner’s analysis</h3>';
-        questions.forEach((q) => {
-          const qCard = document.createElement("div");
-          qCard.className = "q";
-          qCard.innerHTML = `<h3>${q.stem}</h3>
-          <div class="fb good" style="display:block">
-            <b>THE EXAMINER'S VIEW</b>
-            ${q.explanation || "This is the move that balances clinical thoroughness with patient safety and connection."}
-          </div>`;
-          examReview.appendChild(qCard);
-        });
-      }
-
-      acts.exam = 1;
-      updateProgress();
-      if (results) {
-        window.scrollTo({
-          top: results.offsetTop - 70,
-          behavior: "smooth",
-        });
-      }
-    };
-
-    const handleSubmitExamBtnClick = (e: MouseEvent) => {
-      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(
-        "#examSubmitRow .btn",
-      );
-      if (!btn) return;
-      e.preventDefault();
-      submitExamAnswers();
     };
 
     root.addEventListener("click", handleLessonClicks);
-    root.addEventListener("click", handleStartExamClick);
-    root.addEventListener("click", handleExamOptionClick);
-    root.addEventListener("click", handleSubmitExamBtnClick);
+    root.addEventListener("keydown", handleKeyDown);
     root.addEventListener("change", handleCheckboxChange);
     root.addEventListener("change", handleFtScoreChange);
+
+    // Initialise full interactive Exam Engine + Practice Pack PDF generator
+    const extractedQuestions = extractExamQuestions(unit.assessments);
+    const cleanupExamEngine = initCascInteractiveEngine({
+      root,
+      questions: extractedQuestions,
+      stationTitle: unit.title || "CASC Station",
+      onExamComplete: () => {
+        acts.exam = 1;
+        updateProgress();
+      },
+      onProgress: updateProgress,
+    });
 
     return () => {
       observer.disconnect();
       root.removeEventListener("click", handleLessonClicks);
-      root.removeEventListener("click", handleStartExamClick);
-      root.removeEventListener("click", handleExamOptionClick);
-      root.removeEventListener("click", handleSubmitExamBtnClick);
+      root.removeEventListener("keydown", handleKeyDown);
       root.removeEventListener("change", handleCheckboxChange);
       root.removeEventListener("change", handleFtScoreChange);
+      cleanupExamEngine();
       if (timerRef.current) {
         clearInterval(timerRef.current);
         timerRef.current = null;
       }
       document.body.classList.remove("pr-cand", "pr-role", "pr-obs", "pr-all");
     };
-  }, [unit, courseSlug, locale, router, nextUnit]);
+  }, [unit, courseSlug, locale, router, nextUnit, outline]);
 
   if (isLoading) {
     return (

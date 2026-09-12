@@ -467,11 +467,31 @@ html[data-theme="dark"] .casc-experience section h2 {
   align-items: center;
   text-decoration: none;
   color: inherit;
-  transition: background 0.15s ease;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
 }
 
 .casc-experience .srow:hover {
   background: var(--tint);
+}
+
+.casc-experience .srow:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: -2px;
+  background: var(--tint);
+}
+
+.casc-experience .srow:hover .chip {
+  filter: brightness(0.96);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(20, 42, 73, 0.12);
+}
+
+.casc-experience .srow:active {
+  transform: scale(0.995);
 }
 
 .casc-experience .srow:first-child {
@@ -1499,10 +1519,22 @@ html[data-theme="dark"] .casc-experience .done h2 {
   /* When printing card(s), hide all non-card sections, headers, and panels */
   body:is(.pr-cand, .pr-role, .pr-obs, .pr-all) header,
   body:is(.pr-cand, .pr-role, .pr-obs, .pr-all) #examPanel,
-  body:is(.pr-cand, .pr-role, .pr-obs, .pr-all) .casc-experience section:not(.casc-packs-section):not(:has(#packs)),
-  body:is(.pr-cand, .pr-role, .pr-obs, .pr-all) #learnPanel > section:not(.casc-packs-section):not(:has(#packs)),
-  body:is(.pr-cand, .pr-role, .pr-obs, .pr-all) .casc-experience .casc-packs-section .wrap > *:not(#packs),
-  body:is(.pr-cand, .pr-role, .pr-obs, .pr-all) .casc-experience section:has(#packs) .wrap > *:not(#packs) {
+  body:is(.pr-cand, .pr-role, .pr-obs, .pr-all)
+    .casc-experience
+    section:not(.casc-packs-section):not(:has(#packs)),
+  body:is(.pr-cand, .pr-role, .pr-obs, .pr-all)
+    #learnPanel
+    > section:not(.casc-packs-section):not(:has(#packs)),
+  body:is(.pr-cand, .pr-role, .pr-obs, .pr-all)
+    .casc-experience
+    .casc-packs-section
+    .wrap
+    > *:not(#packs),
+  body:is(.pr-cand, .pr-role, .pr-obs, .pr-all)
+    .casc-experience
+    section:has(#packs)
+    .wrap
+    > *:not(#packs) {
     display: none !important;
   }
 
@@ -1684,4 +1716,3 @@ html[data-theme="dark"] .casc-experience .done h2 {
     color: #071326 !important;
   }
 }
-

@@ -35,24 +35,51 @@ export default function SubscribeButton({
   const subscribe = useSubscribeToCourse();
 
   const completeSubscription = useCallback(async () => {
-    const result = await subscribe.mutateAsync(pathway);
-    await Promise.all([
-      queryClient.invalidateQueries({
-        queryKey: academyQueryKeys.currentUser,
-      }),
-      queryClient.invalidateQueries({
+    try {
+      const result = await subscribe.mutateAsync(pathway);
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: academyQueryKeys.currentUser,
+        }),
+        queryClient.invalidateQueries({
+          queryKey: academyQueryKeys.enrolledCourses,
+        }),
+      ]);
+
+      if (onSuccess) {
+        onSuccess();
+      }
+
+      if (autoRedirect) {
+        router.push(
+          `/${locale}/academy/courses/${pathway}/learn/${result.firstUnitSlug ?? "start-here"}`,
+        );
+      }
+    } catch (err: unknown) {
+      await queryClient.invalidateQueries({
         queryKey: academyQueryKeys.enrolledCourses,
-      }),
-    ]);
+      });
 
-    if (onSuccess) {
-      onSuccess();
-    }
+      const message =
+        err instanceof Error ? err.message : String(err ?? "");
+      const isAlreadySubscribed =
+        message.includes("already_subscribed") ||
+        (typeof err === "object" &&
+          err !== null &&
+          "status" in err &&
+          (err as { status: number }).status === 409);
 
-    if (autoRedirect) {
-      router.push(
-        `/${locale}/academy/courses/${pathway}/learn/${result.firstUnitSlug ?? "start-here"}`,
-      );
+      if (isAlreadySubscribed) {
+        if (onSuccess) {
+          onSuccess();
+        }
+        if (autoRedirect) {
+          router.push(`/${locale}/academy/courses/${pathway}/learn/start-here`);
+        }
+        return;
+      }
+
+      console.error("[SubscribeButton] Subscription error:", err);
     }
   }, [
     autoRedirect,

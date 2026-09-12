@@ -36,3 +36,18 @@ export const signUpSchema = signInSchema.extend({
 
 export type SignInInput = z.infer<typeof signInSchema>;
 export type SignUpInput = z.infer<typeof signUpSchema>;
+
+export const sendOtpSchema = z.object({
+  phone: z.string().trim().min(6).max(32),
+  emailOrUsername: z.string().trim().min(3).max(254),
+});
+
+export const resetPasswordSchema = z.object({
+  phone: z.string().trim().min(6).max(32),
+  emailOrUsername: z.string().trim().min(3).max(254),
+  code: z.string().trim().min(4).max(10),
+  newPassword: password,
+});
+
+export type SendOtpInput = z.infer<typeof sendOtpSchema>;
+export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;

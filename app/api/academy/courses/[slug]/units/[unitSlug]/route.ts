@@ -41,5 +41,57 @@ export async function GET(
       { error: `Unit ${unitSlug} was not found in ${slug}.` },
       { status: 404 },
     );
+
+  // Attach correct answers from private.question_answer_keys using admin client if available
+  try {
+    const { createAdminClient } = await import("@/lib/supabase/admin");
+    const admin = createAdminClient();
+
+    type Opt = { id: string; is_correct?: boolean };
+    type Ques = { id: string; correct_option_id?: string; answer_options?: Opt[] };
+    type Assess = { assessment_questions?: Ques[] };
+    type KeyRow = { question_id: string; correct_option_id: string };
+
+    const assessments = (data.assessments as Assess[]) ?? [];
+    const questionIds: string[] = [];
+    assessments.forEach((ass) => {
+      (ass.assessment_questions ?? []).forEach((q) => {
+        if (q.id) questionIds.push(q.id);
+      });
+    });
+
+    if (questionIds.length > 0) {
+      const { data: keys } = await (admin as unknown as {
+        from: (t: string) => {
+          select: (c: string) => {
+            in: (col: string, ids: string[]) => Promise<{ data: KeyRow[] | null }>;
+          };
+        };
+      })
+        .from("question_answer_keys")
+        .select("question_id, correct_option_id")
+        .in("question_id", questionIds);
+
+      if (keys && Array.isArray(keys)) {
+        const keyMap = new Map<string, string>(
+          keys.map((k) => [k.question_id, k.correct_option_id]),
+        );
+        assessments.forEach((ass) => {
+          (ass.assessment_questions ?? []).forEach((q) => {
+            const correctOptId = keyMap.get(q.id);
+            if (correctOptId) {
+              q.correct_option_id = correctOptId;
+              (q.answer_options ?? []).forEach((opt) => {
+                opt.is_correct = opt.id === correctOptId;
+              });
+            }
+          });
+        });
+      }
+    }
+  } catch {
+    // Non-fatal: fallback to source_key / embedded station defaults
+  }
+
   return NextResponse.json({ data });
 }

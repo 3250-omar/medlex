@@ -15,21 +15,26 @@ export function isApiError(error: unknown): error is ApiError {
 type ApiResponse<T> = {
   data?: T;
   error?: string;
+  success?: boolean;
 };
 
 async function readApiResponse<T>(response: Response): Promise<T> {
-  const body = (await response
-    .json()
-    .catch(() => null)) as ApiResponse<T> | null;
+  const body = (await response.json().catch(() => null)) as
+    | (ApiResponse<T> & Record<string, unknown>)
+    | null;
 
-  if (!response.ok || body?.data === undefined) {
+  if (!response.ok) {
     throw new ApiError(
       body?.error ?? "Unable to complete the request.",
       response.status,
     );
   }
 
-  return body.data;
+  if (body?.data !== undefined) {
+    return body.data;
+  }
+
+  return body as unknown as T;
 }
 
 export async function apiRequest<T>(

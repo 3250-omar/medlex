@@ -225,6 +225,40 @@ export interface Database {
         >;
         Relationships: [];
       };
+      contacts_requests: {
+        Row: {
+          id: number;
+          full_name: string;
+          gmail: string;
+          phone: string;
+          professional_role: string | null;
+          organisation: string | null;
+          pathway: string;
+          notes: string | null;
+          locale: string;
+          status: "pending" | "responded" | "ignored";
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: number;
+          full_name: string;
+          gmail: string;
+          phone: string;
+          professional_role?: string | null;
+          organisation?: string | null;
+          pathway: string;
+          notes?: string | null;
+          locale?: string;
+          status?: "pending" | "responded" | "ignored";
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<
+          Database["public"]["Tables"]["contacts_requests"]["Insert"]
+        >;
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: {

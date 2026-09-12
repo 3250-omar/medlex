@@ -189,7 +189,7 @@
       {
         "title": "The CASC Academy",
         "audience": "For MRCPsych CASC candidates worldwide",
-        "description": "An interactive digital preparation platform that mirrors the real examination — designed by an accredited Royal College CASC examiner",
+        "description": "An interactive digital preparation platform that mirrors the real examination — designed by an former Royal College CASC examiner",
         "features": [
           "Self-paced online",
           "English only",
@@ -327,6 +327,8 @@
       "fields": {
         "fullName": "Full Name",
         "email": "Email",
+        "phone": "Phone Number",
+        "phonePlaceholder": "e.g. +20 101 234 5678",
         "professionalRole": "Professional Role",
         "organisation": "Organisation (Optional)",
         "pathway": "Pathway of Interest",
@@ -495,7 +497,24 @@
       "examDate": "Select a valid exam date"
     },
     "examDate": "Exam date",
-    "examDatePlaceholder": "Select your exam date"
+    "examDatePlaceholder": "Select your exam date",
+    "forgotPassword": "Forgot your password?",
+    "resetPassword": "Reset Password",
+    "resetPasswordDescription": "Confirm your registered phone and account to receive a secure verification code via email.",
+    "registeredPhone": "Registered Phone Number",
+    "accountIdentifier": "Email or Username",
+    "sendOtpCode": "Send Verification Code",
+    "sendWhatsAppCode": "Send Verification Code",
+    "verificationCode": "Email Verification Code",
+    "verificationCodePlaceholder": "6-digit code (e.g. 123456)",
+    "openWhatsApp": "Open Chat",
+    "resendOtpCode": "Resend Code",
+    "resendWhatsAppCode": "Resend Code",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm New Password",
+    "resetSubmit": "Verify & Update Password",
+    "resetSuccess": "Your password has been reset successfully. Please sign in with your new password.",
+    "backToSignIn": "Back to sign in"
   },
   "pathwayPages": {
     "labels": {

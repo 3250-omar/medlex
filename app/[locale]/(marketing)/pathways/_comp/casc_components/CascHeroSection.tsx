@@ -32,9 +32,9 @@ export default function CascHeroSection({
       </div>
 
       <div className="relative z-10 mx-auto w-full px-6 sm:px-8 lg:max-w-6xl lg:px-10">
-        <p className="kicker text-gold">
+        {/* <p className="kicker text-gold">
           The CASC Academy · by MedLex Foundations
-        </p>
+        </p> */}
         <h1 className="mt-4 max-w-4xl font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.12] text-white">
           Learn the CASC from the examiner’s side of the table.
         </h1>
