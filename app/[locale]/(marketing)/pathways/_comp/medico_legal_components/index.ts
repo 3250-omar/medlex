@@ -1,0 +1,10 @@
+export { default as MedicoLegalHeroSection } from "./MedicoLegalHeroSection";
+export { default as MedicoLegalAudienceSection } from "./MedicoLegalAudienceSection";
+export { default as MedicoLegalLevelsSection } from "./MedicoLegalLevelsSection";
+export { default as MedicoLegalFlagshipSection } from "./MedicoLegalFlagshipSection";
+export { default as MedicoLegalTwoAudiencesSection } from "./MedicoLegalTwoAudiencesSection";
+export { default as MedicoLegalFounderSection } from "./MedicoLegalFounderSection";
+export { default as MedicoLegalGiftSection } from "./MedicoLegalGiftSection";
+export { default as MedicoLegalWaitlistSection } from "./MedicoLegalWaitlistSection";
+export { default as MedicoLegalFaqSection } from "./MedicoLegalFaqSection";
+export { default as MedicoLegalClosingBannerSection } from "./MedicoLegalClosingBannerSection";

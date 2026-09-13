@@ -740,6 +740,257 @@
         "body": "The programmes are built for the real decisions that arrive once clinical expertise is no longer the whole job",
         "action": "About the founder"
       }
+    },
+    "medicoLegalLanding": {
+      "hero": {
+        "headline": "Where medicine is asked to <em>answer</em> to the court",
+        "answer": "answer",
+        "lead": "Structured, practice-based education for psychiatrists, psychologists and legal professionals — from a first forensic report to an opinion that stands up under cross-examination.",
+        "deliveryLabel": "Delivery",
+        "deliveryValue": "Live interactive online",
+        "languagesLabel": "Languages",
+        "languagesValue": "English · Arabic",
+        "statusLabel": "Status",
+        "statusValue": "Waitlist open",
+        "joinWaitlist": "Join the waitlist",
+        "flagshipBtn": "The flagship programme",
+        "badgeNumber": "4",
+        "badgeText": "Progressive levels, from a single masterclass to advanced certification",
+        "ticker": [
+          "WRITING PSYCHIATRIC EVIDENCE",
+          "COURT-READY REPORTING STANDARDS",
+          "CAPACITY ASSESSMENT",
+          "CRIMINAL RESPONSIBILITY",
+          "EXPERT WITNESS TESTIMONY",
+          "RISK FORMULATION FOR THE COURT",
+          "CROSS-EXAMINATION",
+          "FOURTEEN FOUNDATION MASTERCLASSES"
+        ],
+        "eyebrow": "MEDLEX · PATHWAY 01 · MEDICO-LEGAL EDUCATION"
+      },
+      "audience": {
+        "kicker": "Core Purpose & Alignment",
+        "title": "A clinical opinion and a legal finding are not the same document",
+        "lead": "Most psychiatric reports entering court were never written for court. This pathway exists to close that gap — from both ends.",
+        "p1": "The method is deliberately unglamorous: defined questions, documented reasoning, traceable sources, and conclusions stated at the confidence the evidence supports. That structure is what makes an opinion admissible — and what protects the clinician who signed it.",
+        "p2": "Nothing is imported wholesale. Programmes are built around the legal frameworks practitioners actually appear under, then aligned with international forensic standards.",
+        "quote": "“We’re not just training psychiatrists — we’re building the professional standard where clinical expertise becomes court-admissible evidence”",
+        "quoteCite": "MISSION · MEDLEX SOLUTIONS",
+        "cardTitle": "Who this pathway is for",
+        "items": [
+          {
+            "role": "Psychiatrists",
+            "description": "Receiving legal referrals and needing a report structure that holds under cross-examination."
+          },
+          {
+            "role": "Psychologists",
+            "description": "Working in court-directed assessment and needing a documented methodology."
+          },
+          {
+            "role": "Trainees",
+            "description": "Building forensic competence early, and in the right order."
+          },
+          {
+            "role": "Legal professionals",
+            "description": "Reading psychiatric reports, testing them, and instructing experts well."
+          }
+        ],
+        "note": "Designed for professionals who receive the questions courts ask. Not for the general public."
+      },
+      "levels": {
+        "kicker": "Progressive Competency Architecture",
+        "title": "Four levels. Each one prepares you for the next.",
+        "lead": "A progressive framework built on recognised professional competency frameworks, so that learning is consistent, cumulative and measurable. Enter at the level that matches your practice.",
+        "badgeNumber": "4",
+        "badgeText": "Progressive levels, from a single masterclass to advanced certification",
+        "items": [
+          {
+            "num": "Level 1",
+            "badge": "Foundation Entry",
+            "title": "Foundation Masterclasses",
+            "meta": "Single topic · 3–6 hours · CPD-focused",
+            "description": "Fourteen masterclasses already designed across three core themes — the structured entry point to the pathway. Each takes one question a court asks and teaches the reasoning behind a defensible answer."
+          },
+          {
+            "num": "Level 2",
+            "badge": "Primary Offering",
+            "title": "Professional Skills Programmes",
+            "meta": "Multi-session · 10–14 hours · materials and assignments between sessions",
+            "description": "Practical skills development and the pathway's primary offering. Four to six workshops around a single simulated case, with work produced between sessions and reviewed in the next. Home of Writing Psychiatric Evidence."
+          },
+          {
+            "num": "Level 3",
+            "badge": "Comprehensive",
+            "title": "Foundations of Forensic Psychiatry & Medico-Legal Practice",
+            "meta": "Three-month blended programme",
+            "description": "Structured professional competence across the medico-legal field: assessment, formulation, report writing, and giving evidence — with supervision and assessed work throughout."
+          },
+          {
+            "num": "Level 4",
+            "badge": "Future Pathway",
+            "title": "Advanced Professional Certification",
+            "meta": "Twelve-month programme · future pathway",
+            "description": "The advanced specialist pathway, built in sequence once the earlier levels are established: supervised casework, assessed reports, and a portfolio of practice."
+          }
+        ]
+      },
+      "flagship": {
+        "badge": "Flagship programme · Level 2",
+        "title": "Writing Psychiatric Evidence",
+        "caseFileKicker": "Simulated Forensic Case File",
+        "caseFileName": "MLC-100 · The Train Fire Case",
+        "lead": "Eight modules across two live teaching days, separated by a structured two-week practical assignment. Participants leave having produced a complete psychiatric medico-legal report.",
+        "facts": [
+          {
+            "title": "One case, start to finish.",
+            "body": "The whole programme works on a single simulated medico-legal case file, MLC-100, with eight professionally developed documents — no unrelated examples."
+          },
+          {
+            "title": "Applied, not theoretical.",
+            "body": "Participants move from analysing the case material to writing the report using a structured professional methodology."
+          },
+          {
+            "title": "The full package.",
+            "body": "Educational framework, report-writing checklist, pre-course reading, session summaries, between-session assignments, self-assessment tools, the complete case file and a model psychiatric report."
+          },
+          {
+            "title": "Bilingual.",
+            "body": "Delivered in English and Arabic, each written natively."
+          }
+        ],
+        "joinWaitlist": "Join the waitlist",
+        "brochure": "Programme brochure"
+      },
+      "twoAudiences": {
+        "kicker": "Targeted Professional Streams",
+        "title": "One knowledge base. Two professional audiences.",
+        "lead": "The content is developed once and adapted for the people who use it. The knowledge, principles and case material are the same; only the language, emphasis and examples change.",
+        "clinicians": {
+          "title": "For clinicians",
+          "description": "Psychiatrists, psychologists and trainees learn to answer the legal question as a clinician: what the court is actually asking, what the evidence supports, how to write it so it survives challenge, and how to give it in the witness box.",
+          "tag": "Assessment · Formulation · Report · Evidence"
+        },
+        "legal": {
+          "title": "For legal professionals",
+          "description": "Judges, prosecutors and counsel learn to read a psychiatric report critically: what a sound opinion looks like, where reports typically fail, how to instruct an expert well, and how to test the evidence in cross-examination.",
+          "tag": "Instruction · Reading · Testing · Cross-examination"
+        }
+      },
+      "founder": {
+        "kicker": "Forensic Leadership & Integrity",
+        "title": "Built by someone who has been cross-examined",
+        "lead": "Every programme in this pathway is written and taught by a UK-trained Consultant Forensic Psychiatrist whose own opinions have been examined before Mental Health Tribunals, Magistrates' and Crown Courts, and the Parole Board.",
+        "name": "Dr Ahmed Abouelghit",
+        "role": "Consultant Forensic Psychiatrist · Founder and Programme Director",
+        "profileLink": "Read the full profile →",
+        "principles": [
+          {
+            "title": "Court-tested, not textbook",
+            "description": "The failures the programmes teach around are the ones that actually happen in hearings: the undefined question, the missing reasoning, the conclusion that went further than the evidence.",
+            "tag": "Tribunal · Magistrates' · Crown Court · Parole Board"
+          },
+          {
+            "title": "Built for the jurisdiction",
+            "description": "International forensic standards applied to the legal frameworks practitioners here actually appear under — UK, Egyptian and Gulf — so what is taught can be used on Monday.",
+            "tag": "Local frameworks · International standards"
+          },
+          {
+            "title": "A documented method",
+            "description": "Defined questions, documented reasoning, traceable sources, calibrated conclusions. A method the clinician can explain and stand behind when it is challenged.",
+            "tag": "Admissible · Defensible"
+          },
+          {
+            "title": "Recognition built in sequence",
+            "description": "Academic partnerships and supervision protocols are being developed step by step, so that recognition follows the quality of the work rather than preceding it. No claims made before they are true.",
+            "tag": "Toward accreditation"
+          }
+        ]
+      },
+      "gift": {
+        "tag": "Your free gift",
+        "title": "Register your email to receive your free gift",
+        "lead": "Ten Reasons Psychiatric Reports Fail in Court — the ten most common mistakes that stop a good clinical report from being useful in court, and what to do differently in each case. Written by a Consultant Forensic Psychiatrist who has been on the receiving end of the questions.",
+        "bookBrand": "MEDLEX",
+        "bookKicker": "Free Forensic Guide",
+        "bookTitle": "Ten Reasons Psychiatric Reports Fail in Court",
+        "bookFoot": "Where Medicine Meets Justice",
+        "inputPlaceholder": "Your professional email",
+        "buttonText": "Send me the guide",
+        "sendingText": "Sending...",
+        "note": "Sent immediately. You will hear about the Medico-Legal pathway only — no general mailings.",
+        "successTitle": "Guide sent to your email!",
+        "successDesc": "Please check your inbox at {email}. If you don't see it, please check your spam or promotions folder."
+      },
+      "waitlist": {
+        "kicker": "Advance Priority Access",
+        "title": "Join the waitlist",
+        "lead": "Dates for the next Writing Psychiatric Evidence cohort and the first Foundation Masterclasses will be sent to the waitlist first. You will hear about this pathway only — no general mailings, no commitment.",
+        "nameLabel": "Full name",
+        "namePlaceholder": "e.g. Dr Sarah Jenkins",
+        "emailLabel": "Professional email",
+        "emailPlaceholder": "name@institution.nhs.uk",
+        "professionLabel": "Profession",
+        "professions": {
+          "psychiatrist": "Psychiatrist",
+          "psychologist": "Psychologist",
+          "trainee": "Psychiatry trainee",
+          "legal": "Legal professional",
+          "other": "Other"
+        },
+        "buttonText": "Join the waitlist",
+        "reservingText": "Reserving your place...",
+        "privacyNote": "Zero spam. Strict adherence to professional privacy standards.",
+        "successTitle": "You're on the priority waitlist!",
+        "successDesc": "Thank you, {name}. We have reserved your place for {profession} priority notifications. You will receive cohort dates and curriculum outlines directly to {email} before public release."
+      },
+      "faq": {
+        "kicker": "Clarity & Expectations",
+        "title": "Questions.",
+        "items": [
+          {
+            "q": "Who is this pathway for?",
+            "a": "Psychiatrists and psychologists who write, or expect to write, for courts and tribunals; psychiatry trainees building forensic competence; and legal professionals who instruct, read and test psychiatric evidence. It is not designed for the general public."
+          },
+          {
+            "q": "What is available now?",
+            "a": "The pathway is taking a waitlist. The first cohort of Writing Psychiatric Evidence and the opening Foundation Masterclasses will be announced to the waitlist before anywhere else."
+          },
+          {
+            "q": "How are programmes delivered?",
+            "a": "Live and interactive, online. Masterclasses run as single sessions of three to six hours; skills programmes run across several sessions with assignments in between; the three-month programme blends live teaching with supervised work."
+          },
+          {
+            "q": "Is it in English or Arabic?",
+            "a": "Both. Each programme is delivered in English and in Arabic as separate, natively written versions — not a translation of one into the other."
+          },
+          {
+            "q": "Do I need to be in the UK, Egypt or Qatar?",
+            "a": "No. Online delivery is open worldwide. Where a face-to-face element is offered, its location and dates are stated on the programme page."
+          },
+          {
+            "q": "Is the pathway accredited or CPD-certified?",
+            "a": "Programmes are independent and not currently accredited by any college or regulator. Certificates of completion are issued. Formal CPD recognition and accreditation are being developed in sequence and will be stated clearly on each programme page once in place."
+          },
+          {
+            "q": "Does MedLex provide expert reports or legal advice?",
+            "a": "This pathway is education. MedLex does not provide legal advice and does not act for individuals in their own legal matters. Institutional training and advisory work is described on the Institutional page."
+          }
+        ]
+      },
+      "closing": {
+        "kicker": "Begin Your Progression",
+        "title": "One clear step",
+        "lead": "Join the waitlist for the Medico-Legal Education pathway. You hear about this pathway alone, and you hear first.",
+        "links": {
+          "flagshipTitle": "Writing Psychiatric Evidence",
+          "flagshipBadge": "Flagship · Level 2",
+          "masterclassesTitle": "Foundation Masterclasses",
+          "masterclassesBadge": "Level 1 · 14 Designed",
+          "institutionalTitle": "Institutional Training",
+          "institutionalBadge": "Advisory & Training"
+        },
+        "buttonText": "Join the waitlist"
+      }
     }
   },
   "profile": {
