@@ -14,7 +14,7 @@ const PATHWAYS = [
     href: "/pathways/medico-legal",
     courseSlug: "medico-legal",
     audienceClass: "text-gold",
-    featureStates: [true, true, false],
+    featureStates: [true, true, true],
   },
   {
     href: "/pathways/casc-academy",
@@ -26,7 +26,7 @@ const PATHWAYS = [
     href: "/pathways/foundations",
     courseSlug: "foundations",
     audienceClass: "text-white/55",
-    featureStates: [false, false, false],
+    featureStates: [true, true, true],
   },
 ] as const;
 
@@ -114,11 +114,22 @@ export default function PathwaysSection() {
                       <span className="font-serif text-base font-bold text-gold">
                         {String(pathwayIndex + 1).padStart(2, "0")}
                       </span>
-                      {isEnrolled && (
-                        <span className="border border-gold/50 bg-gold/15 px-3 py-1 font-sans text-[10px] uppercase tracking-[0.16em] text-gold font-semibold rounded-full">
-                          {t("pathways.enrolled")}
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`rounded px-2.5 py-0.5 font-sans text-[10px] uppercase tracking-wider font-semibold ${
+                            pathwayIndex === 1
+                              ? "border border-emerald-400/40 bg-emerald-500/15 text-emerald-300"
+                              : "border border-gold/40 bg-gold/15 text-gold"
+                          }`}
+                        >
+                          {t(`pathwayCards.${pathwayIndex}.status`)}
                         </span>
-                      )}
+                        {isEnrolled && (
+                          <span className="border border-gold/50 bg-gold/15 px-3 py-1 font-sans text-[10px] uppercase tracking-[0.16em] text-gold font-semibold rounded-full">
+                            {t("pathways.enrolled")}
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <h3 className="mb-2 font-serif text-2xl font-bold text-white leading-snug">
                       {t(`pathwayCards.${pathwayIndex}.title`)}

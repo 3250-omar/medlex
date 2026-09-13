@@ -165,13 +165,20 @@ export default function HeroSection({ locale }: HeroSectionProps) {
                   {t("answer")}
                 </em>
               </span>
-              <span className="hero-title-line">{t("line3")}</span>
+              {t("line3") ? (
+                <span className="hero-title-line">{t("line3")}</span>
+              ) : null}
             </h1>
 
             {/* Body */}
-            <p className="hero-lede mb-8 max-w-[62ch] font-sans text-[18px] md:text-[20px] leading-[1.7] text-lbody">
+            <p className="hero-lede mb-3 max-w-[62ch] font-sans text-[18px] md:text-[20px] leading-[1.7] text-lbody">
               {t("body")}
             </p>
+            {t("sub") ? (
+              <p className="hero-sub mb-8 max-w-[62ch] font-sans text-[15px] md:text-[16px] leading-[1.6] text-lbody/75">
+                {t("sub")}
+              </p>
+            ) : null}
 
             {/* CTAs */}
             <div className="flex flex-wrap items-center justify-start gap-4">

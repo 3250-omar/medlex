@@ -84,7 +84,7 @@ export default async function Footer({ locale }: { locale: string }) {
           </nav>
         </div>
         <div className="mt-12 flex flex-col justify-between gap-4 border-t border-white/10 pt-6 font-body text-xs text-mute sm:flex-row sm:items-center">
-          <p>MedLex Foundations · medlexsolutions.com</p>
+          <p>MedLex Solutions · medlexsolutions.com</p>
           <p>{t("disclaimer")}</p>
         </div>
       </div>

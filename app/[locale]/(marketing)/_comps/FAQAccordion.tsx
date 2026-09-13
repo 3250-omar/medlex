@@ -44,7 +44,7 @@ export default function FAQAccordion({
             className={cn(
               "group/item rounded-2xl transition-all duration-300 overflow-hidden",
               isDark
-                ? "border border-white/10 bg-navy/60 backdrop-blur-sm shadow-lg hover:border-gold/40 hover:bg-navy/80"
+                ? "border border-white/10 !bg-navy/60 backdrop-blur-sm shadow-lg hover:border-gold/40 hover:!bg-navy/80 "
                 : "border border-slate-200/90 bg-white shadow-[0_2px_12px_-3px_rgba(20,42,73,0.06)] hover:border-gold/60 hover:shadow-[0_6px_20px_-4px_rgba(212,175,55,0.15)]",
               itemClassName,
             )}
@@ -60,7 +60,7 @@ export default function FAQAccordion({
                 {showNumber && (
                   <span
                     className={cn(
-                      "flex size-9 sm:size-10 shrink-0 items-center justify-center rounded-xl border border-gold/30 bg-gold/10 font-serif text-sm sm:text-base font-bold text-gold transition-colors duration-200 group-hover:bg-gold group-hover:text-navy",
+                      "flex size-9 sm:size-10 shrink-0 items-center justify-center rounded-xl border border-gold/30 bg-gold/10 font-serif text-sm sm:text-base font-bold text-gold transition-colors duration-200 group-hover:bg-gold group-hover:!text-navy",
                       numberClassName,
                     )}
                   >

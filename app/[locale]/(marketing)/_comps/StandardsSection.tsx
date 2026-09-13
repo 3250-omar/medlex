@@ -1,27 +1,6 @@
 import { useTranslations } from "next-intl";
 
-const STANDARDS = [
-  {
-    title: "First-mover, by construction",
-    description:
-      "The region's first specialised forensic psychiatry centre. We are not following a model - we are writing the one others will be measured against.",
-  },
-  {
-    title: "UK-trained, court-tested leadership",
-    description:
-      "Led by a Consultant Forensic Psychiatrist whose opinion has been examined in tribunals, Magistrates' and Crown Courts, and before the Parole Board.",
-  },
-  {
-    title: "A recognition pathway, not a certificate",
-    description:
-      "Academic partnerships, supervision protocols, and judicial collaboration, built in sequence toward sustainable professional accreditation.",
-  },
-  {
-    title: "Built from live cases",
-    description:
-      "Every module derives from actual court requirements and real legal frameworks - the failures we teach around are ones that happened in hearings.",
-  },
-] as const;
+const STANDARDS = [0, 1, 2, 3] as const;
 
 export default function StandardsSection() {
   const t = useTranslations("home");
@@ -41,7 +20,7 @@ export default function StandardsSection() {
           <div>
             <h2
               id="standards-heading"
-              className="max-w-4xl font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.12] text-navy!"
+              className="max-w-4xl font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.12] !text-navy"
             >
               {t("standards.title")}
             </h2>
@@ -52,21 +31,24 @@ export default function StandardsSection() {
         </div>
 
         <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-4">
-          {STANDARDS.map((standard, index) => (
+          {STANDARDS.map((index) => (
             <article
-              key={t(`standards.items.${STANDARDS.indexOf(standard)}.0`)}
+              key={index}
               className="border-t-2 border-gold pt-6 flex flex-col justify-between"
             >
               <div>
                 <span className="font-serif text-2xl font-bold text-gold block mb-3">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <h3 className="font-serif text-xl font-bold text-navy leading-snug mb-3">
-                  {t(`standards.items.${STANDARDS.indexOf(standard)}.0`)}
+                <h3 className="font-serif text-xl font-bold !text-navy leading-snug mb-3">
+                  {t(`standards.items.${index}.0`)}
                 </h3>
                 <p className="font-sans text-[15px] leading-relaxed text-grey">
-                  {t(`standards.items.${STANDARDS.indexOf(standard)}.1`)}
+                  {t(`standards.items.${index}.1`)}
                 </p>
+              </div>
+              <div className="mt-6 pt-4 border-t border-hair font-sans text-xs font-semibold uppercase tracking-wider text-goldd">
+                {t(`standards.items.${index}.2`)}
               </div>
             </article>
           ))}

@@ -919,7 +919,8 @@ html.dark h6 {
 
 /* Gift button hover animation */
 @keyframes gift-wiggle {
-  0%, 100% {
+  0%,
+  100% {
     transform: rotate(0deg) scale(1);
   }
   20% {

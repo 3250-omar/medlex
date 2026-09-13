@@ -55,9 +55,14 @@ export default function FlagshipCourseSection({
             className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,.8fr)] lg:gap-12 items-center"
           >
             <div>
+              <div className="mb-3">
+                <span className="rounded border border-gold/40 bg-gold/10 px-3 py-1 font-sans text-xs font-semibold uppercase tracking-wider text-gold">
+                  {t("flagship.status")}
+                </span>
+              </div>
               <h2
                 id="flagship-heading"
-                className="max-w-3xl font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.12] text-navy!"
+                className="max-w-3xl font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.12] !text-navy"
               >
                 {t("flagship.title")}
               </h2>

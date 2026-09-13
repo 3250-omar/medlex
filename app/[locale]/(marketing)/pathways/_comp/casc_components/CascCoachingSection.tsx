@@ -13,7 +13,7 @@ export default function CascCoachingSection({ locale }: Props) {
         <div className="flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-12 xl:gap-16 max-w-6xl mx-auto">
           {/* Coaching Information Card */}
           <div className="w-full lg:w-1/2 max-w-xl border border-hair rounded-2xl p-8 sm:p-10 bg-white shadow-sm">
-            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-navy!">
+            <h3 className="font-serif text-2xl sm:text-3xl font-bold !text-navy">
               If a weakness will not shift
             </h3>
             <p className="mt-3 font-sans text-sm sm:text-base leading-relaxed text-char/80">
@@ -27,7 +27,7 @@ export default function CascCoachingSection({ locale }: Props) {
 
             <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-6 py-4 border-y border-hair">
               <div>
-                <b className="font-serif text-base font-semibold text-navy! block mb-1">
+                <b className="font-serif text-base font-semibold !text-navy block mb-1">
                   One to one, 60 minutes
                 </b>
                 <span className="text-sm text-grey">
@@ -35,7 +35,7 @@ export default function CascCoachingSection({ locale }: Props) {
                 </span>
               </div>
               <div>
-                <b className="font-serif text-base font-semibold text-navy! block mb-1">
+                <b className="font-serif text-base font-semibold !text-navy block mb-1">
                   Small group, maximum three
                 </b>
                 <span className="text-sm text-grey">

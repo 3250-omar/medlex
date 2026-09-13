@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl";
 
 const AUDIENCE_KEYS = [
   "Psychiatrists",
+  "Psychologists",
   "Courts",
   "Prosecution",
   "Ministries",
@@ -70,10 +71,6 @@ export default function WhoWeAreSection() {
                 {t("who.mission")}
               </cite>
             </div>
-
-            <p className="font-sans text-[16px] leading-[1.75] text-char">
-              {t("who.paragraphs.2")}
-            </p>
 
             {/* Audience Badges */}
             <div className="flex flex-wrap gap-2.5 pt-4">

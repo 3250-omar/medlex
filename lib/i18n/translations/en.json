@@ -73,20 +73,40 @@
     "ctaLoggedIn": "Go to your courses",
     "items": [
       {
-        "question": "Who is this platform for?",
-        "answer": "MedLex is designed for psychiatrists, clinicians, legal professionals, and institutions working where mental health meets the law"
+        "question": "What is MedLex?",
+        "answer": "A professional education platform for psychiatrists, psychologists, trainees and clinical leaders, founded and led by a UK-trained Consultant Forensic Psychiatrist. It runs three pathways: medico-legal education, examination preparation through The CASC Academy, and professional development through MedLex Foundations."
       },
       {
-        "question": "What is the difference between the three pathways?",
-        "answer": "The pathways move from foundational concepts to practical report writing and advanced professional capability, so you can begin at the right level"
+        "question": "Who are the programmes for?",
+        "answer": "Psychiatrists and psychologists who write or may write for courts; MRCPsych CASC candidates and others sitting observed clinical examinations; and clinicians moving into leadership or building a career beyond the clinic. Each pathway states its audience on its own page."
       },
       {
-        "question": "What happens after I register my interest?",
-        "answer": "We will share the next available dates, course guidance, and early access information relevant to your interests"
+        "question": "Which programmes are available now?",
+        "answer": "The CASC Academy is open. Writing Psychiatric Evidence is taking a waitlist for its next cohort. The Foundations programmes are launching; you can register interest and hear when dates are set."
       },
       {
-        "question": "Are prices and dates published?",
-        "answer": "Course dates and pricing are published as each cohort opens. Register your interest to receive the announcement first"
+        "question": "Are the programmes accredited or CPD-certified?",
+        "answer": "Programmes are independent and are not currently accredited by any college or regulator. Certificates of completion are issued for The CASC Academy. Formal CPD and accreditation are planned as programmes mature and will be stated clearly on each programme page when in place."
+      },
+      {
+        "question": "Is MedLex connected to the Royal College of Psychiatrists?",
+        "answer": "No. MedLex is independent and is not endorsed by, affiliated with, or approved by the Royal College. The CASC Academy contains no College examination material; every station is an original, fictional construct."
+      },
+      {
+        "question": "Are programmes delivered in English or Arabic?",
+        "answer": "Medico-Legal Education and MedLex Foundations are delivered bilingually in English and Arabic. The CASC Academy is in English only, because the examination is."
+      },
+      {
+        "question": "Do I need to be in the UK, Egypt or Qatar?",
+        "answer": "No. Online programmes are open worldwide. Face-to-face elements, where offered, are stated on the programme page with location and dates."
+      },
+      {
+        "question": "Does MedLex provide expert opinions or advisory work for institutions?",
+        "answer": "Yes, on a selective basis. Institutional training and advisory work is described on the Institutional page. MedLex does not provide legal advice and does not act for individuals in their own legal matters."
+      },
+      {
+        "question": "How do I get in touch?",
+        "answer": "Register your interest for a pathway and you will hear about that pathway only. For institutional enquiries, use the Institutional page. For anything else, the contact page."
       }
     ]
   },
@@ -102,17 +122,19 @@
       "goToCourses": "Go to your courses",
       "joinCourses": "Join our courses",
       "pathways": "The three pathways",
-      "badge": "Educational pathways, one for each professional audience"
+      "badge": "Educational pathways, one for each professional audience",
+      "sub": "Three educational lines. One founder. One standard: precise, defensible, ready for the room it will be used in."
     },
     "pathways": {
       "enrolled": "Enrolled",
       "eyebrow": "Three Educational Pathways",
-      "title": "One platform. Three ways in",
-      "intro": "Each pathway has its own audience, its own pace, and its own next step. Choose the way in that belongs to you"
+      "title": "One platform. Three ways in.",
+      "intro": "Each pathway has its own audience, its own pace and its own next step. Choose the one that belongs to you."
     },
     "who": {
       "audiences": [
         "Psychiatrists",
+        "Psychologists",
         "Courts",
         "Prosecution",
         "Ministries",
@@ -137,20 +159,24 @@
     "standards": {
       "items": [
         [
-          "First-mover, by construction",
-          "The region’s first specialised forensic psychiatry centre. We are not following a model — we are writing the one others will be measured against"
+          "Built by a practitioner",
+          "Every programme is written and taught by the founder, a Consultant Forensic Psychiatrist still in practice — not licensed content, not franchised trainers. The experience behind each programme is the product.",
+          "All three pathways"
         ],
         [
-          "UK-trained, court-tested leadership",
-          "Led by a Consultant Forensic Psychiatrist whose opinion has been examined in tribunals, Magistrates’ and Crown Courts, and before the Parole Board"
+          "Built from the real situation",
+          "Programmes start from the moment the professional will actually face — the question a court has asked, the patient who says something unexpected at minute three, the meeting where a service decision is made — and work backwards to the skill.",
+          "Courtroom · Examination · Boardroom"
         ],
         [
-          "A recognition pathway, not a certificate",
-          "Academic partnerships, supervision protocols, and judicial collaboration, built in sequence toward sustainable professional accreditation"
+          "Built to produce something",
+          "Learners leave with work they have done, not notes they have taken: a complete medico-legal report, a station performed under time, a leadership plan for their own service. The output is the evidence of learning.",
+          "Report · Performance · Plan"
         ],
         [
-          "Built from live cases",
-          "Every module derives from actual court requirements and real legal frameworks — the failures we teach around are ones that happened in hearings"
+          "Built for two languages and many jurisdictions",
+          "English and Arabic written natively, never translated mechanically. International standards applied to the frameworks practitioners in the UK, Egypt and the Gulf actually work within — nothing imported wholesale.",
+          "English · Arabic"
         ]
       ],
       "title": "Authority. Structure. Recognition",
@@ -163,7 +189,8 @@
       "eyebrow": "Flagship Programme",
       "register": "Register your interest",
       "goToCourses": "Go to your courses",
-      "title": "Writing Psychiatric Evidence"
+      "title": "Writing Psychiatric Evidence",
+      "status": "Waitlist open"
     },
     "founder": {
       "name": "Dr Ahmed Abouelghit",
@@ -176,39 +203,70 @@
     },
     "pathwayCards": [
       {
+        "status": "Waitlist open",
         "title": "Medico-Legal Education",
-        "audience": "For psychiatrists, psychologists & legal professionals",
-        "description": "Four progressive tracks — from single-topic masterclasses to advanced certification — home of the flagship programme, Writing Psychiatric Evidence",
+        "audience": "For psychiatrists, psychologists and legal professionals",
+        "description": "A progressive framework in four levels — fourteen foundation masterclasses, professional skills programmes, a three-month blended programme and advanced certification. Home of the flagship programme, Writing Psychiatric Evidence.",
         "features": [
-          "Live interactive online",
-          "Bilingual EN · AR",
-          "Waitlist open"
+          "Live interactive online, cohort-based",
+          "Bilingual English and Arabic",
+          "One knowledge base, adapted for clinical and legal audiences"
         ],
         "link": "Explore the pathway"
       },
       {
+        "status": "Open now",
         "title": "The CASC Academy",
         "audience": "For MRCPsych CASC candidates worldwide",
-        "description": "An interactive digital preparation platform that mirrors the real examination — designed by an former Royal College CASC examiner",
+        "description": "A self-paced digital preparation library that mirrors the real examination — 43 stations across eight domains, each taken apart from the examiner's side of the table, with particular attention to international candidates.",
         "features": [
-          "Self-paced online",
+          "Self-paced online, 12 months' access",
           "English only",
-          "First to launch — ready"
+          "Interactive stations, not recorded lectures"
         ],
         "link": "Explore the Academy"
       },
       {
+        "status": "First programmes launching",
         "title": "MedLex Foundations",
         "audience": "For clinicians building careers beyond the clinic",
-        "description": "Professional development beyond clinical training — opening with The Clinician’s Edge and the Clinical Leadership Programme",
+        "description": "An expandable portfolio for the professional skills clinicians need throughout their careers but are rarely taught — opening with The Clinician's Edge and the Clinical Leadership Programme.",
         "features": [
-          "Online & face-to-face",
-          "Bilingual EN · AR",
-          "First programmes launching"
+          "Self-paced & live interactive",
+          "Bilingual English & Arabic",
+          "New programmes added continuously"
         ],
         "link": "Explore Foundations"
       }
-    ]
+    ],
+    "gifts": {
+      "title": "Register to receive your free gift",
+      "subtitle": "One resource per pathway. Enter your email and you will hear about that pathway only.",
+      "emailPlaceholder": "Your email",
+      "sendLabel": "Send it",
+      "sendingLabel": "Sending…",
+      "successMessage": "Thank you — check your inbox.",
+      "cards": {
+        "casc": {
+          "pathway": "The CASC Academy",
+          "title": "The Examiner's Briefing",
+          "description": "How the CASC is actually marked, the errors examiners see most often, and the grammar of a British consultation — written from the other side of the table, so you know what is being watched before you walk in."
+        },
+        "medicoLegal": {
+          "pathway": "Medico-Legal Education",
+          "title": "Ten Reasons Psychiatric Reports Fail in Court",
+          "description": "The ten most common mistakes that stop a good clinical report from being useful in court — unclear questions, missing reasoning, conclusions that go further than the evidence — and what to do differently in each case."
+        },
+        "foundations": {
+          "pathway": "MedLex Foundations",
+          "title": "The Clinician's Leadership Trap",
+          "description": "Why good clinicians struggle when they step into leadership — the habits that made them excellent at the bedside and quietly work against them in the meeting room — and the first practical shifts that change it."
+        }
+      }
+    },
+    "faq": {
+      "title": "Questions."
+    }
   },
   "founderPage": {
     "hero": {
