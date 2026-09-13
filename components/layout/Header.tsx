@@ -30,6 +30,7 @@ export default function Header() {
     pathname.includes("/academy/courses/") && pathname.includes("/learn/");
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [countdownDismissed, setCountdownDismissed] = useState(false);
   const [now, setNow] = useState(() => Date.now());
   const [countdownH, setCountdownH] = useState(72);
   const menuTriggerRef = useRef<HTMLButtonElement>(null);
@@ -48,6 +49,7 @@ export default function Header() {
     ? new Date(`${user.examDate}T00:00:00`).getTime() + 86_400_000
     : null;
   const shouldShowExamCountdown =
+    !countdownDismissed &&
     Boolean(user?.examDate) &&
     !pathname.includes("/academy/courses/") &&
     (examEndTime === null || now < examEndTime) &&
@@ -176,6 +178,7 @@ export default function Header() {
             examDate={user.examDate}
             course={coursesLoading ? undefined : currentCourse}
             isLoading={coursesLoading}
+            onDismiss={() => setCountdownDismissed(true)}
           />
         )}
         <div className="relative mx-auto flex h-[72px] w-full max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-10">

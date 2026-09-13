@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect, memo, useCallback } from "react";
 import Link from "next/link";
-import { CalendarDays, Play } from "lucide-react";
+import { CalendarDays, Play, X } from "lucide-react";
 import Counter from "@/components/Counter";
 import { useLocale, useTranslations } from "next-intl";
 import type { EnrolledCourse } from "@/app/[locale]/(marketing)/_apiCalls/academyQueries";
@@ -12,6 +12,7 @@ export interface ExamCountdownProps {
   course: EnrolledCourse | null | undefined;
   isLoading: boolean;
   containerRef?: React.RefObject<HTMLElement | null>;
+  onDismiss?: () => void;
 }
 
 export const ExamCountdown = memo(function ExamCountdown({
@@ -19,6 +20,7 @@ export const ExamCountdown = memo(function ExamCountdown({
   course,
   isLoading,
   containerRef,
+  onDismiss,
 }: ExamCountdownProps) {
   const [now, setNow] = useState(() => Date.now());
 
@@ -166,6 +168,15 @@ export const ExamCountdown = memo(function ExamCountdown({
             </div>
           </div>
         )}
+
+        <button
+          type="button"
+          onClick={onDismiss}
+          className="ms-1 sm:ms-2 shrink-0 rounded-full p-1 text-white/40 transition-colors hover:bg-white/10 hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50"
+          aria-label={locale === "ar" ? "إغلاق" : "Close"}
+        >
+          <X className="size-3.5 sm:size-4" aria-hidden="true" />
+        </button>
       </div>
     </section>
   );
