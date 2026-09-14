@@ -1131,18 +1131,25 @@
 }
 
 .medico-legal-landing .final .links a {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 12px;
   color: #fff;
   text-decoration: none;
   font-weight: 500;
   border-bottom: 1.5px solid var(--gold);
-  padding-bottom: 2px;
+  padding-bottom: 3px;
+  line-height: 1.45;
+  width: fit-content;
+  max-width: 100%;
 }
 
 .medico-legal-landing .final .links a span {
   color: var(--gold-soft);
   font-size: 13px;
-  margin-left: 8px;
   font-weight: 500;
+  white-space: nowrap;
 }
 
 /* ==========================================================================
@@ -1234,4 +1241,99 @@
   .medico-legal-landing .final .wrap {
     justify-content: flex-start;
   }
+}
+
+/* ==========================================================================
+   RTL (ARABIC) ADJUSTMENTS
+   ========================================================================== */
+[dir="rtl"] .medico-legal-landing {
+  text-align: right;
+}
+
+/* 1. HERO SECTION */
+[dir="rtl"] .medico-legal-landing .hero::before {
+  background: linear-gradient(
+    270deg,
+    rgba(10, 20, 40, 0.78) 0%,
+    rgba(10, 20, 40, 0.55) 50%,
+    rgba(10, 20, 40, 0.15) 100%
+  );
+}
+
+[dir="rtl"] .medico-legal-landing .hero .strip div {
+  border-right: 0;
+  border-left: 1px solid rgba(217, 192, 138, 0.35);
+}
+
+[dir="rtl"] .medico-legal-landing .hero .strip div:last-child {
+  border-left: 0;
+}
+
+/* 2. TICKER */
+[dir="rtl"] .medico-legal-landing .ticker li::after {
+  right: auto;
+  left: -3px;
+}
+
+/* 3. AUDIENCE SECTION BLOCKQUOTE */
+[dir="rtl"] .medico-legal-landing .what.who blockquote {
+  border-left: 0;
+  border-right: 3px solid var(--gold);
+  padding-left: 0;
+  padding-right: 26px;
+}
+
+/* 4. FLAGSHIP SECTION */
+[dir="rtl"] .medico-legal-landing .flag::before {
+  background: linear-gradient(
+    270deg,
+    rgba(251, 250, 246, 0.55) 0%,
+    rgba(251, 250, 246, 0.8) 45%,
+    rgba(251, 250, 246, 0.92) 100%
+  );
+}
+
+[dir="rtl"] .medico-legal-landing .facts li {
+  padding-left: 0;
+  padding-right: 22px;
+}
+
+[dir="rtl"] .medico-legal-landing .facts li::before {
+  left: auto;
+  right: 0;
+}
+
+/* 5. FREE GIFT BOOK COVER */
+[dir="rtl"] .medico-legal-landing .cover {
+  border-left: 0;
+  border-right: 10px solid var(--gold);
+  transform: rotate(3deg);
+}
+
+/* 6. FAQ SECTION */
+[dir="rtl"] .medico-legal-landing .faq::before {
+  background: linear-gradient(
+    270deg,
+    rgba(251, 250, 246, 0.96) 0%,
+    rgba(251, 250, 246, 0.92) 55%,
+    rgba(251, 250, 246, 0.55) 100%
+  );
+}
+
+[dir="rtl"] .medico-legal-landing .faq-list summary {
+  padding: 22px 0 22px 44px;
+}
+
+[dir="rtl"] .medico-legal-landing .faq-list summary::after {
+  right: auto;
+  left: 4px;
+}
+
+/* 7. FINAL CTA BANNER */
+[dir="rtl"] .medico-legal-landing .final .wrap {
+  justify-content: flex-start;
+}
+
+[dir="rtl"] .medico-legal-landing .final .inner {
+  max-width: 520px;
 }
