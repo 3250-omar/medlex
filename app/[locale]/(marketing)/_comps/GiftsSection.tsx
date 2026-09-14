@@ -147,7 +147,7 @@ export default function GiftsSection() {
             {t("title")}
           </h2>
           <div className="mt-4 h-0.5 w-14 bg-gold" />
-          <p className="mt-5 font-sans text-base sm:text-lg leading-relaxed text-body max-w-2xl">
+          <p className="mt-5 font-sans text-base sm:text-lg leading-relaxed text-body max-w-2xl text-navy!">
             {t("subtitle")}
           </p>
         </div>
