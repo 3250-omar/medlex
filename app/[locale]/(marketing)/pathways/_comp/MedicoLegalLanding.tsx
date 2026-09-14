@@ -19,10 +19,10 @@ import {
 type Props = { content: PathwayContent; labels: PathwayLabels };
 
 export default function MedicoLegalLanding(_props: Props) {
-  const locale = useLocale() === "ar" ? "ar" : "en";
+  const locale = useLocale();
 
   return (
-    <main id="top" className="bg-white text-char">
+    <div id="top" className="medico-legal-landing">
       {/* 1. HERO SECTION */}
       <MedicoLegalHeroSection locale={locale} />
 
@@ -55,6 +55,6 @@ export default function MedicoLegalLanding(_props: Props) {
 
       {/* 11. CLOSING BANNER */}
       <MedicoLegalClosingBannerSection locale={locale} />
-    </main>
+    </div>
   );
 }

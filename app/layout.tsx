@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { sourceSerif4, inter } from "@/lib/fonts";
+import { sourceSerif4, inter, fraunces } from "@/lib/fonts";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { siteUrl } from "@/lib/seo/metadata";
@@ -25,7 +25,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("dark", sourceSerif4.variable, inter.variable, "font-sans")}
+      className={cn(
+        "dark",
+        sourceSerif4.variable,
+        fraunces.variable,
+        inter.variable,
+        "font-sans",
+      )}
       data-theme="dark"
       data-scroll-behavior="smooth"
       style={{ colorScheme: "dark" }}

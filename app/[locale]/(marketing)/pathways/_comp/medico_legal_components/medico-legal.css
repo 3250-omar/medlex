@@ -1,0 +1,1237 @@
+/* Medico-Legal Pathway Dedicated CSS (Faithful replication of MedLex MedicoLegal Pathway.html) */
+
+.medico-legal-landing {
+  --navy: #14284b;
+  --navy-deep: #0e1d38;
+  --ink: #1b2430;
+  --body: #3a4352;
+  --muted: #6b7382;
+  --gold: #b8933d;
+  --gold-soft: #d9c08a;
+  --gold-pale: #f3ebd6;
+  --paper: #fbfaf6;
+  --parchment: #f4f0e6;
+  --stone: #e4e2da;
+  --white: #ffffff;
+  --serif: var(--font-fraunces, "Fraunces", Georgia, "Times New Roman", serif);
+  --sans: var(
+    --font-sans,
+    "Inter",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif
+  );
+  --wrap: 1120px;
+
+  font-family: var(--sans);
+  color: var(--body);
+  background: var(--paper);
+  line-height: 1.6;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.medico-legal-landing * {
+  box-sizing: border-box;
+}
+
+.medico-legal-landing img {
+  max-width: 100%;
+  display: block;
+}
+
+.medico-legal-landing a {
+  color: inherit;
+}
+
+.medico-legal-landing .wrap {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+.medico-legal-landing h1,
+.medico-legal-landing h2,
+.medico-legal-landing h3 {
+  font-family: var(--serif);
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+
+.medico-legal-landing h2 {
+  font-size: clamp(30px, 3.6vw, 42px);
+  max-width: 24ch;
+  text-wrap: balance;
+}
+
+.medico-legal-landing h3 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.medico-legal-landing p {
+  max-width: 64ch;
+}
+
+.medico-legal-landing .lead {
+  font-size: 19px;
+  color: var(--body);
+}
+
+.medico-legal-landing .rule {
+  width: 56px;
+  height: 2px;
+  background: var(--gold);
+  margin: 22px 0 26px;
+}
+
+.medico-legal-landing .btn {
+  display: inline-block;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 15px;
+  padding: 14px 24px;
+  border-radius: 4px;
+  text-decoration: none;
+  border: 1.5px solid var(--navy);
+  background: var(--navy);
+  color: #fff;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.medico-legal-landing .btn:hover {
+  background: var(--navy-deep);
+}
+
+.medico-legal-landing .btn.ghost {
+  background: transparent;
+  color: var(--navy);
+}
+
+.medico-legal-landing .btn.ghost:hover {
+  background: var(--navy);
+  color: #fff;
+}
+
+.medico-legal-landing .btn.gold {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy-deep);
+}
+
+.medico-legal-landing .btn.gold:hover {
+  background: #a8842f;
+}
+
+.medico-legal-landing .btn.light {
+  background: #fff;
+  border-color: #fff;
+  color: var(--navy);
+}
+
+.medico-legal-landing .btn.light:hover {
+  background: var(--gold-pale);
+}
+
+.medico-legal-landing .link {
+  color: var(--navy);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1.5px solid var(--gold-soft);
+  padding-bottom: 1px;
+}
+
+.medico-legal-landing .link:hover {
+  border-color: var(--gold);
+}
+
+.medico-legal-landing :focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.medico-legal-landing section {
+  padding: 96px 0;
+}
+
+.medico-legal-landing .section-head {
+  margin-bottom: 44px;
+}
+
+.medico-legal-landing .section-head p {
+  margin-top: 16px;
+}
+
+.medico-legal-landing .eyebrow {
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: 18px;
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+.medico-legal-landing .hero {
+  padding: 0;
+  background: var(--navy-deep) url("/images/medicolegal/bg_5__hero.jpg")
+    center/cover no-repeat;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.medico-legal-landing .hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(10, 20, 40, 0.78) 0%,
+    rgba(10, 20, 40, 0.55) 50%,
+    rgba(10, 20, 40, 0.15) 100%
+  );
+}
+
+.medico-legal-landing .hero .wrap {
+  position: relative;
+}
+
+.medico-legal-landing .hero .grid {
+  position: relative;
+  padding: 96px 0 80px;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+
+.medico-legal-landing .hero .grid > div {
+  max-width: 640px;
+}
+
+.medico-legal-landing .hero h1 {
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.medico-legal-landing .hero h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gold-soft);
+}
+
+.medico-legal-landing .hero .lead {
+  margin-top: 28px;
+  font-size: 20px;
+  max-width: 50ch;
+  color: #e9ecf2;
+}
+
+.medico-legal-landing .hero .strip {
+  display: flex;
+  gap: 0;
+  margin-top: 30px;
+  border: 1px solid rgba(217, 192, 138, 0.45);
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(14, 29, 56, 0.55);
+}
+
+.medico-legal-landing .hero .strip div {
+  flex: 1;
+  padding: 14px 18px;
+  border-right: 1px solid rgba(217, 192, 138, 0.35);
+}
+
+.medico-legal-landing .hero .strip div:last-child {
+  border-right: 0;
+}
+
+.medico-legal-landing .hero .strip small {
+  display: block;
+  font-size: 12px;
+  color: #9aa6ba;
+  letter-spacing: 0.06em;
+  margin-bottom: 3px;
+}
+
+.medico-legal-landing .hero .strip b {
+  font-size: 15px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.medico-legal-landing .hero .ctas {
+  display: flex;
+  gap: 14px;
+  margin-top: 36px;
+  flex-wrap: wrap;
+}
+
+.medico-legal-landing .hero .btn {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy-deep);
+}
+
+.medico-legal-landing .hero .btn:hover {
+  background: #a8842f;
+}
+
+.medico-legal-landing .hero .btn.ghost {
+  background: transparent;
+  border-color: #fff;
+  color: #fff;
+}
+
+.medico-legal-landing .hero .btn.ghost:hover {
+  background: #fff;
+  color: var(--navy);
+}
+
+/* ==========================================================================
+   TICKER
+   ========================================================================== */
+.medico-legal-landing .ticker {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+  padding: 14px 0;
+  position: relative;
+  background: var(--navy);
+}
+
+.medico-legal-landing .ticker ul {
+  display: flex;
+  gap: 0;
+  list-style: none;
+  white-space: nowrap;
+  width: max-content;
+  animation: ml-tick 48s linear infinite;
+  margin: 0;
+  padding: 0;
+}
+
+.medico-legal-landing .ticker li {
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+  color: #dce1ea;
+  font-weight: 500;
+  padding: 0 28px;
+  position: relative;
+}
+
+.medico-legal-landing .ticker li::after {
+  content: "";
+  position: absolute;
+  right: -3px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  background: var(--gold);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+@keyframes ml-tick {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medico-legal-landing .ticker ul {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   WHO THIS IS FOR
+   ========================================================================== */
+.medico-legal-landing .what.who {
+  background-image: none;
+  background-color: var(--parchment);
+  color: var(--body);
+  position: relative;
+  padding: 104px 0;
+}
+
+.medico-legal-landing .what.who .wrap {
+  position: relative;
+}
+
+.medico-legal-landing .what.who h2 {
+  color: var(--navy);
+  max-width: none;
+  text-wrap: balance;
+}
+
+.medico-legal-landing .what.who .kicker {
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--body);
+  margin-top: 14px;
+  max-width: none;
+}
+
+.medico-legal-landing .what.who .grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 72px;
+  align-items: start;
+  margin-top: 44px;
+}
+
+.medico-legal-landing .what.who p {
+  color: var(--body);
+}
+
+.medico-legal-landing .what.who blockquote {
+  margin: 34px 0 0;
+  padding: 10px 0 10px 26px;
+  border-left: 3px solid var(--gold);
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.4vw, 28px);
+  line-height: 1.35;
+  color: var(--navy);
+  max-width: none;
+}
+
+.medico-legal-landing .what.who blockquote cite {
+  display: block;
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 12.5px;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  margin-top: 12px;
+}
+
+.medico-legal-landing .aud {
+  border: 1px solid rgba(217, 192, 138, 0.5);
+  border-radius: 6px;
+  padding: 28px 28px 22px;
+  background: var(--navy);
+  box-shadow: 0 24px 50px rgba(20, 40, 75, 0.2);
+}
+
+.medico-legal-landing .aud h3 {
+  color: #fff;
+  font-size: 20px;
+  margin-bottom: 16px;
+  font-family: var(--serif);
+}
+
+.medico-legal-landing .aud-item {
+  padding: 14px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.medico-legal-landing .aud-item b {
+  display: block;
+  color: var(--gold-soft);
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.medico-legal-landing .aud-item span {
+  font-size: 15px;
+  color: #dce1ea;
+}
+
+.medico-legal-landing .aud-note {
+  margin-top: 14px;
+  font-size: 13.5px;
+  color: #9aa6ba;
+}
+
+/* ==========================================================================
+   THE FOUR LEVELS
+   ========================================================================== */
+.medico-legal-landing .paths {
+  background: var(--white);
+  border-top: 1px solid var(--stone);
+  border-bottom: 1px solid var(--stone);
+}
+
+.medico-legal-landing .levels-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 40px;
+  align-items: end;
+}
+
+.medico-legal-landing .levels-head h2 {
+  color: var(--navy);
+}
+
+.medico-legal-landing .levels-head .badge {
+  position: static;
+  background: var(--navy);
+  color: #fff;
+  border-radius: 6px;
+  padding: 18px 20px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  max-width: 300px;
+  box-shadow: 0 12px 30px rgba(20, 40, 75, 0.2);
+}
+
+.medico-legal-landing .levels-head .badge b {
+  font-family: var(--serif);
+  font-size: 40px;
+  font-weight: 500;
+  color: var(--gold-soft);
+  line-height: 1;
+}
+
+.medico-legal-landing .levels-head .badge span {
+  font-size: 13.5px;
+  line-height: 1.35;
+  color: #e9ecf2;
+}
+
+.medico-legal-landing .ladder {
+  display: grid;
+  gap: 0;
+  border: 1px solid var(--stone);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.medico-legal-landing .rung {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 28px;
+  padding: 34px 36px;
+  background: var(--parchment);
+  border-bottom: 2px solid var(--gold-soft);
+}
+
+.medico-legal-landing .rung:last-child {
+  border-bottom: 0;
+}
+
+.medico-legal-landing .rung .num {
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--gold);
+  font-weight: 500;
+  padding-top: 2px;
+}
+
+.medico-legal-landing .rung h3 {
+  font-size: 23px;
+  color: var(--navy);
+}
+
+.medico-legal-landing .rung .meta {
+  font-size: 13.5px;
+  color: var(--muted);
+  margin: 6px 0 12px;
+  letter-spacing: 0.02em;
+}
+
+.medico-legal-landing .rung p {
+  font-size: 16px;
+  max-width: 66ch;
+}
+
+/* ==========================================================================
+   FLAGSHIP (Writing Psychiatric Evidence)
+   ========================================================================== */
+.medico-legal-landing .flag {
+  position: relative;
+  background: var(--white) url("/images/medicolegal/bg_4__flag.jpg")
+    center/cover no-repeat;
+  border-top: 1px solid var(--stone);
+  border-bottom: 1px solid var(--stone);
+}
+
+.medico-legal-landing .flag::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(251, 250, 246, 0.55) 0%,
+    rgba(251, 250, 246, 0.8) 45%,
+    rgba(251, 250, 246, 0.92) 100%
+  );
+}
+
+.medico-legal-landing .flag .wrap {
+  position: relative;
+}
+
+.medico-legal-landing .flag .grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.medico-legal-landing .flag figure {
+  margin: 0;
+}
+
+.medico-legal-landing .flag figure img {
+  border-radius: 6px;
+  aspect-ratio: auto;
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  box-shadow: 0 30px 60px rgba(20, 40, 75, 0.28);
+}
+
+.medico-legal-landing .facts {
+  list-style: none;
+  margin: 26px 0 30px;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.medico-legal-landing .facts li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 15.5px;
+}
+
+.medico-legal-landing .facts li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 8px;
+  height: 8px;
+  background: var(--gold);
+}
+
+.medico-legal-landing .facts b {
+  color: var(--ink);
+}
+
+.medico-legal-landing .flag .ctas {
+  display: flex;
+  gap: 14px;
+  margin-top: 36px;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   TWO AUDIENCES
+   ========================================================================== */
+.medico-legal-landing .two {
+  background: var(--white);
+}
+
+.medico-legal-landing .two-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.medico-legal-landing .two-grid article {
+  background: var(--parchment);
+  border: 1px solid var(--stone);
+  border-top: 3px solid var(--navy);
+  border-radius: 6px;
+  padding: 32px 32px 28px;
+}
+
+.medico-legal-landing .two-grid h3 {
+  font-size: 22px;
+  color: var(--navy);
+  margin-bottom: 12px;
+}
+
+.medico-legal-landing .two-grid p {
+  font-size: 16px;
+}
+
+.medico-legal-landing .two-grid .where {
+  margin-top: 18px;
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   WHY THIS TEACHER (How we teach)
+   ========================================================================== */
+.medico-legal-landing .how {
+  position: relative;
+  background: var(--navy-deep) url("/images/medicolegal/bg_1__how.jpg")
+    center/cover no-repeat;
+  border-top: 1px solid var(--stone);
+  border-bottom: 1px solid var(--stone);
+  color: #fff;
+}
+
+.medico-legal-landing .how::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(14, 29, 56, 0.78) 0%,
+    rgba(14, 29, 56, 0.62) 100%
+  );
+}
+
+.medico-legal-landing .how .wrap {
+  position: relative;
+}
+
+.medico-legal-landing .how h2 {
+  color: #fff;
+}
+
+.medico-legal-landing .how .lead {
+  max-width: 70ch;
+  color: #dce1ea;
+}
+
+.medico-legal-landing .credit {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin-top: 28px;
+  padding: 16px 20px;
+  border: 1px solid rgba(217, 192, 138, 0.45);
+  border-radius: 6px;
+  background: rgba(14, 29, 56, 0.45);
+  max-width: 560px;
+}
+
+.medico-legal-landing .credit img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--gold-soft);
+  flex-shrink: 0;
+}
+
+.medico-legal-landing .credit b {
+  display: block;
+  color: #fff;
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.medico-legal-landing .credit span {
+  display: block;
+  font-size: 13.5px;
+  color: #c9d0dc;
+  margin: 2px 0 6px;
+}
+
+.medico-legal-landing .credit .link {
+  color: #fff;
+  border-bottom-color: var(--gold);
+  font-size: 14px;
+}
+
+.medico-legal-landing .how-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 52px;
+}
+
+.medico-legal-landing .how-grid article {
+  background: var(--white);
+  border: 1px solid var(--stone);
+  border-top: 3px solid var(--gold);
+  border-radius: 6px;
+  padding: 34px 34px 30px;
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  column-gap: 22px;
+}
+
+.medico-legal-landing .how-grid .ico {
+  grid-row: 1/4;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--gold-pale);
+  display: grid;
+  place-items: center;
+}
+
+.medico-legal-landing .how-grid .ico svg {
+  width: 26px;
+  height: 26px;
+  stroke: var(--navy);
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.medico-legal-landing .how-grid h3,
+.medico-legal-landing .how-grid p,
+.medico-legal-landing .how-grid .where {
+  grid-column: 2;
+}
+
+.medico-legal-landing .how-grid h3 {
+  font-size: 21px;
+  margin-bottom: 12px;
+  color: var(--navy);
+}
+
+.medico-legal-landing .how-grid p {
+  font-size: 15.5px;
+  color: var(--body);
+}
+
+.medico-legal-landing .how-grid .where {
+  padding-top: 16px;
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   FREE GIFT
+   ========================================================================== */
+.medico-legal-landing .gift {
+  background: #ebe5d6;
+  color: var(--body);
+  border-top: 4px solid var(--gold);
+  padding: 88px 0;
+}
+
+.medico-legal-landing .gift-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.medico-legal-landing .gift-tag {
+  display: inline-block;
+  background: var(--navy);
+  color: var(--gold-soft);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 6px 12px;
+  border-radius: 3px;
+  margin-bottom: 18px;
+}
+
+.medico-legal-landing .gift h2 {
+  color: var(--navy);
+  max-width: none;
+}
+
+.medico-legal-landing .gift .lead {
+  color: var(--body);
+  margin-top: 18px;
+  max-width: 60ch;
+}
+
+.medico-legal-landing .gift-form {
+  display: flex;
+  gap: 10px;
+  margin-top: 28px;
+  max-width: 560px;
+}
+
+.medico-legal-landing .gift-form input {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  font-size: 16px;
+  padding: 15px 16px;
+  border: 1.5px solid var(--navy);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--ink);
+}
+
+.medico-legal-landing .gift-form button {
+  font: inherit;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 15px 22px;
+  border-radius: 4px;
+  border: 0;
+  background: var(--navy);
+  color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.medico-legal-landing .gift-form button:hover {
+  background: var(--navy-deep);
+}
+
+.medico-legal-landing .gift-note {
+  margin-top: 12px;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+.medico-legal-landing .cover {
+  aspect-ratio: 3/4;
+  background: linear-gradient(160deg, #1b3766 0%, #0e1d38 100%);
+  border-radius: 4px;
+  box-shadow: 0 30px 60px rgba(20, 40, 75, 0.35);
+  border-left: 10px solid var(--gold);
+  display: flex;
+  padding: 28px 26px;
+  transform: rotate(-3deg);
+  user-select: none;
+}
+
+.medico-legal-landing .cover-in {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.medico-legal-landing .cover-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--serif);
+  letter-spacing: 0.1em;
+  font-size: 16px;
+  color: var(--gold-soft);
+  font-weight: 600;
+}
+
+.medico-legal-landing .cover-brand img {
+  height: 26px;
+  width: auto;
+}
+
+.medico-legal-landing .cover-kicker {
+  margin-top: auto;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--gold-soft);
+  font-weight: 600;
+}
+
+.medico-legal-landing .cover-title {
+  font-family: var(--serif);
+  font-size: 26px;
+  line-height: 1.15;
+  color: #fff;
+  margin: 10px 0 22px;
+}
+
+.medico-legal-landing .cover-foot {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--gold-soft);
+}
+
+/* ==========================================================================
+   RESOURCES + WAITLIST
+   ========================================================================== */
+.medico-legal-landing .resources {
+  padding: 96px 0;
+  background: var(--white);
+}
+
+.medico-legal-landing .wl-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  max-width: 720px;
+}
+
+.medico-legal-landing .wl-grid h2 {
+  color: var(--navy);
+}
+
+.medico-legal-landing .wl-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 28px;
+  max-width: 560px;
+}
+
+.medico-legal-landing .wl-form input,
+.medico-legal-landing .wl-form select {
+  font: inherit;
+  font-size: 15px;
+  padding: 13px 14px;
+  border: 1.5px solid var(--stone);
+  border-radius: 4px;
+  background: var(--white);
+  color: var(--ink);
+}
+
+.medico-legal-landing .wl-form select {
+  grid-column: 1 / -1;
+}
+
+.medico-legal-landing .wl-form .btn {
+  grid-column: 1 / -1;
+  justify-self: start;
+  border: 0;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   FAQ
+   ========================================================================== */
+.medico-legal-landing .faq {
+  position: relative;
+  background: var(--paper) url("/images/medicolegal/bg_2__faq.jpg") center/cover
+    no-repeat;
+  border-top: 1px solid var(--stone);
+}
+
+.medico-legal-landing .faq::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(251, 250, 246, 0.96) 0%,
+    rgba(251, 250, 246, 0.92) 55%,
+    rgba(251, 250, 246, 0.55) 100%
+  );
+}
+
+.medico-legal-landing .faq .wrap {
+  position: relative;
+}
+
+.medico-legal-landing .faq h2 {
+  color: var(--navy);
+}
+
+.medico-legal-landing .faq-list {
+  margin-top: 36px;
+  border-top: 1px solid var(--stone);
+  max-width: 820px;
+}
+
+.medico-legal-landing .faq-list details {
+  border-bottom: 1px solid var(--stone);
+}
+
+.medico-legal-landing .faq-list summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 22px 44px 22px 0;
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 500;
+  color: var(--ink);
+  position: relative;
+}
+
+.medico-legal-landing .faq-list summary::-webkit-details-marker {
+  display: none;
+}
+
+.medico-legal-landing .faq-list summary::after {
+  content: "+";
+  position: absolute;
+  right: 4px;
+  top: 18px;
+  font-family: var(--sans);
+  font-size: 26px;
+  color: var(--gold);
+  font-weight: 300;
+  line-height: 1;
+}
+
+.medico-legal-landing .faq-list details[open] summary::after {
+  content: "–";
+}
+
+.medico-legal-landing .faq-list details p {
+  padding: 0 0 24px;
+  max-width: 66ch;
+  font-size: 16px;
+  color: var(--body);
+}
+
+/* ==========================================================================
+   FINAL CTA BANNER
+   ========================================================================== */
+.medico-legal-landing .final {
+  position: relative;
+  background: var(--navy-deep) url("/images/medicolegal/bg_3__final.jpg")
+    no-repeat left center/auto 100%;
+  color: #fff;
+  min-height: 640px;
+  display: flex;
+  align-items: center;
+}
+
+.medico-legal-landing .final::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(14, 29, 56, 0) 0%,
+    rgba(14, 29, 56, 0) 48%,
+    rgba(14, 29, 56, 0.9) 62%,
+    rgba(14, 29, 56, 1) 75%
+  );
+}
+
+.medico-legal-landing .final .wrap {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.medico-legal-landing .final .inner {
+  max-width: 460px;
+}
+
+.medico-legal-landing .final h2 {
+  color: #fff;
+}
+
+.medico-legal-landing .final p {
+  color: #c9d0dc;
+  margin-top: 16px;
+}
+
+.medico-legal-landing .final .links {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
+  margin: 30px 0 34px;
+}
+
+.medico-legal-landing .final .links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1.5px solid var(--gold);
+  padding-bottom: 2px;
+}
+
+.medico-legal-landing .final .links a span {
+  color: var(--gold-soft);
+  font-size: 13px;
+  margin-left: 8px;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS (max-width: 980px)
+   ========================================================================== */
+@media (max-width: 980px) {
+  .medico-legal-landing section {
+    padding: 72px 0;
+  }
+
+  .medico-legal-landing .hero .grid {
+    padding: 56px 0 48px;
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .medico-legal-landing .hero::before {
+    background: linear-gradient(
+      180deg,
+      rgba(10, 20, 40, 0.85) 0%,
+      rgba(10, 20, 40, 0.7) 60%,
+      rgba(10, 20, 40, 0.35) 100%
+    );
+  }
+
+  .medico-legal-landing .hero {
+    background-position: 70% center;
+  }
+
+  .medico-legal-landing .hero .strip {
+    flex-direction: column;
+  }
+
+  .medico-legal-landing .hero .strip div {
+    border-right: 0;
+    border-bottom: 1px solid rgba(217, 192, 138, 0.35);
+  }
+
+  .medico-legal-landing .what.who {
+    padding: 72px 0;
+  }
+
+  .medico-legal-landing .what.who .grid,
+  .medico-legal-landing .flag .grid,
+  .medico-legal-landing .wl-grid,
+  .medico-legal-landing .levels-head,
+  .medico-legal-landing .two-grid,
+  .medico-legal-landing .how-grid,
+  .medico-legal-landing .gift-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .medico-legal-landing .rung {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 26px 22px;
+  }
+
+  .medico-legal-landing .cover {
+    max-width: 240px;
+    transform: none;
+  }
+
+  .medico-legal-landing .gift-form {
+    flex-direction: column;
+  }
+
+  .medico-legal-landing .wl-form {
+    grid-template-columns: 1fr;
+  }
+
+  .medico-legal-landing .final {
+    min-height: 0;
+    background-size: 100% auto;
+    background-position: center top;
+    padding-top: 300px;
+  }
+
+  .medico-legal-landing .final::before {
+    background: linear-gradient(
+      180deg,
+      rgba(14, 29, 56, 0.15) 0%,
+      rgba(14, 29, 56, 0.9) 300px,
+      rgba(14, 29, 56, 0.96) 100%
+    );
+  }
+
+  .medico-legal-landing .final .wrap {
+    justify-content: flex-start;
+  }
+}
