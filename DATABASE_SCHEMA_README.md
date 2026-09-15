@@ -1,6 +1,6 @@
 # Medlex Database Schema
 
-This document describes the current Supabase/PostgreSQL schema. The canonical source is the ordered SQL in [`supabase/migrations`](supabase/migrations); `types/database.ts` is a partial application type and must be regenerated when the schema changes.
+This document describes the current Supabase/PostgreSQL schema. The canonical source of truth for both applications (`medlex` and `medllex_admin_dashboard`) is the ordered SQL migration suite in [`medlex/supabase/migrations`](supabase/migrations). All schema changes, new tables, functions, triggers, and RLS policies must be authored as timestamped migrations here and never duplicated or applied out-of-band. Application TypeScript interfaces in `medlex/types/database.ts` and `medllex_admin_dashboard/types/database.ts` mirror this shared database structure.
 
 ## Platform and conventions
 
@@ -90,6 +90,23 @@ courses -> feedbacks -> public_course_feedbacks (read-only view)
 | `certificates` | UUID PK; unique certificate number; unique enrollment -> enrollments (restrict); recipient/course/release snapshots; issue/revocation/storage fields | One certificate per enrollment. |
 | `certificate_download_events` | Identity bigint PK; certificate -> certificates (cascade); optional user -> auth users (set null); timestamp | Certificate download audit. |
 | `feedbacks` | UUID PK; user -> auth users (cascade); course -> courses (cascade); nonblank text; timestamps | One learner feedback record per course. |
+
+### Private 1:1 Sessions (CASC Coaching)
+
+| Table | Columns and constraints | Purpose |
+| --- | --- | --- |
+| `private_session_hosts` | UUID PK; `profile_id` -> profiles (restrict); `display_name`, `timezone`, `google_calendar_id`, `is_active`; timestamps | Registered instructor/host for 1:1 sessions. |
+| `private_session_offers` | UUID PK; `course_id` -> courses; code (`direct`, `package_5`, `package_10`), session_count (1, 5, 10), `price_minor`, `currency`, `title_en`, `title_ar`, `is_active`; timestamps | Session purchase offers and package definitions. |
+| `private_session_slots` | UUID PK; `course_id`, `host_id`, `starts_at`, `ends_at` (+1h check), `source_timezone`, `status` (`available`, `held`, `booked`, `withdrawn`, `completed`); GiST non-overlapping exclusion constraint | Scheduled 60-minute time slots in Africa/Cairo. |
+| `session_payment_attempts` | UUID PK; unique `idempotency_key`, `user_id`, `course_id`, `offer_id`, `purpose`, optional `slot_id`, `quantity_snapshot`, `amount_minor`, `currency`, `provider`, `status`, `hold_expires_at` | Payment intentions and holds. |
+| `session_payment_webhook_events` | UUID PK; unique `provider_event_id`, `payload_hash`, `verified`, `processing_status`, `attempt_id`; timestamps | Durable deduplicated Paymob webhook receipts. |
+| `session_entitlements` | UUID PK; `user_id`, `course_id`, `offer_id`, `payment_attempt_id` (unique), `purchased_quantity`, `reserved_quantity`, `consumed_quantity`, `remaining_quantity` (`reserved + consumed + remaining = purchased` invariant), `status` | Learner package credit balances. |
+| `sessions_booking` | UUID PK; `slot_id`, `user_id`, `course_id`, `host_id`, `funding_type` (`direct_payment` or `package_credit`), `status`, `session_link`, unique `idempotency_key`, confirmed timestamp | Confirmed coaching bookings. |
+| `session_credit_ledger` | UUID PK; `entitlement_id`, optional `booking_id`, `delta` (!= 0), `reason`, unique `idempotency_key`, `actor_type`, `created_at`; append-only trigger | Immutable credit balance ledger. |
+| `private_session_meetings` | UUID PK; unique `booking_id`, `provider`, `provider_event_id`, `conference_id`, `join_url`, `meeting_status`, `email_status`, retry counts | Google Meet and delivery tracking. |
+| `private_session_outbox` | UUID PK; `booking_id`, `job_type`, unique `deduplication_key`, `status`, `available_at`, `locked_at`, `locked_by`, `attempt_count`, `max_attempts` | Transactional outbox with `SKIP LOCKED` leasing. |
+| `private_session_audit_events` | UUID PK; `actor_type`, `actor_id`, `entity_type`, `entity_id`, `action`, `before_state`, `after_state`, `correlation_id`, `created_at`; append-only trigger | Immutable security audit trail. |
+
 
 ## View, storage, and security
 

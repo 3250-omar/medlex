@@ -28,6 +28,12 @@ export async function GET() {
     }
   }
 
+  const emailVerified = Boolean(
+    user?.email_confirmed_at ||
+      user?.confirmed_at ||
+      user?.user_metadata?.email_verified
+  );
+
   return NextResponse.json({
     data: user
       ? {
@@ -37,6 +43,7 @@ export async function GET() {
           username: user.user_metadata?.username ?? null,
           phone: user.user_metadata?.phone ?? null,
           examDate: user.user_metadata?.exam_date ?? null,
+          emailVerified,
           avatarPath,
           avatarUrl,
           createdAt: user.created_at ?? null,

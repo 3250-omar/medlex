@@ -11,6 +11,7 @@ export type CurrentUser = {
   phone?: string | null;
   examDate?: string | null;
   role?: "learner" | "admin" | string | null;
+  emailVerified?: boolean;
   avatarPath?: string | null;
   avatarUrl?: string | null;
   createdAt?: string | null;

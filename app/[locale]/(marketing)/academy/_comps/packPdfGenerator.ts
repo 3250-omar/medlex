@@ -1,4 +1,4 @@
-import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
+import { PDFDocument, StandardFonts, rgb, PDFFont, PDFPage } from "pdf-lib";
 
 function sanitize(str: string): string {
   return str
@@ -13,7 +13,7 @@ function sanitize(str: string): string {
 
 function wrapText(
   text: string,
-  font: any,
+  font: PDFFont,
   fontSize: number,
   maxWidth: number,
 ): string[] {
@@ -74,7 +74,7 @@ export async function openPackPdf(
   const lightBg = rgb(247 / 255, 249 / 255, 252 / 255);
   const borderCol = rgb(220 / 255, 226 / 255, 235 / 255);
 
-  const drawHeader = (page: any, cardTitle: string, subtitle: string) => {
+  const drawHeader = (page: PDFPage, cardTitle: string, subtitle: string) => {
     // Top Brand Bar
     page.drawRectangle({
       x: MARGIN,
@@ -140,7 +140,7 @@ export async function openPackPdf(
     return PAGE_H - 105;
   };
 
-  const drawFooter = (page: any, pageIndex: number, totalPages: number) => {
+  const drawFooter = (page: PDFPage, pageIndex: number, totalPages: number) => {
     page.drawLine({
       start: { x: MARGIN, y: 36 },
       end: { x: PAGE_W - MARGIN, y: 36 },

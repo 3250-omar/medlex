@@ -6,7 +6,10 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "lint": "eslint"
+        "lint": "eslint",
+        "test:private-sessions:sql": "supabase test db",
+        "test:private-sessions:http": "node scripts/private-sessions/test-auth-entry.mjs && node scripts/private-sessions/test-direct-booking.mjs && node scripts/private-sessions/test-fulfillment-adapters.mjs && node scripts/private-sessions/test-private-session-resilience.mjs && node scripts/private-sessions/test-package-redemption.mjs",
+        "test:private-sessions": "npm run test:private-sessions:sql && npm run test:private-sessions:http"
     },
     "dependencies": {
         "@base-ui/react": "^1.7.0",
