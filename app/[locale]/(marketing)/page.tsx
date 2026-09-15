@@ -44,8 +44,8 @@ export default async function HomePage({ params }: HomePageProps) {
       <FeedbackSection pathway="all" />
       <StandardsSection />
       <GiftsSection />
-      <HomeFAQSection />
       <FounderSection locale={locale} />
+      <HomeFAQSection />
     </>
   );
 }

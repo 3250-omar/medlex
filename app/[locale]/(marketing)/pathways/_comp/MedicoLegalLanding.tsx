@@ -45,7 +45,7 @@ export default function MedicoLegalLanding(_props: Props) {
       <MedicoLegalGiftSection />
 
       {/* 8. WAITLIST SECTION */}
-      <MedicoLegalWaitlistSection />
+      {/* <MedicoLegalWaitlistSection /> */}
 
       {/* 9. FEEDBACK SECTION */}
       <FeedbackSection pathway="medico-legal" />
@@ -54,7 +54,7 @@ export default function MedicoLegalLanding(_props: Props) {
       <MedicoLegalFaqSection />
 
       {/* 11. CLOSING BANNER */}
-      <MedicoLegalClosingBannerSection locale={locale} />
+      {/* <MedicoLegalClosingBannerSection locale={locale} /> */}
     </div>
   );
 }

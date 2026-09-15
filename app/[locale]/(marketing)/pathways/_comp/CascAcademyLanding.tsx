@@ -89,8 +89,7 @@ export default function CascAcademyLanding(_props: Props) {
 
       {/* 3. HOW A STATION WORKS (ANATOMY) */}
       <CascHowStationWorksSection />
-      {/* 11. COACHING */}
-      <CascCoachingSection locale={locale} onOpenBooking={handleOpenBooking} />
+
       {/* 4. FREE STATION PREVIEW CALLOUT */}
       <CascFreeStationPreviewSection locale={locale} />
 
@@ -105,7 +104,8 @@ export default function CascAcademyLanding(_props: Props) {
 
       {/* 8. THE EXAMINER (ABOUT) */}
       <CascExaminerSection />
-
+      {/* 11. COACHING */}
+      <CascCoachingSection locale={locale} onOpenBooking={handleOpenBooking} />
       {/* 10. FEEDBACK SECTION */}
       <FeedbackSection pathway="casc-academy" />
 

@@ -22,7 +22,7 @@
   },
   "brand": {
     "name": "MEDLEX",
-    "descriptor": "Forensic & Medicolegal Psychiatry",
+    "descriptor": "Where medicine meets justice",
     "home": "MedLex — home"
   },
   "language": "العربية",
@@ -30,16 +30,25 @@
   "footer": {
     "pathways": "Pathways",
     "medlex": "MedLex",
+    "contact": "Contact",
     "education": "Medico-Legal Education",
     "academy": "The CASC Academy",
     "foundations": "MedLex Foundations",
-    "founder": "The Founder",
+    "waitlistOpen": "Waitlist open",
+    "openNow": "Open now",
+    "inProduction": "In production",
+    "founder": "The founder",
     "institutional": "Institutional work",
-    "contact": "Contact & register interest",
+    "questions": "Questions",
     "privacy": "Privacy",
     "terms": "Terms",
-    "description": "Specialised training and expert consultation in forensic and medicolegal psychiatry, serving courts, institutions, and clinicians across the MENA region",
-    "disclaimer": "Consultation is not a substitute for legal representation"
+    "description": "MedLex is a specialist professional education and training company at the intersection of medicine, law and institutional practice — founded and led by a UK-trained Consultant Forensic Psychiatrist.",
+    "locations": "United Kingdom · Egypt · Qatar",
+    "motto": "Where Medicine Meets Justice",
+    "register": "Register your interest",
+    "email": "support@medlexsolutions.com",
+    "phone": "+20 101 951 5321",
+    "copyright": "© 2026 MedLex Solutions · medlexsolutions.com"
   },
   "registration": {
     "title": "Register your interest",
@@ -141,20 +150,16 @@
         "Legal counsel"
       ],
       "paragraphs": [
-        "MedLex Solutions is the first specialised forensic psychiatry training and consultation centre in the MENA region. We work along two lines that reinforce each other: structured training that equips psychiatrists with the forensic competence courts expect, and expert consultation that gives judicial and governmental institutions evaluations they can rely on",
-        "The method is deliberately unglamorous — defined questions, documented reasoning, traceable sources, and conclusions stated at the confidence the evidence actually supports. That structure is what makes an opinion admissible, and it is also what protects the clinician who signed it",
-        "We are not importing a model wholesale. Programmes are built around the legal frameworks practitioners here actually appear under, then aligned with international forensic standards rather than the other way round"
+        "MedLex is a founder-led professional education company at the intersection of medicine, law and institutional practice. It exists because the skills that matter most in a clinical career — writing an opinion that survives cross-examination, performing under observation in an examination, leading a service rather than simply running one — are rarely taught in a structured way. Every programme is built by a Consultant Forensic Psychiatrist whose own work spans the clinic, the courtroom, the training programme and the boardroom, and every programme is built to the same standard: a defined question, documented reasoning, and a method the learner can defend afterwards."
       ],
-      "quote": "We’re not just training psychiatrists — we’re building the professional standard where clinical expertise becomes court-admissible evidence",
-      "mission": "Mission · MedLex Solutions",
+      "quote": "Rigour before reassurance. Evidence before assertion. The standard that survives scrutiny.",
       "stats": [
         "Consultant training and practice in forensic psychiatry",
-        "Countries of practice: the United Kingdom, Egypt, and Qatar"
+        "Countries of practice: the United Kingdom, Egypt and Qatar"
       ],
-      "imageAlt": "A caduceus joined with the scales of justice",
-      "eyebrow": "Who We Are",
-      "title": "A clinical opinion and a legal finding are not the same document",
-      "intro": "Most psychiatric reports entering court were never written for court. MedLex exists to close that gap — from both ends"
+      "imageAlt": "Consultant teaching professional seminar",
+      "title": "The skills that define a career are rarely taught. MedLex teaches them.",
+      "intro": "Specialist professional education at the intersection of medicine, law and institutional practice — built by a practitioner, for practitioners."
     },
     "standards": {
       "items": [
