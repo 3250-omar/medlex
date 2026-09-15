@@ -88,8 +88,7 @@ export default function WhoWeAreSection() {
               {STATS.map((stat, idx) => (
                 <div
                   key={stat.value}
-                  className="rounded-[4px] p-6 sm:p-7 text-white flex flex-col justify-between"
-                  style={{ backgroundColor: "#122238" }}
+                  className="rounded-md p-6 sm:p-7 text-white flex flex-col justify-between bg-navy!"
                 >
                   <div
                     className="font-serif text-3xl sm:text-4xl font-medium mb-3"

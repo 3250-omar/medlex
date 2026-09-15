@@ -1,6 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import Container from "@/components/layout/Container";
-import FAQAccordion from "../_comps/FAQAccordion";
+import FAQSection from "../_comps/FAQSection";
 import FaqCtaButton from "./_comp/FaqCtaButton";
 
 export default async function FAQPage({
@@ -14,6 +13,7 @@ export default async function FAQPage({
     question: t(`items.${i}.question`),
     answer: t(`items.${i}.answer`),
   }));
+
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-char">
       {/* FAQ Hero Header */}
@@ -41,16 +41,9 @@ export default async function FAQPage({
       </section>
 
       {/* Accordion Questions List */}
-      <section className="py-20 lg:py-28 bg-[#FAF8F5] text-char">
-        <div className="mx-auto w-full px-6 sm:px-10 md:px-14 lg:px-20 max-w-3xl lg:max-w-4xl">
-          <FAQAccordion items={items} />
-
-          {/* Centered CTA */}
-          <div className="mt-12 flex flex-col items-center justify-center text-center">
-            <FaqCtaButton />
-          </div>
-        </div>
-      </section>
+      <FAQSection items={items}>
+        <FaqCtaButton />
+      </FAQSection>
     </div>
   );
 }

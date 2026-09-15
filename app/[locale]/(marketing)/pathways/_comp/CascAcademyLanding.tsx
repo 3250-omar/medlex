@@ -89,7 +89,12 @@ export default function CascAcademyLanding(_props: Props) {
 
       {/* 3. HOW A STATION WORKS (ANATOMY) */}
       <CascHowStationWorksSection />
-
+      {/* 12. PRICING & ENROL */}
+      <CascPricingSection
+        locale={locale}
+        cascEnrolment={cascEnrolment}
+        continueSlug={continueSlug}
+      />
       {/* 4. FREE STATION PREVIEW CALLOUT */}
       <CascFreeStationPreviewSection locale={locale} />
 
@@ -108,13 +113,6 @@ export default function CascAcademyLanding(_props: Props) {
       <CascCoachingSection locale={locale} onOpenBooking={handleOpenBooking} />
       {/* 10. FEEDBACK SECTION */}
       <FeedbackSection pathway="casc-academy" />
-
-      {/* 12. PRICING & ENROL */}
-      <CascPricingSection
-        locale={locale}
-        cascEnrolment={cascEnrolment}
-        continueSlug={continueSlug}
-      />
 
       {/* 13. QUESTIONS (FAQ) */}
       <CascFaqSection />

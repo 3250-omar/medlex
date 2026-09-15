@@ -1,88 +1,195 @@
 "use client";
 
-import Image from "next/image";
+import { useState } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import { useCurrentUser } from "../_apiCalls/academyQueries";
 
 interface FlagshipCourseSectionProps {
   locale: string;
 }
 
+const SITUATION_CARDS = [
+  { href: "/pathways/medico-legal" },
+  { href: "/pathways/casc-academy" },
+  { href: "/pathways/foundations" },
+] as const;
+
 export default function FlagshipCourseSection({
   locale,
 }: FlagshipCourseSectionProps) {
-  const t = useTranslations("home");
-  const router = useRouter();
-  const { data: user } = useCurrentUser();
+  const t = useTranslations("home.flagship");
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleProspectusSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || status === "loading") return;
+
+    setStatus("loading");
+    setErrorMessage("");
+
+    try {
+      const res = await fetch("/api/gifts/interest", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, type: "prospectus", locale }),
+      });
+
+      if (res.ok) {
+        setStatus("success");
+      } else {
+        setStatus("error");
+        setErrorMessage("Something went wrong. Please try again.");
+      }
+    } catch {
+      setStatus("error");
+      setErrorMessage("Something went wrong. Please try again.");
+    }
+  };
+
   return (
     <section
       className="relative overflow-hidden bg-white py-20 lg:py-28 text-char border-b border-hair"
-      aria-labelledby="flagship-heading"
+      aria-labelledby="situations-heading"
     >
-      <div className="w-full px-6 sm:px-10 md:px-14 lg:px-20 xl:px-24 2xl:px-28">
-        <div className="grid w-full grid-cols-1 gap-10 lg:grid-cols-[220px_1fr] lg:gap-16 items-start">
-          <div className="flex flex-col items-start">
-            <div className="flex items-start gap-4 pt-1">
-              <span className="mt-2 block h-px w-10 shrink-0 bg-gold" />
-              <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-gold text-nowrap">
-                {t("flagship.eyebrow")}
-              </span>
-            </div>
-            {user ? (
-              <button
-                type="button"
-                onClick={() => router.push(`/${locale}/courses`)}
-                className="btn btn-navy mt-8 py-3.5! px-7 text-sm font-semibold gap-2 inline-flex items-center shadow-md"
-              >
-                {t("flagship.goToCourses")}
-                <span aria-hidden="true">→</span>
-              </button>
-            ) : (
-              <Link
-                href={`/${locale}/pathways/medico-legal`}
-                className="btn text-nowrap! btn-navy mt-8 py-3.5! px-7! text-sm font-semibold! gap-2 inline-flex! items-center shadow-md"
-              >
-                {t("flagship.register")}
-                <span aria-hidden="true">→</span>
-              </Link>
-            )}
-          </div>
-
-          <div
-            data-reveal
-            className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,.8fr)] lg:gap-12 items-center"
+      <div className="mx-auto max-w-7xl px-6 sm:px-8">
+        {/* Header: Title + Gold Bar + Subtitle */}
+        <div className="max-w-3xl">
+          <h2
+            id="situations-heading"
+            className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[46px] font-bold !text-navy leading-[1.14] tracking-tight whitespace-pre-line"
           >
-            <div>
-              <div className="mb-3">
-                <span className="rounded border border-gold/40 bg-gold/10 px-3 py-1 font-sans text-xs font-semibold uppercase tracking-wider text-gold">
-                  {t("flagship.status")}
-                </span>
+            {t("title")}
+          </h2>
+
+          <div className="mt-4 sm:mt-5 h-[2px] w-12 bg-gold" />
+
+          <p className="mt-5 font-sans text-base sm:text-lg text-char/80 leading-relaxed max-w-2xl">
+            {t("subtitle")}
+          </p>
+        </div>
+
+        {/* Three Situation Cards */}
+        <div className="mt-12 sm:mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+          {SITUATION_CARDS.map((card, idx) => (
+            <article
+              key={card.href}
+              className="flex flex-col justify-between rounded-lg border border-[#E7E1D4] border-t-[3px] border-t-[#C5A880] bg-[#FAF7F2] p-7 sm:p-8 shadow-sm transition-all duration-300 hover:shadow-md hover:border-[#DDD4C4]"
+            >
+              <div>
+                <blockquote className="font-serif text-lg sm:text-xl md:text-[21px] font-semibold !text-navy leading-snug">
+                  {t(`cards.${idx}.quote`)}
+                </blockquote>
               </div>
-              <h2
-                id="flagship-heading"
-                className="max-w-3xl font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.12] !text-navy"
+
+              <div className="mt-12 sm:mt-16 pt-2">
+                <h3 className="font-sans text-sm sm:text-[15px] font-bold !text-navy tracking-tight">
+                  {t(`cards.${idx}.title`)}
+                </h3>
+                <p className="mt-2 font-sans text-xs sm:text-sm text-char/75 leading-relaxed">
+                  {t(`cards.${idx}.description`)}
+                </p>
+                <Link
+                  href={`/${locale}${card.href}`}
+                  className="mt-5 inline-block font-sans text-xs sm:text-sm font-semibold !text-navy underline underline-offset-4 decoration-navy/40 hover:text-goldd hover:decoration-goldd transition-colors"
+                >
+                  {t(`cards.${idx}.linkText`)}
+                </Link>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {/* Prospectus Banner */}
+        <div className="mt-10 sm:mt-14 rounded-xl sm:rounded-2xl bg-navy p-6 sm:p-8 md:p-10 text-white shadow-xl border border-white/10">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+            {/* Left: Book Cover Graphic + Information */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-8">
+              {/* Embedded Prospectus Book Cover */}
+              <div
+                className="relative shrink-0 w-[105px] sm:w-[120px] aspect-[1/1.37] rounded-md sm:rounded-lg overflow-hidden flex bg-[#142C4E] shadow-xl border border-white/10 select-none"
+                aria-hidden="true"
               >
-                {t("flagship.title")}
-              </h2>
-              <p className="mt-6 max-w-2xl font-sans text-base sm:text-lg leading-relaxed text-char">
-                {t("flagship.body")}
-              </p>
+                {/* Gold spine stripe */}
+                <div className="w-2 sm:w-2.5 h-full bg-[#C69D48] shrink-0" />
+
+                {/* Cover text */}
+                <div className="flex-1 flex flex-col justify-between p-3 sm:p-3.5 pl-2.5 sm:pl-3">
+                  {/* MEDLEX Header */}
+                  <div className="font-serif text-[13px] sm:text-[15px] font-bold tracking-[0.14em] text-[#E8C882] uppercase">
+                    {t("prospectus.bookHeader")}
+                  </div>
+
+                  {/* Prospectus & Year Footer */}
+                  <div className="font-sans text-[10px] sm:text-[11.5px] text-[#BAC8DB] leading-tight font-normal">
+                    <div>{t("prospectus.bookTitle")}</div>
+                    <div className="mt-0.5">{t("prospectus.bookYear")}</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Prospectus Description */}
+              <div className="max-w-md">
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-white tracking-tight">
+                  {t("prospectus.title")}
+                </h3>
+                <p className="mt-2 font-sans text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  {t("prospectus.description")}
+                </p>
+              </div>
             </div>
 
-            <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-hair shadow-lg bg-tint">
-              <Image
-                src="/images/writing-psychiatric-evidence.webp"
-                alt="Writing Psychiatric Evidence course preview"
-                fill
-                sizes="(min-width: 1024px) 35vw, 90vw"
-                className="object-cover"
-              />
-              <div
-                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/30 via-transparent to-transparent"
-                aria-hidden="true"
-              />
+            {/* Right: Email capture field */}
+            <div className="w-full lg:w-auto shrink-0">
+              {status === "success" ? (
+                <div className="flex items-center gap-2 rounded-md border border-gold/30 bg-gold/10 px-5 py-3 font-sans text-sm font-medium text-gold">
+                  <svg
+                    className="h-4 w-4 shrink-0"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <span>{t("prospectus.success")}</span>
+                </div>
+              ) : (
+                <form
+                  onSubmit={handleProspectusSubmit}
+                  className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3"
+                >
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder={t("prospectus.placeholder")}
+                    className="w-full sm:w-72 rounded-md bg-white px-4 py-3 font-sans text-sm text-navy placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-gold/60 transition-all"
+                  />
+                  <button
+                    type="submit"
+                    disabled={status === "loading"}
+                    className="rounded-md bg-[#C5A880] hover:bg-[#BFA06C] active:bg-[#B3935D] text-[#0B1B33] px-5 py-3 font-sans text-sm font-semibold whitespace-nowrap transition-colors shadow-sm disabled:opacity-60 cursor-pointer"
+                  >
+                    {status === "loading"
+                      ? t("prospectus.sending")
+                      : t("prospectus.button")}
+                  </button>
+                </form>
+              )}
+              {status === "error" && (
+                <p className="mt-2 font-sans text-xs text-red-400">
+                  {errorMessage}
+                </p>
+              )}
             </div>
           </div>
         </div>

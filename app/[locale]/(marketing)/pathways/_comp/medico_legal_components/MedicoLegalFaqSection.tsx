@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import FAQSection from "../../../_comps/FAQSection";
 
 type RawFaqItem = {
   q: string;
@@ -11,20 +12,17 @@ export default function MedicoLegalFaqSection() {
   const t = useTranslations("pathwayPages.medicoLegalLanding.faq");
   const rawFaqs = (t.raw("items") as RawFaqItem[]) || [];
 
+  const items = rawFaqs.map((faq) => ({
+    question: faq.q,
+    answer: faq.a,
+  }));
+
   return (
-    <section className="faq" id="faq">
-      <div className="wrap">
-        <h2>{t("title")}</h2>
-        <div className="rule"></div>
-        <div className="faq-list">
-          {rawFaqs.map((faq, idx) => (
-            <details key={idx}>
-              <summary>{faq.q}</summary>
-              <p>{faq.a}</p>
-            </details>
-          ))}
-        </div>
-      </div>
-    </section>
+    <FAQSection
+      id="faq"
+      headingId="medico-legal-faq-heading"
+      title={t("title")}
+      items={items}
+    />
   );
 }

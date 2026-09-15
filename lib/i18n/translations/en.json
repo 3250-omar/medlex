@@ -189,13 +189,42 @@
       "intro": "Why institutions and clinicians choose to work to our standard"
     },
     "flagship": {
-      "alt": "",
-      "body": "Eight modules across two live teaching days, built on a single simulated case file (MLC-100). Participants leave having produced a complete psychiatric medico-legal report",
-      "eyebrow": "Flagship Programme",
-      "register": "Register your interest",
-      "goToCourses": "Go to your courses",
-      "title": "Writing Psychiatric Evidence",
-      "status": "Waitlist open"
+      "title": "Which room are\nyou preparing for?",
+      "subtitle": "Most people arrive at MedLex with one situation in mind. Start from yours.",
+      "cards": [
+        {
+          "quote": "“I have been asked to write for a court, and I want it to hold.”",
+          "title": "Medico-Legal Education",
+          "description": "From a first forensic report to an opinion that survives cross-examination.",
+          "linkText": "Go to the pathway",
+          "href": "/pathways/medico-legal"
+        },
+        {
+          "quote": "“I am sitting the CASC, and reading has stopped helping.”",
+          "title": "The CASC Academy",
+          "description": "Forty-three stations taken apart from the examiner’s side of the table.",
+          "linkText": "Go to the Academy",
+          "href": "/pathways/casc-academy"
+        },
+        {
+          "quote": "“I am good with patients. It is everything else I was never taught.”",
+          "title": "MedLex Foundations",
+          "description": "The non-clinical skills a career depends on — and leadership when the time comes.",
+          "linkText": "Go to Foundations",
+          "href": "/pathways/foundations"
+        }
+      ],
+      "prospectus": {
+        "bookHeader": "MEDLEX",
+        "bookTitle": "Prospectus",
+        "bookYear": "2026–27",
+        "title": "The MedLex Prospectus",
+        "description": "All three pathways, every programme, and the standard behind them — in one document you can read, keep, or send to a colleague.",
+        "placeholder": "Your professional email",
+        "button": "Send the prospectus",
+        "sending": "Sending...",
+        "success": "Thank you. We will send the prospectus to your email."
+      }
     },
     "founder": {
       "name": "Dr Ahmed Abouelghit",
@@ -270,7 +299,7 @@
       }
     },
     "faq": {
-      "title": "Questions."
+      "title": "Questions"
     }
   },
   "founderPage": {
@@ -972,7 +1001,7 @@
       "gift": {
         "tag": "Your free gift",
         "title": "Register your email to receive your free gift",
-        "lead": "Ten Reasons Psychiatric Reports Fail in Court — the ten most common mistakes that stop a good clinical report from being useful in court, and what to do differently in each case. Written by a Consultant Forensic Psychiatrist who has been on the receiving end of the questions.",
+        "lead": "Ten Reasons Psychiatric Reports Fail in Court — the ten most common mistakes that stop a good clinical report from being useful in court, and what to do differently in each case. Written by a Consultant Forensic Psychiatrist who has been on the receiving end of the questions",
         "bookBrand": "MEDLEX",
         "bookKicker": "Free Forensic Guide",
         "bookTitle": "Ten Reasons Psychiatric Reports Fail in Court",
@@ -1008,7 +1037,7 @@
       },
       "faq": {
         "kicker": "Clarity & Expectations",
-        "title": "Questions.",
+        "title": "Questions",
         "items": [
           {
             "q": "Who is this pathway for?",
