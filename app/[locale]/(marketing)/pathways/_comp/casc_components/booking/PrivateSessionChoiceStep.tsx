@@ -152,7 +152,7 @@ export const PrivateSessionChoiceStep = React.memo(
         <button
           type="button"
           onClick={handleSelectDirect}
-          className="w-full flex items-start justify-between p-4 rounded-xl border border-hair hover:border-navy/50 bg-white hover:bg-tint/20 text-start transition-[border-color,background-color] duration-150 ease-out min-h-[44px] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-gold transform-gpu"
+          className="w-full flex items-start justify-between p-4 rounded-xl border border-gray-400 hover:border-navy/50 bg-white hover:bg-tint/20 text-start transition-[border-color,background-color] duration-150 ease-out min-h-[44px] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-gold transform-gpu"
         >
           <div className="space-y-1">
             <div className="flex items-center gap-2">
@@ -174,7 +174,7 @@ export const PrivateSessionChoiceStep = React.memo(
         <button
           type="button"
           onClick={handleSelectPackage}
-          className="w-full flex items-start justify-between p-4 rounded-xl border border-hair hover:border-navy/50 bg-white hover:bg-tint/20 text-start transition-[border-color,background-color] duration-150 ease-out min-h-[44px] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-gold transform-gpu"
+          className="w-full flex items-start justify-between p-4 rounded-xl border border-gray-400 hover:border-navy/50 bg-white hover:bg-tint/20 text-start transition-[border-color,background-color] duration-150 ease-out min-h-[44px] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-gold transform-gpu"
         >
           <div className="space-y-1">
             <div className="flex items-center gap-2">
