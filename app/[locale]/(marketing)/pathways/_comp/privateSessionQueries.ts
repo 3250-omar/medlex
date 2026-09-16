@@ -14,6 +14,7 @@ import type {
   PackageCheckoutInput,
   BookingRedemptionInput,
 } from "@/lib/private-sessions/schemas";
+import { academyQueryKeys } from "../../_apiCalls/academyQueries";
 
 export const privateSessionKeys = {
   all: ["private-sessions"] as const,
@@ -79,10 +80,27 @@ export function usePurchaseStatus(purchaseId: string | null, enabled = false) {
     },
     enabled: enabled && Boolean(purchaseId),
     refetchInterval: (query) => {
-      const status = query.state.data?.status;
+      const data = query.state.data;
+      const status = data?.status;
+      const booking = data?.booking;
+
+      // If paid direct booking, keep polling until meeting link and email status are ready
+      if (status === "paid") {
+        const needsMeeting =
+          booking && !booking.sessionLink && booking.meetingStatus !== "failed";
+        const needsEmail =
+          booking &&
+          booking.emailStatus !== "sent" &&
+          booking.emailStatus !== "failed";
+
+        if (needsMeeting || needsEmail) {
+          return 2000;
+        }
+        return false;
+      }
+
       // Stop polling on terminal states
       if (
-        status === "paid" ||
         status === "failed" ||
         status === "cancelled" ||
         status === "paid_unfulfilled"
@@ -95,6 +113,8 @@ export function usePurchaseStatus(purchaseId: string | null, enabled = false) {
 }
 
 export function useDirectCheckoutMutation() {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async ({
       input,
@@ -118,10 +138,18 @@ export function useDirectCheckoutMutation() {
       }
       return json.data as CheckoutResultData;
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: privateSessionKeys.all });
+      queryClient.refetchQueries({ queryKey: privateSessionKeys.all });
+      queryClient.invalidateQueries({ queryKey: academyQueryKeys.currentUser });
+      queryClient.refetchQueries({ queryKey: academyQueryKeys.currentUser });
+    },
   });
 }
 
 export function usePackageCheckoutMutation() {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async ({
       input,
@@ -146,6 +174,12 @@ export function usePackageCheckoutMutation() {
         );
       }
       return json.data as CheckoutResultData;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: privateSessionKeys.all });
+      queryClient.refetchQueries({ queryKey: privateSessionKeys.all });
+      queryClient.invalidateQueries({ queryKey: academyQueryKeys.currentUser });
+      queryClient.refetchQueries({ queryKey: academyQueryKeys.currentUser });
     },
   });
 }
@@ -180,6 +214,9 @@ export function useRedeemCreditMutation() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: privateSessionKeys.all });
+      queryClient.refetchQueries({ queryKey: privateSessionKeys.all });
+      queryClient.invalidateQueries({ queryKey: academyQueryKeys.currentUser });
+      queryClient.refetchQueries({ queryKey: academyQueryKeys.currentUser });
     },
   });
 }

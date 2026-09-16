@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { bookingRedemptionSchema } from "@/lib/private-sessions/schemas";
 import {
   getCorrelationId,
@@ -9,6 +10,10 @@ import {
   internalError,
   authenticateAndRequireVerifiedUser,
 } from "@/lib/private-sessions/http";
+import {
+  fulfillBookingImmediately,
+  processOutboxBatch,
+} from "@/lib/private-sessions/fulfillment";
 
 export const dynamic = "force-dynamic";
 
@@ -94,18 +99,50 @@ export async function POST(req: NextRequest) {
 
     const booking = Array.isArray(bookingData) ? bookingData[0] : bookingData;
 
+    // Trigger immediate Google Meet + email fulfillment
+    let sessionLink: string | null = null;
+    if (booking?.id) {
+      try {
+        sessionLink = await fulfillBookingImmediately(booking.id);
+      } catch (fErr) {
+        console.error("[Redemption Immediate Fulfillment Error]", fErr);
+      }
+    }
+
+    // Fetch meeting data populated by fulfillment
+    const adminClient = createAdminClient();
+    const { data: meetingData } = await adminClient
+      .from("private_session_meetings")
+      .select("join_url, meeting_status, email_status")
+      .eq("booking_id", booking.id)
+      .maybeSingle();
+
+    // Re-fetch booking to get session_link set by fulfillment if not already returned
+    const { data: updatedBooking } = await adminClient
+      .from("sessions_booking")
+      .select("session_link")
+      .eq("id", booking.id)
+      .maybeSingle();
+
+    sessionLink = sessionLink || updatedBooking?.session_link || meetingData?.join_url || null;
+
     return NextResponse.json(
       {
         data: {
+          id: booking.id,
           bookingId: booking.id,
           slotId: booking.slot_id,
           status: booking.status,
           startsAt: booking.starts_at,
           endsAt: booking.ends_at,
           fundingType: "package_credit",
+          sessionLink: updatedBooking?.session_link || meetingData?.join_url || null,
+          joinUrl: meetingData?.join_url || updatedBooking?.session_link || null,
+          meetingStatus: meetingData?.meeting_status || "pending",
+          emailStatus: meetingData?.email_status || "pending",
         },
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Error redeeming session credit";

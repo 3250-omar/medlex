@@ -86,9 +86,10 @@ export interface PurchaseStatusData {
 
 export interface CheckoutResultData {
   purchaseId: string;
-  status: "pending";
+  status: "pending" | "paid";
   checkoutUrl: string;
   holdExpiresAt: string | null;
+  sessionLink?: string | null;
 }
 
 export interface ApiErrorPayload {

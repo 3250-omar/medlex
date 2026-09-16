@@ -25,22 +25,26 @@ import {
   CascFaqSection,
   CascClosingBannerSection,
 } from "./casc_components";
-import type { BookingMode } from "./casc_components/PrivateSessionDialog";
+import type { BookingMode } from "./casc_components/booking/types";
 
 // Lazy-load private session dialog so it doesn't impact initial page load performance
 const PrivateSessionDialog = dynamic(
-  () => import("./casc_components/PrivateSessionDialog"),
+  () => import("./casc_components/booking/PrivateSessionDialog"),
   { ssr: false },
 );
 
 type Props = { content: PathwayContent; labels: PathwayLabels };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function CascAcademyLanding(_props: Props) {
   const locale = useLocale();
   const searchParams = useSearchParams();
 
   const { data: user } = useCurrentUser();
-  const { data: enrolledCourses } = useEnrolledCourses(Boolean(user));
+  const { data: fallbackEnrolledCourses } = useEnrolledCourses(
+    Boolean(user && !user.enrolledCourses),
+  );
+  const enrolledCourses = user?.enrolledCourses ?? fallbackEnrolledCourses;
 
   const initialPurchaseId = searchParams.get("purchaseId");
   const initialOpen =

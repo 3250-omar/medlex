@@ -1498,6 +1498,9 @@
     "tryAgain": "إعادة المحاولة",
     "continueToCalendar": "جدولة جلسة الآن",
     "scheduleLater": "الجدولة لاحقاً",
+    "localTime": "توقيتك المحلي",
+    "emailPendingNotice": "جاري إعداد لقاءك. ستصلك رسالة تأكيد تتضمن رابط Google Meet قريباً.",
+    "packageCreditsReady": "رصيد جلساتك متاح الآن. يمكنك جدولة جلساتك في أي وقت يناسبك.",
     "contactSupport": "التواصل مع الدعم"
   }
 }

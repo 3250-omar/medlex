@@ -3,6 +3,39 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/api/client";
 
+export type UserUpcomingBooking = {
+  id: string;
+  courseSlug: string;
+  startsAt: string;
+  endsAt: string;
+  status: string;
+  fundingType: "direct_payment" | "package_credit" | string;
+  joinUrl: string | null;
+  sessionLink: string | null;
+  meetingStatus?: string;
+  emailStatus?: string;
+};
+
+export type UserPrivateSessionPackage = {
+  id: string;
+  courseSlug: string;
+  packageCode: string | null;
+  purchased: number;
+  remaining: number;
+  status: string;
+};
+
+export type UserPrivateSessionsSummary = {
+  hasActiveSession: boolean;
+  sessionType: "none" | "direct" | "package" | "both";
+  hasUpcomingBooking: boolean;
+  nextBooking: UserUpcomingBooking | null;
+  upcomingBookings: UserUpcomingBooking[];
+  hasPackage: boolean;
+  totalRemainingCredits: number;
+  packages: UserPrivateSessionPackage[];
+};
+
 export type CurrentUser = {
   id: string;
   email: string | null;
@@ -15,6 +48,8 @@ export type CurrentUser = {
   avatarPath?: string | null;
   avatarUrl?: string | null;
   createdAt?: string | null;
+  enrolledCourses?: EnrolledCourse[];
+  privateSessions?: UserPrivateSessionsSummary;
 };
 export type Subscription = {
   enrollmentId: string;

@@ -31,6 +31,12 @@ function getTransport() {
     port,
     secure,
     auth: { user, pass },
+    connectionTimeout: 8000,
+    greetingTimeout: 5000,
+    socketTimeout: 10000,
+    tls: {
+      rejectUnauthorized: process.env.NODE_ENV === "production",
+    },
   });
 }
 

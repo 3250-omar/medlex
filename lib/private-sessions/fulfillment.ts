@@ -261,12 +261,16 @@ async function processSendEmailJob(bookingId: string, admin: AdminClient) {
   });
 
   // 2. Send email via SMTP
-  await sendEmail({
+  const emailResult = await sendEmail({
     to: learnerEmail,
     subject: emailContent.subject,
     html: emailContent.html,
     text: emailContent.text,
   });
+
+  if (!emailResult.success) {
+    throw new Error(emailResult.error || "Failed to send confirmation email");
+  }
 
   // 3. Mark meeting email status sent
   await admin
@@ -276,4 +280,67 @@ async function processSendEmailJob(bookingId: string, admin: AdminClient) {
       email_sent_at: new Date().toISOString(),
     })
     .eq("booking_id", booking.id);
+}
+
+/**
+ * Direct fulfillment for a single booking (called immediately from checkout or redemption).
+ * Creates Google Calendar event + Meet link synchronously so user gets link instantly.
+ * Sends confirmation email asynchronously in the background.
+ */
+export async function fulfillBookingImmediately(
+  bookingId: string,
+): Promise<string | null> {
+  const admin = createAdminClient();
+
+  // 1. Create Google Calendar event & Meet link
+  await processCreateMeetingJob(bookingId, admin);
+
+  // 2. Mark the meeting outbox job completed
+  await admin
+    .from("private_session_outbox")
+    .update({
+      status: "completed",
+      completed_at: new Date().toISOString(),
+      locked_at: null,
+      locked_by: null,
+    })
+    .eq("booking_id", bookingId)
+    .eq("job_type", "create_meeting");
+
+  // Fetch the generated link
+  const { data: updated } = await admin
+    .from("sessions_booking")
+    .select("session_link")
+    .eq("id", bookingId)
+    .maybeSingle();
+
+  // 3. Send confirmation email and update outbox / meeting status
+  try {
+    await processSendEmailJob(bookingId, admin);
+    await admin
+      .from("private_session_outbox")
+      .update({
+        status: "completed",
+        completed_at: new Date().toISOString(),
+        locked_at: null,
+        locked_by: null,
+      })
+      .eq("booking_id", bookingId)
+      .eq("job_type", "send_confirmation_email");
+  } catch (err) {
+    console.warn(
+      `[Fulfillment Email] Booking ${bookingId} email delivery warning:`,
+      err instanceof Error ? err.message : err,
+    );
+    await admin
+      .from("private_session_meetings")
+      .update({
+        email_status: "failed",
+        last_error_code:
+          err instanceof Error ? err.message.slice(0, 120) : "EMAIL_FAILED",
+      })
+      .eq("booking_id", bookingId);
+  }
+
+  return updated?.session_link || null;
 }

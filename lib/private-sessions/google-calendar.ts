@@ -74,16 +74,20 @@ export async function createGoogleCalendarEvent({
   hostEmail,
   calendarId,
 }: CreateMeetingParams): Promise<GoogleCalendarMeetingResult> {
-  const targetCalendarId =
-    calendarId ||
-    process.env.GOOGLE_CALENDAR_ID ||
-    "primary";
+  const configuredDefaultCal = process.env.GOOGLE_CALENDAR_ID || "primary";
+  const preferredCalendarId =
+    calendarId && !calendarId.includes("casc-host-calendar")
+      ? calendarId
+      : configuredDefaultCal;
 
   const token = await getAccessToken();
 
   // If credentials are not configured or in development, return a deterministic meeting link
   if (!token) {
-    if (process.env.NODE_ENV === "production" && process.env.GOOGLE_OAUTH_CLIENT_ID) {
+    if (
+      process.env.NODE_ENV === "production" &&
+      process.env.GOOGLE_OAUTH_CLIENT_ID
+    ) {
       throw new Error("Failed to obtain Google Calendar access token");
     }
 
@@ -117,30 +121,45 @@ export async function createGoogleCalendarEvent({
     },
   };
 
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 10000);
+  const executeCreate = async (calId: string) => {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
+    try {
+      const res = await fetch(
+        `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(
+          calId,
+        )}/events?conferenceDataVersion=1`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(eventPayload),
+          signal: controller.signal,
+        },
+      );
+      clearTimeout(timeout);
+      return res;
+    } catch (err) {
+      clearTimeout(timeout);
+      throw err;
+    }
+  };
 
   try {
-    const response = await fetch(
-      `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(
-        targetCalendarId
-      )}/events?conferenceDataVersion=1`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(eventPayload),
-        signal: controller.signal,
-      }
-    );
+    let response = await executeCreate(preferredCalendarId);
 
-    clearTimeout(timeout);
+    // If custom host calendar is 404/not found, gracefully retry on primary calendar
+    if (response.status === 404 && preferredCalendarId !== "primary") {
+      response = await executeCreate("primary");
+    }
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`Google Calendar API error (${response.status}): ${errorText}`);
+      throw new Error(
+        `Google Calendar API error (${response.status}): ${errorText}`,
+      );
     }
 
     const event = (await response.json()) as {
@@ -153,13 +172,17 @@ export async function createGoogleCalendarEvent({
     };
     const joinUrl =
       event.hangoutLink ||
-      event.conferenceData?.entryPoints?.find((ep) => ep.entryPointType === "video")?.uri ||
+      event.conferenceData?.entryPoints?.find(
+        (ep) => ep.entryPointType === "video",
+      )?.uri ||
       "";
 
     const conferenceId = event.conferenceData?.conferenceId || null;
 
     if (!joinUrl || !event.id) {
-      throw new Error("Google Calendar event created without Google Meet video conference link");
+      throw new Error(
+        "Google Calendar event created without Google Meet video conference link",
+      );
     }
 
     return {
@@ -168,7 +191,6 @@ export async function createGoogleCalendarEvent({
       joinUrl,
     };
   } catch (err: unknown) {
-    clearTimeout(timeout);
     throw err;
   }
 }

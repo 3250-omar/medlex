@@ -12,6 +12,10 @@ import {
 } from "@/lib/private-sessions/http";
 // TODO: Re-import paymentAdapter once Paymob payment integration is enabled
 // import { paymentAdapter } from "@/lib/private-sessions/payment";
+import {
+  fulfillBookingImmediately,
+  processOutboxBatch,
+} from "@/lib/private-sessions/fulfillment";
 
 export async function POST(req: NextRequest) {
   const correlationId = getCorrelationId(req);
@@ -151,6 +155,22 @@ export async function POST(req: NextRequest) {
         return internalError(confirmError.message, correlationId);
       }
 
+      // Directly fulfill Google Meet creation for this booking immediately
+      const { data: bookingRow } = await admin
+        .from("sessions_booking")
+        .select("id, session_link")
+        .eq("payment_attempt_id", hold.payment_attempt_id)
+        .maybeSingle();
+
+      let sessionLink: string | null = bookingRow?.session_link || null;
+      if (bookingRow?.id && !sessionLink) {
+        try {
+          sessionLink = await fulfillBookingImmediately(bookingRow.id);
+        } catch (fErr) {
+          console.error("[Checkout Immediate Fulfillment Error]", fErr);
+        }
+      }
+
       return NextResponse.json(
         {
           data: {
@@ -158,6 +178,7 @@ export async function POST(req: NextRequest) {
             status: "paid",
             checkoutUrl: returnUrl,
             holdExpiresAt: hold.hold_expires_at,
+            sessionLink: sessionLink,
           },
         },
         { status: 201 },

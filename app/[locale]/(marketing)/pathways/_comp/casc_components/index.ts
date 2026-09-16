@@ -17,4 +17,5 @@ export { default as CascCoachingSection } from "./CascCoachingSection";
 export { default as CascPricingSection } from "./CascPricingSection";
 export { default as CascFaqSection, referenceFaqs } from "./CascFaqSection";
 export { default as CascClosingBannerSection } from "./CascClosingBannerSection";
-export { default as PrivateSessionDialog } from "./PrivateSessionDialog";
+export { default as PrivateSessionDialog } from "./booking/PrivateSessionDialog";
+export * from "./booking";

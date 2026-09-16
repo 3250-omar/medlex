@@ -1498,6 +1498,9 @@
     "tryAgain": "Try Again",
     "continueToCalendar": "Schedule a Session Now",
     "scheduleLater": "Schedule Later",
+    "localTime": "Your local time",
+    "emailPendingNotice": "Your meeting is being prepared. You'll receive a confirmation email with your Google Meet link shortly.",
+    "packageCreditsReady": "Your session credits are now available. Schedule your sessions whenever you're ready.",
     "contactSupport": "Contact Support"
   }
 }
