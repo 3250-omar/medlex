@@ -209,19 +209,6 @@ export default function Header() {
             </span>
           </Link>
 
-          {/* ── Mobile user menu (centered between logo and hamburger) ── */}
-          {user && (
-            <div className="absolute left-1/2 -translate-x-1/2 lg:hidden">
-              <UserAccountMenu
-                user={user}
-                locale={locale}
-                onSignOut={handleSignOut}
-                profileLabel={t("nav.profile")}
-                logoutLabel={t("actions.logout")}
-              />
-            </div>
-          )}
-
           {/* ── Desktop nav ──────────────────────────────────────────── */}
           <Navigation showCourses={showCourses} />
 
@@ -258,20 +245,31 @@ export default function Header() {
             )}
           </div>
 
-          {/* ── Mobile hamburger ─────────────────────────────────────── */}
-          <button
-            ref={menuTriggerRef}
-            type="button"
-            onClick={() => setMenuOpen(true)}
-            className="flex min-h-11 min-w-11 flex-col items-center justify-center gap-[5px] lg:hidden"
-            aria-label={t("actions.menu")}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-site-navigation"
-          >
-            <span className="block h-px w-6 bg-white" />
-            <span className="block h-px w-4 bg-white" />
-            <span className="block h-px w-6 bg-white" />
-          </button>
+          {/* ── Mobile right actions (User menu + hamburger) ──────────── */}
+          <div className="flex items-center gap-2 lg:hidden">
+            {user && (
+              <UserAccountMenu
+                user={user}
+                locale={locale}
+                onSignOut={handleSignOut}
+                profileLabel={t("nav.profile")}
+                logoutLabel={t("actions.logout")}
+              />
+            )}
+            <button
+              ref={menuTriggerRef}
+              type="button"
+              onClick={() => setMenuOpen(true)}
+              className="flex min-h-11 min-w-11 flex-col items-center justify-center gap-[5px]"
+              aria-label={t("actions.menu")}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-site-navigation"
+            >
+              <span className="block h-px w-6 bg-white" />
+              <span className="block h-px w-4 bg-white" />
+              <span className="block h-px w-6 bg-white" />
+            </button>
+          </div>
         </div>
       </header>
 

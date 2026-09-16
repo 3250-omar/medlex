@@ -205,7 +205,7 @@
 
 .medico-legal-landing .hero .grid {
   position: relative;
-  padding: 96px 0 80px;
+  padding: 112px 0 80px;
   display: grid;
   grid-template-columns: 1fr;
   align-items: center;
@@ -216,9 +216,9 @@
 }
 
 .medico-legal-landing .hero h1 {
-  font-size: clamp(40px, 5vw, 64px);
+  font-size: clamp(34px, 5vw, 64px);
   font-weight: 400;
-  line-height: 1.02;
+  line-height: 1.08;
   letter-spacing: -0.02em;
   color: #fff;
 }
@@ -1161,9 +1161,19 @@
   }
 
   .medico-legal-landing .hero .grid {
-    padding: 56px 0 48px;
+    padding: 110px 0 48px;
     grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 32px;
+  }
+
+  .medico-legal-landing .hero h1 {
+    font-size: clamp(30px, 6vw, 44px);
+    line-height: 1.1;
+  }
+
+  .medico-legal-landing .hero .lead {
+    font-size: 18px;
+    margin-top: 20px;
   }
 
   .medico-legal-landing .hero::before {
@@ -1186,6 +1196,10 @@
   .medico-legal-landing .hero .strip div {
     border-right: 0;
     border-bottom: 1px solid rgba(217, 192, 138, 0.35);
+  }
+
+  .medico-legal-landing .hero .strip div:last-child {
+    border-bottom: 0;
   }
 
   .medico-legal-landing .what.who {
@@ -1212,6 +1226,7 @@
   .medico-legal-landing .cover {
     max-width: 240px;
     transform: none;
+    margin: 0 auto;
   }
 
   .medico-legal-landing .gift-form {
@@ -1244,6 +1259,140 @@
 }
 
 /* ==========================================================================
+   MOBILE PHONES (max-width: 640px)
+   ========================================================================== */
+@media (max-width: 640px) {
+  .medico-legal-landing section {
+    padding: 56px 0;
+  }
+
+  .medico-legal-landing .wrap {
+    padding: 0 18px;
+  }
+
+  .medico-legal-landing .hero .grid {
+    padding: 104px 0 36px;
+    gap: 24px;
+  }
+
+  .medico-legal-landing .hero h1 {
+    font-size: clamp(26px, 7vw, 36px);
+    line-height: 1.14;
+  }
+
+  .medico-legal-landing .hero .lead {
+    font-size: 15.5px;
+    line-height: 1.55;
+    margin-top: 16px;
+  }
+
+  .medico-legal-landing .hero .strip {
+    margin-top: 22px;
+  }
+
+  .medico-legal-landing .hero .strip div {
+    padding: 12px 16px;
+  }
+
+  .medico-legal-landing .hero .strip small {
+    font-size: 11px;
+  }
+
+  .medico-legal-landing .hero .strip b {
+    font-size: 14.5px;
+  }
+
+  .medico-legal-landing .hero .ctas {
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 26px;
+  }
+
+  .medico-legal-landing .hero .btn {
+    width: 100%;
+    text-align: center;
+    padding: 13px 20px;
+  }
+
+  .medico-legal-landing .what.who {
+    padding: 56px 0;
+  }
+
+  .medico-legal-landing .what.who blockquote {
+    padding-left: 16px;
+    margin-top: 24px;
+    font-size: 20px;
+  }
+
+  .medico-legal-landing .aud {
+    padding: 22px 18px 18px;
+  }
+
+  .medico-legal-landing .levels-head .badge {
+    max-width: 100%;
+    padding: 14px 16px;
+  }
+
+  .medico-legal-landing .rung {
+    padding: 22px 16px;
+  }
+
+  .medico-legal-landing .flag .ctas {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .medico-legal-landing .flag .ctas .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .medico-legal-landing .two-grid article {
+    padding: 24px 18px;
+  }
+
+  .medico-legal-landing .how-grid article {
+    padding: 24px 18px;
+    grid-template-columns: 44px 1fr;
+    column-gap: 14px;
+  }
+
+  .medico-legal-landing .how-grid .ico {
+    width: 44px;
+    height: 44px;
+  }
+
+  .medico-legal-landing .how-grid .ico svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .medico-legal-landing .credit {
+    padding: 14px 16px;
+    gap: 14px;
+  }
+
+  .medico-legal-landing .gift {
+    padding: 56px 0;
+  }
+
+  .medico-legal-landing .cover {
+    max-width: 220px;
+    margin: 0 auto;
+  }
+
+  .medico-legal-landing .faq-list summary {
+    font-size: 18px;
+    padding: 18px 36px 18px 0;
+  }
+
+  .medico-legal-landing .faq-list summary::after {
+    font-size: 22px;
+    top: 16px;
+  }
+}
+
+/* ==========================================================================
    RTL (ARABIC) ADJUSTMENTS
    ========================================================================== */
 [dir="rtl"] .medico-legal-landing {
@@ -1269,6 +1418,17 @@
   border-left: 0;
 }
 
+@media (max-width: 980px) {
+  [dir="rtl"] .medico-legal-landing .hero .strip div {
+    border-left: 0;
+    border-bottom: 1px solid rgba(217, 192, 138, 0.35);
+  }
+
+  [dir="rtl"] .medico-legal-landing .hero .strip div:last-child {
+    border-bottom: 0;
+  }
+}
+
 /* 2. TICKER */
 [dir="rtl"] .medico-legal-landing .ticker li::after {
   right: auto;
@@ -1281,6 +1441,13 @@
   border-right: 3px solid var(--gold);
   padding-left: 0;
   padding-right: 26px;
+}
+
+@media (max-width: 640px) {
+  [dir="rtl"] .medico-legal-landing .what.who blockquote {
+    padding-left: 0;
+    padding-right: 16px;
+  }
 }
 
 /* 4. FLAGSHIP SECTION */
@@ -1310,6 +1477,13 @@
   transform: rotate(3deg);
 }
 
+@media (max-width: 980px) {
+  [dir="rtl"] .medico-legal-landing .cover {
+    transform: none;
+    margin: 0 auto;
+  }
+}
+
 /* 6. FAQ SECTION */
 [dir="rtl"] .medico-legal-landing .faq::before {
   background: linear-gradient(
@@ -1327,6 +1501,17 @@
 [dir="rtl"] .medico-legal-landing .faq-list summary::after {
   right: auto;
   left: 4px;
+}
+
+@media (max-width: 640px) {
+  [dir="rtl"] .medico-legal-landing .faq-list summary {
+    padding: 18px 0 18px 36px;
+  }
+
+  [dir="rtl"] .medico-legal-landing .faq-list summary::after {
+    left: 4px;
+    right: auto;
+  }
 }
 
 /* 7. FINAL CTA BANNER */
