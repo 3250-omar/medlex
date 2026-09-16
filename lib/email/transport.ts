@@ -1,5 +1,12 @@
 import "server-only";
-import nodemailer from "nodemailer";
+// =====================================================================
+// NODEMAILER TRANSPORT (COMMENTED OUT — replaced by Resend HTTP API)
+// Reason: Vercel serverless blocks SMTP ports 25/465/587.
+// Resend uses HTTPS (port 443) which works everywhere.
+// =====================================================================
+// import nodemailer from "nodemailer";
+
+import { Resend } from "resend";
 
 export interface SendEmailOptions {
   to: string;
@@ -15,49 +22,43 @@ export interface SendEmailResult {
   error?: string;
 }
 
-function getTransport() {
-  const host = process.env.SMTP_HOST?.trim();
-  const user = process.env.SMTP_USER?.trim();
-  const rawPass = process.env.SMTP_PASS?.trim() || "";
-  // Strip surrounding quotes or internal spaces from copied app passwords
-  const pass = rawPass.replace(/^["']|["']$/g, "").replace(/\s+/g, "").trim();
-  const port = Number(process.env.SMTP_PORT) || 587;
-  const secure = process.env.SMTP_SECURE === "true" || port === 465;
+// =====================================================================
+// OLD NODEMAILER TRANSPORT (kept for reference)
+// =====================================================================
+// function getTransport() {
+//   const host = process.env.SMTP_HOST?.trim();
+//   const user = process.env.SMTP_USER?.trim();
+//   const rawPass = process.env.SMTP_PASS?.trim() || "";
+//   const pass = rawPass.replace(/^["']|["']$/g, "").replace(/\s+/g, "").trim();
+//   const port = Number(process.env.SMTP_PORT) || 587;
+//   const secure = process.env.SMTP_SECURE === "true" || port === 465;
+//   if (!user || !pass) return null;
+//   const isGmail = host?.includes("gmail") || user.endsWith("@gmail.com");
+//   if (isGmail) {
+//     return nodemailer.createTransport({
+//       service: "gmail",
+//       auth: { user, pass },
+//       connectionTimeout: 10000,
+//       greetingTimeout: 5000,
+//       socketTimeout: 15000,
+//     });
+//   }
+//   if (!host) return null;
+//   return nodemailer.createTransport({
+//     host, port, secure,
+//     auth: { user, pass },
+//     connectionTimeout: 8000,
+//     greetingTimeout: 5000,
+//     socketTimeout: 10000,
+//     tls: { rejectUnauthorized: process.env.NODE_ENV === "production" },
+//   });
+// }
+// =====================================================================
 
-  if (!user || !pass) {
-    return null;
-  }
-
-  // If host is gmail or user is a gmail address, prefer the built-in 'gmail' service
-  // to avoid SSL/TLS handshake quirks and specific port timeout issues
-  const isGmail = host?.includes("gmail") || user.endsWith("@gmail.com");
-
-  if (isGmail) {
-    return nodemailer.createTransport({
-      service: "gmail",
-      auth: { user, pass },
-      connectionTimeout: 10000,
-      greetingTimeout: 5000,
-      socketTimeout: 15000,
-    });
-  }
-
-  if (!host) {
-    return null;
-  }
-
-  return nodemailer.createTransport({
-    host,
-    port,
-    secure,
-    auth: { user, pass },
-    connectionTimeout: 8000,
-    greetingTimeout: 5000,
-    socketTimeout: 10000,
-    tls: {
-      rejectUnauthorized: process.env.NODE_ENV === "production",
-    },
-  });
+function getResendClient(): Resend | null {
+  const apiKey = process.env.RESEND_API_KEY?.trim();
+  if (!apiKey) return null;
+  return new Resend(apiKey);
 }
 
 export async function sendEmail({
@@ -67,20 +68,21 @@ export async function sendEmail({
   text,
   replyTo,
 }: SendEmailOptions): Promise<SendEmailResult> {
-  const transporter = getTransport();
+  const resend = getResendClient();
   const from =
+    process.env.EMAIL_FROM?.trim() ||
     process.env.SMTP_FROM?.trim() ||
-    `MedLex System <${process.env.SMTP_USER || "noreply@medlexsolutions.com"}>`;
+    `MedLex System <onboarding@resend.dev>`;
   const defaultReplyTo =
     process.env.SMTP_REPLY_TO || "support@medlexsolutions.com";
 
-  if (!transporter) {
+  if (!resend) {
     if (process.env.NODE_ENV === "production") {
       throw new Error(
-        "SMTP server is not configured in production environment",
+        "RESEND_API_KEY is not configured in production environment",
       );
     }
-    // In local development, log to console but make sure it's explicitly recorded
+    // In local development, log to console
     console.log(`[Dev Email Transport] To: ${to}, Subject: ${subject}`);
     return {
       success: true,
@@ -89,22 +91,32 @@ export async function sendEmail({
   }
 
   try {
-    const info = await transporter.sendMail({
+    const { data, error } = await resend.emails.send({
       from,
-      to,
+      to: [to],
       subject,
-      text,
       html,
+      text,
       replyTo: replyTo || defaultReplyTo,
     });
 
+    if (error) {
+      console.error(`[Resend] Failed to send email to ${to}:`, error);
+      return {
+        success: false,
+        error: error.message,
+      };
+    }
+
+    console.log(`[Resend] Successfully sent email to ${to}, id: ${data?.id}`);
     return {
       success: true,
-      messageId: info.messageId,
+      messageId: data?.id,
     };
   } catch (err: unknown) {
     const message =
-      err instanceof Error ? err.message : "Failed to send email via SMTP";
+      err instanceof Error ? err.message : "Failed to send email via Resend";
+    console.error(`[Resend] Exception sending to ${to}:`, message);
     return {
       success: false,
       error: message,
