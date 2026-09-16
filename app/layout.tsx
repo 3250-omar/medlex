@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { sourceSerif4, inter, fraunces } from "@/lib/fonts";
+import { sourceSerif4, inter, fraunces, cairo } from "@/lib/fonts";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { siteUrl } from "@/lib/seo/metadata";
@@ -30,6 +30,7 @@ export default function RootLayout({
         sourceSerif4.variable,
         fraunces.variable,
         inter.variable,
+        cairo.variable,
         "font-sans",
       )}
       data-theme="dark"

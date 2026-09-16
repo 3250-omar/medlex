@@ -297,6 +297,28 @@ html.dark h5,
 html.dark h6 {
   color: var(--text);
 }
+
+/* RTL / Arabic Typography Rules */
+[dir="rtl"],
+html[dir="rtl"],
+body[dir="rtl"] {
+  --font-serif:
+    var(--font-cairo), "Cairo", "Segoe UI", Tahoma, Arial, sans-serif;
+  --font-sans:
+    var(--font-cairo), "Cairo", "Segoe UI", Tahoma, Arial, sans-serif;
+  --font-display:
+    var(--font-cairo), "Cairo", "Segoe UI", Tahoma, Arial, sans-serif;
+  --font-body:
+    var(--font-cairo), "Cairo", "Segoe UI", Tahoma, Arial, sans-serif;
+  --font-heading:
+    var(--font-cairo), "Cairo", "Segoe UI", Tahoma, Arial, sans-serif;
+}
+
+[dir="rtl"],
+[dir="rtl"] * {
+  letter-spacing: normal !important;
+}
+
 /* Page-transition and scroll-ready reveal: restrained, compositional motion. */
 @keyframes medlex-reveal {
   from {

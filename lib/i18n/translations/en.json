@@ -275,7 +275,7 @@
     ],
     "gifts": {
       "title": "Register to receive your free gift",
-      "subtitle": "One resource per pathway. Enter your email and you will hear about that pathway only.",
+      "subtitle": "One resource per pathway. Explore each pathway to download your free gift.",
       "emailPlaceholder": "Your email",
       "sendLabel": "Send it",
       "sendingLabel": "Sending…",
@@ -284,17 +284,20 @@
         "casc": {
           "pathway": "The CASC Academy",
           "title": "The Examiner's Briefing",
-          "description": "How the CASC is actually marked, the errors examiners see most often, and the grammar of a British consultation — written from the other side of the table, so you know what is being watched before you walk in."
+          "description": "How the CASC is actually marked, the errors examiners see most often, and the grammar of a British consultation — written from the other side of the table, so you know what is being watched before you walk in.",
+          "action": "Visit The CASC Academy Pathway to download your FREE GIFT"
         },
         "medicoLegal": {
           "pathway": "Medico-Legal Education",
           "title": "Ten Reasons Psychiatric Reports Fail in Court",
-          "description": "The ten most common mistakes that stop a good clinical report from being useful in court — unclear questions, missing reasoning, conclusions that go further than the evidence — and what to do differently in each case."
+          "description": "The ten most common mistakes that stop a good clinical report from being useful in court — unclear questions, missing reasoning, conclusions that go further than the evidence — and what to do differently in each case.",
+          "action": "Visit The Medico-Legal Education Pathway to download your FREE GIFT"
         },
         "foundations": {
           "pathway": "MedLex Foundations",
           "title": "The Clinician's Leadership Trap",
-          "description": "Why good clinicians struggle when they step into leadership — the habits that made them excellent at the bedside and quietly work against them in the meeting room — and the first practical shifts that change it."
+          "description": "Why good clinicians struggle when they step into leadership — the habits that made them excellent at the bedside and quietly work against them in the meeting room — and the first practical shifts that change it.",
+          "action": "Visit The MedLex Foundation Pathway to download your FREE GIFT"
         }
       }
     },

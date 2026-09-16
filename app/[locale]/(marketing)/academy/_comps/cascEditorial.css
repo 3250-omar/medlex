@@ -310,17 +310,17 @@ html[data-theme="dark"] .casc-experience header h1 {
 }
 
 /* Subtle Rhythm for alternating sections across the lesson */
-.casc-experience section#s2,
-.casc-experience section:has(.player) {
+.casc-experience section#s2:not(.done):not(.on-navy),
+.casc-experience section:has(.player):not(.done):not(.on-navy) {
   background: #f8fafc;
 }
 
-.casc-experience section#s4 {
+.casc-experience section#s4:not(.done):not(.on-navy) {
   background: #ffffff;
 }
 
-.casc-experience section#s5,
-.casc-experience section:has(.takes) {
+.casc-experience section#s5:not(.done):not(.on-navy),
+.casc-experience section:has(.takes):not(.done):not(.on-navy) {
   background: #faf8f5;
 }
 
@@ -924,10 +924,10 @@ html[data-theme="dark"] .casc-experience header h1 {
 }
 
 .casc-experience .opt.picked {
-  border-color: var(--navy);
-  background: var(--navy2);
+  border-color: var(--navy) !important;
+  background: var(--navy2) !important;
   color: #ffffff !important;
-  font-weight: 600;
+  font-weight: 600 !important;
 }
 
 .casc-experience .opt:disabled,
@@ -1017,7 +1017,7 @@ html[data-theme="dark"] .casc-experience header h1 {
   border-left: 4px solid var(--gold) !important;
 }
 
-.casc-experience .opt {
+.casc-experience .opt:not(.picked):not(.correct):not(.wrong) {
   background: #ffffff !important;
   color: #1e293b !important;
   border: 1.5px solid #cbd5e1 !important;
@@ -1264,9 +1264,50 @@ html[data-theme="dark"] .casc-experience header h1 {
 }
 
 .casc-experience .rub input {
-  width: 17px;
-  height: 17px;
-  accent-color: var(--gold);
+  width: 18px;
+  height: 18px;
+  accent-color: #10b981 !important;
+  cursor: pointer;
+}
+
+.casc-experience .rub tr:has(input[type="checkbox"]:checked) td {
+  background: #f0fdf4 !important;
+  color: #065f46 !important;
+}
+
+/* Observer Card Judgement Buttons (Pass / Borderline / Fail) */
+.casc-experience .pcard .opt {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  min-width: 90px !important;
+  border-radius: 8px !important;
+  padding: 8px 18px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  border: 1.5px solid #cbd5e1 !important;
+  background: #ffffff !important;
+  color: #1e293b !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.casc-experience .pcard .opt:hover:not(.picked) {
+  border-color: #10b981 !important;
+  background: #f0fdf4 !important;
+  color: #065f46 !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Selected judgement box: vibrant green with crisp white text */
+.casc-experience .pcard .opt.picked {
+  background: #10b981 !important;
+  color: #ffffff !important;
+  border-color: #059669 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.35) !important;
+  transform: translateY(-1px) !important;
 }
 
 .casc-experience .rub tr.dom td {
@@ -1394,33 +1435,48 @@ html[data-theme="dark"] .casc-experience header h1 {
 /* ==========================================================================
    Done Section (Navy Banner on completion)
    ========================================================================== */
-.casc-experience .done {
-  background: var(--navy);
-  color: #ffffff;
+.casc-experience .done,
+.casc-experience section.done,
+.casc-experience section.on-navy,
+.casc-experience section[class*="done"],
+.casc-experience section[id^="s"].done,
+.casc-experience section[id^="s"].on-navy {
+  background: var(--navy) !important;
+  color: #ffffff !important;
   text-align: center;
-  border-bottom: 0;
+  border-bottom: 0 !important;
   padding: 52px 0;
 }
 
 .casc-experience .done h2,
+.casc-experience section.done h2,
+.casc-experience section.on-navy h2,
 html.dark .casc-experience .done h2,
 html[data-theme="dark"] .casc-experience .done h2 {
   color: #ffffff !important;
 }
 
-.casc-experience .done p {
-  color: var(--lbody);
+.casc-experience .done p,
+.casc-experience section.done p,
+.casc-experience section.on-navy p {
+  color: var(--lbody) !important;
   max-width: 56ch;
   margin: 10px auto 0;
 }
 
-.casc-experience .done .tag2 {
+.casc-experience .done .tag2,
+.casc-experience section.done .tag2 {
   margin-top: 26px;
-  color: var(--gold);
+  color: var(--gold) !important;
   font-weight: 700;
   font-size: 12px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
+}
+
+.casc-experience .done .eyebrow,
+.casc-experience section.done .eyebrow {
+  color: var(--gold) !important;
 }
 
 .casc-experience .mark {
@@ -1431,19 +1487,26 @@ html[data-theme="dark"] .casc-experience .done h2 {
 /* ==========================================================================
    Footer
    ========================================================================== */
-.casc-experience footer {
-  background: var(--deep);
-  color: var(--mute);
+.casc-experience footer,
+.casc-experience .casc-content-mount footer {
+  background: var(--deep) !important;
+  color: var(--mute) !important;
   font-size: 13px;
   padding: 22px 0;
-  border-top: 0;
+  border-top: 0 !important;
 }
 
-.casc-experience footer .wrap {
+.casc-experience footer .wrap,
+.casc-experience .casc-content-mount footer .wrap {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 10px;
+}
+
+.casc-experience footer span,
+.casc-experience .casc-content-mount footer span {
+  color: var(--mute) !important;
 }
 
 /* ==========================================================================

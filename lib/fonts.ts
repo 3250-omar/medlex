@@ -1,4 +1,11 @@
-import { Source_Serif_4, Inter, Fraunces } from "next/font/google";
+import { Source_Serif_4, Inter, Fraunces, Cairo } from "next/font/google";
+
+export const cairo = Cairo({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-cairo",
+  display: "swap",
+});
 
 export const sourceSerif4 = Source_Serif_4({
   subsets: ["latin"],

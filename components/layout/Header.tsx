@@ -188,22 +188,22 @@ export default function Header() {
             className="group flex items-center gap-3"
             aria-label={t("brand.home")}
           >
-            <span className="flex h-8 w-11 items-center justify-center overflow-hidden border border-gold/50 bg-[#1b375c]/60 p-0.5 transition-colors group-hover:border-gold">
+            <span className="flex h-12 w-18 items-center justify-center overflow-hidden border border-gold/50 bg-[#1b375c]/60 p-0.5 transition-colors group-hover:border-gold rounded-md">
               <Image
                 src="/images/new-emblem.png"
                 alt=""
-                width={36}
-                height={20}
+                width={46}
+                height={30}
                 className="h-auto w-auto object-contain"
                 priority
                 aria-hidden="true"
               />
             </span>
             <span className="flex flex-col leading-tight">
-              <span className="font-display text-[13px] tracking-[0.2em] text-white">
+              <span className="font-display text-[13px] sm:text-[14px] rtl:text-[16px] rtl:font-bold tracking-[0.2em] rtl:tracking-normal text-white">
                 {t("brand.name")}
               </span>
-              <span className="font-body text-[8px] tracking-[0.15em] text-white/40 uppercase">
+              <span className="font-body text-[8px] sm:text-[9px] rtl:text-[11px] rtl:font-medium tracking-[0.15em] rtl:tracking-normal text-white/60 rtl:text-white/80 uppercase rtl:normal-case">
                 {t("brand.descriptor")}
               </span>
             </span>
@@ -231,7 +231,7 @@ export default function Header() {
             {pathname.includes("/casc-academy") ? null : (
               <Link
                 href={alternateLocalePath}
-                className="font-body text-sm tracking-[0.15em] text-lbody transition-colors hover:text-white"
+                className="font-body text-sm rtl:text-[15px] rtl:font-medium tracking-[0.15em] rtl:tracking-normal text-lbody transition-colors hover:text-white"
                 aria-label={
                   locale === "en"
                     ? t("actions.switchToArabic")

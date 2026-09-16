@@ -177,14 +177,14 @@ export default async function Footer({ locale }: { locale: string }) {
                   >
                     {locale === "en" ? "العربية" : "English"}
                   </Link>
-                  <div className="pt-2">
+                  {/* <div className="pt-2">
                     <Link
                       href={`/${locale}/contact`}
                       className="inline-flex items-center justify-center bg-[#c5a059] hover:bg-[#d4af37] text-[#0b1726] font-semibold text-xs sm:text-sm px-5 py-2.5 rounded shadow transition-all duration-200"
                     >
                       {t("register")}
                     </Link>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

@@ -1,7 +1,7 @@
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
 import type { EnrolledCourse } from "../../../_apiCalls/academyQueries";
-import EnrolOrContinue, { btnGold, btnGhost } from "./EnrolOrContinue";
+import EnrolOrContinue, { btnGold } from "./EnrolOrContinue";
 
 type Props = {
   locale: string;
@@ -15,8 +15,8 @@ export default function CascClosingBannerSection({
   continueSlug,
 }: Props) {
   return (
-    <section className="relative py-20 lg:py-28 bg-deep text-lbody on-deep text-center overflow-hidden">
-      {/* Background image full width with opacity 70% */}
+    <section className="relative py-20 lg:py-28 bg-tint text-center border-t border-hair overflow-hidden">
+      {/* Background image commented out:
       <div className="absolute inset-0 pointer-events-none select-none z-0">
         <Image
           src="/images/sectionImages/reports_section.jpg"
@@ -24,15 +24,15 @@ export default function CascClosingBannerSection({
           fill
           className="object-cover object-center opacity-90"
         />
-        {/* Dark gradient overlay blending with bg-deep for readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-deep/70 via-deep/60 to-deep/80" />
       </div>
+      */}
 
       <div className="relative z-10 mx-auto max-w-3xl px-6 sm:px-8">
-        <h2 className="font-serif text-3xl sm:text-4xl lg:text-[42px] font-bold leading-tight text-white max-w-2xl mx-auto">
+        <h2 className="font-serif text-3xl sm:text-4xl lg:text-[42px] font-bold leading-tight text-navy! max-w-2xl mx-auto">
           The candidates who pass are rarely the ones who knew the most
         </h2>
-        <p className="mt-5 font-serif text-lg sm:text-xl text-lbody leading-relaxed max-w-xl mx-auto">
+        <p className="mt-5 font-serif text-lg sm:text-xl text-char leading-relaxed max-w-xl mx-auto">
           They are the ones who practised out loud, on purpose, with someone
           watching — and who knew, before they walked in, which four seconds of
           each station the mark actually turns on
@@ -45,7 +45,7 @@ export default function CascClosingBannerSection({
             locale={locale}
           />
           <Link
-            className={btnGhost}
+            className="btn btn-ghost !min-h-12 !px-7 font-semibold !text-navy !border-navy/30 hover:!bg-navy hover:!text-white text-sm !rounded-full transition-all hover:-translate-y-0.5"
             href={`/${locale}/academy/preview/station-7-2`}
           >
             Try a station free

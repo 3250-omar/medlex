@@ -65,7 +65,7 @@ const Navigation = memo(function Navigation({
             href={targetPath}
             onClick={(e) => handleScroll(e, item.href)}
             aria-current={isActive ? "page" : undefined}
-            className={`group relative font-body text-sm tracking-wide transition-colors duration-200 hover:text-white ${isActive ? "text-gold font-semibold" : "text-lbody font-medium"}`}
+            className={`group relative font-body text-sm rtl:text-[15px] rtl:font-medium tracking-wide rtl:tracking-normal transition-colors duration-200 hover:text-white ${isActive ? "text-gold font-semibold" : "text-lbody font-medium"}`}
           >
             {item.label === "Courses" ? t("nav.courses") : labels[index]}
             <span

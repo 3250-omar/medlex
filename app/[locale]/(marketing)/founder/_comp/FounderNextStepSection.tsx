@@ -31,16 +31,15 @@ export default function FounderNextStepSection({
 
   return (
     <section
-      className="relative overflow-hidden border-b border-white/10 on-navy text-lbody"
+      className="relative overflow-hidden bg-white border-b border-hair text-char"
       aria-labelledby="founder-next-step-heading"
     >
-      {/* Background image with dual-tone overlay */}
+      {/* Background image with dual-tone overlay (commented out)
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: "url('/images/mandate-case-review.jpg')" }}
         aria-hidden="true"
       />
-      {/* Deep Navy / gold dual-tone overlay */}
       <div
         className="absolute inset-0"
         style={{
@@ -49,6 +48,7 @@ export default function FounderNextStepSection({
         }}
         aria-hidden="true"
       />
+      */}
 
       {/* Content */}
       <div className="relative w-full px-6 sm:px-10 md:px-14 lg:px-20 xl:px-24 2xl:px-28 py-16 md:py-20 lg:py-24">
@@ -66,21 +66,21 @@ export default function FounderNextStepSection({
             {/* Heading */}
             <h2
               id="founder-next-step-heading"
-              className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.12] tracking-tight text-white"
+              className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.12] tracking-tight !text-navy"
             >
               {t("title")}
             </h2>
 
             {/* Body */}
-            <p className="mt-5 font-sans text-base sm:text-lg leading-relaxed text-lbody max-w-xl">
+            <p className="mt-5 font-sans text-base sm:text-lg leading-relaxed text-slate-600 max-w-xl">
               {t("body")}
             </p>
           </div>
 
           {/* ── Right: Pathway card ── */}
-          <div className="rounded-2xl border border-white/15 bg-deep/90 backdrop-blur-md p-7 sm:p-9 shadow-2xl">
+          <div className="rounded-2xl border border-navy/15 bg-navy text-white p-7 sm:p-9 shadow-xl">
             {/* Card eyebrow */}
-            <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-mute block mb-5">
+            <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-gold/80 block mb-5">
               {t("cardEyebrow")}
             </span>
 

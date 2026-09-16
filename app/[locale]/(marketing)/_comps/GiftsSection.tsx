@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { useTranslations } from "next-intl";
-import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
+import { ArrowRight } from "lucide-react";
 
 type GiftKey = "casc" | "medicoLegal" | "foundations";
 
@@ -10,61 +10,21 @@ interface GiftCardProps {
   pathway: string;
   title: string;
   description: string;
-  emailPlaceholder: string;
-  sendLabel: string;
-  sendingLabel: string;
-  successMessage: string;
-  giftKey: GiftKey;
+  href: string;
+  actionText: string;
 }
 
 function GiftCard({
   pathway,
   title,
   description,
-  emailPlaceholder,
-  sendLabel,
-  sendingLabel,
-  successMessage,
-  giftKey,
+  href,
+  actionText,
 }: GiftCardProps) {
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<
-    "idle" | "loading" | "success" | "error"
-  >("idle");
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || status === "loading") return;
-
-    setStatus("loading");
-    setErrorMessage("");
-
-    try {
-      const res = await fetch("/api/gifts/interest", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, gift: giftKey }),
-      });
-      if (res.ok) {
-        setStatus("success");
-      } else {
-        const data = await res.json().catch(() => ({}));
-        setErrorMessage(
-          data?.error ?? "Something went wrong. Please try again.",
-        );
-        setStatus("error");
-      }
-    } catch {
-      setErrorMessage("Something went wrong. Please try again.");
-      setStatus("error");
-    }
-  };
-
   return (
-    <article className="flex flex-col rounded-sm border border-gold/30 bg-white shadow-sm">
+    <article className="group flex flex-col justify-between rounded-sm border border-gold/30 bg-white shadow-sm transition-all duration-300 hover:border-gold/60 hover:shadow-md hover:-translate-y-0.5">
       {/* Top gold accent line */}
-      <div className="h-0.5 w-full bg-gold/60 rounded-t-sm" />
+      <div className="h-0.5 w-full bg-gold/60 rounded-t-sm transition-all duration-300 group-hover:bg-gold" />
 
       <div className="flex flex-1 flex-col p-7 sm:p-8">
         {/* Pathway label */}
@@ -82,41 +42,22 @@ function GiftCard({
           {description}
         </p>
 
-        {/* Form */}
-        <div className="mt-7">
-          {status === "success" ? (
-            <p className="font-sans text-sm font-medium text-gold">
-              {successMessage}
-            </p>
-          ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-              <div className="flex gap-0 rounded-sm overflow-hidden border border-slate-200 focus-within:border-gold/60 focus-within:ring-1 focus-within:ring-gold/30 transition-all">
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder={emailPlaceholder}
-                  className="min-w-0 flex-1 bg-transparent px-4 py-3 font-sans text-sm text-navy outline-none placeholder:text-slate-400"
-                />
-                <button
-                  type="submit"
-                  disabled={status === "loading"}
-                  className={cn(
-                    "shrink-0 bg-navy px-5 py-3 font-sans text-sm font-semibold text-white transition-colors",
-                    status === "loading"
-                      ? "opacity-60 cursor-not-allowed"
-                      : "hover:bg-navy-deep",
-                  )}
-                >
-                  {status === "loading" ? sendingLabel : sendLabel}
-                </button>
-              </div>
-              {status === "error" && (
-                <p className="font-sans text-xs text-red-600">{errorMessage}</p>
-              )}
-            </form>
-          )}
+        {/* Pathway link with animated hover */}
+        <div className="mt-7 pt-5 border-t border-slate-100">
+          <Link
+            href={href}
+            className="group/link relative flex items-center justify-between gap-3 overflow-hidden rounded-sm border border-navy/20 bg-[#faf9f6] px-4 py-3.5 text-xs sm:text-sm font-semibold text-navy transition-all duration-300 hover:border-navy hover:bg-navy hover:text-white hover:shadow-md active:scale-[0.99]"
+          >
+            <span className="leading-snug transition-transform duration-300 group-hover/link:translate-x-0.5">
+              {actionText}
+            </span>
+            <span
+              className="flex size-7 shrink-0 items-center justify-center rounded-full bg-navy/5 text-navy transition-all duration-300 group-hover/link:bg-gold group-hover/link:text-navy group-hover/link:translate-x-1 rtl:group-hover/link:-translate-x-1"
+              aria-hidden="true"
+            >
+              <ArrowRight className="size-3.5 transition-transform duration-300 rtl:rotate-180" />
+            </span>
+          </Link>
         </div>
       </div>
     </article>
@@ -125,11 +66,31 @@ function GiftCard({
 
 export default function GiftsSection() {
   const t = useTranslations("home.gifts");
+  const locale = useLocale();
 
-  const cards: { giftKey: GiftKey }[] = [
-    { giftKey: "casc" },
-    { giftKey: "medicoLegal" },
-    { giftKey: "foundations" },
+  const cards: {
+    giftKey: GiftKey;
+    href: string;
+    defaultActionText: string;
+  }[] = [
+    {
+      giftKey: "casc",
+      href: "/pathways/casc-academy",
+      defaultActionText:
+        "Visit The CASC Academy Pathway to download your FREE GIFT",
+    },
+    {
+      giftKey: "medicoLegal",
+      href: "/pathways/medico-legal",
+      defaultActionText:
+        "Visit The Medico-Legal Education Pathway to download your FREE GIFT",
+    },
+    {
+      giftKey: "foundations",
+      href: "/pathways/foundations",
+      defaultActionText:
+        "Visit The MedLex Foundation Pathway to download your FREE GIFT",
+    },
   ];
 
   return (
@@ -154,19 +115,22 @@ export default function GiftsSection() {
 
         {/* Cards grid */}
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {cards.map(({ giftKey }) => (
-            <GiftCard
-              key={giftKey}
-              giftKey={giftKey}
-              pathway={t(`cards.${giftKey}.pathway`)}
-              title={t(`cards.${giftKey}.title`)}
-              description={t(`cards.${giftKey}.description`)}
-              emailPlaceholder={t("emailPlaceholder")}
-              sendLabel={t("sendLabel")}
-              sendingLabel={t("sendingLabel")}
-              successMessage={t("successMessage")}
-            />
-          ))}
+          {cards.map(({ giftKey, href, defaultActionText }) => {
+            const actionText = t.has(`cards.${giftKey}.action`)
+              ? t(`cards.${giftKey}.action`)
+              : defaultActionText;
+
+            return (
+              <GiftCard
+                key={giftKey}
+                pathway={t(`cards.${giftKey}.pathway`)}
+                title={t(`cards.${giftKey}.title`)}
+                description={t(`cards.${giftKey}.description`)}
+                href={`/${locale}${href}`}
+                actionText={actionText}
+              />
+            );
+          })}
         </div>
       </div>
     </section>

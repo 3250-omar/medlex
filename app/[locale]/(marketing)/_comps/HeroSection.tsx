@@ -150,14 +150,16 @@ export default function HeroSection({ locale }: HeroSectionProps) {
             {/* Eyebrow label */}
             <div className="hero-kicker mb-6 flex items-center justify-start gap-3">
               <span className="block h-px w-10 bg-gold/70" />
-              <span className="font-sans text-[12px] uppercase tracking-[0.25em] text-gold font-semibold">
+              <span className="font-sans text-[12px] sm:text-[13px] rtl:text-[14px] uppercase rtl:normal-case tracking-[0.25em] rtl:tracking-normal text-gold font-semibold">
                 {t("kicker")}
               </span>
             </div>
 
             {/* Headline */}
             <h1 className="hero-title mb-7 font-serif text-[clamp(42px,4.5vw,70px)] font-bold leading-[1.08] tracking-[-0.015em] text-white">
-              <span className="hero-title-line">{t("line1")}</span>
+              {t("line1") ? (
+                <span className="hero-title-line">{t("line1")}</span>
+              ) : null}
               <span className="hero-title-line">
                 {t("line2")}
                 <em className="hero-answer not-italic text-gold">
