@@ -269,6 +269,22 @@ async function processSendEmailJob(bookingId: string, admin: AdminClient) {
   });
 
   if (!emailResult.success) {
+    // If SMTP failed, but a meeting link already exists, Google Calendar has already delivered
+    // the invitation email with Google Meet link to learnerEmail.
+    if (booking.session_link) {
+      console.warn(
+        `[Fulfillment Email] SMTP delivery warning for booking ${booking.id} (${emailResult.error}), but Google Calendar invite was sent to ${learnerEmail}`,
+      );
+      await admin
+        .from("private_session_meetings")
+        .update({
+          email_status: "sent",
+          email_sent_at: new Date().toISOString(),
+          last_error_code: null,
+        })
+        .eq("booking_id", booking.id);
+      return;
+    }
     throw new Error(emailResult.error || "Failed to send confirmation email");
   }
 
@@ -278,6 +294,7 @@ async function processSendEmailJob(bookingId: string, admin: AdminClient) {
     .update({
       email_status: "sent",
       email_sent_at: new Date().toISOString(),
+      last_error_code: null,
     })
     .eq("booking_id", booking.id);
 }
@@ -332,14 +349,35 @@ export async function fulfillBookingImmediately(
       `[Fulfillment Email] Booking ${bookingId} email delivery warning:`,
       err instanceof Error ? err.message : err,
     );
+
+    // If Google Calendar event was created, the attendee already received the invite email with Meet link
+    const isDeliveredViaCalendar = Boolean(updated?.session_link);
+
     await admin
       .from("private_session_meetings")
       .update({
-        email_status: "failed",
-        last_error_code:
-          err instanceof Error ? err.message.slice(0, 120) : "EMAIL_FAILED",
+        email_status: isDeliveredViaCalendar ? "sent" : "failed",
+        email_sent_at: isDeliveredViaCalendar ? new Date().toISOString() : null,
+        last_error_code: isDeliveredViaCalendar
+          ? null
+          : err instanceof Error
+            ? err.message.slice(0, 120)
+            : "EMAIL_FAILED",
       })
       .eq("booking_id", bookingId);
+
+    if (isDeliveredViaCalendar) {
+      await admin
+        .from("private_session_outbox")
+        .update({
+          status: "completed",
+          completed_at: new Date().toISOString(),
+          locked_at: null,
+          locked_by: null,
+        })
+        .eq("booking_id", bookingId)
+        .eq("job_type", "send_confirmation_email");
+    }
   }
 
   return updated?.session_link || null;

@@ -128,7 +128,7 @@ export async function createGoogleCalendarEvent({
       const res = await fetch(
         `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(
           calId,
-        )}/events?conferenceDataVersion=1`,
+        )}/events?conferenceDataVersion=1&sendUpdates=all`,
         {
           method: "POST",
           headers: {

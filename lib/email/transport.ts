@@ -18,11 +18,31 @@ export interface SendEmailResult {
 function getTransport() {
   const host = process.env.SMTP_HOST?.trim();
   const user = process.env.SMTP_USER?.trim();
-  const pass = process.env.SMTP_PASS?.replace(/\s+/g, "").trim();
+  const rawPass = process.env.SMTP_PASS?.trim() || "";
+  // Strip surrounding quotes or internal spaces from copied app passwords
+  const pass = rawPass.replace(/^["']|["']$/g, "").replace(/\s+/g, "").trim();
   const port = Number(process.env.SMTP_PORT) || 587;
   const secure = process.env.SMTP_SECURE === "true" || port === 465;
 
-  if (!host || !user || !pass) {
+  if (!user || !pass) {
+    return null;
+  }
+
+  // If host is gmail or user is a gmail address, prefer the built-in 'gmail' service
+  // to avoid SSL/TLS handshake quirks and specific port timeout issues
+  const isGmail = host?.includes("gmail") || user.endsWith("@gmail.com");
+
+  if (isGmail) {
+    return nodemailer.createTransport({
+      service: "gmail",
+      auth: { user, pass },
+      connectionTimeout: 10000,
+      greetingTimeout: 5000,
+      socketTimeout: 15000,
+    });
+  }
+
+  if (!host) {
     return null;
   }
 
