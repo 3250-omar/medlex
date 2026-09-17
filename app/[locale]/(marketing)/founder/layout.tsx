@@ -1,10 +1,30 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { createPageMetadata } from "@/lib/seo/metadata";
+import { createLocalizedMetadata, type Locale } from "@/lib/seo/metadata";
+import { JsonLd } from "@/lib/seo/JsonLd";
+import { createPersonSchema } from "@/lib/seo/schema";
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: "en" | "ar" }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
   const { locale } = await params;
-  return createPageMetadata({ locale, path: "/founder", title: "Dr Ahmed Abouelghit | Founder", description: "Meet the forensic psychiatrist behind MedLex and its evidence-led approach to medicolegal psychiatry education." });
+  return createLocalizedMetadata(locale as Locale, "founder");
 }
 
-export default function FounderLayout({ children }: { children: ReactNode }) { return children; }
+export default async function FounderLayout({
+  children,
+  params,
+}: {
+  children: ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return (
+    <>
+      <JsonLd data={createPersonSchema(locale)} />
+      {children}
+    </>
+  );
+}

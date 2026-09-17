@@ -1,4 +1,6 @@
 import { getTranslations } from "next-intl/server";
+import { JsonLd } from "@/lib/seo/JsonLd";
+import { createFaqSchema } from "@/lib/seo/schema";
 import FAQSection from "../_comps/FAQSection";
 import FaqCtaButton from "./_comp/FaqCtaButton";
 
@@ -16,6 +18,7 @@ export default async function FAQPage({
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-char">
+      <JsonLd data={createFaqSchema(items)} />
       {/* FAQ Hero Header */}
       <section className="relative overflow-hidden bg-navy pt-32 pb-20 md:pt-44 md:pb-28 on-navy text-lbody border-b border-white/10">
         {/* Subtle decorative radial glow */}

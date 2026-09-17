@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
+const NOINDEX_ROBOTS_HEADER = {
+  "X-Robots-Tag": "noindex, nofollow, noarchive, nosnippet, noimageindex",
+};
+
 interface RouteParams {
   params: Promise<{ slug: string }>;
 }
@@ -16,7 +20,7 @@ export async function GET(request: Request, context: RouteParams) {
   if (!user) {
     return NextResponse.json(
       { error: "authentication_required" },
-      { status: 401 },
+      { status: 401, headers: NOINDEX_ROBOTS_HEADER },
     );
   }
 
@@ -25,10 +29,13 @@ export async function GET(request: Request, context: RouteParams) {
   });
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: error.message },
+      { status: 500, headers: NOINDEX_ROBOTS_HEADER },
+    );
   }
 
-  return NextResponse.json({ data });
+  return NextResponse.json({ data }, { headers: NOINDEX_ROBOTS_HEADER });
 }
 
 export async function POST(request: Request, context: RouteParams) {
@@ -42,7 +49,7 @@ export async function POST(request: Request, context: RouteParams) {
   if (!user) {
     return NextResponse.json(
       { error: "authentication_required" },
-      { status: 401 },
+      { status: 401, headers: NOINDEX_ROBOTS_HEADER },
     );
   }
 
@@ -71,9 +78,12 @@ export async function POST(request: Request, context: RouteParams) {
           ? "Course progress must be at least 50% to claim a certificate."
           : error.message,
       },
-      { status: isThresholdError ? 403 : 500 },
+      {
+        status: isThresholdError ? 403 : 500,
+        headers: NOINDEX_ROBOTS_HEADER,
+      },
     );
   }
 
-  return NextResponse.json({ data });
+  return NextResponse.json({ data }, { headers: NOINDEX_ROBOTS_HEADER });
 }

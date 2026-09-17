@@ -1,28 +1,27 @@
 import type { Metadata } from "next";
-import CourseCompletion from "../../../_comps/CourseCompletion";
+import type { ReactNode } from "react";
 import { CASC_PRIVATE_ROBOTS } from "@/lib/seo/metadata";
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
   const isCasc = slug === "casc-academy";
   return {
     title: isCasc
-      ? "Course Completion | CASC Academy | MedLex"
-      : "Course Completion | MedLex",
+      ? "Certificate | CASC Academy | MedLex"
+      : "Certificate | MedLex",
     robots: CASC_PRIVATE_ROBOTS,
   };
 }
 
-export default async function CompletionPage({
-  params,
+export default function CourseCertificateLayout({
+  children,
 }: {
+  children: ReactNode;
   params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { locale, slug } = await params;
-  return <CourseCompletion locale={locale} courseSlug={slug} />;
+  return children;
 }
-

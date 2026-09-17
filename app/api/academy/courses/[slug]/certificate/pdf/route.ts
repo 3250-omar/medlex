@@ -4,6 +4,10 @@ import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 import fs from "fs";
 import path from "path";
 
+const NOINDEX_ROBOTS_HEADER = {
+  "X-Robots-Tag": "noindex, nofollow, noarchive, nosnippet, noimageindex",
+};
+
 interface RouteParams {
   params: Promise<{ slug: string }>;
 }
@@ -19,7 +23,7 @@ export async function GET(request: Request, context: RouteParams) {
   if (!user) {
     return NextResponse.json(
       { error: "authentication_required" },
-      { status: 401 },
+      { status: 401, headers: NOINDEX_ROBOTS_HEADER },
     );
   }
 
@@ -32,7 +36,7 @@ export async function GET(request: Request, context: RouteParams) {
   if (statusError || !statusData) {
     return NextResponse.json(
       { error: statusError?.message || "Failed to retrieve course status" },
-      { status: 500 },
+      { status: 500, headers: NOINDEX_ROBOTS_HEADER },
     );
   }
 
@@ -53,7 +57,7 @@ export async function GET(request: Request, context: RouteParams) {
   if (!status.enrolled) {
     return NextResponse.json(
       { error: "You are not enrolled in this course." },
-      { status: 403 },
+      { status: 403, headers: NOINDEX_ROBOTS_HEADER },
     );
   }
 
@@ -112,7 +116,7 @@ export async function GET(request: Request, context: RouteParams) {
   if (!fs.existsSync(templatePath)) {
     return NextResponse.json(
       { error: "Certificate template file not found on server." },
-      { status: 500 },
+      { status: 500, headers: NOINDEX_ROBOTS_HEADER },
     );
   }
 
@@ -172,7 +176,7 @@ export async function GET(request: Request, context: RouteParams) {
   if (!certificateId) {
     return NextResponse.json(
       { error: "Unable to create the certificate download record." },
-      { status: 500 },
+      { status: 500, headers: NOINDEX_ROBOTS_HEADER },
     );
   }
 
@@ -188,7 +192,7 @@ export async function GET(request: Request, context: RouteParams) {
   if (downloadEventError) {
     return NextResponse.json(
       { error: "Unable to record the certificate download." },
-      { status: 500 },
+      { status: 500, headers: NOINDEX_ROBOTS_HEADER },
     );
   }
 
@@ -198,6 +202,7 @@ export async function GET(request: Request, context: RouteParams) {
       "Content-Type": "application/pdf",
       "Content-Disposition": `inline; filename="MedLex-Certificate-${slug}.pdf"`,
       "Cache-Control": "private, no-cache, no-store, must-revalidate",
+      ...NOINDEX_ROBOTS_HEADER,
     },
   });
 }

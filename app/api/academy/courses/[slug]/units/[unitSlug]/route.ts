@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
+const NOINDEX_ROBOTS_HEADER = {
+  "X-Robots-Tag": "noindex, nofollow, noarchive, nosnippet, noimageindex",
+};
+
 type Row = Record<string, unknown>;
 type Query = {
   eq: (column: string, value: string | boolean) => Query;
@@ -22,11 +26,36 @@ export async function GET(
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user)
+
+  if (!user) {
     return NextResponse.json(
       { error: "authentication_required" },
-      { status: 401 },
+      {
+        status: 401,
+        headers: NOINDEX_ROBOTS_HEADER,
+      },
     );
+  }
+
+  // Verify active course enrolment
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: enrollment } = await (supabase as any)
+    .from("enrollments")
+    .select("id, status, courses!inner(slug)")
+    .eq("user_id", user.id)
+    .eq("courses.slug", slug)
+    .in("status", ["active", "completed", "paused"])
+    .maybeSingle();
+
+  if (!enrollment) {
+    return NextResponse.json(
+      { error: "enrolment_required" },
+      {
+        status: 403,
+        headers: NOINDEX_ROBOTS_HEADER,
+      },
+    );
+  }
 
   const db = supabase as unknown as Client;
   const { data, error } = await db
@@ -36,11 +65,16 @@ export async function GET(
     )
     .eq("slug", unitSlug)
     .single();
-  if (error || !data)
+
+  if (error || !data) {
     return NextResponse.json(
       { error: `Unit ${unitSlug} was not found in ${slug}.` },
-      { status: 404 },
+      {
+        status: 404,
+        headers: NOINDEX_ROBOTS_HEADER,
+      },
     );
+  }
 
   // Attach correct answers from private.question_answer_keys using admin client if available
   try {
@@ -93,5 +127,10 @@ export async function GET(
     // Non-fatal: fallback to source_key / embedded station defaults
   }
 
-  return NextResponse.json({ data });
+  return NextResponse.json(
+    { data },
+    {
+      headers: NOINDEX_ROBOTS_HEADER,
+    },
+  );
 }

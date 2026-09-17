@@ -3,10 +3,12 @@ import { type PathwayContent } from "./pathwayContent";
 
 interface PathwayFounderSectionProps {
   founder: PathwayContent["founder"];
+  locale?: string;
 }
 
 export default function PathwayFounderSection({
   founder,
+  locale = "en",
 }: PathwayFounderSectionProps) {
   return (
     <section className="border-b border-hair bg-white text-char">
@@ -20,7 +22,7 @@ export default function PathwayFounderSection({
             {founder.body}
           </p>
           <Link
-            href="/founder"
+            href={`/${locale}/founder`}
             className="mt-8 inline-flex items-center gap-2 border-b-2 border-gold pb-1 font-body text-sm font-semibold text-navy transition-colors hover:text-goldd"
           >
             {founder.action} <span aria-hidden="true">→</span>

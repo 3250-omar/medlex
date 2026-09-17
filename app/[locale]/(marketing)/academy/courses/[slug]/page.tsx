@@ -1,5 +1,22 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Container from "@/components/layout/Container";
+import { CASC_PRIVATE_ROBOTS } from "@/lib/seo/metadata";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const isCasc = slug === "casc-academy";
+  return {
+    title: isCasc
+      ? "CASC Academy Learning Dashboard | MedLex"
+      : "Course Learning Dashboard | MedLex",
+    robots: CASC_PRIVATE_ROBOTS,
+  };
+}
 
 export default async function AcademyCoursePage({
   params,

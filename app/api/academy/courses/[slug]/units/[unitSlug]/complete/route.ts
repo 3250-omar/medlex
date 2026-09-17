@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
+const NOINDEX_ROBOTS_HEADER = {
+  "X-Robots-Tag": "noindex, nofollow, noarchive, nosnippet, noimageindex",
+};
+
 type Row = Record<string, unknown>;
 
 export async function POST(
@@ -16,7 +20,7 @@ export async function POST(
   if (!user) {
     return NextResponse.json(
       { error: "authentication_required" },
-      { status: 401 },
+      { status: 401, headers: NOINDEX_ROBOTS_HEADER },
     );
   }
 
@@ -30,7 +34,7 @@ export async function POST(
   );
 
   if (!rpcError && rpcData) {
-    return NextResponse.json({ data: rpcData });
+    return NextResponse.json({ data: rpcData }, { headers: NOINDEX_ROBOTS_HEADER });
   }
 
   // 2. Fallback: execute directly in case the new RPC migration hasn't been applied to remote yet
@@ -43,7 +47,10 @@ export async function POST(
       .single();
 
     if (courseRes.error || !courseRes.data) {
-      return NextResponse.json({ error: "course_not_found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "course_not_found" },
+        { status: 404, headers: NOINDEX_ROBOTS_HEADER },
+      );
     }
     const courseId = courseRes.data.id;
 
@@ -60,7 +67,7 @@ export async function POST(
     if (enrollmentRes.error || !enrollmentRes.data) {
       return NextResponse.json(
         { error: "active_enrollment_required" },
-        { status: 403 },
+        { status: 403, headers: NOINDEX_ROBOTS_HEADER },
       );
     }
     const { id: enrollmentId, release_id: releaseId } = enrollmentRes.data;
@@ -74,7 +81,10 @@ export async function POST(
       .single();
 
     if (unitRes.error || !unitRes.data) {
-      return NextResponse.json({ error: "unit_not_found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "unit_not_found" },
+        { status: 404, headers: NOINDEX_ROBOTS_HEADER },
+      );
     }
     const { id: unitId, sequence_number: unitSeq } = unitRes.data;
 
@@ -133,20 +143,26 @@ export async function POST(
       (u: Row) => Number(u.sequence_number) > Number(unitSeq),
     );
 
-    return NextResponse.json({
-      data: {
-        completed: true,
-        unitId,
-        unitSlug,
-        completedUnits,
-        totalUnits,
-        progressPercent,
-        isCourseCompleted,
-        nextUnitSlug: nextUnit?.slug ? String(nextUnit.slug) : null,
+    return NextResponse.json(
+      {
+        data: {
+          completed: true,
+          unitId,
+          unitSlug,
+          completedUnits,
+          totalUnits,
+          progressPercent,
+          isCourseCompleted,
+          nextUnitSlug: nextUnit?.slug ? String(nextUnit.slug) : null,
+        },
       },
-    });
+      { headers: NOINDEX_ROBOTS_HEADER },
+    );
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "server_error";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json(
+      { error: message },
+      { status: 500, headers: NOINDEX_ROBOTS_HEADER },
+    );
   }
 }

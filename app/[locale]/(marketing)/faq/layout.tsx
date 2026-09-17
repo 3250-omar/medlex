@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { createPageMetadata } from "@/lib/seo/metadata";
+import { createLocalizedMetadata, type Locale } from "@/lib/seo/metadata";
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: "en" | "ar" }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
   const { locale } = await params;
-  return createPageMetadata({ locale, path: "/faq", title: "Frequently Asked Questions", description: "Answers to common questions about MedLex courses, professional learning pathways, and enrolment." });
+  return createLocalizedMetadata(locale as Locale, "faq");
 }
 
-export default function FaqLayout({ children }: { children: ReactNode }) { return children; }
+export default function FaqLayout({ children }: { children: ReactNode }) {
+  return children;
+}

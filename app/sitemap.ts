@@ -1,16 +1,32 @@
 import type { MetadataRoute } from "next";
-import { siteUrl } from "@/lib/seo/metadata";
+import {
+  SEO_ROUTES_REGISTRY,
+  CANONICAL_ORIGIN,
+  type Locale,
+} from "@/lib/seo/metadata";
 
-const publicPaths = ["", "/founder", "/pathways", "/pathways/medico-legal", "/pathways/casc-academy", "/pathways/foundations", "/institutional", "/contact", "/faq", "/privacy", "/terms", "/refund-policy", "/register"];
+const LOCALES: Locale[] = ["en", "ar"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return (["en", "ar"] as const).flatMap((locale) =>
-    publicPaths.map((path) => ({
-      url: new URL(`/${locale}${path}`, siteUrl).toString(),
-      lastModified: new Date(),
-      changeFrequency: path === "" ? "weekly" : "monthly",
-      priority: path === "" ? 1 : path.startsWith("/pathways") ? 0.9 : 0.7,
-      alternates: { languages: { en: new URL(`/en${path}`, siteUrl).toString(), ar: new URL(`/ar${path}`, siteUrl).toString() } },
-    })),
+  const routes = Object.values(SEO_ROUTES_REGISTRY);
+
+  return LOCALES.flatMap((locale) =>
+    routes.map((config) => {
+      const canonicalUrl = `${CANONICAL_ORIGIN}/${locale}${config.path}`;
+      const enUrl = `${CANONICAL_ORIGIN}/en${config.path}`;
+      const arUrl = `${CANONICAL_ORIGIN}/ar${config.path}`;
+
+      return {
+        url: canonicalUrl,
+        lastModified: config.lastModified,
+        alternates: {
+          languages: {
+            en: enUrl,
+            ar: arUrl,
+            "x-default": enUrl,
+          },
+        },
+      };
+    }),
   );
 }

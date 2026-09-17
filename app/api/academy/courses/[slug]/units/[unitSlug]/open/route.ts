@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
+const NOINDEX_ROBOTS_HEADER = {
+  "X-Robots-Tag": "noindex, nofollow, noarchive, nosnippet, noimageindex",
+};
+
 export async function POST(
   _: Request,
   { params }: { params: Promise<{ slug: string; unitSlug: string }> },
@@ -14,7 +18,7 @@ export async function POST(
   if (!user) {
     return NextResponse.json(
       { error: "authentication_required" },
-      { status: 401 },
+      { status: 401, headers: NOINDEX_ROBOTS_HEADER },
     );
   }
 
@@ -28,7 +32,7 @@ export async function POST(
   );
 
   if (!rpcError && rpcData) {
-    return NextResponse.json({ data: rpcData });
+    return NextResponse.json({ data: rpcData }, { headers: NOINDEX_ROBOTS_HEADER });
   }
 
   // 2. Fallback direct execution
@@ -40,7 +44,10 @@ export async function POST(
       .single();
 
     if (courseRes.error || !courseRes.data) {
-      return NextResponse.json({ error: "course_not_found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "course_not_found" },
+        { status: 404, headers: NOINDEX_ROBOTS_HEADER },
+      );
     }
 
     const enrollmentRes = await supabase
@@ -56,7 +63,7 @@ export async function POST(
     if (enrollmentRes.error || !enrollmentRes.data) {
       return NextResponse.json(
         { error: "active_enrollment_required" },
-        { status: 403 },
+        { status: 403, headers: NOINDEX_ROBOTS_HEADER },
       );
     }
 
@@ -70,7 +77,10 @@ export async function POST(
       .single();
 
     if (unitRes.error || !unitRes.data) {
-      return NextResponse.json({ error: "unit_not_found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "unit_not_found" },
+        { status: 404, headers: NOINDEX_ROBOTS_HEADER },
+      );
     }
 
     const unitId = unitRes.data.id;
@@ -111,15 +121,21 @@ export async function POST(
         .eq("unit_id", unitId);
     }
 
-    return NextResponse.json({
-      data: {
-        success: true,
-        unitId,
-        unitSlug,
+    return NextResponse.json(
+      {
+        data: {
+          success: true,
+          unitId,
+          unitSlug,
+        },
       },
-    });
+      { headers: NOINDEX_ROBOTS_HEADER },
+    );
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "server_error";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json(
+      { error: message },
+      { status: 500, headers: NOINDEX_ROBOTS_HEADER },
+    );
   }
 }

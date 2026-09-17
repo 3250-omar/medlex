@@ -1,10 +1,53 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { createPageMetadata } from "@/lib/seo/metadata";
+import { createLocalizedMetadata, CANONICAL_ORIGIN, type Locale } from "@/lib/seo/metadata";
+import { JsonLd } from "@/lib/seo/JsonLd";
+import { createBreadcrumbSchema } from "@/lib/seo/schema";
+import Breadcrumbs from "@/components/seo/Breadcrumbs";
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: "en" | "ar" }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
   const { locale } = await params;
-  return createPageMetadata({ locale, path: "/pathways/foundations", title: "Foundations of Medicolegal Psychiatry", description: "Develop a rigorous foundation in the language, ethics, and clinical reasoning of medicolegal psychiatry." });
+  return createLocalizedMetadata(locale as Locale, "pathwayFoundations");
 }
 
-export default function FoundationsLayout({ children }: { children: ReactNode }) { return children; }
+export default async function FoundationsLayout({
+  children,
+  params,
+}: {
+  children: ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const isAr = locale === "ar";
+
+  const breadcrumbs = [
+    { label: isAr ? "الرئيسية" : "Home", href: `/${locale}` },
+    { label: isAr ? "المسارات" : "Pathways", href: `/${locale}#pathways` },
+    { label: isAr ? "أسس الطب النفسي الشرعي" : "Foundations of Medicolegal Psychiatry" },
+  ];
+
+  const breadcrumbSchema = createBreadcrumbSchema([
+    { name: isAr ? "الرئيسية" : "Home", url: `${CANONICAL_ORIGIN}/${locale}` },
+    { name: isAr ? "المسارات" : "Pathways", url: `${CANONICAL_ORIGIN}/${locale}/pathways` },
+    {
+      name: isAr ? "أسس الطب النفسي الشرعي" : "Foundations of Medicolegal Psychiatry",
+      url: `${CANONICAL_ORIGIN}/${locale}/pathways/foundations`,
+    },
+  ]);
+
+  return (
+    <>
+      <JsonLd data={breadcrumbSchema} />
+      <div className="bg-navy border-b border-white/10 pt-20">
+        <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10">
+          <Breadcrumbs items={breadcrumbs} />
+        </div>
+      </div>
+      {children}
+    </>
+  );
+}

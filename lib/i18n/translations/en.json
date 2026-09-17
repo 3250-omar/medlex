@@ -1505,5 +1505,147 @@
     "emailPendingNotice": "Your meeting is being prepared. You'll receive a confirmation email with your Google Meet link shortly.",
     "packageCreditsReady": "Your session credits are now available. Schedule your sessions whenever you're ready.",
     "contactSupport": "Contact Support"
+  },
+  "seo": {
+    "home": {
+      "title": "MedLex | Forensic Psychiatry Education & CASC Training",
+      "description": "Specialist professional education in forensic psychiatry, medicolegal reporting, and MRCPsych CASC coaching. Founded by Dr Ahmed Abouelghit.",
+      "ogTitle": "MedLex — Forensic Psychiatry Education & CASC Training",
+      "ogDescription": "Consultant-led training for clinical and medicolegal excellence across the UK and MENA.",
+      "imageAlt": "MedLex — Forensic Psychiatry Education & CASC Training"
+    },
+    "founder": {
+      "title": "Dr Ahmed Abouelghit — Consultant Forensic Psychiatrist",
+      "description": "Meet Dr Ahmed Abouelghit, Consultant Forensic Psychiatrist and founder of MedLex, practicing across the United Kingdom, Egypt, and Qatar.",
+      "ogTitle": "Dr Ahmed Abouelghit — Consultant Forensic Psychiatrist | MedLex",
+      "ogDescription": "Consultant forensic psychiatrist specializing in expert medicolegal evaluation, risk assessment, and clinical education.",
+      "imageAlt": "Dr Ahmed Abouelghit, Consultant Forensic Psychiatrist",
+      "breadcrumb": "Founder"
+    },
+    "pathways": {
+      "title": "Psychiatry Education Pathways",
+      "description": "Explore MedLex professional learning pathways: Medicolegal Report Writing, MRCPsych CASC Academy, and Foundations of Forensic Psychiatry.",
+      "ogTitle": "Psychiatry Education Pathways | MedLex",
+      "ogDescription": "Structured postgraduate training pathways for clinicians, expert witnesses, and mental health professionals.",
+      "imageAlt": "MedLex Professional Psychiatry Pathways",
+      "breadcrumb": "Pathways"
+    },
+    "pathwayMedicoLegal": {
+      "title": "Medicolegal Psychiatry & Expert Report Writing",
+      "description": "Master the clinical formulation, legal frameworks, and defensible reasoning required to write medicolegal reports that withstand courtroom cross-examination.",
+      "ogTitle": "Medicolegal Psychiatry & Expert Report Writing | MedLex",
+      "ogDescription": "Defensible psychiatric evidence training for clinicians and legal professionals.",
+      "imageAlt": "Medicolegal Psychiatry & Expert Report Writing Pathway",
+      "breadcrumb": "Medicolegal Pathway"
+    },
+    "pathwayCascAcademy": {
+      "title": "MRCPsych CASC Preparation & Coaching",
+      "description": "Consultant-led MRCPsych CASC preparation, comprehensive station walkthroughs, calibrated mark sheets, and 1-on-1 private practice sessions.",
+      "ogTitle": "MRCPsych CASC Preparation & Coaching | MedLex CASC Academy",
+      "ogDescription": "Systematic preparation and mock examination stations for the Royal College of Psychiatrists CASC.",
+      "imageAlt": "MedLex MRCPsych CASC Academy",
+      "breadcrumb": "CASC Academy"
+    },
+    "pathwayFoundations": {
+      "title": "Foundations of Medicolegal Psychiatry",
+      "description": "Build foundational competence in psychiatric jurisprudence, civil and criminal legal tests, patient capacity, and ethical medical testimony.",
+      "ogTitle": "Foundations of Medicolegal Psychiatry | MedLex",
+      "ogDescription": "Essential legal and ethical principles for practicing psychiatrists and clinicians.",
+      "imageAlt": "Foundations of Medicolegal Psychiatry Pathway",
+      "breadcrumb": "Foundations"
+    },
+    "institutional": {
+      "title": "Forensic Psychiatry Services for Courts & Institutions",
+      "description": "Independent psychiatric evaluations, expert witness testimony, and institutional advisory services for courts, justice ministries, and legal practices.",
+      "ogTitle": "Forensic Psychiatry Services for Courts & Institutions | MedLex",
+      "ogDescription": "Specialist forensic assessments and consultancy for public institutions and legal counsel.",
+      "imageAlt": "MedLex Institutional Forensic Psychiatry Services",
+      "breadcrumb": "Institutional"
+    },
+    "contact": {
+      "title": "Courses & Institutional Enquiries",
+      "description": "Contact the MedLex admissions and institutional team regarding clinical courses, CASC coaching, or commissioned forensic evaluations.",
+      "ogTitle": "Contact MedLex — Courses & Institutional Enquiries",
+      "ogDescription": "Get in touch with MedLex for admissions, institutional partnerships, and course details.",
+      "imageAlt": "Contact MedLex",
+      "breadcrumb": "Contact"
+    },
+    "faq": {
+      "title": "Courses, CASC & Medicolegal Training FAQ",
+      "description": "Find answers to frequently asked questions about MedLex educational pathways, CASC preparation, enrolment, and certifications.",
+      "ogTitle": "MedLex FAQ — Courses, CASC & Medicolegal Training",
+      "ogDescription": "Frequently asked questions regarding training pathways, accreditation, and practice.",
+      "imageAlt": "MedLex Frequently Asked Questions",
+      "breadcrumb": "FAQ"
+    },
+    "stationPreview": {
+      "title": "Free MRCPsych CASC Station Preview — Station 7.2",
+      "description": "Experience a full-length MRCPsych CASC station with clinical candidate instructions, actor scenario, scoring rubric, and consultant video analysis.",
+      "ogTitle": "Free MRCPsych CASC Station Preview | MedLex",
+      "ogDescription": "Try a real Royal College CASC station simulation free on MedLex Academy.",
+      "imageAlt": "Free MRCPsych CASC Station 7.2 Preview",
+      "breadcrumb": "Station 7.2 Preview"
+    },
+    "register": {
+      "title": "Register Your Interest in MedLex Programmes",
+      "description": "Submit your interest in upcoming MedLex forensic psychiatry cohorts, CASC mock examinations, and medicolegal workshops.",
+      "ogTitle": "Register Interest | MedLex Professional Programmes",
+      "ogDescription": "Join the priority register for upcoming MedLex clinical and medicolegal courses.",
+      "imageAlt": "Register for MedLex Programmes",
+      "breadcrumb": "Register"
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "description": "How MedLex collects, uses, protects, and stores personal data and educational records in compliance with applicable privacy regulations.",
+      "ogTitle": "Privacy Policy | MedLex",
+      "ogDescription": "Our commitment to learner privacy, confidentiality, and data protection.",
+      "imageAlt": "MedLex Privacy Policy",
+      "breadcrumb": "Privacy Policy"
+    },
+    "terms": {
+      "title": "Terms and Conditions",
+      "description": "Terms and conditions governing enrolment, platform access, intellectual property, and acceptable use across MedLex educational services.",
+      "ogTitle": "Terms and Conditions | MedLex",
+      "ogDescription": "Terms of service and user agreements for MedLex programmes.",
+      "imageAlt": "MedLex Terms and Conditions",
+      "breadcrumb": "Terms and Conditions"
+    },
+    "refundPolicy": {
+      "title": "Refund Policy",
+      "description": "Clear policies on course cancellations, fee refunds, rescheduling, and guarantee terms for MedLex courses and coaching sessions.",
+      "ogTitle": "Refund Policy | MedLex",
+      "ogDescription": "Transparent enrolment terms, cancellation guidelines, and refund conditions.",
+      "imageAlt": "MedLex Refund Policy",
+      "breadcrumb": "Refund Policy"
+    }
+  },
+  "pathwaysOverview": {
+    "eyebrow": "Professional Learning Pathways",
+    "title": "A Clearer Route Through Complex Psychiatric Evidence",
+    "intro": "Structured, consultant-led postgraduate education for clinicians, legal professionals, and institutions working where clinical psychiatry meets the law.",
+    "explorePathways": "Explore Our Pathways",
+    "medicoLegal": {
+      "badge": "Clinical & Legal Practice",
+      "title": "Medicolegal Psychiatry & Expert Report Writing",
+      "description": "Master the clinical formulation, procedural frameworks, and courtroom reasoning needed to author defensible expert witness reports.",
+      "cta": "View Medicolegal Pathway"
+    },
+    "cascAcademy": {
+      "badge": "Examination Excellence",
+      "title": "MRCPsych CASC Preparation & Coaching",
+      "description": "Rigorous clinical station simulations, consultant breakdown videos, calibrated scoring rubrics, and 1-on-1 performance coaching.",
+      "cta": "View CASC Academy"
+    },
+    "foundations": {
+      "badge": "Core Competencies",
+      "title": "Foundations of Medicolegal Psychiatry",
+      "description": "Develop a solid grasp of capacity, consent, criminal responsibility, and ethical testimony in medicolegal practice.",
+      "cta": "View Foundations Pathway"
+    },
+    "founderNotice": {
+      "title": "Taught by a Practicing Consultant",
+      "description": "Every pathway is developed and led by Dr Ahmed Abouelghit, Consultant Forensic Psychiatrist.",
+      "cta": "Learn About the Founder"
+    }
   }
 }

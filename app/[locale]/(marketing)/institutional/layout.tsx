@@ -1,10 +1,31 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { createPageMetadata } from "@/lib/seo/metadata";
+import { createLocalizedMetadata, type Locale } from "@/lib/seo/metadata";
+import { JsonLd } from "@/lib/seo/JsonLd";
+import { createServiceSchema } from "@/lib/seo/schema";
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: "en" | "ar" }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
   const { locale } = await params;
-  return createPageMetadata({ locale, path: "/institutional", title: "Institutional Services", description: "MedLex delivers clear, defensible psychiatric evidence and specialist education for courts, prosecutors, and public institutions." });
+  return createLocalizedMetadata(locale as Locale, "institutional");
 }
 
-export default function InstitutionalLayout({ children }: { children: ReactNode }) { return children; }
+export default async function InstitutionalLayout({
+  children,
+  params,
+}: {
+  children: ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+
+  return (
+    <>
+      <JsonLd data={createServiceSchema(locale)} />
+      {children}
+    </>
+  );
+}

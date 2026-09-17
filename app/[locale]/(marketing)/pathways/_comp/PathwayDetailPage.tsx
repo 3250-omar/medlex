@@ -14,12 +14,14 @@ import {
 } from "./pathwayContent";
 
 type PathwayDetailPageProps = {
+  locale?: string;
   pathway: PathwayKey;
   content: PathwayContent;
   labels: PathwayLabels;
 };
 
 export default function PathwayDetailPage({
+  locale,
   pathway,
   content,
   labels,
@@ -45,7 +47,7 @@ export default function PathwayDetailPage({
           programmeLabel={labels.programme}
         />
       ) : null}
-      <PathwayFounderSection founder={content.founder} />
+      <PathwayFounderSection founder={content.founder} locale={locale} />
       {content.faqs ? (
         <PathwayFaqSection
           faqs={content.faqs}

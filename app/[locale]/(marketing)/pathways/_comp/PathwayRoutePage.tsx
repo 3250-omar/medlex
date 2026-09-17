@@ -19,6 +19,7 @@ export default async function PathwayRoutePage({
 
   return (
     <PathwayDetailPage
+      locale={locale}
       pathway={pathway}
       content={t.raw(pathway) as PathwayContent}
       labels={t.raw("labels") as PathwayLabels}

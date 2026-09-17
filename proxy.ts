@@ -28,6 +28,8 @@ export async function proxy(request: NextRequest) {
     pathname.startsWith("/_next") ||
     pathname.startsWith("/api") ||
     pathname.startsWith("/favicon") ||
+    pathname === "/sitemap.xml" ||
+    pathname === "/robots.txt" ||
     /\.(.*)$/.test(pathname);
   if (isPublicAsset) return NextResponse.next();
 
@@ -38,6 +40,7 @@ export async function proxy(request: NextRequest) {
   if (!locale) {
     return NextResponse.redirect(
       new URL(`/${defaultLocale}${pathname}`, request.url),
+      308,
     );
   }
 
@@ -80,6 +83,13 @@ export async function proxy(request: NextRequest) {
         `/${locale}/auth?tab=sign-in&redirect=${encodeURIComponent(pathname)}`,
         request.url,
       ),
+    );
+  }
+
+  if (isProtected) {
+    response.headers.set(
+      "X-Robots-Tag",
+      "noindex, nofollow, noarchive, nosnippet, noimageindex",
     );
   }
 

@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
+const NOINDEX_ROBOTS_HEADER = {
+  "X-Robots-Tag": "noindex, nofollow, noarchive, nosnippet, noimageindex",
+};
+
 type Row = Record<string, unknown>;
 type Query = {
   eq: (column: string, value: string | boolean) => Query;
@@ -23,11 +27,36 @@ export async function GET(
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user)
+
+  if (!user) {
     return NextResponse.json(
       { error: "authentication_required" },
-      { status: 401 },
+      {
+        status: 401,
+        headers: NOINDEX_ROBOTS_HEADER,
+      },
     );
+  }
+
+  // Verify active course enrolment
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: enrollment } = await (supabase as any)
+    .from("enrollments")
+    .select("id, status, courses!inner(slug)")
+    .eq("user_id", user.id)
+    .eq("courses.slug", slug)
+    .in("status", ["active", "completed", "paused"])
+    .maybeSingle();
+
+  if (!enrollment) {
+    return NextResponse.json(
+      { error: "enrolment_required" },
+      {
+        status: 403,
+        headers: NOINDEX_ROBOTS_HEADER,
+      },
+    );
+  }
 
   const db = supabase as unknown as Client;
   const { data, error } = await db
@@ -37,8 +66,16 @@ export async function GET(
     )
     .eq("slug", slug)
     .single();
-  if (error || !data)
-    return NextResponse.json({ error: "Course not found." }, { status: 404 });
+
+  if (error || !data) {
+    return NextResponse.json(
+      { error: "Course not found." },
+      {
+        status: 404,
+        headers: NOINDEX_ROBOTS_HEADER,
+      },
+    );
+  }
 
   const releases = Array.isArray(data.course_releases) ? data.course_releases : [];
   const release = releases.find((item): item is Row => Boolean(item && typeof item === "object"));
@@ -50,12 +87,20 @@ export async function GET(
     .map((unit) => {
       const progress = Array.isArray(unit.unit_progress) ? unit.unit_progress[0] : null;
       return {
-        id: String(unit.id), slug: String(unit.slug), title: String(unit.title),
+        id: String(unit.id),
+        slug: String(unit.slug),
+        title: String(unit.title),
         unitCode: typeof unit.unit_code === "string" ? unit.unit_code : null,
         sequenceNumber: Number(unit.sequence_number ?? 0),
         progressPercent: Number((progress as Row | undefined)?.progress_percent ?? 0),
         status: typeof (progress as Row | undefined)?.status === "string" ? String((progress as Row).status) : null,
       };
     });
-  return NextResponse.json({ data: { course: { slug: String(data.slug), title: String(data.title_en) }, units } });
+
+  return NextResponse.json(
+    { data: { course: { slug: String(data.slug), title: String(data.title_en) }, units } },
+    {
+      headers: NOINDEX_ROBOTS_HEADER,
+    },
+  );
 }

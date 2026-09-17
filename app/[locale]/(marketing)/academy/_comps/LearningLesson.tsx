@@ -79,6 +79,7 @@ export default function LearningLesson({
   unitSlug,
 }: Props) {
   const router = useRouter();
+  const isAr = locale === "ar";
   const containerRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [answeredAllQuestions, setAnsweredAllQuestions] = useState(false);
@@ -254,20 +255,28 @@ export default function LearningLesson({
           doneBtn.removeAttribute("data-locked-tooltip");
           hintEl.className = "casc-lock-hint unlocked";
           hintEl.textContent = passedExam
-            ? `✓ Exam passed with score ${examResult?.score}/${examResult?.total} (> 50%). You can continue to the next lesson.`
-            : "✓ All decisions completed. You can continue to the next lesson.";
+            ? isAr
+              ? `✓ تم اجتياز الاختبار بنتيجة ${examResult?.score}/${examResult?.total} (> 50%). يمكنك الآن الانتقال إلى الدرس التالي.`
+              : `✓ Exam passed with score ${examResult?.score}/${examResult?.total} (> 50%). You can continue to the next lesson.`
+            : isAr
+              ? "✓ تم إكمال جميع القرارات. يمكنك الآن الانتقال إلى الدرس التالي."
+              : "✓ All decisions completed. You can continue to the next lesson.";
         } else {
           doneBtn.classList.add("casc-btn-locked");
           doneBtn.classList.remove("casc-btn-unlocked");
           doneBtn.setAttribute("aria-disabled", "true");
           doneBtn.setAttribute(
             "data-locked-tooltip",
-            `Please complete the questions (${remaining} remaining) or score > 50% in Exam Mode`,
+            isAr
+              ? `يرجى إكمال الأسئلة (${remaining} متبقية) أو تسجيل > 50% في وضع الاختبار`
+              : `Please complete the questions (${remaining} remaining) or score > 50% in Exam Mode`,
           );
           hintEl.className = "casc-lock-hint";
-          hintEl.textContent = `Answer all ${remaining} decision${
-            remaining > 1 ? "s" : ""
-          } or score > 50% in Exam Mode to unlock this next step.`;
+          hintEl.textContent = isAr
+            ? `أجب على جميع القرارات (${remaining} متبقية) أو احصل على > 50% في وضع الاختبار لفتح الخطوة التالية.`
+            : `Answer all ${remaining} decision${
+                remaining > 1 ? "s" : ""
+              } or score > 50% in Exam Mode to unlock this next step.`;
         }
       }
 
@@ -773,7 +782,11 @@ export default function LearningLesson({
 
   if (isLoading) {
     return (
-      <div className="casc-experience">
+      <main
+        className="casc-experience"
+        dir={isAr ? "rtl" : "ltr"}
+        lang={locale}
+      >
         <header>
           <div className="wrap" style={{ padding: "60px 24px" }}>
             <div
@@ -822,18 +835,27 @@ export default function LearningLesson({
             }}
           />
         </div>
-      </div>
+      </main>
     );
   }
 
   if (error || !unit) {
     return (
-      <div className="casc-experience">
+      <main
+        className="casc-experience"
+        dir={isAr ? "rtl" : "ltr"}
+        lang={locale}
+      >
         <header>
           <div className="wrap" style={{ padding: "60px 24px" }}>
-            <h1>Unable to load this lesson</h1>
+            <h1>
+              {isAr ? "تعذر تحميل هذا الدرس" : "Unable to load this lesson"}
+            </h1>
             <p className="sub" style={{ marginTop: "12px" }}>
-              {error?.message ?? "Lesson unit content was not found."}
+              {error?.message ??
+                (isAr
+                  ? "لم يتم العثور على محتوى الدرس."
+                  : "Lesson unit content was not found.")}
             </p>
             <p style={{ marginTop: "24px" }}>
               <button
@@ -845,26 +867,35 @@ export default function LearningLesson({
                   style={{
                     display: "inline-block",
                     verticalAlign: "-2px",
-                    marginRight: "6px",
+                    marginRight: isAr ? 0 : "6px",
+                    marginLeft: isAr ? "6px" : 0,
                   }}
                   size={16}
                 />
-                Try again
+                {isAr ? "إعادة المحاولة" : "Try again"}
               </button>
             </p>
           </div>
         </header>
-      </div>
+      </main>
     );
   }
 
   const blocks = [...unit.content_blocks].sort(
     (a, b) => a.sort_order - b.sort_order,
   );
-  const fullHtml = blocks
+  const rawHtml = blocks
     .map((b) => b.content.html || "")
     .filter(Boolean)
     .join("\n");
+
+  // Sanitize out script tags while preserving all interactive CASC DOM structures
+  const fullHtml = rawHtml.replace(
+    /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+    "",
+  );
+
+  const hasH1 = /<h1[\s>]/i.test(fullHtml);
 
   const scrollToFirstUnanswered = () => {
     const root = containerRef.current;
@@ -885,34 +916,55 @@ export default function LearningLesson({
   };
 
   return (
-    <div className="casc-experience" dir="ltr" lang="en">
+    <main className="casc-experience" dir="ltr" lang="en">
+      {!hasH1 && <h1 className="sr-only">{unit.title}</h1>}
+
       {/* Complete unit HTML mount point (contains the full authentic page from the database) */}
       <div
         ref={containerRef}
         className="casc-content-mount"
+        dir="ltr"
+        lang="en"
         dangerouslySetInnerHTML={{ __html: fullHtml }}
       />
 
       {/* Sticky Bottom Unit Pagination Bar */}
-      <nav className="casc-bottom-nav" aria-label="Course Lesson Navigation">
+      <nav
+        className="casc-bottom-nav"
+        aria-label={
+          isAr ? "التنقل بين دروس الدورة" : "Course Lesson Navigation"
+        }
+        dir={isAr ? "rtl" : "ltr"}
+      >
         <div className="nav-inner">
           {previousUnit ? (
             <Link
               href={`/${locale}/academy/courses/${courseSlug}/learn/${previousUnit.slug}`}
               title={previousUnit.title}
+              aria-label={
+                isAr
+                  ? `الانتقال إلى الدرس السابق: ${previousUnit.title}`
+                  : `Go to previous lesson: ${previousUnit.title}`
+              }
             >
-              <ChevronLeft size={16} /> Previous
+              <ChevronLeft size={16} className={isAr ? "rotate-180" : ""} />{" "}
+              {isAr ? "السابق" : "Previous"}
             </Link>
           ) : (
-            <button type="button" disabled>
-              <ChevronLeft size={16} /> Previous
+            <button type="button" disabled aria-disabled="true">
+              <ChevronLeft size={16} className={isAr ? "rotate-180" : ""} />{" "}
+              {isAr ? "السابق" : "Previous"}
             </button>
           )}
 
           <span className="nav-counter">
             {currentIndex >= 0 && outline
-              ? `Station ${currentIndex + 1} of ${outline.units.length}`
-              : "CASC Lesson"}
+              ? isAr
+                ? `المحطة ${currentIndex + 1} من ${outline.units.length}`
+                : `Station ${currentIndex + 1} of ${outline.units.length}`
+              : isAr
+                ? "درس CASC"
+                : "CASC Lesson"}
           </span>
 
           {nextUnit ? (
@@ -920,12 +972,18 @@ export default function LearningLesson({
               <Link
                 href={`/${locale}/academy/courses/${courseSlug}/learn/${nextUnit.slug}`}
                 title={nextUnit.title}
+                aria-label={
+                  isAr
+                    ? `الانتقال إلى الدرس التالي: ${nextUnit.title}`
+                    : `Go to next lesson: ${nextUnit.title}`
+                }
                 className="casc-nav-next-active"
                 onClick={() => {
                   completeUnit({ courseSlug, unitSlug });
                 }}
               >
-                Next <ChevronRight size={16} />
+                {isAr ? "التالي" : "Next"}{" "}
+                <ChevronRight size={16} className={isAr ? "rotate-180" : ""} />
               </Link>
             ) : (
               <div
@@ -935,16 +993,27 @@ export default function LearningLesson({
                 <button
                   type="button"
                   disabled
+                  aria-disabled="true"
                   className="casc-nav-next-disabled"
                 >
-                  Next (Locked) <ChevronRight size={16} />
+                  {isAr ? "التالي (مغلق)" : "Next (Locked)"}{" "}
+                  <ChevronRight
+                    size={16}
+                    className={isAr ? "rotate-180" : ""}
+                  />
                 </button>
                 <span className="casc-tooltip-popup" role="tooltip">
-                  Please complete the questions
-                  {remainingQuestions > 0
-                    ? ` (${remainingQuestions} remaining)`
-                    : ""}{" "}
-                  or score &gt; 50% in Exam Mode
+                  {isAr
+                    ? `يرجى إكمال القرارات والأسئلة${
+                        remainingQuestions > 0
+                          ? ` (${remainingQuestions} متبقية)`
+                          : ""
+                      } أو اجتياز وضع الاختبار (> 50%)`
+                    : `Please complete the questions${
+                        remainingQuestions > 0
+                          ? ` (${remainingQuestions} remaining)`
+                          : ""
+                      } or score > 50% in Exam Mode`}
                 </span>
               </div>
             )
@@ -953,31 +1022,47 @@ export default function LearningLesson({
               href={`/${locale}/academy/courses/${courseSlug}/completion`}
               style={{ background: "var(--gold)", color: "var(--navy)" }}
               className="casc-nav-next-active"
+              aria-label={
+                isAr
+                  ? "إتمام الدورة والمتابعة إلى شاشة الإنجاز"
+                  : "Complete course and continue to completion page"
+              }
               onClick={() => {
                 completeUnit({ courseSlug, unitSlug });
               }}
             >
-              Complete Course & Continue
+              {isAr ? "إتمام الدورة والمتابعة" : "Complete Course & Continue"}
             </Link>
           ) : (
             <div
               className="casc-locked-tooltip-wrap"
               onClick={scrollToFirstUnanswered}
             >
-              <button type="button" disabled className="casc-nav-next-disabled">
-                Complete Course (Locked)
+              <button
+                type="button"
+                disabled
+                aria-disabled="true"
+                className="casc-nav-next-disabled"
+              >
+                {isAr ? "إتمام الدورة (مغلق)" : "Complete Course (Locked)"}
               </button>
               <span className="casc-tooltip-popup" role="tooltip">
-                Please complete the questions
-                {remainingQuestions > 0
-                  ? ` (${remainingQuestions} remaining)`
-                  : ""}{" "}
-                or score &gt; 50% in Exam Mode
+                {isAr
+                  ? `يرجى إكمال القرارات والأسئلة${
+                      remainingQuestions > 0
+                        ? ` (${remainingQuestions} متبقية)`
+                        : ""
+                    } أو اجتياز وضع الاختبار (> 50%)`
+                  : `Please complete the questions${
+                      remainingQuestions > 0
+                        ? ` (${remainingQuestions} remaining)`
+                        : ""
+                    } or score > 50% in Exam Mode`}
               </span>
             </div>
           )}
         </div>
       </nav>
-    </div>
+    </main>
   );
 }

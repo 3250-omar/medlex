@@ -1,20 +1,14 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { createPageMetadata } from "@/lib/seo/metadata";
+import { createLocalizedMetadata, type Locale } from "@/lib/seo/metadata";
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: "en" | "ar" }>;
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  return createPageMetadata({
-    locale,
-    path: "/pathways",
-    title: "Learning Pathways",
-    description:
-      "Explore MedLex learning pathways for clinicians, legal professionals, and institutions working where mental health meets the law.",
-  });
+  return createLocalizedMetadata(locale as Locale, "pathways");
 }
 
 export default function PathwaysLayout({ children }: { children: ReactNode }) {

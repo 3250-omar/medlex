@@ -15,7 +15,6 @@ export default async function Footer({ locale }: { locale: string }) {
             src="/images/medicolegal/bg_3__final.jpg"
             alt="MedLex — Where Medicine Meets Justice"
             fill
-            priority
             sizes="(min-width: 1024px) 42vw, 100vw"
             className="object-cover object-left lg:object-center"
           />
@@ -136,7 +135,7 @@ export default async function Footer({ locale }: { locale: string }) {
                   </li>
                   <li>
                     <Link
-                      href={`/${locale}#faq`}
+                      href={`/${locale}/faq`}
                       className="block text-[#c7d2de] hover:text-[#c5a059] transition-colors"
                     >
                       {t("questions")}
@@ -177,14 +176,6 @@ export default async function Footer({ locale }: { locale: string }) {
                   >
                     {locale === "en" ? "العربية" : "English"}
                   </Link>
-                  {/* <div className="pt-2">
-                    <Link
-                      href={`/${locale}/contact`}
-                      className="inline-flex items-center justify-center bg-[#c5a059] hover:bg-[#d4af37] text-[#0b1726] font-semibold text-xs sm:text-sm px-5 py-2.5 rounded shadow transition-all duration-200"
-                    >
-                      {t("register")}
-                    </Link>
-                  </div> */}
                 </div>
               </div>
             </div>
@@ -206,6 +197,13 @@ export default async function Footer({ locale }: { locale: string }) {
                 className="hover:text-white transition-colors"
               >
                 {t("terms")}
+              </Link>
+              <span>·</span>
+              <Link
+                href={`/${locale}/refund-policy`}
+                className="hover:text-white transition-colors"
+              >
+                {locale === "ar" ? "سياسة الاسترداد" : "Refund Policy"}
               </Link>
             </div>
           </div>

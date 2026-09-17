@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { CASC_PRIVATE_ROBOTS } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = {
-  robots: { index: false, follow: false },
+  robots: CASC_PRIVATE_ROBOTS,
 };
 
 export default function AcademyLayout({ children }: { children: ReactNode }) {

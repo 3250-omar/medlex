@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { createPageMetadata } from "@/lib/seo/metadata";
+import { createLocalizedMetadata, type Locale } from "@/lib/seo/metadata";
+import { JsonLd } from "@/lib/seo/JsonLd";
+import { createWebSiteSchema } from "@/lib/seo/schema";
 import FlagshipCourseSection from "./_comps/FlagshipCourseSection";
 import FounderSection from "./_comps/FounderSection";
 import GiftsSection from "./_comps/GiftsSection";
@@ -18,18 +20,7 @@ export async function generateMetadata({
   params,
 }: HomePageProps): Promise<Metadata> {
   const { locale } = await params;
-  const isArabic = locale === "ar";
-
-  return createPageMetadata({
-    locale: isArabic ? "ar" : "en",
-    path: "",
-    title: isArabic
-      ? "مِدلكس — حيث يلتقي الطب بالعدالة"
-      : "MedLex — Where Medicine Meets Justice",
-    description: isArabic
-      ? "مِدلكس منصة تعليم مهني تخصصية يقودها مؤسسها للأطباء النفسيين والأخصائيين النفسيين والقيادات السريرية — التعليم الطبي القانوني، وأكاديمية CASC، ومِدلكس للتأسيس."
-      : "MedLex is a founder-led professional education platform for psychiatrists, psychologists and clinical leaders — medico-legal education, The CASC Academy, and MedLex Foundations.",
-  });
+  return createLocalizedMetadata(locale as Locale, "home");
 }
 
 export default async function HomePage({ params }: HomePageProps) {
@@ -37,6 +28,7 @@ export default async function HomePage({ params }: HomePageProps) {
 
   return (
     <>
+      <JsonLd data={createWebSiteSchema()} />
       <HeroSection locale={locale} />
       <WhoWeAreSection />
       <PathwaysSection />
