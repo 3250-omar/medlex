@@ -233,11 +233,7 @@ export default function PublicStationPreview({ locale }: Props) {
       .map((block) => block.content.html ?? "")
       .join("\n") ?? "";
   return (
-    <main
-      className="casc-experience min-h-screen bg-white pt-16"
-      dir="ltr"
-      lang="en"
-    >
+    <main className="casc-experience min-h-screen bg-white" dir="ltr" lang="en">
       {!unit && !error ? (
         <div className="wrap py-20">Loading Station 7.2…</div>
       ) : null}
