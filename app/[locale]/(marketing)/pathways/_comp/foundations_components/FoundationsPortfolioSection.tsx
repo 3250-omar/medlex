@@ -1,102 +1,84 @@
-"use client";
-
 import { useTranslations } from "next-intl";
-
-type ProgrammeItem = {
-  status: string;
-  live?: boolean;
-  for: string;
-  title: string;
-  description: string;
-  bullets: string[];
-  action: string;
-  href: string;
-};
+import SectionHeader from "./ui/SectionHeader";
+import {
+  type ProgrammeItem,
+  DEFAULT_PROGRAMMES,
+} from "./foundations.constants";
 
 export default function FoundationsPortfolioSection() {
   const t = useTranslations("pathwayPages.foundationsLanding.portfolio");
 
-  const defaultProgrammes: ProgrammeItem[] = [
-    {
-      status: "Coming soon",
-      live: true,
-      for: "Online, self-paced · English",
-      title: "The Clinician's Edge",
-      description:
-        "8 modules on the non-clinical skills every doctor is expected to have — from how the system works to preparing for an internal investigation. Short video lessons, interactive pages and a workbook for every module.",
-      bullets: [
-        "8 modules, 8 skills you will use",
-        "Video, interactive pages and workbook",
-        "Study at your own pace",
-      ],
-      action: "See the 8 modules",
-      href: "#course",
-    },
-    {
-      status: "Coming soon",
-      live: false,
-      for: "Live, face to face · Arabic or English",
-      title: "Clinical Leadership Programme",
-      description:
-        "6 modules for clinicians leading a team, a unit or a service: the decisions, the documents and the conversations that clinical training never covered.",
-      bullets: [
-        "6 modules, delivered in person",
-        "Your own workbook and exercises",
-        "Small cohorts, by city",
-      ],
-      action: "About the programme",
-      href: "#leadership",
-    },
-    {
-      status: "Coming soon",
-      live: false,
-      for: "Next in the portfolio",
-      title: "AI for Clinicians",
-      description:
-        "What AI can and cannot do in clinical and professional work, how to use it safely and well, and where the professional and medico-legal lines sit.",
-      bullets: [
-        "Practical, not technical",
-        "Built for clinical settings",
-        "Dates to the waitlist first",
-      ],
-      action: "Hear when it opens",
-      href: "#waitlist",
-    },
-  ];
-
-  let programmes: ProgrammeItem[] = defaultProgrammes;
+  let programmes: ProgrammeItem[] = DEFAULT_PROGRAMMES;
   try {
     const raw = t.raw("programmes") as ProgrammeItem[];
     if (Array.isArray(raw) && raw.length > 0) {
       programmes = raw;
     }
   } catch {
-    programmes = defaultProgrammes;
+    programmes = DEFAULT_PROGRAMMES;
   }
 
   return (
-    <section className="paths" id="portfolio">
-      <div className="wrap">
-        <div className="section-head">
-          <h2 className="text-navy!">{t("title")}</h2>
-          <div className="rule"></div>
-          <p className="lead">{t("lead")}</p>
-        </div>
-        <div className="path-grid">
+    <section
+      className="relative bg-white bg-[url('/images/foundations/bg_paths.jpg')] bg-cover bg-center py-20 lg:py-24 border-y border-fd-stone"
+      id="portfolio"
+    >
+      <div
+        className="absolute inset-0 bg-white/90 pointer-events-none"
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10 max-w-[1120px] mx-auto px-7">
+        <SectionHeader
+          title={t("title")}
+          titleClassName="text-fd-navy!"
+          lead={t("lead")}
+        />
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 border border-fd-stone rounded-md overflow-hidden">
           {programmes.map((p, idx) => (
-            <article key={idx} className="path">
-              <span className={`status ${p.live ? "live" : ""}`}>
+            <article
+              key={idx}
+              className="p-8 sm:p-9 bg-fd-parchment text-fd-body flex flex-col border-b lg:border-b-0 lg:border-r rtl:lg:border-r-0 rtl:lg:border-l border-fd-gold-soft last:border-b-0 lg:last:border-r-0 rtl:lg:last:border-l-0"
+            >
+              <span
+                className={`self-start inline-block text-[13px] font-semibold px-2.5 py-1 rounded-xs mb-4 leading-tight ${
+                  p.live
+                    ? "bg-fd-navy text-white"
+                    : "bg-fd-gold-pale text-[#7a5f1d]"
+                }`}
+              >
                 {p.status}
               </span>
-              <div className="for">{p.for}</div>
-              <h3>{p.title}</h3>
-              <p>{p.description}</p>
-              <ul>
+              <div className="text-[14px] text-fd-gold font-semibold mb-2.5">
+                {p.for}
+              </div>
+              <h3 className="font-serif text-[24px] font-semibold text-fd-navy! leading-[1.2]">
+                {p.title}
+              </h3>
+              <p className="mt-3.5 text-[16px] text-fd-body leading-[1.55] flex-1 mb-0">
+                {p.description}
+              </p>
+              <ul className="list-none my-6 p-0 space-y-2 text-[14.5px] text-fd-muted">
                 {p.bullets.map((b, bIdx) => (
-                  <li key={bIdx}>{b}</li>
+                  <li
+                    key={bIdx}
+                    className="flex items-baseline gap-2.5 leading-[1.45]"
+                  >
+                    <span
+                      className="text-fd-gold select-none font-normal"
+                      aria-hidden="true"
+                    >
+                      —
+                    </span>
+                    <span>{b}</span>
+                  </li>
                 ))}
               </ul>
-              <a className="link" href={p.href}>
+              <a
+                className="self-start text-fd-navy font-semibold no-underline border-b-[1.5px] border-fd-gold-soft hover:border-fd-gold pb-px transition-colors cursor-pointer"
+                href={p.href}
+              >
                 {p.action}
               </a>
             </article>

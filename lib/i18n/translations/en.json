@@ -444,7 +444,8 @@
       "submitAnother": "Submit another inquiry →",
       "errorTitle": "Submission Failed",
       "errorGeneric": "Failed to send message, please try again later",
-      "errorConfig": "Mail service is temporarily unconfigured, please email us directly",
+      "loggedInAs": "Logged in as",
+      "autoContactInfo": "Your name, email, and phone number are automatically linked to this inquiry.",
       "privacy": "Your details are used only to contact you about MedLex programmes, and are never shared",
       "sidebar": {
         "contactTitle": "CONTACT",

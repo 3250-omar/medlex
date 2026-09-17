@@ -8,3 +8,7 @@ export { default as MedicoLegalGiftSection } from "./MedicoLegalGiftSection";
 export { default as MedicoLegalWaitlistSection } from "./MedicoLegalWaitlistSection";
 export { default as MedicoLegalFaqSection } from "./MedicoLegalFaqSection";
 export { default as MedicoLegalClosingBannerSection } from "./MedicoLegalClosingBannerSection";
+// Shared presentation primitives & constants
+export { default as SectionHeader } from "./ui/SectionHeader";
+export { default as MedicoLegalSectionHeader } from "./ui/MedicoLegalSectionHeader";
+export * from "./medico_legal.constants";

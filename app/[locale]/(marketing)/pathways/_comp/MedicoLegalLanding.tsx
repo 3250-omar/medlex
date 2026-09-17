@@ -11,9 +11,7 @@ import {
   MedicoLegalTwoAudiencesSection,
   MedicoLegalFounderSection,
   MedicoLegalGiftSection,
-  MedicoLegalWaitlistSection,
   MedicoLegalFaqSection,
-  MedicoLegalClosingBannerSection,
 } from "./medico_legal_components";
 
 type Props = { content: PathwayContent; labels: PathwayLabels };

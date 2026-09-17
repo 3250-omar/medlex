@@ -7,3 +7,7 @@ export { default as FoundationsLeadershipSection } from "./FoundationsLeadership
 export { default as FoundationsFounderSection } from "./FoundationsFounderSection";
 export { default as FoundationsWaitlistSection } from "./FoundationsWaitlistSection";
 export { default as FoundationsFaqSection } from "./FoundationsFaqSection";
+
+// Shared presentation primitives & constants
+export { default as SectionHeader } from "./ui/SectionHeader";
+export * from "./foundations.constants";

@@ -21,7 +21,7 @@ export default function FoundationsLanding(_props: Props) {
   const locale = useLocale();
 
   return (
-    <div id="top" className="foundations-landing">
+    <div id="top" className="w-full bg-fd-paper text-fd-body font-sans antialiased">
       {/* 1. HERO SECTION */}
       <FoundationsHeroSection locale={locale} />
 

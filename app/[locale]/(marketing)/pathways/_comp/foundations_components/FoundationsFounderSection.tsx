@@ -1,108 +1,86 @@
-"use client";
-
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import SectionHeader from "./ui/SectionHeader";
+import {
+  type PrincipleItem,
+  DEFAULT_FOUNDER_PRINCIPLES,
+  FOUNDER_ICONS,
+} from "./foundations.constants";
 
 type Props = {
   locale: string;
 };
 
-type PrincipleItem = {
-  title: string;
-  description: string;
-  tag: string;
-};
-
 export default function FoundationsFounderSection({ locale }: Props) {
   const t = useTranslations("pathwayPages.foundationsLanding.founder");
 
-  const defaultPrinciples: PrincipleItem[] = [
-    {
-      title: "Real situations, not theory",
-      description:
-        "The audits, investigations, appraisals and service meetings in these programmes are ones the founder has sat through — on both sides of the table.",
-      tag: "Clinician · Service lead · Programme director",
-    },
-    {
-      title: "Built for the systems you work in",
-      description:
-        "The UK system as the worked example, with the principles that carry to the Gulf and other advanced health systems — and the differences named where they matter.",
-      tag: "United Kingdom · Gulf · Egypt",
-    },
-    {
-      title: "Ready to use on Monday",
-      description:
-        "Every module ends with what you will be able to do, and a workbook that turns it into something done: a teaching session planned, a portfolio started, a meeting run.",
-      tag: "Workbook · Toolkit · Applied",
-    },
-    {
-      title: "Clear about what you get",
-      description:
-        "Independent professional development with a certificate of completion. CPD recognition will be shown on each programme page once it is in place.",
-      tag: "Independent · Certificate of completion",
-    },
-  ];
-
-  const principles =
-    (t.raw("principles") as PrincipleItem[]) || defaultPrinciples;
-
-  const svgIcons = [
-    // Scales
-    <svg key="0" viewBox="0 0 24 24">
-      <path d="M12 3v18M5 7l7-2 7 2M5 7l-3 7a3 3 0 0 0 6 0L5 7zM19 7l-3 7a3 3 0 0 0 6 0l-3-7zM8 21h8" />
-    </svg>,
-    // Globe
-    <svg key="1" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="9" />
-      <path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" />
-    </svg>,
-    // Document
-    <svg key="2" viewBox="0 0 24 24">
-      <path d="M6 3h9l4 4v14H6z" />
-      <path d="M15 3v4h4M9 12h6M9 16h6" />
-    </svg>,
-    // Clock / Check
-    <svg key="3" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 7v5l3 2" />
-    </svg>,
-  ];
+  const principles: PrincipleItem[] =
+    (t.raw("principles") as PrincipleItem[]) || DEFAULT_FOUNDER_PRINCIPLES;
 
   return (
-    <section className="how" id="founder">
-      <div className="wrap">
-        <h2>{t("title")}</h2>
-        <div className="rule"></div>
-        <p className="lead">{t("lead")}</p>
+    <section
+      className="bg-white border-b border-fd-stone py-20 lg:py-24 text-fd-body"
+      id="founder"
+    >
+      <div className="max-w-[1120px] mx-auto px-7">
+        <SectionHeader
+          title={t("title")}
+          titleClassName="text-fd-navy!"
+          lead={t("lead")}
+        />
 
-        <div className="credit">
+        {/* Founder Profile Badge */}
+        <div className="flex items-center gap-4.5 mt-7 p-4 sm:p-5 border border-fd-gold-soft/45 rounded-md bg-fd-navy max-w-[560px] text-white shadow-[0_8px_24px_rgba(20,40,75,0.12)]">
           <img
             src="/images/foundations/dr_ahmed_abouelghit.jpg"
             alt={t("name")}
             width={64}
             height={64}
+            className="w-16 h-16 rounded-full object-cover border-[1.5px] border-fd-gold-soft shrink-0"
           />
           <div>
-            <b>{t("name")}</b>
-            <span>{t("role")}</span>
-            <Link className="link" href={`/${locale}/founder`}>
+            <b className="block font-serif text-[18px] text-white font-medium leading-[1.25]">
+              {t("name")}
+            </b>
+            <span className="block text-[13.5px] text-[#c9d0dc] my-1 leading-[1.35]">
+              {t("role")}
+            </span>
+            <Link
+              className="inline-block text-[14px] font-semibold text-white border-b-[1.5px] border-fd-gold pb-px hover:text-fd-gold-soft hover:border-fd-gold-soft transition-colors"
+              href={`/${locale}/founder`}
+            >
               {t("profileLink")}
             </Link>
           </div>
         </div>
 
-        <blockquote className="hq">
+        {/* Pull Quote */}
+        <blockquote className="mt-8.5 py-2 pl-6 rtl:pl-0 rtl:pr-6 border-l-[3px] rtl:border-l-0 rtl:border-r-[3px] border-fd-gold font-serif text-[23px] leading-[1.35] text-fd-navy max-w-[68ch]">
           {t("quote")}
-          <cite>{t("quoteCite")}</cite>
+          <cite className="block font-sans not-italic text-[12px] tracking-[0.12em] text-fd-gold mt-2.5 font-semibold uppercase">
+            {t("quoteCite")}
+          </cite>
         </blockquote>
 
-        <div className="how-grid">
+        {/* 2x2 Principles Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-13">
           {principles.map((p, idx) => (
-            <article key={idx}>
-              <div className="ico">{svgIcons[idx % svgIcons.length]}</div>
-              <h3>{p.title}</h3>
-              <p>{p.description}</p>
-              <div className="where">{p.tag}</div>
+            <article
+              key={idx}
+              className="border border-fd-stone rounded-md p-7 sm:p-8 bg-fd-parchment grid grid-cols-[auto_1fr] gap-x-5 items-start hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(20,40,75,0.08)] transition-all duration-200"
+            >
+              <div className="row-span-3 w-[52px] h-[52px] rounded-full bg-fd-navy flex items-center justify-center shrink-0 [&_svg]:w-[26px] [&_svg]:h-[26px] [&_svg]:stroke-fd-gold-soft [&_svg]:stroke-[1.6]">
+                {FOUNDER_ICONS[idx % FOUNDER_ICONS.length]}
+              </div>
+              <h3 className="col-start-2 font-serif text-[21px] font-semibold text-fd-navy! mb-2 leading-[1.25]">
+                {p.title}
+              </h3>
+              <p className="col-start-2 font-sans text-[15.5px] text-fd-body leading-[1.55] m-0">
+                {p.description}
+              </p>
+              <div className="col-start-2 font-sans pt-4 text-[13px] text-fd-gold font-semibold tracking-[0.02em]">
+                {p.tag}
+              </div>
             </article>
           ))}
         </div>

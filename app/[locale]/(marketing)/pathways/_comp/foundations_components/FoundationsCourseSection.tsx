@@ -1,181 +1,115 @@
-"use client";
-
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import SectionHeader from "./ui/SectionHeader";
+import {
+  type ModuleItem,
+  type GetItem,
+  DEFAULT_MODULES,
+  DEFAULT_WHAT_YOU_GET,
+} from "./foundations.constants";
 
 type Props = {
   locale: string;
 };
 
-type ModuleItem = {
-  num: string;
-  title: string;
-  description: string;
-  small: string;
-};
-
-type GetItem = {
-  title: string;
-  description: string;
-};
-
 export default function FoundationsCourseSection({ locale }: Props) {
   const t = useTranslations("pathwayPages.foundationsLanding.course");
 
-  const defaultModules: ModuleItem[] = [
-    {
-      num: "01",
-      title: "Understanding How the System Works",
-      description:
-        "Roles, hierarchy, rotas, on-call, escalation, and where you sit within it — the UK system as the worked example, with the principles that carry to the Gulf.",
-      small: "Walk into any department and understand how it runs.",
-    },
-    {
-      num: "02",
-      title: "Communication at Work",
-      description:
-        "The referral, the email to a consultant, the notes, the handover, the moment you speak up in a meeting — clear, concise, and escalated the right way.",
-      small: "Communicate with the clarity colleagues expect of you.",
-    },
-    {
-      num: "03",
-      title: "Audit & Quality Improvement",
-      description:
-        "What audit and QI actually are, how the cycle works from standard to re-audit, the difference between the two, and what you will be asked to do.",
-      small: "Take part in audit and QI with real understanding.",
-    },
-    {
-      num: "04",
-      title: "Research",
-      description:
-        "The main types of study and what they are for, what being involved means early on, how to get onto a project, and how to read a paper well enough to discuss it.",
-      small:
-        "Hold a conversation about a paper and find a route onto a project.",
-    },
-    {
-      num: "05",
-      title: "Teaching, Supervision & Feedback",
-      description:
-        "Planning and delivering a clear teaching session, supervising juniors, giving feedback that helps — and receiving it well.",
-      small: "Teach and supervise in a way that strengthens how you are seen.",
-    },
-    {
-      num: "06",
-      title: "Management & Leadership Basics",
-      description:
-        "How a service is organised, who the key people are, how to work within a team, and the real difference between management and leadership at your level.",
-      small: "Step into team and leadership situations with confidence.",
-    },
-    {
-      num: "07",
-      title: "Portfolio, Appraisal & Revalidation",
-      description:
-        "What a portfolio is, what to collect and why, how appraisal works, and how revalidation fits into the longer arc of a career.",
-      small: "Know exactly what to collect, from the first day.",
-    },
-    {
-      num: "08",
-      title: "Preparing for an Internal Investigation",
-      description:
-        "The subject no one prepares you for. What an investigation involves, your rights, what to do and avoid early on, and where to find proper support.",
-      small:
-        "Understand how investigations work and protect yourself sensibly.",
-    },
-  ];
-
-  const defaultGetItems: GetItem[] = [
-    {
-      title: "8 modules",
-      description:
-        "Short video lessons and interactive pages, at your own pace.",
-    },
-    {
-      title: "Workbook & toolkit",
-      description: "A practical workbook with every module, yours to keep.",
-    },
-    {
-      title: "The Foundations group",
-      description:
-        "A WhatsApp network of doctors across the UK, the Gulf and Egypt, sharing how their systems actually work.",
-    },
-    {
-      title: "Weekly insight emails",
-      description:
-        "One topic a week from the founder — interviews, appraisal, audit, leadership — through your course.",
-    },
-    {
-      title: "Certificate of completion",
-      description: "Issued in your name when you finish the 8 modules.",
-    },
-  ];
-
-  let modules: ModuleItem[] = defaultModules;
+  let modules: ModuleItem[] = DEFAULT_MODULES;
   try {
     const raw = t.raw("modules") as ModuleItem[];
     if (Array.isArray(raw) && raw.length > 0) {
       modules = raw;
     }
   } catch {
-    modules = defaultModules;
+    modules = DEFAULT_MODULES;
   }
 
-  let getItems: GetItem[] = defaultGetItems;
+  let getItems: GetItem[] = DEFAULT_WHAT_YOU_GET;
   try {
     const raw = t.raw("whatYouGetItems") as GetItem[];
     if (Array.isArray(raw) && raw.length > 0) {
       getItems = raw;
     }
   } catch {
-    getItems = defaultGetItems;
+    getItems = DEFAULT_WHAT_YOU_GET;
   }
 
   return (
-    <section className="flag" id="course">
-      <div className="wrap">
-        <div className="section-head head-img">
-          <div>
-            <div className="eyebrow">{t("eyebrow")}</div>
-            <h2 className="text-navy!">{t("title")}</h2>
-            <div className="rule"></div>
-            <p className="lead">{t("lead")}</p>
-          </div>
-          <figure className="side-img">
+    <section
+      className="bg-fd-parchment border-b border-fd-stone py-20 lg:py-24 text-fd-body"
+      id="course"
+    >
+      <div className="max-w-[1120px] mx-auto px-7">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-10 lg:gap-12 items-center">
+          <SectionHeader
+            eyebrow={t("eyebrow")}
+            title={t("title")}
+            titleClassName="text-fd-navy!"
+            lead={t("lead")}
+            className="mb-0"
+          />
+          <figure className="m-0">
             <img
               src="/images/foundations/clinicians_edge_desk.jpg"
               alt="Research, audit and quality improvement at a clinician's desk"
+              className="rounded-md aspect-[16/11] object-cover w-full shadow-[0_24px_50px_rgba(20,40,75,0.22)]"
             />
           </figure>
         </div>
 
-        <div className="mod-grid">
+        {/* 8 Practical Modules */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4.5 mt-11">
           {modules.map((m, idx) => (
-            <article key={idx} className="mod">
-              <span>{m.num}</span>
+            <article
+              key={idx}
+              className="grid grid-cols-[56px_1fr] gap-4 bg-white border border-fd-stone rounded-md p-6"
+            >
+              <span className="font-serif text-[38px] text-fd-gold leading-none font-medium select-none">
+                {m.num}
+              </span>
               <div>
-                <h3>{m.title}</h3>
-                <p>{m.description}</p>
-                <small>{m.small}</small>
+                <h3 className="font-serif text-[19px] font-semibold text-fd-navy! mb-2 leading-[1.25]">
+                  {m.title}
+                </h3>
+                <p className="text-[15px] text-fd-body leading-[1.55] mb-0">
+                  {m.description}
+                </p>
+                <small className="block mt-2.5 text-[13px] text-fd-gold font-semibold leading-[1.4]">
+                  {m.small}
+                </small>
               </div>
             </article>
           ))}
         </div>
 
-        <h3 className="get-head">{t("whatYouGetTitle")}</h3>
-        <div className="format five">
+        {/* What You Get Breakdown */}
+        <h3 className="mt-11 font-serif text-[22px] font-semibold text-fd-navy!">
+          {t("whatYouGetTitle")}
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4.5 mt-4.5">
           {getItems.map((item, idx) => (
-            <div key={idx}>
-              <b>{item.title}</b>
-              <span>{item.description}</span>
+            <div key={idx} className="border-t-2 border-fd-gold pt-3.5">
+              <b className="block font-serif text-[19px] font-semibold text-fd-navy mb-1.5 leading-[1.3]">
+                {item.title}
+              </b>
+              <span className="block text-[14.5px] text-fd-body leading-[1.5]">
+                {item.description}
+              </span>
             </div>
           ))}
         </div>
 
-        <div className="ctas">
-          <a className="btn" href="#waitlist">
+        {/* Course CTAs */}
+        <div className="flex flex-wrap items-center gap-3.5 mt-9">
+          <a
+            className="inline-block font-sans font-semibold text-[15px] px-6 py-3.5 rounded border-[1.5px] border-fd-navy bg-fd-navy text-white hover:bg-fd-navy-deep transition-colors cursor-pointer text-center"
+            href="#waitlist"
+          >
             {t("joinWaitlist")}
           </a>
           <Link
-            className="btn ghost"
+            className="inline-block font-sans font-semibold text-[15px] px-6 py-3.5 rounded border-[1.5px] border-fd-navy bg-transparent text-fd-navy hover:bg-fd-navy hover:text-white transition-colors cursor-pointer text-center"
             href={`/${locale}/programmes/clinicians-edge`}
           >
             {t("brochure")}

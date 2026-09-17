@@ -2,7 +2,6 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "./[locale]/(marketing)/pathways/_comp/medico_legal_components/medico-legal.css";
-@import "./[locale]/(marketing)/pathways/_comp/foundations_components/foundations.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -21,6 +20,19 @@
   --lbody: #d7dee8;
   --mute: #9db0c7;
   --hair: #e6e6e0;
+
+  /* Foundations Pathway Specific Tokens */
+  --fd-navy: #14284b;
+  --fd-navy-deep: #0e1d38;
+  --fd-gold: #b8933d;
+  --fd-gold-soft: #d9c08a;
+  --fd-gold-pale: #f3ebd6;
+  --fd-paper: #fbfaf6;
+  --fd-parchment: #f4f0e6;
+  --fd-stone: #e4e2da;
+  --fd-body: #3a4352;
+  --fd-muted: #6b7382;
+  --fd-ink: #1b2430;
 
   /* Typography */
   --serif: var(--font-serif, "Source Serif 4", Georgia, serif);
@@ -90,6 +102,19 @@
   --color-lbody: var(--lbody);
   --color-mute: var(--mute);
   --color-hair: var(--hair);
+
+  /* Foundations Pathway Color Classes */
+  --color-fd-navy: var(--fd-navy);
+  --color-fd-navy-deep: var(--fd-navy-deep);
+  --color-fd-gold: var(--fd-gold);
+  --color-fd-gold-soft: var(--fd-gold-soft);
+  --color-fd-gold-pale: var(--fd-gold-pale);
+  --color-fd-paper: var(--fd-paper);
+  --color-fd-parchment: var(--fd-parchment);
+  --color-fd-stone: var(--fd-stone);
+  --color-fd-body: var(--fd-body);
+  --color-fd-muted: var(--fd-muted);
+  --color-fd-ink: var(--fd-ink);
 
   --color-paper: var(--paper);
   --color-surface: var(--surface);
@@ -964,4 +989,27 @@ body[dir="rtl"] {
 .group:hover .group-hover\:animate-gift-wiggle {
   animation: gift-wiggle 0.65s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
   transform-origin: center bottom;
+}
+
+/* Foundations Ticker Marquee Animation */
+@keyframes foundationsTick {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes foundationsTickRtl {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(50%);
+  }
+}
+
+.animate-foundations-ticker {
+  animation: foundationsTick 48s linear infinite;
 }
