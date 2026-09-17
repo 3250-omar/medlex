@@ -1,0 +1,1528 @@
+/* MedLex Foundations Pathway Dedicated CSS (Faithful replication of MedLex_Foundations_Pathway.html) */
+
+.foundations-landing {
+  --navy: #14284b;
+  --navy-deep: #0e1d38;
+  --ink: #1b2430;
+  --body: #3a4352;
+  --muted: #6b7382;
+  --gold: #b8933d;
+  --gold-soft: #d9c08a;
+  --gold-pale: #f3ebd6;
+  --paper: #fbfaf6;
+  --parchment: #f4f0e6;
+  --stone: #e4e2da;
+  --white: #ffffff;
+  --serif: var(--font-fraunces, "Fraunces", Georgia, "Times New Roman", serif);
+  --sans: var(
+    --font-sans,
+    "Inter",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif
+  );
+  --wrap: 1120px;
+
+  font-family: var(--sans);
+  color: var(--body);
+  background: var(--paper);
+  line-height: 1.6;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.foundations-landing * {
+  box-sizing: border-box;
+}
+
+.foundations-landing img {
+  max-width: 100%;
+  display: block;
+}
+
+.foundations-landing a {
+  color: inherit;
+}
+
+.foundations-landing .wrap {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+.foundations-landing h1,
+.foundations-landing h2,
+.foundations-landing h3 {
+  font-family: var(--serif);
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+
+.foundations-landing h2 {
+  font-size: clamp(30px, 3.6vw, 42px);
+  max-width: 24ch;
+  text-wrap: balance;
+}
+
+.foundations-landing h3 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.foundations-landing p {
+  max-width: 64ch;
+}
+
+.foundations-landing .lead {
+  font-size: 19px;
+  color: var(--body);
+}
+
+.foundations-landing .rule {
+  width: 56px;
+  height: 2px;
+  background: var(--gold);
+  margin: 22px 0 26px;
+}
+
+.foundations-landing .btn {
+  display: inline-block;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 15px;
+  padding: 14px 24px;
+  border-radius: 4px;
+  text-decoration: none;
+  border: 1.5px solid var(--navy);
+  background: var(--navy);
+  color: #fff;
+  transition:
+    background 0.15s,
+    color 0.15s;
+  cursor: pointer;
+}
+
+.foundations-landing .btn:hover {
+  background: var(--navy-deep);
+}
+
+.foundations-landing .btn.ghost {
+  background: transparent;
+  color: var(--navy);
+}
+
+.foundations-landing .btn.ghost:hover {
+  background: var(--navy);
+  color: #fff;
+}
+
+.foundations-landing .btn.gold {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy-deep);
+}
+
+.foundations-landing .btn.gold:hover {
+  background: #a8842f;
+}
+
+.foundations-landing .btn.light {
+  background: #fff;
+  border-color: #fff;
+  color: var(--navy);
+}
+
+.foundations-landing .btn.light:hover {
+  background: var(--gold-pale);
+}
+
+.foundations-landing .link {
+  color: var(--navy);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1.5px solid var(--gold-soft);
+  padding-bottom: 1px;
+  cursor: pointer;
+}
+
+.foundations-landing .link:hover {
+  border-color: var(--gold);
+}
+
+.foundations-landing :focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.foundations-landing section {
+  padding: 96px 0;
+}
+
+.foundations-landing .section-head {
+  margin-bottom: 44px;
+}
+
+.foundations-landing .section-head p {
+  margin-top: 16px;
+}
+
+.foundations-landing .eyebrow {
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: 18px;
+}
+
+/* ==========================================================================
+   1. HERO SECTION (Identical to Medico-Legal Hero Design)
+   ========================================================================== */
+.foundations-landing .hero {
+  padding: 0;
+  background: var(--navy-deep) url("/images/foundations/hero_bg.jpg")
+    center/cover no-repeat;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.foundations-landing .hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(10, 20, 40, 0.9) 0%,
+    rgba(10, 20, 40, 0.78) 42%,
+    rgba(10, 20, 40, 0.25) 75%,
+    rgba(10, 20, 40, 0.1) 100%
+  );
+}
+
+.foundations-landing .hero .wrap {
+  position: relative;
+}
+
+.foundations-landing .hero .grid {
+  position: relative;
+  padding: 112px 0 80px;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+
+.foundations-landing .hero .grid > div {
+  max-width: 640px;
+}
+
+.foundations-landing .hero h1 {
+  font-size: clamp(40px, 5vw, 66px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.foundations-landing .hero h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gold-soft);
+}
+
+.foundations-landing .hero .lead {
+  margin-top: 28px;
+  font-size: 20px;
+  max-width: 50ch;
+  color: #e9ecf2;
+}
+
+.foundations-landing .hero .strip {
+  display: flex;
+  gap: 0;
+  margin-top: 30px;
+  border: 1px solid rgba(217, 192, 138, 0.45);
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(14, 29, 56, 0.55);
+}
+
+.foundations-landing .hero .strip div {
+  flex: 1;
+  padding: 14px 18px;
+  border-right: 1px solid rgba(217, 192, 138, 0.35);
+}
+
+.foundations-landing .hero .strip div:last-child {
+  border-right: 0;
+}
+
+.foundations-landing .hero .strip small {
+  display: block;
+  font-size: 12px;
+  color: #9aa6ba;
+  letter-spacing: 0.06em;
+  margin-bottom: 3px;
+  text-transform: uppercase;
+}
+
+.foundations-landing .hero .strip b {
+  font-size: 15px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.foundations-landing .hero .ctas {
+  display: flex;
+  gap: 14px;
+  margin-top: 36px;
+  flex-wrap: wrap;
+}
+
+.foundations-landing .hero .btn {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy-deep);
+}
+
+.foundations-landing .hero .btn:hover {
+  background: #a8842f;
+}
+
+.foundations-landing .hero .btn.ghost {
+  background: transparent;
+  border-color: #fff;
+  color: #fff;
+}
+
+.foundations-landing .hero .btn.ghost:hover {
+  background: #fff;
+  color: var(--navy);
+}
+
+/* Continuous Ticker */
+.foundations-landing .ticker {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+  padding: 14px 0;
+  position: relative;
+  background: var(--navy);
+}
+
+.foundations-landing .ticker ul {
+  display: flex;
+  gap: 0;
+  list-style: none;
+  white-space: nowrap;
+  width: max-content;
+  animation: foundationsTick 48s linear infinite;
+  margin: 0;
+  padding: 0;
+}
+
+.foundations-landing .ticker li {
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+  color: #dce1ea;
+  font-weight: 500;
+  padding: 0 28px;
+  position: relative;
+}
+
+.foundations-landing .ticker li::after {
+  content: "";
+  position: absolute;
+  right: -3px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  background: var(--gold);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+@keyframes foundationsTick {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .foundations-landing .ticker ul {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   2. AUDIENCE / WHO SECTION (Faithful to MedLex_Foundations_Pathway.html & design)
+   ========================================================================== */
+.foundations-landing .what.who,
+.foundations-landing .who {
+  position: relative;
+  background-image: none !important;
+  background-color: var(--parchment, var(--tint, #f4f0e6)) !important;
+  color: var(--body, var(--char, #3a4352));
+  padding: 104px 0;
+}
+
+.foundations-landing .what.who::before,
+.foundations-landing .who::before {
+  display: none !important;
+  background: none !important;
+  content: none !important;
+}
+
+.foundations-landing .what.who .wrap,
+.foundations-landing .who .wrap {
+  position: relative;
+}
+
+.foundations-landing .what.who h2,
+.foundations-landing .who h2 {
+  font-family: var(--serif);
+  font-size: clamp(30px, 3.6vw, 42px);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: var(--navy, #14284b) !important;
+  max-width: 24ch;
+  text-wrap: balance;
+}
+
+.foundations-landing .what.who .kicker,
+.foundations-landing .who .kicker {
+  font-family: var(--serif);
+  font-size: 20px;
+  line-height: 1.5;
+  color: var(--body, var(--char, #3a4352));
+  margin-top: 14px;
+  max-width: none;
+}
+
+.foundations-landing .who .grid,
+.foundations-landing .what.who .grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 72px;
+  align-items: start;
+  margin-top: 44px;
+}
+
+.foundations-landing .what.who p,
+.foundations-landing .who p {
+  color: var(--body, var(--char, #3a4352));
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 64ch;
+}
+
+.foundations-landing .what.who blockquote,
+.foundations-landing .who blockquote {
+  margin: 34px 0 0;
+  padding: 10px 0 10px 26px;
+  border-left: 3px solid var(--gold, #b8933d);
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.4vw, 28px);
+  line-height: 1.35;
+  color: var(--navy, #14284b) !important;
+  max-width: none;
+}
+
+.foundations-landing .what.who blockquote cite,
+.foundations-landing .who blockquote cite {
+  display: block;
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 12.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold, #b8933d) !important;
+  margin-top: 14px;
+}
+
+.foundations-landing .who .aud,
+.foundations-landing .what.who .aud,
+.foundations-landing .aud {
+  border: 1px solid var(--navy, #14284b);
+  border-radius: 6px;
+  padding: 28px 28px 22px;
+  background: var(--navy, #14284b) !important;
+  box-shadow: 0 24px 50px rgba(20, 40, 75, 0.2);
+}
+
+.foundations-landing .aud h3 {
+  font-family: var(--serif);
+  color: #ffffff !important;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.foundations-landing .aud-item {
+  padding: 14px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.foundations-landing .aud-item b {
+  display: block;
+  color: var(--gold-soft, #d9c08a) !important;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.foundations-landing .aud-item span {
+  font-size: 15px;
+  color: #dce1ea !important;
+  line-height: 1.5;
+  display: block;
+}
+
+.foundations-landing .aud-note {
+  margin-top: 14px;
+  font-size: 13.5px;
+  color: #c9d0dc !important;
+}
+
+/* ==========================================================================
+   3. FREE GIFT SECTION (Faithful to MedLex_Foundations_Pathway.html & design)
+   ========================================================================== */
+.foundations-landing .gift {
+  background: #ebe5d6 !important;
+  color: var(--body);
+  border-top: 4px solid var(--gold);
+  border-bottom: 0;
+  padding: 88px 0;
+}
+
+.foundations-landing .gift-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.foundations-landing .cover {
+  aspect-ratio: 3 / 4;
+  background: linear-gradient(160deg, #1b3766 0%, #0e1d38 100%);
+  border-radius: 4px;
+  box-shadow: 0 30px 60px rgba(20, 40, 75, 0.35);
+  border-left: 10px solid var(--gold);
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 0;
+  display: flex;
+  padding: 28px 26px;
+  transform: rotate(-3deg);
+}
+
+.foundations-landing .cover-in {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  border: 0;
+  padding: 0;
+}
+
+.foundations-landing .cover-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--serif);
+  letter-spacing: 0.1em;
+  font-size: 16px;
+  color: var(--gold-soft);
+  font-weight: 600;
+}
+
+.foundations-landing .cover-brand img {
+  height: 26px;
+  width: auto;
+}
+
+.foundations-landing .cover-kicker {
+  margin-top: auto;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--gold-soft);
+  font-weight: 600;
+}
+
+.foundations-landing .cover-title {
+  font-family: var(--serif);
+  font-size: 26px;
+  line-height: 1.15;
+  color: #fff;
+  margin: 10px 0 22px;
+  font-weight: 500;
+}
+
+.foundations-landing .cover-foot {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--gold-soft);
+  border-top: 0;
+  padding-top: 0;
+}
+
+.foundations-landing .gift-tag {
+  display: inline-block;
+  background: var(--navy);
+  color: var(--gold-soft);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 6px 12px;
+  border-radius: 3px;
+  margin-bottom: 18px;
+}
+
+.foundations-landing .gift h2 {
+  color: var(--navy) !important;
+  max-width: none;
+  font-family: var(--serif);
+  font-size: clamp(30px, 3.6vw, 42px);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.foundations-landing .gift .lead {
+  color: var(--body);
+  margin-top: 18px;
+  max-width: 60ch;
+  font-size: 19px;
+  line-height: 1.6;
+}
+
+.foundations-landing .gift .lead em {
+  font-style: italic;
+}
+
+.foundations-landing .gift-form {
+  display: flex;
+  gap: 10px;
+  margin-top: 28px;
+  max-width: 560px;
+}
+
+.foundations-landing .gift-form input {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  font-size: 16px;
+  padding: 15px 16px;
+  border: 1.5px solid var(--navy);
+  border-radius: 4px;
+  background: #ffffff;
+  color: var(--ink);
+}
+
+.foundations-landing .gift-form input::placeholder {
+  color: var(--muted);
+}
+
+.foundations-landing .gift-form button {
+  font: inherit;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 15px 22px;
+  border-radius: 4px;
+  border: 0;
+  background: var(--navy);
+  color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.foundations-landing .gift-form button:hover {
+  background: var(--navy-deep);
+}
+
+.foundations-landing .gift-note {
+  margin-top: 12px;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+/* ==========================================================================
+   4. PORTFOLIO SECTION (3 PROGRAMMES)
+   ========================================================================== */
+.foundations-landing .paths {
+  position: relative;
+  background: var(--white) url("/images/foundations/bg_paths.jpg") center/cover
+    no-repeat;
+  border-top: 1px solid var(--stone);
+  border-bottom: 1px solid var(--stone);
+  padding: 96px 0;
+}
+
+.foundations-landing .paths::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.9);
+  pointer-events: none;
+}
+
+.foundations-landing .paths .wrap {
+  position: relative;
+  z-index: 1;
+}
+
+.foundations-landing .path-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 1px solid var(--stone);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.foundations-landing .path {
+  padding: 38px 32px 34px;
+  background: var(--parchment);
+  color: var(--body);
+  display: flex;
+  flex-direction: column;
+  border-right: 2px solid var(--gold-soft);
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+
+.foundations-landing .path:last-child {
+  border-right: 0;
+}
+
+.foundations-landing .path .status {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 3px;
+  background: var(--gold-pale);
+  color: #7a5f1d;
+  margin-bottom: 16px;
+  align-self: flex-start;
+  line-height: 1.3;
+}
+
+.foundations-landing .path .status.live {
+  background: var(--navy);
+  color: #fff;
+}
+
+.foundations-landing .path .for {
+  font-size: 14px;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.foundations-landing .path h3 {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.2;
+}
+
+.foundations-landing .path p {
+  margin-top: 14px;
+  font-size: 16px;
+  color: var(--body);
+  line-height: 1.55;
+  margin-bottom: 0;
+  flex: 1;
+}
+
+.foundations-landing .path ul {
+  list-style: none;
+  margin: 22px 0 26px;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+  font-size: 14.5px;
+  color: var(--muted);
+  border-top: 0;
+}
+
+.foundations-landing .path ul li {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  line-height: 1.45;
+  padding: 0;
+  position: static;
+}
+
+.foundations-landing .path ul li::before {
+  content: "—";
+  color: var(--gold);
+  flex: none;
+  position: static;
+  font-weight: 400;
+}
+
+.foundations-landing .path .link {
+  align-self: flex-start;
+  color: var(--navy);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1.5px solid var(--gold-soft);
+  padding-bottom: 1px;
+  transition: border-color 0.15s;
+}
+
+.foundations-landing .path .link:hover {
+  border-color: var(--gold);
+}
+
+/* ==========================================================================
+   5. THE CLINICIAN'S EDGE (FLAGSHIP COURSE)
+   ========================================================================== */
+.foundations-landing .flag {
+  position: relative;
+  background: var(--parchment);
+  border-bottom: 1px solid var(--stone);
+  padding: 96px 0;
+}
+
+.foundations-landing .head-img {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.foundations-landing .side-img {
+  margin: 0;
+}
+
+.foundations-landing .side-img img {
+  border-radius: 6px;
+  aspect-ratio: 16 / 11;
+  object-fit: cover;
+  width: 100%;
+  box-shadow: 0 24px 50px rgba(20, 40, 75, 0.22);
+}
+
+.foundations-landing .mod-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 44px;
+}
+
+.foundations-landing .mod {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 16px;
+  background: var(--white);
+  border: 1px solid var(--stone);
+  border-radius: 6px;
+  padding: 24px 24px 22px;
+}
+
+.foundations-landing .mod > span {
+  font-family: var(--serif);
+  font-size: 38px;
+  color: var(--gold);
+  line-height: 1;
+  font-weight: 500;
+}
+
+.foundations-landing .mod h3 {
+  font-family: var(--serif);
+  font-size: 19px;
+  color: var(--navy);
+  margin-bottom: 8px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.foundations-landing .mod p {
+  font-size: 15px;
+  color: var(--body);
+  line-height: 1.55;
+  margin-bottom: 0;
+}
+
+.foundations-landing .mod small {
+  display: block;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.foundations-landing .get-head {
+  margin-top: 44px;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.foundations-landing .format {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 36px;
+}
+
+.foundations-landing .format.five {
+  grid-template-columns: repeat(5, 1fr);
+  margin-top: 18px;
+}
+
+.foundations-landing .format div {
+  border-top: 2px solid var(--gold);
+  padding-top: 14px;
+}
+
+.foundations-landing .format b {
+  display: block;
+  font-family: var(--serif);
+  font-size: 19px;
+  color: var(--navy);
+  font-weight: 600;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.foundations-landing .format span {
+  display: block;
+  font-size: 14.5px;
+  color: var(--body);
+  line-height: 1.5;
+}
+
+.foundations-landing .ctas {
+  display: flex;
+  gap: 14px;
+  margin-top: 36px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* ==========================================================================
+   6. CLINICAL LEADERSHIP PROGRAMME
+   ========================================================================== */
+.foundations-landing .two {
+  background: var(--navy-deep);
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.foundations-landing .two h2 {
+  color: #fff;
+}
+
+.foundations-landing .two .lead {
+  color: #dce1ea;
+}
+
+.foundations-landing .clp-head {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 48px;
+  align-items: center;
+  margin-bottom: 44px;
+}
+
+.foundations-landing .clp-head .section-head {
+  margin-bottom: 0;
+}
+
+.foundations-landing .clp-img {
+  margin: 0;
+}
+
+.foundations-landing .clp-img img {
+  border-radius: 6px;
+  aspect-ratio: 16 / 11;
+  object-fit: cover;
+  width: 100%;
+  border: 1px solid rgba(217, 192, 138, 0.5);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.35);
+}
+
+.foundations-landing .two-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.foundations-landing .two-grid article {
+  border: 1px solid rgba(217, 192, 138, 0.45);
+  border-radius: 6px;
+  padding: 34px 32px;
+  background: rgba(14, 29, 56, 0.5);
+}
+
+.foundations-landing .two-grid h3 {
+  color: #fff;
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.foundations-landing .two-grid p {
+  color: #dce1ea;
+  font-size: 15.5px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.foundations-landing .two-grid .where {
+  display: inline-block;
+  border: 1px solid rgba(217, 192, 138, 0.6);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--gold-soft);
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   7. TAUGHT BY / FOUNDER SECTION
+   ========================================================================== */
+.foundations-landing .how {
+  position: relative;
+  background: var(--white);
+  border-bottom: 1px solid var(--stone);
+  padding: 96px 0;
+}
+
+.foundations-landing .how h2 {
+  color: var(--navy);
+  font-family: var(--serif);
+  font-size: clamp(30px, 3.6vw, 42px);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  max-width: 24ch;
+  text-wrap: balance;
+}
+
+.foundations-landing .how .rule {
+  width: 56px;
+  height: 2px;
+  background: var(--gold);
+  margin: 22px 0 26px;
+}
+
+.foundations-landing .how .lead {
+  font-size: 19px;
+  color: var(--body);
+  max-width: 70ch;
+  line-height: 1.6;
+}
+
+.foundations-landing .credit {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin-top: 28px;
+  padding: 16px 20px;
+  border: 1px solid rgba(217, 192, 138, 0.45);
+  border-radius: 6px;
+  background: var(--navy);
+  max-width: 560px;
+  box-shadow: 0 8px 24px rgba(20, 40, 75, 0.12);
+}
+
+.foundations-landing .credit img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--gold-soft);
+  flex-shrink: 0;
+}
+
+.foundations-landing .credit b {
+  display: block;
+  color: #ffffff;
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.foundations-landing .credit span {
+  display: block;
+  font-size: 13.5px;
+  color: #c9d0dc;
+  margin: 3px 0 6px;
+  line-height: 1.35;
+}
+
+.foundations-landing .credit .link {
+  color: #ffffff;
+  border-bottom: 1.5px solid var(--gold);
+  padding-bottom: 1px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.foundations-landing .credit .link:hover {
+  border-bottom-color: var(--gold-soft);
+  color: var(--gold-soft);
+}
+
+.foundations-landing .hq {
+  margin: 34px 0 0;
+  padding: 8px 0 8px 24px;
+  border-left: 3px solid var(--gold);
+  font-family: var(--serif);
+  font-size: 23px;
+  line-height: 1.35;
+  color: var(--navy);
+  max-width: 68ch;
+}
+
+.foundations-landing .hq cite {
+  display: block;
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  margin-top: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.foundations-landing .how-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 52px;
+}
+
+.foundations-landing .how-grid article {
+  border: 1px solid var(--stone);
+  border-radius: 6px;
+  padding: 32px 28px;
+  background: var(--parchment);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0 20px;
+  align-items: start;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.foundations-landing .how-grid article:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(20, 40, 75, 0.08);
+}
+
+.foundations-landing .how-grid .ico {
+  grid-row: 1 / 4;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--navy);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.foundations-landing .how-grid .ico svg {
+  width: 26px;
+  height: 26px;
+  stroke: var(--gold-soft);
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.foundations-landing .how-grid h3 {
+  grid-column: 2;
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 8px;
+  line-height: 1.25;
+}
+
+.foundations-landing .how-grid p {
+  grid-column: 2;
+  font-family: var(--sans);
+  font-size: 15.5px;
+  color: var(--body);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.foundations-landing .how-grid .where {
+  grid-column: 2;
+  font-family: var(--sans);
+  padding-top: 16px;
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+   8. WAITLIST SECTION
+   ========================================================================== */
+.foundations-landing .resources {
+  background: var(--paper);
+  border-bottom: 1px solid var(--stone);
+}
+
+.foundations-landing .wl-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.foundations-landing .wl-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 28px;
+  max-width: 560px;
+}
+
+.foundations-landing .wl-form input,
+.foundations-landing .wl-form select {
+  font: inherit;
+  font-size: 15px;
+  padding: 13px 14px;
+  border: 1.5px solid var(--stone);
+  border-radius: 4px;
+  background: var(--white);
+  color: var(--ink);
+}
+
+.foundations-landing .wl-form select {
+  grid-column: 1 / -1;
+}
+
+.foundations-landing .wl-form .btn {
+  grid-column: 1 / -1;
+  justify-self: start;
+  border: 0;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   9. FAQ SECTION
+   ========================================================================== */
+.foundations-landing .faq {
+  position: relative;
+  background: var(--paper) url("/images/foundations/bg_faq.jpg") center/cover
+    no-repeat;
+  border-bottom: 1px solid var(--stone);
+}
+
+.foundations-landing .faq-list {
+  display: grid;
+  gap: 12px;
+  max-width: 820px;
+  margin-top: 36px;
+}
+
+.foundations-landing .faq-list details {
+  background: var(--white);
+  border: 1px solid var(--stone);
+  border-radius: 6px;
+  padding: 20px 24px;
+  cursor: pointer;
+  transition: box-shadow 0.15s;
+}
+
+.foundations-landing .faq-list details[open] {
+  box-shadow: 0 4px 14px rgba(20, 40, 75, 0.06);
+}
+
+.foundations-landing .faq-list summary {
+  font-family: var(--serif);
+  font-size: 19px;
+  color: var(--navy);
+  font-weight: 500;
+  outline: none;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.foundations-landing .faq-list summary::-webkit-details-marker {
+  display: none;
+}
+
+.foundations-landing .faq-list summary::after {
+  content: "+";
+  font-family: var(--sans);
+  font-size: 22px;
+  color: var(--gold);
+  font-weight: 400;
+  margin-left: 12px;
+  transition: transform 0.2s;
+}
+
+.foundations-landing .faq-list details[open] summary::after {
+  content: "–";
+}
+
+.foundations-landing .faq-list p {
+  margin-top: 14px;
+  font-size: 15.5px;
+  color: var(--body);
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   RESPONSIVE QUERIES
+   ========================================================================== */
+@media (max-width: 960px) {
+  .foundations-landing .hero .grid,
+  .foundations-landing .who .grid,
+  .foundations-landing .gift-grid,
+  .foundations-landing .head-img,
+  .foundations-landing .clp-head,
+  .foundations-landing .wl-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .foundations-landing .path-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .foundations-landing .path {
+    border-right: 0;
+    border-bottom: 2px solid var(--gold-soft);
+  }
+
+  .foundations-landing .path:last-child {
+    border-bottom: 0;
+  }
+
+  .foundations-landing .mod-grid,
+  .foundations-landing .two-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .foundations-landing .format.five {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .foundations-landing .how-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .foundations-landing .how-grid article {
+    padding: 26px 20px;
+    gap: 0 16px;
+  }
+
+  .foundations-landing .how-grid .ico {
+    width: 44px;
+    height: 44px;
+  }
+
+  .foundations-landing .how-grid .ico svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .foundations-landing .how-grid h3 {
+    font-size: 19px;
+  }
+}
+
+@media (max-width: 600px) {
+  .foundations-landing section {
+    padding: 64px 0;
+  }
+
+  .foundations-landing .hero .strip {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .foundations-landing .gift-form {
+    flex-direction: column;
+  }
+
+  .foundations-landing .credit {
+    max-width: 100%;
+  }
+
+  .foundations-landing .hq {
+    font-size: 20px;
+    padding-left: 18px;
+  }
+
+  .foundations-landing .wl-form {
+    grid-template-columns: 1fr;
+  }
+
+  .foundations-landing .format.five,
+  .foundations-landing .how-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   RTL (ARABIC) ADJUSTMENTS
+   ========================================================================== */
+[dir="rtl"] .foundations-landing {
+  text-align: right;
+}
+
+/* 1. HERO SECTION */
+[dir="rtl"] .foundations-landing .hero::before {
+  background: linear-gradient(
+    270deg,
+    rgba(10, 20, 40, 0.9) 0%,
+    rgba(10, 20, 40, 0.78) 42%,
+    rgba(10, 20, 40, 0.25) 75%,
+    rgba(10, 20, 40, 0.1) 100%
+  );
+}
+
+[dir="rtl"] .foundations-landing .hero .strip div {
+  border-right: 0;
+  border-left: 1px solid rgba(217, 192, 138, 0.35);
+}
+
+[dir="rtl"] .foundations-landing .hero .strip div:last-child {
+  border-left: 0;
+}
+
+@media (max-width: 980px) {
+  [dir="rtl"] .foundations-landing .hero .strip div {
+    border-left: 0;
+    border-bottom: 1px solid rgba(217, 192, 138, 0.35);
+  }
+
+  [dir="rtl"] .foundations-landing .hero .strip div:last-child {
+    border-bottom: 0;
+  }
+}
+
+/* 2. TICKER */
+[dir="rtl"] .foundations-landing .ticker li::after {
+  right: auto;
+  left: -3px;
+}
+
+/* 3. AUDIENCE SECTION BLOCKQUOTE */
+[dir="rtl"] .foundations-landing .what.who blockquote {
+  border-left: 0;
+  border-right: 3px solid var(--gold);
+  padding-left: 0;
+  padding-right: 26px;
+}
+
+@media (max-width: 640px) {
+  [dir="rtl"] .foundations-landing .what.who blockquote {
+    padding-left: 0;
+    padding-right: 16px;
+  }
+}
+
+/* 3.5. FOUNDER / TAUGHT BY SECTION BLOCKQUOTE */
+[dir="rtl"] .foundations-landing .hq {
+  border-left: 0;
+  border-right: 3px solid var(--gold);
+  padding-left: 0;
+  padding-right: 24px;
+}
+
+@media (max-width: 600px) {
+  [dir="rtl"] .foundations-landing .hq {
+    padding-left: 0;
+    padding-right: 18px;
+  }
+}
+
+/* 4. FREE GIFT BOOK COVER */
+[dir="rtl"] .foundations-landing .cover {
+  border-left: 0;
+  border-right: 10px solid var(--gold);
+  transform: rotate(3deg);
+}
+
+@media (max-width: 980px) {
+  [dir="rtl"] .foundations-landing .cover {
+    transform: none;
+    margin: 0 auto;
+  }
+}
+
+/* 4.5. PORTFOLIO SECTION */
+[dir="rtl"] .foundations-landing .path {
+  border-right: 0;
+  border-left: 2px solid var(--gold-soft);
+  text-align: right;
+}
+
+[dir="rtl"] .foundations-landing .path:last-child {
+  border-left: 0;
+}
+
+[dir="rtl"] .foundations-landing .path .status {
+  align-self: flex-start;
+}
+
+[dir="rtl"] .foundations-landing .path .link {
+  align-self: flex-start;
+}
+
+@media (max-width: 960px) {
+  [dir="rtl"] .foundations-landing .path {
+    border-left: 0;
+    border-bottom: 2px solid var(--gold-soft);
+  }
+
+  [dir="rtl"] .foundations-landing .path:last-child {
+    border-bottom: 0;
+  }
+}
+
+/* 5. FAQ SECTION */
+[dir="rtl"] .foundations-landing .faq-list summary {
+  padding: 22px 0 22px 44px;
+}
+
+[dir="rtl"] .foundations-landing .faq-list summary::after {
+  right: auto;
+  left: 4px;
+}
+
+@media (max-width: 640px) {
+  [dir="rtl"] .foundations-landing .faq-list summary {
+    padding: 18px 0 18px 36px;
+  }
+
+  [dir="rtl"] .foundations-landing .faq-list summary::after {
+    left: 4px;
+    right: auto;
+  }
+}
+

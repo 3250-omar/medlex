@@ -1,6 +1,7 @@
 import AudienceSection from "./AudienceSection";
 import CascAcademyLanding from "./CascAcademyLanding";
 import MedicoLegalLanding from "./MedicoLegalLanding";
+import FoundationsLanding from "./FoundationsLanding";
 import FeatureSection from "./FeatureSection";
 import FormatsSection from "./FormatsSection";
 import PathwayFaqSection from "./PathwayFaqSection";
@@ -32,6 +33,10 @@ export default function PathwayDetailPage({
 
   if (pathway === "medico-legal") {
     return <MedicoLegalLanding content={content} labels={labels} />;
+  }
+
+  if (pathway === "foundations") {
+    return <FoundationsLanding content={content} labels={labels} />;
   }
 
   return (

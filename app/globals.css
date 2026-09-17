@@ -2,6 +2,7 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "./[locale]/(marketing)/pathways/_comp/medico_legal_components/medico-legal.css";
+@import "./[locale]/(marketing)/pathways/_comp/foundations_components/foundations.css";
 
 @custom-variant dark (&:is(.dark *));
 

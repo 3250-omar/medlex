@@ -1086,6 +1086,294 @@
         },
         "buttonText": "Join the waitlist"
       }
+    },
+    "foundationsLanding": {
+      "hero": {
+        "headline": "Clinical training makes a doctor. It does not make a <em>career</em>.",
+        "lead": "Professional development for doctors beyond clinical training: leadership, career, and private practice — the skills every clinician is expected to have, and almost no one is taught.",
+        "deliveryLabel": "Delivery",
+        "deliveryValue": "Online, self-paced · live programmes",
+        "languagesLabel": "Languages",
+        "languagesValue": "English · Arabic",
+        "statusLabel": "Status",
+        "statusValue": "First course coming soon",
+        "joinWaitlist": "Join the waitlist",
+        "freeGuideBtn": "Get the free guide",
+        "ticker": [
+          "HOW THE SYSTEM WORKS",
+          "COMMUNICATION AT WORK",
+          "AUDIT AND QUALITY IMPROVEMENT",
+          "RESEARCH",
+          "TEACHING AND SUPERVISION",
+          "MANAGEMENT AND LEADERSHIP",
+          "PORTFOLIO, APPRAISAL AND REVALIDATION",
+          "INTERNAL INVESTIGATIONS"
+        ]
+      },
+      "audience": {
+        "title": "The whole non-clinical side of the job",
+        "kicker": "Audit, teaching, research, management, your portfolio, the system itself. You are expected to handle all of it from early in your career — and none of it was part of your clinical training.",
+        "p1": "MedLex Foundations teaches the skills that sit outside clinical knowledge but decide how capable and credible you appear: how your service is actually run, how to communicate so that colleagues listen, how to teach, audit and research with confidence, how to build a portfolio that supports your career, and how to lead a team when the time comes.",
+        "p2": "Every programme is built by a consultant who has worked inside demanding health systems in the United Kingdom, Egypt and Qatar — and knows exactly where doctors are left to work it out alone.",
+        "quote": "“If you’ve ever sat in a meeting hoping not to be asked a question, this is for you. You’re not behind — you were just never shown. We’ll show you.”",
+        "quoteCite": "MEDLEX FOUNDATIONS",
+        "cardTitle": "Who this pathway is for",
+        "items": [
+          {
+            "role": "Doctors in the UK, the Gulf and other advanced systems",
+            "description": "Working in, or training within, a system whose unwritten rules were never explained."
+          },
+          {
+            "role": "Early- and mid-career doctors",
+            "description": "Confident with patients, less sure in audit, teaching or management — and starting to think about appraisal."
+          },
+          {
+            "role": "Senior clinicians in management roles",
+            "description": "Leading a service or a team, and wanting a clear method rather than instinct."
+          },
+          {
+            "role": "Anyone who would rather arrive prepared",
+            "description": "The doctor who wants solid footing before walking into the room."
+          }
+        ],
+        "note": "For clinicians. Not for the general public."
+      },
+      "gift": {
+        "tag": "Your free gift",
+        "title": "Register your email to receive your free guide",
+        "lead": "<em>What the Panel Is Really Asking</em> — interview skills, and the 10 questions every clinician must prepare. How the room reads you, what each question is really testing, and the trap behind each one — written by a consultant who has sat on the panel.",
+        "bookBrand": "MEDLEX",
+        "bookKicker": "Free guide · The medical interview",
+        "bookTitle": "What the Panel Is Really Asking",
+        "bookFoot": "Where Medicine Meets Justice",
+        "inputPlaceholder": "Your professional email",
+        "buttonText": "Send me the guide",
+        "note": "Sent immediately. You will only hear about the Foundations pathway — nothing else.",
+        "successTitle": "Guide on its way",
+        "successDesc": "We have sent your free guide to {email}."
+      },
+      "portfolio": {
+        "title": "3 programmes. More to come.",
+        "lead": "Each programme stands on its own. Together they cover the working life of a clinician beyond the clinic.",
+        "programmes": [
+          {
+            "status": "Coming soon",
+            "live": true,
+            "for": "Online, self-paced · English",
+            "title": "The Clinician's Edge",
+            "description": "8 modules on the non-clinical skills every doctor is expected to have — from how the system works to preparing for an internal investigation. Short video lessons, interactive pages and a workbook for every module.",
+            "bullets": [
+              "8 modules, 8 skills you will use",
+              "Video, interactive pages and workbook",
+              "Study at your own pace"
+            ],
+            "action": "See the 8 modules",
+            "href": "#course"
+          },
+          {
+            "status": "Coming soon",
+            "live": false,
+            "for": "Live, face to face · Arabic or English",
+            "title": "Clinical Leadership Programme",
+            "description": "6 modules for clinicians leading a team, a unit or a service: the decisions, the documents and the conversations that clinical training never covered.",
+            "bullets": [
+              "6 modules, delivered in person",
+              "Your own workbook and exercises",
+              "Small cohorts, by city"
+            ],
+            "action": "About the programme",
+            "href": "#leadership"
+          },
+          {
+            "status": "Coming soon",
+            "live": false,
+            "for": "Next in the portfolio",
+            "title": "AI for Clinicians",
+            "description": "What AI can and cannot do in clinical and professional work, how to use it safely and well, and where the professional and medico-legal lines sit.",
+            "bullets": [
+              "Practical, not technical",
+              "Built for clinical settings",
+              "Dates to the waitlist first"
+            ],
+            "action": "Hear when it opens",
+            "href": "#waitlist"
+          }
+        ]
+      },
+      "course": {
+        "eyebrow": "The Clinician's Edge · coming soon",
+        "title": "8 modules. 8 skills you will use.",
+        "lead": "One online course covering the whole non-clinical side of the job. Each module explains what you will be expected to do — and what you will be able to do by the end.",
+        "modules": [
+          {
+            "num": "01",
+            "title": "Understanding How the System Works",
+            "description": "Roles, hierarchy, rotas, on-call, escalation, and where you sit within it — the UK system as the worked example, with the principles that carry to the Gulf.",
+            "small": "Walk into any department and understand how it runs."
+          },
+          {
+            "num": "02",
+            "title": "Communication at Work",
+            "description": "The referral, the email to a consultant, the notes, the handover, the moment you speak up in a meeting — clear, concise, and escalated the right way.",
+            "small": "Communicate with the clarity colleagues expect of you."
+          },
+          {
+            "num": "03",
+            "title": "Audit & Quality Improvement",
+            "description": "What audit and QI actually are, how the cycle works from standard to re-audit, the difference between the two, and what you will be asked to do.",
+            "small": "Take part in audit and QI with real understanding."
+          },
+          {
+            "num": "04",
+            "title": "Research",
+            "description": "The main types of study and what they are for, what being involved means early on, how to get onto a project, and how to read a paper well enough to discuss it.",
+            "small": "Hold a conversation about a paper and find a route onto a project."
+          },
+          {
+            "num": "05",
+            "title": "Teaching, Supervision & Feedback",
+            "description": "Planning and delivering a clear teaching session, supervising juniors, giving feedback that helps — and receiving it well.",
+            "small": "Teach and supervise in a way that strengthens how you are seen."
+          },
+          {
+            "num": "06",
+            "title": "Management & Leadership Basics",
+            "description": "How a service is organised, who the key people are, how to work within a team, and the real difference between management and leadership at your level.",
+            "small": "Step into team and leadership situations with confidence."
+          },
+          {
+            "num": "07",
+            "title": "Portfolio, Appraisal & Revalidation",
+            "description": "What a portfolio is, what to collect and why, how appraisal works, and how revalidation fits into the longer arc of a career.",
+            "small": "Know exactly what to collect, from the first day."
+          },
+          {
+            "num": "08",
+            "title": "Preparing for an Internal Investigation",
+            "description": "The subject no one prepares you for. What an investigation involves, your rights, what to do and avoid early on, and where to find proper support.",
+            "small": "Understand how investigations work and protect yourself sensibly."
+          }
+        ],
+        "whatYouGetTitle": "What you get",
+        "whatYouGetItems": [
+          {
+            "title": "8 modules",
+            "description": "Short video lessons and interactive pages, at your own pace."
+          },
+          {
+            "title": "Workbook & toolkit",
+            "description": "A practical workbook with every module, yours to keep."
+          },
+          {
+            "title": "The Foundations group",
+            "description": "A WhatsApp network of doctors across the UK, the Gulf and Egypt, sharing how their systems actually work."
+          },
+          {
+            "title": "Weekly insight emails",
+            "description": "One topic a week from the founder — interviews, appraisal, audit, leadership — through your course."
+          },
+          {
+            "title": "Certificate of completion",
+            "description": "Issued in your name when you finish the 8 modules."
+          }
+        ],
+        "joinWaitlist": "Join the waitlist",
+        "brochure": "Programme brochure"
+      },
+      "leadership": {
+        "eyebrow": "Coming soon · live, face to face",
+        "title": "Clinical Leadership Programme",
+        "lead": "For clinicians already leading — or about to lead — a team, a unit or a service. 6 modules delivered in person over consecutive days, in Arabic or English depending on where the cohort runs, with your own workbook and exercises built around real service decisions.",
+        "learn": {
+          "title": "What you will learn",
+          "description": "How to lead colleagues who were your peers, run a meeting that reaches a decision, manage performance and conflict, read your service's numbers, and represent your team upward without losing its trust.",
+          "tag": "6 modules · In person · Workbook and exercises"
+        },
+        "runs": {
+          "title": "How it runs",
+          "description": "Small cohorts, face to face, hosted by city — the United Kingdom, Egypt or the Gulf — so the language, the examples and the system references match the room. Dates are announced to the waitlist first.",
+          "tag": "Arabic or English · By city · Dates to the waitlist first"
+        }
+      },
+      "founder": {
+        "title": "Taught by someone who has lived it",
+        "lead": "Every programme in this pathway is built by a UK-trained Consultant Forensic Psychiatrist with senior clinical and leadership experience across Egypt, the United Kingdom and Qatar — a service lead and training programme director who has been through every one of these situations himself.",
+        "name": "Dr Ahmed Abouelghit",
+        "role": "Consultant Forensic Psychiatrist · Founder and Programme Director",
+        "profileLink": "Read the full profile",
+        "quote": "“No one fails at this because they are not clever enough. They fail because no one ever sat them down and explained how the job actually works.”",
+        "quoteCite": "DR AHMED ABOUELGHIT",
+        "principles": [
+          {
+            "title": "Real situations, not theory",
+            "description": "The audits, investigations, appraisals and service meetings in these programmes are ones the founder has sat through — on both sides of the table.",
+            "tag": "Clinician · Service lead · Programme director"
+          },
+          {
+            "title": "Built for the systems you work in",
+            "description": "The UK system as the worked example, with the principles that carry to the Gulf and other advanced health systems — and the differences named where they matter.",
+            "tag": "United Kingdom · Gulf · Egypt"
+          },
+          {
+            "title": "Ready to use on Monday",
+            "description": "Every module ends with what you will be able to do, and a workbook that turns it into something done: a teaching session planned, a portfolio started, a meeting run.",
+            "tag": "Workbook · Toolkit · Applied"
+          },
+          {
+            "title": "Clear about what you get",
+            "description": "Independent professional development with a certificate of completion. CPD recognition will be shown on each programme page once it is in place.",
+            "tag": "Independent · Certificate of completion"
+          }
+        ]
+      },
+      "waitlist": {
+        "title": "Join the waitlist",
+        "lead": "Be first when The Clinician's Edge opens — at founding-cohort pricing, announced to the waitlist before anyone else — and hear the dates for the Clinical Leadership Programme and AI for Clinicians as soon as they are set.",
+        "namePlaceholder": "Full name",
+        "emailPlaceholder": "Professional email",
+        "roleOptions": [
+          "Doctor in training",
+          "Consultant / specialist",
+          "Clinician in a management role",
+          "Other clinician"
+        ],
+        "buttonText": "Join the waitlist",
+        "successTitle": "You're on the waitlist!",
+        "successDesc": "Thank you, {name}. We will notify you at {email} as soon as enrolment opens."
+      },
+      "faq": {
+        "title": "Questions",
+        "items": [
+          {
+            "q": "Who is this pathway for?",
+            "a": "Doctors working in or training within the UK, the Gulf or another advanced health system; early- and mid-career doctors who were never taught the non-clinical side of the job; and senior clinicians in management roles who want a clear method. It is not for the general public"
+          },
+          {
+            "q": "What is available now?",
+            "a": "The Clinician's Edge opens first, at founding-cohort pricing announced to the waitlist. The Clinical Leadership Programme and AI for Clinicians follow — dates go to the waitlist first"
+          },
+          {
+            "q": "How is The Clinician's Edge delivered?",
+            "a": "Fully online and self-paced: short video lessons, interactive pages in each module, and a workbook and toolkit you keep"
+          },
+          {
+            "q": "How is the Clinical Leadership Programme delivered?",
+            "a": "Live and face to face, in small cohorts hosted by city. The language — Arabic or English — follows the location"
+          },
+          {
+            "q": "Is it in English or Arabic?",
+            "a": "The Clinician's Edge is in English. The Clinical Leadership Programme runs in Arabic or English depending on where the cohort is held. Each programme states its language on its own page"
+          },
+          {
+            "q": "Is the pathway accredited or CPD-certified?",
+            "a": "Programmes are independent and not currently accredited by any college or regulator. You receive a certificate of completion. CPD recognition will be shown on each programme page once it is in place"
+          },
+          {
+            "q": "Is this clinical training?",
+            "a": "No. Foundations covers the professional, non-clinical skills of a medical career. It does not teach clinical medicine and does not replace specialty training or local induction"
+          }
+        ]
+      }
     }
   },
   "profile": {
