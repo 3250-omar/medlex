@@ -48,6 +48,7 @@
     "register": "Register your interest",
     "email": "support@medlexsolutions.com",
     "phone": "+20 101 951 5321",
+    "whatsapp": "Contact on WhatsApp",
     "copyright": "© 2026 MedLex Solutions · medlexsolutions.com"
   },
   "registration": {
@@ -126,13 +127,13 @@
       "line2": "Meets",
       "answer": "Justice",
       "line3": "",
-      "body": "A specialist professional education company at the intersection of medicine, law and institutional practice — founded and led by a UK-trained Consultant Forensic Psychiatrist.",
+      "body": "Professional education for psychiatrists, psychologists, clinicians and legal professionals — writing for courts, passing the CASC, and leading beyond the clinic",
       "register": "Register your interest",
       "goToCourses": "Go to your courses",
       "joinCourses": "Join our courses",
       "pathways": "The three pathways",
-      "badge": "Educational pathways, one for each professional audience",
-      "sub": "Three educational lines. One founder. One standard: precise, defensible, ready for the room it will be used in."
+      "badge": "Consultant. Every programme written and taught by the founder",
+      "sub": "Three pathways, built and taught by a UK-trained Consultant Forensic Psychiatrist. Choose the one that belongs to you"
     },
     "pathways": {
       "enrolled": "Enrolled",
@@ -229,7 +230,7 @@
     "founder": {
       "name": "Dr Ahmed Abouelghit",
       "role": "UK-trained Consultant Forensic Psychiatrist",
-      "bio": "His practice spans forensic psychiatry, medico-legal reporting, Mental Health Tribunals, court and Parole Board work — alongside directing specialist training and serving as an accredited MRCPsych CASC examiner for the Royal College of Psychiatrists",
+      "bio": "His practice spans forensic psychiatry, medico-legal reporting, Mental Health Tribunals, court and Parole Board work — alongside directing specialist training, and formerly an examiner for the Royal College of Psychiatrists' CASC",
       "caption": "Dr. Ahmed Abouelghit · Consultant",
       "imageAlt": "Dr. Ahmed Abouelghit, Consultant Forensic Psychiatrist",
       "eyebrow": "The Founder",
@@ -254,7 +255,7 @@
         "audience": "For MRCPsych CASC candidates worldwide",
         "description": "A self-paced digital preparation library that mirrors the real examination — 43 stations across eight domains, each taken apart from the examiner's side of the table, with particular attention to international candidates.",
         "features": [
-          "Self-paced online, 12 months' access",
+          "Self-paced online, 6 months' access",
           "English only",
           "Interactive stations, not recorded lectures"
         ],
@@ -1090,8 +1091,8 @@
     },
     "foundationsLanding": {
       "hero": {
-        "headline": "Clinical training makes a doctor. It does not make a <em>career</em>.",
-        "lead": "Professional development for doctors beyond clinical training: leadership, career, and private practice — the skills every clinician is expected to have, and almost no one is taught.",
+        "headline": "Clinical training makes a doctor. It does not make a <em>career</em>",
+        "lead": "Professional development for doctors beyond clinical training: how the system works, how to lead, and how to protect your career — the skills every clinician is expected to have, and almost no one is taught",
         "deliveryLabel": "Delivery",
         "deliveryValue": "Online, self-paced · live programmes",
         "languagesLabel": "Languages",
@@ -1442,260 +1443,158 @@
   },
   "institutionalPage": {
     "hero": {
-      "eyebrow": "FOR INSTITUTIONS",
-      "title": "Expert consultation\n& court services",
-      "intro": "Independent psychiatric evaluations, clinical governance review, and capacity-building programmes built to judicial standards across the MENA region",
-      "metrics": [
-        {
-          "label": "Jurisdictions",
-          "value": "3 Countries",
-          "detail": "UK · Egypt · Qatar"
-        },
-        {
-          "label": "Forums",
-          "value": "Court-Tested",
-          "detail": "Tribunals, Courts & Parole Boards"
-        },
-        {
-          "label": "Methodology",
-          "value": "Defensible",
-          "detail": "Evidentiary standard before conclusion"
-        }
+      "title": "We build the capacity. Your institution keeps the work",
+      "lead": "MedLex works with courts, ministries, health authorities and legal bodies on training, policy and advisory. Our role is to build your capability; the casework, and the opinion, remain yours",
+      "stripWhatLabel": "What we do",
+      "stripWhatValue": "Training · Policy · Advisory",
+      "stripLangLabel": "Languages",
+      "stripLangValue": "Arabic · English",
+      "stripLocLabel": "Delivered in",
+      "stripLocValue": "Egypt · the Gulf · UK",
+      "ctaEnquiry": "Make an enquiry",
+      "ctaServices": "What we provide",
+      "tickerItems": [
+        "INSTITUTIONAL TRAINING",
+        "MEDICO-LEGAL GOVERNANCE",
+        "POLICY AND PROTOCOL DESIGN",
+        "CAPACITY BUILDING",
+        "CASE DISCUSSION AND ADVISORY",
+        "REPORT QUALITY FRAMEWORKS",
+        "LEADERSHIP DEVELOPMENT",
+        "INSTITUTIONAL PARTNERSHIPS"
       ]
     },
-    "servicesGrid": {
-      "eyebrow": "AREAS OF PRACTICE",
-      "title": "Four specialised services for judicial and healthcare bodies",
-      "cards": [
-        {
-          "tag": "01 · ASSESSMENTS",
-          "title": "Clinical Forensic Assessment",
-          "desc": "Independent psychiatric evaluations for courts, prosecution, and legal counsel in criminal, civil, and custodial proceedings",
-          "linkText": "Explore Service"
-        },
-        {
-          "tag": "02 · PROTOCOLS",
-          "title": "Institutional Policy & Protocols",
-          "desc": "Development of defensible clinical governance standards, fitness-to-plead frameworks, and structured risk assessment tools",
-          "linkText": "Explore Service"
-        },
-        {
-          "tag": "03 · CASE REVIEW",
-          "title": "Case Review & Second Opinions",
-          "desc": "Peer review of disputed psychiatric evidence, medico-legal audit, and independent evaluation of complex court files",
-          "linkText": "Explore Service"
-        },
-        {
-          "tag": "04 · TRAINING",
-          "title": "Capacity Building & Training",
-          "desc": "Bespoke forensic psychiatry curriculums and masterclasses for judges, prosecutors, hospital leadership, and legal teams",
-          "linkText": "Explore Service"
-        }
+    "services": {
+      "title": "Three things we provide",
+      "lead": "All of it works the same way: your people, your cases, your name on the output. We work behind the scenes to make what you already do stronger and more defensible",
+      "trainingTitle": "Training",
+      "trainingDesc": "Programmes designed for your institution and delivered to your teams, in Arabic or English — from writing and testing psychiatric evidence to the professional skills your senior clinicians are expected to have",
+      "trainingItems": [
+        "Writing psychiatric evidence that answers the legal question",
+        "Reading and testing psychiatric evidence — for judges, prosecutors and counsel",
+        "Risk formulation, capacity and criminal responsibility",
+        "Interviewing vulnerable witnesses and children",
+        "Clinical leadership, communication and internal investigations"
+      ],
+      "policyTitle": "Policy and governance",
+      "policyDesc": "The frameworks that decide whether medico-legal work in your institution holds up: how opinions are commissioned, written, reviewed and recorded",
+      "policyItems": [
+        "Standards for commissioning and quality-checking psychiatric reports",
+        "Record-keeping, confidentiality and disclosure policy",
+        "Detention, restraint and incident-review governance",
+        "Internal peer review and supervision structures",
+        "Competency frameworks for medico-legal roles"
+      ],
+      "advisoryTitle": "Advisory and case discussion",
+      "advisoryDesc": "A consultant in the room with your team when a case is difficult — helping them reason it through, test their own opinion and find the weak point before someone else does",
+      "advisoryItems": [
+        "Confidential case discussion with your clinicians",
+        "Structured reasoning and formulation support",
+        "Review of your own draft frameworks and methods",
+        "Standing advisory access for a defined period",
+        "Guidance on where specialist independent input is needed"
       ]
     },
-    "standards": {
-      "eyebrow": "STANDARDS & INTEGRITY",
-      "title": "Built for the scrutiny of modern courts and institutions",
-      "intro": "Why judicial bodies, ministries, and hospitals rely on MedLex expert consultation",
-      "pillars": [
-        {
-          "title": "UK-Trained Consultant Leadership",
-          "desc": "Led by a Consultant Forensic Psychiatrist with extensive practice across UK Mental Health Tribunals, Crown Courts, and regional bodies"
-        },
-        {
-          "title": "Evidence Before Opinion",
-          "desc": "Method before conclusion. Defined questions, structured psychometric instruments, and opinions stated at the confidence the evidence supports"
-        },
-        {
-          "title": "Jurisdictional Alignment",
-          "desc": "Reports constructed around the specific statutory questions posed under your jurisdiction's penal, civil, or healthcare code"
-        },
-        {
-          "title": "Professional Protection",
-          "desc": "Court-conscious methodology that protects institutional integrity, maintains strict clinician neutrality, and survives cross-examination"
-        }
+    "notDo": {
+      "title": "What we do not do",
+      "para1": "MedLex is an education and consultancy company, not a clinical or expert-witness practice. That line is deliberate, and we hold it in every engagement",
+      "para2": "It means we are never a party to your proceedings, never in competition with your own experts, and never in a position where advising you today conflicts with an opinion we gave yesterday. What we build stays with your institution: your people, your methods, your name on the work",
+      "para3": "Where a case genuinely needs an independent psychiatric opinion, we will say so — and help you specify what to commission and how to test what you receive",
+      "boxTitle": "We never:",
+      "boxItems": [
+        "Assess patients, defendants or claimants",
+        "Write or co-sign psychiatric or medico-legal reports",
+        "Give evidence, orally or in writing, in any proceedings",
+        "Appear before a court, tribunal or prosecutor",
+        "Attach our name to any opinion used in a case"
+      ],
+      "boxWhy": "This is written into every contract"
+    },
+    "trackRecord": {
+      "tag": "DELIVERED",
+      "title": "Public prosecutors, Egypt — interviewing children",
+      "lead": "Dr Ahmed Abouelghit (founder, MedLex) designed and delivered a structured training programme for public prosecutors on interviewing children, in partnership with UNICEF Egypt, run in Arabic across multiple cohorts",
+      "facts": [
+        "Curriculum designed from the forensic evidence base and adapted to Egyptian practice",
+        "Delivered entirely in Arabic, to prosecutors in their own working context",
+        "Multiple cohorts, with materials left with the institution",
+        "No case involvement of any kind — training only"
       ]
     },
-    "details": {
-      "service1": {
-        "number": "01",
-        "eyebrow": "ASSESSMENT & EVALUATION",
-        "title": "Clinical Forensic Assessment",
-        "subtitle": "Independent psychiatric evaluations built to evidentiary standards",
-        "description": "We produce court-admissible psychiatric evaluations for civil and criminal cases. Our reports address specific statutory questions with rigorous documentation, diagnostic clarity, and defensible clinical reasoning that withstands cross-examination",
-        "features": [
-          "Criminal responsibility, sanity, and diminished capacity",
-          "Fitness to plead and stand trial",
-          "Mental capacity, guardianship, and testamentary capacity",
-          "Structured violence and recidivism risk assessment (HCR-20 / SAPROF)",
-          "Assessment of custodial and prison placement suitability"
+    "howWeWork": {
+      "title": "Three ways to work with us",
+      "lead": "Every engagement is scoped in writing before it begins: what is delivered, to whom, over what period, and what is explicitly out of scope",
+      "way1Num": "01",
+      "way1Title": "A defined programme",
+      "way1Desc": "A training programme designed for your institution and delivered to an agreed number of cohorts — in person, online, or both",
+      "way1Meta": "Typically 2–8 weeks · one session a week, or a concentrated block of days",
+      "way2Num": "02",
+      "way2Title": "A governance project",
+      "way2Desc": "A piece of work with a defined output: a policy, a framework, a set of standards, or a review of what you already have, delivered as a document your institution owns",
+      "way2Meta": "Typically 4–12 weeks · one named deliverable",
+      "way3Num": "03",
+      "way3Title": "Standing advisory",
+      "way3Desc": "Scheduled access to a consultant for case discussion and guidance over an agreed period — regular sessions with your team, on your cases, without any written opinion from us",
+      "way3Meta": "Renewable term · agreed session frequency"
+    },
+    "enquiry": {
+      "title": "Make an enquiry",
+      "lead": "Tell us what your institution needs. We reply within two working days, and if the work is outside what we do, we will say so and point you to the right place",
+      "form": {
+        "institution": "Institution",
+        "nameRole": "Your name and role",
+        "email": "Official email",
+        "typeLabel": "Type of institution",
+        "typePlaceholder": "Type of institution",
+        "typeOptions": [
+          "Court or judicial body",
+          "Public prosecution",
+          "Ministry or government authority",
+          "Hospital or health authority",
+          "Law firm or legal department",
+          "University or training academy",
+          "International organisation",
+          "Other"
         ],
-        "specCard": {
-          "eyebrow": "ENGAGEMENT SPECIFICATION",
-          "formatLabel": "Format",
-          "formatValue": "In-person & Secure Remote",
-          "timelineLabel": "Typical Lead Time",
-          "timelineValue": "10–20 Business Days",
-          "jurisdictionLabel": "Jurisdiction",
-          "jurisdictionValue": "UK, Egypt, Qatar & GCC",
-          "clientsLabel": "Primary Clients",
-          "clientsValue": "Courts, Prosecution, Defence & In-House Counsel",
-          "action": "Request Assessment"
-        }
+        "needLabel": "What you need",
+        "needPlaceholder": "What you need",
+        "needOptions": [
+          "Training programme",
+          "Policy and governance",
+          "Advisory and case discussion",
+          "Not sure yet — would like to discuss"
+        ],
+        "detailsPlaceholder": "What you are trying to achieve, and any timeline",
+        "fullName": "Your full name",
+        "role": "Your role or position",
+        "phone": "Official phone number",
+        "phonePlaceholder": "+20 100 000 0000",
+        "loggedInAs": "Logged in as",
+        "autoContactInfo": "Your account details will be attached automatically",
+        "errorTitle": "Submission failed",
+        "errorGeneric": "An error occurred while sending your enquiry, please try again",
+        "errorConfig": "The service is temporarily unavailable, please try again later",
+        "submitAnother": "Send another enquiry",
+        "submit": "Send enquiry",
+        "submitting": "Sending...",
+        "success": "Thank you for your enquiry. We will reply within two working days",
+        "disclaimer": "Please do not send case material, patient information or identifying details with an enquiry"
       },
-      "service2": {
-        "number": "02",
-        "eyebrow": "GOVERNANCE & SAFETY",
-        "title": "Institutional Policy & Protocols",
-        "subtitle": "Clinical governance standards that minimise medicolegal risk",
-        "description": "Healthcare facilities and custodial institutions operate under severe legal scrutiny. We assist leadership in drafting, auditing, and implementing protocols that meet international human rights benchmarks while aligning with local statutory frameworks",
-        "features": [
-          "Involuntary admission & detention compliance frameworks",
-          "Seclusion, physical restraint, and de-escalation governance",
-          "High-risk incident, suicide, and near-miss investigation protocols",
-          "Medicolegal confidentiality, record-keeping, and disclosure policies",
-          "Dual-obligation ethics guidance for prison and security-setting clinicians"
-        ],
-        "specCard": {
-          "eyebrow": "ENGAGEMENT SPECIFICATION",
-          "formatLabel": "Delivery",
-          "formatValue": "Institutional Advisory & On-Site Audits",
-          "timelineLabel": "Duration",
-          "timelineValue": "4–12 Weeks Structured Mandate",
-          "jurisdictionLabel": "Alignment",
-          "jurisdictionValue": "National Health & Mental Health Acts",
-          "clientsLabel": "Primary Clients",
-          "clientsValue": "Ministries of Health, Hospital Groups, Custodial Services",
-          "action": "Request Protocol Review"
-        }
-      },
-      "service3": {
-        "number": "03",
-        "eyebrow": "AUDIT & SECOND OPINION",
-        "title": "Case Review & Second Opinions",
-        "subtitle": "Objective forensic audit of complex psychiatric evidence",
-        "description": "When medical evidence is disputed, contradictory, or methodologically flawed, courts and legal teams require an authoritative, independent second perspective. We provide rigorous review of medical records, existing expert reports, and interview transcripts",
-        "features": [
-          "Evidentiary audit of prior psychiatric expert reports",
-          "Identification of cognitive bias, diagnostic overreach, or procedural flaws",
-          "Cross-examination briefings and question formulation for trial counsel",
-          "Independent expert witness testimony before tribunals and appellate courts",
-          "Multidisciplinary case conference facilitation for complex matters"
-        ],
-        "specCard": {
-          "eyebrow": "ENGAGEMENT SPECIFICATION",
-          "formatLabel": "Review Type",
-          "formatValue": "Confidential Dossier & Case Audit",
-          "timelineLabel": "Turnaround",
-          "timelineValue": "5–10 Business Days (Priority triage available)",
-          "jurisdictionLabel": "Scope",
-          "jurisdictionValue": "Appellate, Criminal & Disciplinary Hearings",
-          "clientsLabel": "Primary Clients",
-          "clientsValue": "Judicial Panels, Senior Legal Counsel, Regulatory Bodies",
-          "action": "Submit Dossier for Review"
-        }
-      },
-      "service4": {
-        "number": "04",
-        "eyebrow": "EDUCATION & CAPACITY",
-        "title": "Capacity Building & Training",
-        "subtitle": "Specialised forensic curriculums for judicial and medical personnel",
-        "description": "We bridge the cultural and intellectual divide between clinical medicine and the law. Our programmes equip judicial officers to critically appraise psychiatric evidence, and teach clinicians how to write reports that survive legal examination",
-        "features": [
-          "Forensic mental health literacy for judges and prosecutors",
-          "Accredited medicolegal report writing masterclasses for psychiatrists",
-          "Risk formulation and management workshops for clinical teams",
-          "Simulated courtroom cross-examination and mock-trial workshops",
-          "Continuing Medical / Legal Education (CME/CLE) accredited modules"
-        ],
-        "specCard": {
-          "eyebrow": "ENGAGEMENT SPECIFICATION",
-          "formatLabel": "Format",
-          "formatValue": "Executive Workshops & Cohort Training",
-          "timelineLabel": "Cohort Size",
-          "timelineValue": "15–45 Participants per Cohort",
-          "jurisdictionLabel": "Delivery",
-          "jurisdictionValue": "On-Site (MENA) or Interactive Virtual",
-          "clientsLabel": "Primary Clients",
-          "clientsValue": "Judicial Academies, University Hospitals, Medical Syndicates",
-          "action": "Inquire for Cohorts"
-        }
+      "nextSteps": {
+        "title": "What happens next",
+        "step1Num": "1",
+        "step1Title": "We reply within two working days",
+        "step1Desc": "usually with two or three questions",
+        "step2Num": "2",
+        "step2Title": "A short call",
+        "step2Desc": "to understand the institution, the people, and the constraint you are working within",
+        "step3Num": "3",
+        "step3Title": "A written proposal",
+        "step3Desc": "scope, delivery, language, timeline, fees — and what is out of scope",
+        "step4Num": "4",
+        "step4Title": "Contract and delivery",
+        "step4Desc": "with MedLex for Training and Consultancy LLC. Fees are quoted in USD or EGP"
       }
-    },
-    "engagements": {
-      "eyebrow": "MODES OF ENGAGEMENT",
-      "title": "Four standard frameworks for institutional collaboration",
-      "intro": "Flexible contractual arrangements structured around the governance and procurement requirements of ministries, tribunals, and healthcare authorities",
-      "items": [
-        {
-          "tag": "FRAMEWORK 01",
-          "title": "Single-Case Expert Instruction",
-          "desc": "Direct instruction by courts, public prosecutors, or joint legal parties for expert opinion, written evaluation, and viva voce testimony in specific cases"
-        },
-        {
-          "tag": "FRAMEWORK 02",
-          "title": "Advisory Retainer & Council",
-          "desc": "Ongoing consultative access for ministries, correctional authorities, and judicial bodies seeking on-call forensic psychiatry expertise and legislative advice"
-        },
-        {
-          "tag": "FRAMEWORK 03",
-          "title": "Clinical Governance Review",
-          "desc": "Comprehensive forensic and medicolegal audits of inpatient facilities, secure psychiatric units, and custodial healthcare services"
-        },
-        {
-          "tag": "FRAMEWORK 04",
-          "title": "Institutional Training Partnerships",
-          "desc": "Multi-year curriculum design and delivery for national judicial training centres, postgraduate medical faculties, and bar associations"
-        }
-      ]
-    },
-    "form": {
-      "eyebrow": "DIRECT INQUIRY",
-      "title": "Request an institutional consultation",
-      "intro": "Submit your institutional inquiry below. Our senior advisory team will review your mandate and respond under strict professional confidentiality",
-      "fields": {
-        "orgName": "Organisation / Institutional Body",
-        "orgNamePlaceholder": "e.g. Ministry of Justice, Hospital Group, Law Firm",
-        "contactPerson": "Contact Person & Title",
-        "contactPersonPlaceholder": "e.g. Dr. / Counsellor Full Name",
-        "email": "Official / Corporate Email",
-        "emailPlaceholder": "official@organisation.gov / .org",
-        "jurisdiction": "Jurisdiction / Country",
-        "jurisdictionPlaceholder": "Select jurisdiction...",
-        "service": "Service Required",
-        "servicePlaceholder": "Select service...",
-        "brief": "Scope of Work / Case Summary",
-        "briefPlaceholder": "Please provide a non-confidential overview of the mandate, timeline, and specific requirements..."
-      },
-      "jurisdictions": [
-        "Egypt",
-        "Qatar",
-        "United Kingdom",
-        "United Arab Emirates",
-        "Kingdom of Saudi Arabia",
-        "Kuwait",
-        "Other MENA Jurisdiction",
-        "International"
-      ],
-      "services": [
-        "Clinical Forensic Assessment (Case Specific)",
-        "Institutional Policy & Governance Protocols",
-        "Case Review & Second Expert Opinion",
-        "Capacity Building & Institutional Training",
-        "Governmental or Judicial Advisory Mandate",
-        "Other Bespoke Consultation"
-      ],
-      "submit": "Submit Institutional Inquiry",
-      "submitting": "Submitting Inquiry...",
-      "successTitle": "Inquiry Received",
-      "successDesc": "Thank you. Our institutional liaison team will review your inquiry and follow up within 1–2 business days under strict professional confidentiality",
-      "confidentiality": "All communications are treated with strict legal and medical confidentiality in accordance with international professional standards"
-    },
-    "ctaBanner": {
-      "eyebrow": "BESPOKE ENGAGEMENTS",
-      "title": "Need a tailored institutional training program or consultation?",
-      "desc": "Our faculty designs bespoke continuous medical and legal education (CME/CLE) programs aligned with your regional jurisdiction",
-      "action": "Request Proposal"
     }
   },
   "exam": {
@@ -1836,11 +1735,11 @@
       "breadcrumb": "CASC Academy"
     },
     "pathwayFoundations": {
-      "title": "Foundations of Medicolegal Psychiatry",
-      "description": "Build foundational competence in psychiatric jurisprudence, civil and criminal legal tests, patient capacity, and ethical medical testimony.",
-      "ogTitle": "Foundations of Medicolegal Psychiatry | MedLex",
-      "ogDescription": "Essential legal and ethical principles for practicing psychiatrists and clinicians.",
-      "imageAlt": "Foundations of Medicolegal Psychiatry Pathway",
+      "title": "MedLex Foundations — Professional Development for Clinicians",
+      "description": "The non-clinical skills every doctor is expected to have and almost no one is taught — The Clinician's Edge, the Clinical Leadership Programme, and AI for Clinicians",
+      "ogTitle": "MedLex Foundations — Professional Development for Clinicians",
+      "ogDescription": "The non-clinical skills every doctor is expected to have and almost no one is taught — The Clinician's Edge, the Clinical Leadership Programme, and AI for Clinicians",
+      "imageAlt": "MedLex Foundations — Professional Development for Clinicians",
       "breadcrumb": "Foundations"
     },
     "institutional": {
@@ -1927,8 +1826,8 @@
     },
     "foundations": {
       "badge": "Core Competencies",
-      "title": "Foundations of Medicolegal Psychiatry",
-      "description": "Develop a solid grasp of capacity, consent, criminal responsibility, and ethical testimony in medicolegal practice.",
+      "title": "MedLex Foundations",
+      "description": "Develop non-clinical mastery, leadership skills, career protection, and AI adoption beyond conventional clinical training",
       "cta": "View Foundations Pathway"
     },
     "founderNotice": {
@@ -1936,5 +1835,274 @@
       "description": "Every pathway is developed and led by Dr Ahmed Abouelghit, Consultant Forensic Psychiatrist.",
       "cta": "Learn About the Founder"
     }
+  },
+  "cascHero": {
+    "kicker": "An online CASC preparation course, built by a former examiner.",
+    "titlePrefix": "Learn the CASC from the ",
+    "titleHighlight": "examiner's",
+    "titleSuffix": " side of the table.",
+    "subtitle": "43 interactive stations, each shown failed two ways and passed once, with the examiner's reasoning at every decision — plus a 12-week workbook, a practice group and 6 months' access.",
+    "step1Number": "1",
+    "step1Title": "Enrol",
+    "step1Desc": "One payment, 6 months' access. Start the same day on your phone, tablet or laptop — all 43 stations open from the first login.",
+    "step2Number": "2",
+    "step2Title": "Work through the stations",
+    "step2Desc": "About 45 minutes each: read the station fail twice and pass once, make the seven decisions yourself, then sit a timed 7-minute Exam Mode.",
+    "step3Number": "3",
+    "step3Title": "Practise with colleagues",
+    "step3Desc": "Every station ends with cards for a three-person practice session — candidate, role-player, observer — and the WhatsApp group helps you find your two.",
+    "workbookTitle": "12 Weeks to the CASC Workbook",
+    "workbookDesc": "— included, and guides you through all three steps, week by week.",
+    "enrolCta": "Enrol — £147 for the founding hundred",
+    "tryStationCta": "Try a station free",
+    "coachingPrefix": "Need more than the course? One-to-one coaching with the examiner is available separately — ",
+    "coachingLink": "see coaching",
+    "navWhatYouGet": "What you get",
+    "navHowItWorks": "How it works",
+    "navFreeGuides": "Free guides",
+    "navTheLibrary": "The library",
+    "navCoaching": "Coaching",
+    "navQuestions": "Questions",
+    "navEnrol": "Enrol"
+  },
+  "cascHowStationWorks": {
+    "title": "How a station works",
+    "description": "Not lectures. Not model answers. Every station is built the same way, around the specific error that costs candidates the mark — then you make the decisions yourself. About 45 minutes in Learn Mode, then 7 minutes in Exam Mode.",
+    "step1Num": "1",
+    "step1Title": "The trap, named",
+    "step1Desc": "What this station is really testing, and the two ways good candidates get it wrong.",
+    "step2Num": "2",
+    "step2Title": "Two failures, one pass",
+    "step2Desc": "The same consultation three times, line by line. One failure is obvious; the other is the kind one, and worse.",
+    "step3Num": "3",
+    "step3Title": "The examiner's reasoning",
+    "step3Desc": "Tap any moment and read what an examiner is thinking as it happens — and why the mark is being lost or won.",
+    "step4Num": "4",
+    "step4Title": "Seven decisions",
+    "step4Desc": "You are in the chair. Choose, read the examiner's response, try again until you find the move that works.",
+    "step5Num": "5",
+    "step5Title": "Exam Mode, then the cards",
+    "step5Desc": "Seven minutes, timed, on a patient you have not met. Then a three-person practice pack to run with colleagues that evening.",
+    "ctaTitle": "See a station before you decide.",
+    "ctaDesc": "Station 7.2 is open to anyone, no login. Read it fail twice, read it pass, tap the examiner's reasoning, then make the seven decisions yourself.",
+    "ctaButton": "Open Station 7.2 — free",
+    "accordionTrigger": "Or read the opening of Station 7.2 here — the same seven minutes, three ways",
+    "comparisonFail1Tag": "Fail 1 — the defence",
+    "comparisonFail1Quote": "“Mr Boyd, I’ll stop you there, because nothing improper has happened. Libby was assessed as Gillick competent. Her mother attended with her. Fluoxetine is the recommended first line — and with respect, that printout misreads the data.”",
+    "comparisonFail1ExaminerNote": "Six sentences, six accurate facts — and the station is already lost. Every word answered the anger; not one answered the man.",
+    "comparisonFail2Tag": "Fail 2 — the surrender",
+    "comparisonFail2Quote": "“Mr Boyd, I’m so sorry. You’re right to be angry — a parent should never find out like that, and I can’t defend how this was handled. If it had been my decision, I’d have wanted you in the room before anything was prescribed.”",
+    "comparisonFail2ExaminerNote": "The room is quieter already — and it sounds like good practice. Listen to what was conceded: an apology for a fault that did not happen, and the one apology actually owed never named.",
+    "comparisonPassTag": "The pass",
+    "comparisonPassQuote": "“Mr Boyd — I’m glad you came in, and I’m not going anywhere, so let’s sit. You found out from a pharmacy bag on a kitchen counter, and you’ve been reading things that would frighten any parent. Before I explain anything, tell me the thing that’s worrying you most.”",
+    "comparisonPassExaminerNote": "Not one fact corrected, not one protocol cited — and the temperature has already dropped. The corrections can wait. They will land later precisely because they were not fired now.",
+    "comparisonExaminerTitle": "What the examiner is thinking"
+  },
+  "cascGifts": {
+    "book1Kicker": "Free guide",
+    "book1TitlePrefix": "The Examiner's",
+    "book1TitleSuffix": "Briefing",
+    "book1Tagline": "Where Medicine Meets Justice",
+    "book1Tooltip": "Click to download The Examiner's Briefing",
+    "book2Kicker": "Free tool",
+    "book2TitlePrefix": "The Examiner's",
+    "book2TitleSuffix": "Error Log",
+    "book2Tagline": "Where Medicine Meets Justice",
+    "book2Tooltip": "Click to download The Examiner's Error Log",
+    "badge": "Before you enrol",
+    "title": "Register your Email to download your gifts",
+    "description": "The Examiner's Briefing — how the CASC is actually marked, the errors examiners see most, and the grammar of a British consultation. The Examiner's Error Log — a one-page self-audit you fill in after every practice station, so the person watching you can tick what they saw.",
+    "emailPlaceholder": "Your professional email",
+    "emailAriaLabel": "Your professional email",
+    "submitButton": "Send me both",
+    "sendingButton": "Sending...",
+    "successHeading": "Both resources are downloading!",
+    "successFallback": "If your browser blocked the second download, click directly:",
+    "downloadError": "Unable to download the resources. Please try again.",
+    "footnote": "Both PDFs, immediately. Then occasional notes from the examiner's side of the table — unsubscribe in one click. No card, no commitment."
+  },
+  "cascProblem": {
+    "titleLine1": "Most candidates who fail",
+    "titleLine2": "have already read enough.",
+    "p1": "They have the textbooks. They have watched the videos. They can describe a risk assessment accurately at a desk, on their own, with no clock running.",
+    "p2": "Then they walk into a station where a woman is packing her bag to go home, and something she says at minute three changes what the station is actually about — and nothing they revised tells them what to do in the next four seconds.",
+    "p3": "The CASC is a performance examination. It tests what comes out of your mouth, under time, in front of someone who is marking you. Reading is the cheapest form of preparation to consume and the least likely to change your score.",
+    "quote": "“Would I be confident to have this candidate as my registrar? That is the question behind every mark — and the lens every station here is marked through.”",
+    "quoteAuthor": "THE EXAMINER'S QUESTION"
+  },
+  "cascFreePreview": {
+    "titleLine1": "Start with the free station. ",
+    "titleLine2": "Enrol when you've seen it",
+    "description": "Station 7.2, complete and free, no login. Then 43 stations, the workbook, the practice group and 6 months' access for £147.",
+    "tryStationButton": "Try a station free",
+    "enrolButton": "Enrol"
+  },
+  "termsPage": {
+    "kicker": "Legal & Terms",
+    "title": "Terms of Sale and Use",
+    "brand": "MedLex Solutions · medlexsolutions.com",
+    "lastUpdated": "Last updated: 20 September 2026",
+    "intro": "These Terms apply to the courses, programmes and coaching sold on medlexsolutions.com (the \"Site\") and to your use of them, and by enrolling or booking, you agree to these Terms",
+    "tableOfContents": "Contents",
+    "quickSummary": "Key Highlights",
+    "highlightRefund": "14-Day Refund",
+    "highlightRefundSub": "Within 14 days and up to 3 stations completed",
+    "highlightLicence": "Single-User Licence",
+    "highlightLicenceSub": "Strictly individual preparation only",
+    "highlightAccess": "6 Months Access",
+    "highlightAccessSub": "+3 months free extension on exam resit",
+    "highlightPayment": "Merchant of Record",
+    "highlightPaymentSub": "Paddle processes payments, taxes and invoicing",
+    "backToTop": "Back to top",
+    "paddleNotice": "Payments are processed by Paddle.com Market Limited (\"Paddle\") as merchant of record, Paddle's Buyer Terms apply to the payment, tax and invoicing, and these Terms apply to your access to and use of what you buy",
+    "sec1Title": "Who we are",
+    "sec1Body1": "The Site and its courses are provided by MedLex for Training and Consultancy LLC, a limited liability company registered in Egypt (tax registration no. 774-030-542), trading as MedLex Solutions (\"MedLex\", \"we\"), with registered address: 5 El-Fadl Street, Office F1-03-02, First Floor, Abdeen, Cairo, Egypt, and email: info@medlexsolutions.com",
+    "sec2Title": "What you buy",
+    "sec2Body": "Each course or programme page states what is included, and for The CASC Academy, enrolment gives one named person: the station library, the 12 Weeks to the CASC workbook, the candidates' WhatsApp group, the examiner's notes by email, and a certificate of completion, while coaching is sold separately",
+    "sec3Title": "Access",
+    "sec3Body1": "Access to an online course runs for the period stated on its page — for The CASC Academy, 6 months from purchase, extended by 3 months at no charge if you sit the examination in that period and need to resit (email us with reasonable evidence before your access ends)",
+    "sec3Body2": "We may update or add to a course during your access period",
+    "sec4Title": "Licence",
+    "sec4Body1": "A course is licensed to one individual for their own preparation, and you may not share your login, copy, record, download or redistribute the content, or use it to build any product or service, while printing the practice cards for your own practice sessions is permitted, and if we reasonably believe an account is being shared, we may suspend or end access without refund",
+    "sec4Body2": "All content is the intellectual property of MedLex",
+    "sec5Title": "Price",
+    "sec5Body": "Prices are shown at checkout in GBP, Paddle applies any tax due in your country before you pay, founding-cohort prices apply to a stated number of enrolments and end when those are taken, and price changes do not affect purchases already made",
+    "sec6Title": "Refunds",
+    "sec6Body": "Our Refund Policy at medlexsolutions.com/refund-policy forms part of these Terms, in summary: a full refund within 14 days of purchase, provided you have completed no more than 3 stations, and coaching sessions cancelled with more than 24 hours' notice are refundable, while sessions cancelled later, or missed, are not",
+    "sec7Title": "WhatsApp groups and emails",
+    "sec7Body": "Groups are for enrolled learners only, members must treat others with courtesy and must not share course content, examination content, or any patient or third-party information, we may remove anyone who does, WhatsApp's own terms apply, your phone number is visible to other members, and you can unsubscribe from our emails at any time without affecting your access",
+    "sec8Title": "Coaching",
+    "sec8Body": "Coaching is booked through the Site, packages must be used within the period stated at purchase (5 sessions: 3 months; 10 sessions: 6 months) after which unused sessions expire, you may reschedule or cancel free of charge up to 24 hours before a session, and coaching is examination preparation, not clinical supervision or advice on any real patient",
+    "sec9Title": "What our courses are — and are not",
+    "sec9Item1Title": "Independent",
+    "sec9Item1Desc": "MedLex is not endorsed by, affiliated with, or approved by the Royal College of Psychiatrists or any other college or regulator, and courses contain no examination material, as every station and scenario is an original, fictional construct",
+    "sec9Item2Title": "No guarantee",
+    "sec9Item2Desc": "Courses are designed to improve performance, and we do not promise that you will pass any examination",
+    "sec9Item3Title": "Educational, not clinical",
+    "sec9Item3Desc": "Content teaches examination and professional skills, is not clinical advice, and must not be relied on in the care of a real patient",
+    "sec9Item4Title": "Certificates record completion",
+    "sec9Item4Desc": "Certificates record completion, and they are not accreditation, qualifications or CPD credit unless a course page expressly says so",
+    "sec10Title": "Your account",
+    "sec10Body": "Keep your details accurate and your login secure, do not attempt to interfere with the Site or copy content by automated means, and we may suspend or end access for breach of these Terms, while serious breaches (sharing, redistribution) are not refunded",
+    "sec11Title": "Availability",
+    "sec11Body": "We aim to keep the Site available at all times but cannot guarantee it, and if a course is unavailable for more than 7 consecutive days during your access period, we extend your access by the same period",
+    "sec12Title": "Liability",
+    "sec12Body": "Nothing in these Terms limits liability that cannot be limited by law, otherwise our total liability to you in connection with a purchase is limited to the amount you paid for it, and we are not liable for examination outcomes, loss of earnings, or indirect loss",
+    "sec13Title": "Privacy",
+    "sec13Body": "We handle your personal data as described in our Privacy Policy at medlexsolutions.com/privacy-policy",
+    "sec14Title": "Changes",
+    "sec14Body": "The version of these Terms in force when you buy applies to that purchase, and we will email existing customers about material changes",
+    "sec15Title": "Governing law",
+    "sec15Body": "These Terms are governed by the law of England and Wales, and consumers also keep any mandatory protections of the country where they live",
+    "sec16Title": "Contact",
+    "sec16Body": "info@medlexsolutions.com · MedLex for Training and Consultancy LLC (trading as MedLex Solutions), 5 El-Fadl Street, Office F1-03-02, Abdeen, Cairo, Egypt"
+  },
+  "privacyPage": {
+    "kicker": "Privacy & Data Protection",
+    "title": "Privacy Policy",
+    "brand": "MedLex Solutions · medlexsolutions.com",
+    "lastUpdated": "Last updated: 20 September 2026",
+    "intro": "This policy explains what personal data MedLex Solutions (MedLex for Training and Consultancy LLC) collects through medlexsolutions.com, why, and what your rights are",
+    "tableOfContents": "Contents",
+    "quickSummary": "Key Highlights",
+    "highlightNoHealth": "No Patient Data",
+    "highlightNoHealthSub": "We never collect health data or patient records",
+    "highlightController": "Data Controller",
+    "highlightControllerSub": "MedLex for Training and Consultancy LLC (Cairo, Egypt)",
+    "highlightSecurity": "Strict Security",
+    "highlightSecuritySub": "Encrypted in transit, access-controlled and password-protected",
+    "highlightRights": "Your Rights",
+    "highlightRightsSub": "Access, rectify, export, or delete your personal data anytime",
+    "backToTop": "Back to top",
+    "sec1Title": "Who is responsible",
+    "sec1Body": "The data controller is MedLex for Training and Consultancy LLC, trading as MedLex Solutions, 5 El-Fadl Street, Office F1-03-02, First Floor, Abdeen, Cairo, Egypt — info@medlexsolutions.com",
+    "sec2Title": "What we collect and why",
+    "thWhen": "When you…",
+    "thCollect": "We collect",
+    "thUse": "We use it to",
+    "row1When": "Request a free guide or join a waitlist",
+    "row1Collect": "Name (optional), email, the pathway you chose",
+    "row1Use": "Send the guide, and news of that pathway only",
+    "row2When": "Enrol in a course",
+    "row2Collect": "Name, email, country, role; payment is handled by Paddle — we do not see your card details",
+    "row2Use": "Create your account, deliver the course, issue your certificate, send course emails",
+    "row3When": "Use a course",
+    "row3Collect": "Your progress, decision-point answers, video positions",
+    "row3Use": "Show you where you left off and mark completion",
+    "row4When": "Book coaching",
+    "row4Collect": "Name, email, phone, session preferences",
+    "row4Use": "Schedule and deliver sessions",
+    "row5When": "Join a WhatsApp group",
+    "row5Collect": "Your phone number, via WhatsApp",
+    "row5Use": "Add you to the group",
+    "row6When": "Contact us",
+    "row6Collect": "Whatever you send us",
+    "row6Use": "Reply",
+    "sec2Disclaimer": "We do not collect health data or any information about patients, and we ask you not to send any",
+    "sec3Title": "Legal basis",
+    "sec3Body": "Performance of a contract (delivering what you bought); consent (free guides, waitlists, marketing emails — withdrawable at any time by unsubscribing); and our legitimate interest in running and securing the Site",
+    "sec4Title": "Who processes your data for us",
+    "sec4Item1Label": "Website and course platform hosting",
+    "sec4Item1Desc": "SiteGround (hosting, including the course database)",
+    "sec4Item2Label": "Domain and email services",
+    "sec4Item2Desc": "Namecheap",
+    "sec4Item3Label": "Payments",
+    "sec4Item3Desc": "Paddle.com Market Limited (merchant of record) ⚑",
+    "sec4Item4Label": "Email delivery",
+    "sec4Item4Desc": "[email platform, if separate from Namecheap — e.g. Mailchimp, Brevo]",
+    "sec4Item5Label": "Video hosting",
+    "sec4Item5Desc": "[to be confirmed — Vimeo or Bunny Stream]",
+    "sec4Item6Label": "Document delivery",
+    "sec4Item6Desc": "guides and workbooks are sent as PDFs by email and downloaded from your account",
+    "sec4Item7Label": "Messaging groups",
+    "sec4Item7Desc": "WhatsApp (Meta Platforms) — governed by WhatsApp's own terms and privacy policy",
+    "sec4Item8Label": "Certificates and documents",
+    "sec4Item8Desc": "generated on our platform; PDFs carry your name as a licence marker",
+    "sec4Transfer": "Some of these providers store data outside the UK and EU. Where they do, transfers rely on the provider's standard contractual clauses or an adequacy decision",
+    "sec5Title": "How long we keep it",
+    "sec5Body": "Course accounts and progress: for your access period plus 12 months, then deleted or anonymised; Purchase records: 6 years, as required for tax and accounting; Waitlist and guide emails: until you unsubscribe; Coaching records: 12 months after your last session",
+    "sec6Title": "Cookies",
+    "sec6Body": "The Site uses cookies needed to keep you logged in and to remember your preferences, and [analytics tool, if any] to understand how the Site is used, you can control cookies in your browser, and the Site works without non-essential cookies",
+    "sec7Title": "Your rights",
+    "sec7Body": "You can ask to see, correct, delete or export the personal data we hold about you, object to or restrict its use, and withdraw consent at any time, email info@medlexsolutions.com, and if you are in the UK or EU you may also complain to your data protection authority (in the UK, the Information Commissioner's Office)",
+    "sec8Title": "Security",
+    "sec8Body": "Data is stored on password-protected, access-controlled systems, transmitted over encrypted connections, and reachable only by people who need it to deliver the service",
+    "sec9Title": "Children",
+    "sec9Body": "The Site is for professionals and is not directed at anyone under 18",
+    "sec10Title": "Changes",
+    "sec10Body": "We will post changes here and email account holders about anything material"
+  },
+  "refundPage": {
+    "kicker": "Policies & Guarantee",
+    "title": "Refund Policy",
+    "brand": "MedLex Solutions · medlexsolutions.com",
+    "lastUpdated": "Last updated: 20 September 2026",
+    "intro": "Clear, transparent refund terms for online courses, coaching sessions and packages across MedLex Solutions",
+    "quickSummary": "Key Highlights",
+    "highlightCourses": "14-Day Guarantee",
+    "highlightCoursesSub": "Full refund within 14 days and up to 3 stations completed",
+    "highlightCoaching": "Coaching Rescheduling",
+    "highlightCoachingSub": "Free cancellation or reschedule with 24+ hours' notice",
+    "highlightSpeed": "5–10 Working Days",
+    "highlightSpeedSub": "Returned directly to your original payment method",
+    "highlightHelp": "2 Working Days",
+    "highlightHelpSub": "Fast response from our support team via email",
+    "sec1Title": "Online courses (including The CASC Academy)",
+    "sec1Item1Title": "14-day refund",
+    "sec1Item1Desc": "If you ask within 14 days of purchase and have completed no more than 3 stations (measured by Exam Mode completions), we refund you in full, email info@medlexsolutions.com or use Paddle's buyer support ⚑, and refunds are returned to the original payment method within 5–10 working days",
+    "sec1Item2Title": "After 14 days or after 3 stations",
+    "sec1Item2Desc": "After 14 days, or after more than 3 stations, purchases are non-refundable, except where the law requires otherwise",
+    "sec1Item3Title": "Immediate access",
+    "sec1Item3Desc": "At checkout you confirm that you want access straight away and understand this affects your statutory 14 day cancellation right for digital content, and our 14 day refund above applies in its place",
+    "sec1Item4Title": "Technical failure",
+    "sec1Item4Desc": "If a fault on our side stops you using the course and we cannot fix it within 7 days, you may choose a full refund at any point in your access period",
+    "sec2Title": "Coaching",
+    "sec2Item1": "Cancel or reschedule more than 24 hours before a session: no charge; a paid single session is refunded in full",
+    "sec2Item2": "Cancel later than 24 hours before, or miss a session: the session is treated as used and is not refunded",
+    "sec2Item3": "Packages: unused sessions expire at the end of the package period (5 sessions: 3 months; 10 sessions: 6 months) and are not refunded",
+    "sec2Item4": "If we cancel a session, you choose an alternative time or a refund for that session",
+    "sec2Item5": "Small-group sessions that do not fill within [30] days of booking: refund, or transfer to a one-to-one session at the difference in price",
+    "sec3Title": "How to ask",
+    "sec3Body": "Email info@medlexsolutions.com with the name and email you used at purchase, and we reply within 2 working days"
   }
 }

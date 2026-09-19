@@ -131,7 +131,7 @@ export default function PrivateSessionDialog({
   const handleStartSignIn = useCallback(() => {
     const returnPath = `/${locale}/pathways/casc-academy?oneToOne=open#one-to-one-sessions`;
     router.push(
-      `/${locale}/auth/login?redirectTo=${encodeURIComponent(returnPath)}`,
+      `/${locale}/auth?tab=sign-in&redirect=${encodeURIComponent(returnPath)}`,
     );
   }, [locale, router]);
 

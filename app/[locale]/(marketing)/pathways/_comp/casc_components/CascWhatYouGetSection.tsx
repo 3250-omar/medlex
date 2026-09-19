@@ -37,7 +37,7 @@ export default function CascWhatYouGetSection() {
   return (
     <section
       id="included"
-      className="py-20 lg:py-24 border-b border-white/10 bg-navy text-lbody on-navy"
+      className="py-20 lg:py-24 border-b border-white/10 bg-navy text-lbody on-navy scroll-mt-16"
     >
       <div className="mx-auto w-full px-6 sm:px-8 lg:max-w-6xl lg:px-10">
         <p className="kicker text-gold">What you get</p>

@@ -126,7 +126,7 @@ export const SEO_ROUTES_REGISTRY: Record<SeoRouteKey, SeoRouteConfig> = {
   },
   privacy: {
     key: "privacy",
-    path: "/privacy",
+    path: "/privacy-policy",
     translationKey: "privacy",
     schemaType: "WebPage",
     lastModified: "2026-03-01T00:00:00.000Z",

@@ -4,7 +4,7 @@ export const referenceFaqs = [
   {
     question: "How long do I have access?",
     answer:
-      "Twelve months from the day you enrol — long enough to prepare, sit, and if it comes to it, resit at the following diet. If your access runs out before a resit, show us the booking and you get three further months at no charge.",
+      "Six months from the day you enrol — long enough to prepare, sit, and if it comes to it, resit at the following diet. If your access runs out before a resit, show us the booking and you get three further months at no charge.",
   },
   {
     question: "How long does a station take?",

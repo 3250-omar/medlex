@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useContext, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Loader2 } from "lucide-react";
 import confetti from "canvas-confetti";
 import { useQueryClient } from "@tanstack/react-query";
@@ -13,6 +14,7 @@ import {
 } from "../../../_apiCalls/academyQueries";
 
 export default function CascGiftsSection() {
+  const t = useTranslations("cascGifts");
   const dialog = useContext(InterestDialogContext);
   const { data: user } = useCurrentUser();
   const { data: _giftStatus } = useGiftStatus(Boolean(user));
@@ -141,7 +143,7 @@ export default function CascGiftsSection() {
   return (
     <section
       id="gifts"
-      className="relative py-20 lg:py-28 border-y border-hair bg-[#EFE9DD] text-char overflow-hidden"
+      className="relative py-20 lg:py-28 border-y border-hair bg-[#EFE9DD] text-char overflow-hidden scroll-mt-16"
     >
       <div className="mx-auto w-full max-w-6xl px-6 sm:px-8 lg:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-[440px_1fr] xl:grid-cols-[470px_1fr] gap-12 lg:gap-16 items-center">
@@ -159,7 +161,7 @@ export default function CascGiftsSection() {
                 void handleDownloadSingle("1", "The Examiner's Briefing.pdf")
               }
               className="group relative w-44 sm:w-52 md:w-56 aspect-[3/4.3] rounded-[4px] border-l-[10px] sm:border-l-[12px] border-[#B8933D] bg-gradient-to-br from-[#1B3766] via-[#142A4E] to-[#0E1D38] p-4 sm:p-5 text-white shadow-[0_22px_45px_rgba(20,40,75,0.38)] -rotate-[4.5deg] transition-all duration-300 hover:-translate-y-2 hover:rotate-[-5.5deg] hover:shadow-[0_28px_55px_rgba(20,40,75,0.48)] cursor-pointer z-10 flex flex-col justify-between"
-              title="Click to download The Examiner's Briefing"
+              title={t("book1Tooltip")}
             >
               {/* Spine crease shadow */}
               <div className="absolute inset-y-0 left-0 w-3 bg-gradient-to-r from-black/40 to-transparent pointer-events-none" />
@@ -181,18 +183,18 @@ export default function CascGiftsSection() {
               {/* Book 1 Body: Kicker + Title */}
               <div className="relative z-10 my-auto pt-6 sm:pt-8">
                 <p className="font-serif italic text-[11px] sm:text-xs text-[#D9C08A] tracking-wider mb-2">
-                  Free guide
+                  {t("book1Kicker")}
                 </p>
                 <h3 className="font-serif text-xl sm:text-[24px] font-bold leading-[1.15] text-white tracking-tight">
-                  The Examiner&apos;s
-                  <span className="block mt-0.5 font-bold">Briefing</span>
+                  {t("book1TitlePrefix")}
+                  <span className="block mt-0.5 font-bold">{t("book1TitleSuffix")}</span>
                 </h3>
               </div>
 
               {/* Book 1 Footer */}
               <div className="relative z-10 pt-4">
                 <p className="font-serif italic text-[10px] sm:text-[11.5px] text-[#D9C08A]/90 tracking-normal">
-                  Where Medicine Meets Justice
+                  {t("book1Tagline")}
                 </p>
               </div>
             </div>
@@ -203,7 +205,7 @@ export default function CascGiftsSection() {
                 void handleDownloadSingle("2", "The Examiner's Error Log.pdf")
               }
               className="group relative w-44 sm:w-52 md:w-56 aspect-[3/4.3] rounded-[4px] border-l-[10px] sm:border-l-[12px] border-[#B8933D] bg-gradient-to-br from-[#1C3A6B] via-[#142A4E] to-[#0C1A32] p-4 sm:p-5 text-white shadow-[-8px_25px_50px_rgba(15,29,56,0.42)] rotate-[2.5deg] -ml-20 sm:-ml-24 mt-8 sm:mt-10 transition-all duration-300 hover:-translate-y-2 hover:rotate-[1.5deg] hover:shadow-[-8px_32px_60px_rgba(15,29,56,0.52)] cursor-pointer z-20 flex flex-col justify-between"
-              title="Click to download The Examiner's Error Log"
+              title={t("book2Tooltip")}
             >
               {/* Spine crease shadow */}
               <div className="absolute inset-y-0 left-0 w-3 bg-gradient-to-r from-black/40 to-transparent pointer-events-none" />
@@ -225,18 +227,18 @@ export default function CascGiftsSection() {
               {/* Book 2 Body: Kicker + Title */}
               <div className="relative z-10 my-auto pt-6 sm:pt-8">
                 <p className="font-serif italic text-[11px] sm:text-xs text-[#D9C08A] tracking-wider mb-2">
-                  Free tool
+                  {t("book2Kicker")}
                 </p>
                 <h3 className="font-serif text-xl sm:text-[24px] font-bold leading-[1.15] text-white tracking-tight">
-                  The Examiner&apos;s
-                  <span className="block mt-0.5 font-bold">Error Log</span>
+                  {t("book2TitlePrefix")}
+                  <span className="block mt-0.5 font-bold">{t("book2TitleSuffix")}</span>
                 </h3>
               </div>
 
               {/* Book 2 Footer */}
               <div className="relative z-10 pt-4">
                 <p className="font-serif italic text-[10px] sm:text-[11.5px] text-[#D9C08A]/90 tracking-normal">
-                  Where Medicine Meets Justice
+                  {t("book2Tagline")}
                 </p>
               </div>
             </div>
@@ -246,21 +248,17 @@ export default function CascGiftsSection() {
           <div>
             {/* Tag badge: dark navy pill with gold/soft text */}
             <div className="inline-block bg-[#0E1D38] text-[#E8D4A0] text-xs font-semibold px-3 py-1.5 rounded-[3px] tracking-wide mb-4">
-              Before you enrol
+              {t("badge")}
             </div>
 
             {/* Section title */}
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-[42px] font-bold text-navy! leading-[1.16] tracking-tight">
-              Two things from the examiner&apos;s chair, free
+              {t("title")}
             </h2>
 
             {/* Lead paragraph */}
             <p className="font-serif italic text-[16px] sm:text-[17.5px] text-[#3A4352]! leading-relaxed mt-5 max-w-[560px]">
-              The Examiner&apos;s Briefing — how the CASC is actually marked,
-              the errors examiners see most, and the grammar of a British
-              consultation. The Examiner&apos;s Error Log — a one-page
-              self-audit you fill in after every practice station, so the person
-              watching you can tick what they saw.
+              {t("description")}
             </p>
 
             {/* Email form */}
@@ -273,8 +271,8 @@ export default function CascGiftsSection() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Your professional email"
-                aria-label="Your professional email"
+                placeholder={t("emailPlaceholder")}
+                aria-label={t("emailAriaLabel")}
                 className="flex-1 min-w-0 bg-white border-[1.5px] border-[#0E1D38] text-[#0E1D38] placeholder:text-[#8C93A0] rounded-[4px] px-4 py-3 sm:py-3.5 text-[15px] font-sans focus:outline-none focus:ring-2 focus:ring-[#B8933D]"
               />
               <button
@@ -288,10 +286,10 @@ export default function CascGiftsSection() {
                       className="animate-spin text-white shrink-0"
                       size={16}
                     />
-                    <span>Sending...</span>
+                    <span>{t("sendingButton")}</span>
                   </>
                 ) : (
-                  "Send me both"
+                  t("submitButton")
                 )}
               </button>
             </form>
@@ -299,10 +297,10 @@ export default function CascGiftsSection() {
             {submitted && (
               <div className="mt-4 p-3.5 rounded-[4px] bg-[#0E1D38]! text-white max-w-[520px] text-xs sm:text-sm">
                 <p className="font-semibold text-[#E8D4A0]">
-                  Both resources are downloading!
+                  {t("successHeading")}
                 </p>
                 <p className="text-white/80 mt-1 text-xs">
-                  If your browser blocked the second download, click directly:
+                  {t("successFallback")}
                 </p>
                 <div className="flex flex-wrap gap-2 mt-2">
                   <button
@@ -335,15 +333,13 @@ export default function CascGiftsSection() {
 
             {downloadError && (
               <p role="alert" className="text-xs text-red-600 mt-2">
-                Unable to download the resources. Please try again.
+                {t("downloadError")}
               </p>
             )}
 
             {/* Footnote / Note */}
             <p className="mt-3.5 text-xs sm:text-[12.5px] leading-relaxed text-[#6B7382] max-w-[520px]">
-              Both PDFs, immediately. Then occasional notes from the
-              examiner&apos;s side of the table — unsubscribe in one click. No
-              card, no commitment.
+              {t("footnote")}
             </p>
           </div>
         </div>

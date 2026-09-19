@@ -15,7 +15,7 @@ export default function CascPricingSection({
   return (
     <section
       id="enrol"
-      className="py-20 lg:py-28 border-b border-white/10 bg-navy text-lbody on-navy"
+      className="py-20 lg:py-28 border-b border-white/10 bg-navy text-lbody on-navy scroll-mt-16"
     >
       <div className="mx-auto w-full px-6 sm:px-8 lg:max-w-6xl lg:px-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         <div>
@@ -49,7 +49,7 @@ export default function CascPricingSection({
               "The candidates' WhatsApp group",
               "The examiner's notes by email",
               "Your certificate on completion",
-              "12 months' access — extended free by three months if you resit",
+              "6 months' access — extended free by three months if you resit",
             ].map((item) => (
               <li
                 key={item}

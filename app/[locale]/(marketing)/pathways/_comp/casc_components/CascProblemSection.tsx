@@ -1,35 +1,55 @@
-export default function CascProblemSection() {
-  return (
-    <section className="py-20 lg:py-24 border-b border-hair bg-white">
-      <div className="mx-auto w-full px-6 sm:px-8 lg:max-w-6xl lg:px-10 grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-start">
-        <div>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-[40px] font-bold leading-tight text-navy!">
-            Most candidates who fail have already read enough.
-          </h2>
-          <p className="mt-5 font-serif text-lg sm:text-xl text-char leading-relaxed">
-            They have the textbooks. They have watched the videos. They can
-            describe a risk assessment accurately at a desk, on their own, with
-            no clock running.
-          </p>
-          <p className="mt-4 font-sans text-base text-char/85 leading-relaxed">
-            Then they walk into a station where a woman is packing her bag to go
-            home, and something she says at minute three changes what the station
-            is actually about — and nothing they revised tells them what to do in
-            the next four seconds.
-          </p>
-          <p className="mt-4 font-sans text-base text-char/85 leading-relaxed">
-            The CASC is a performance examination. It tests what comes out of
-            your mouth, under time, in front of someone who is marking you.
-            Reading is the cheapest form of preparation to consume and the least
-            likely to change your score.
-          </p>
-        </div>
+"use client";
 
-        <blockquote className="font-serif text-2xl lg:text-[26px] leading-snug text-navy! border-t-4 border-gold pt-5 mt-2">
-          &ldquo;Would I be confident to have this candidate as my registrar?
-          That is the question behind every mark — and the lens every station
-          here is marked through.&rdquo;
-        </blockquote>
+import Image from "next/image";
+import { useTranslations } from "next-intl";
+
+export default function CascProblemSection() {
+  const t = useTranslations("cascProblem");
+
+  return (
+    <section className="relative py-20 sm:py-24 lg:py-28 border-b border-hair bg-[#06101E] text-white overflow-hidden">
+      {/* Background Image with directional dark gradient overlay */}
+      <div className="absolute inset-0 pointer-events-none select-none z-0">
+        <Image
+          src="/images/sectionImages/reports_section.jpg"
+          alt="Law Reports background"
+          fill
+          className="object-cover object-left md:object-left-top opacity-55"
+          sizes="100vw"
+        />
+        {/* Navy gradient overlay matching the mockup tones */}
+        <div className="absolute inset-0! bg-gradient-to-r from-[#060E1B]/5! via-[#071324]/30! to-[#050C17]/35! rtl:bg-gradient-to-l! pointer-events-none" />
+      </div>
+
+      <div className="relative z-10 mx-auto w-full px-6 sm:px-8 lg:max-w-6xl lg:px-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-12 lg:gap-16 xl:gap-20 items-center">
+          {/* Left Column: Heading, accent bar & paragraphs */}
+          <div>
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-[42px] font-bold leading-[1.18] text-white tracking-tight">
+              {t("titleLine1")}
+              <span className="block mt-1">{t("titleLine2")}</span>
+            </h2>
+
+            {/* Gold accent separator bar */}
+            <div className="w-10 h-0.5 bg-[#C5A367] mt-5 mb-6" />
+
+            <div className="space-y-4 font-sans text-sm sm:text-[15px] leading-relaxed text-[#D0D7E2]">
+              <p>{t("p1")}</p>
+              <p>{t("p2")}</p>
+              <p>{t("p3")}</p>
+            </div>
+          </div>
+
+          {/* Right Column: Examiner's Quote with vertical gold line */}
+          <div className="border-s-2 border-[#C5A367] ps-6 sm:ps-7 py-1">
+            <blockquote className="font-serif text-xl sm:text-2xl lg:text-[25px] leading-[1.4] text-[#DEBF79] font-normal">
+              {t("quote")}
+            </blockquote>
+            <p className="mt-5 font-sans text-[11px] sm:text-xs uppercase tracking-[0.2em] font-semibold text-[#8E9DB2]">
+              {t("quoteAuthor")}
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );

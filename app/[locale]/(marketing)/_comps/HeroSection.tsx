@@ -147,14 +147,6 @@ export default function HeroSection({ locale }: HeroSectionProps) {
         <div className="grid w-full grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,1.18fr)_minmax(0,.82fr)] lg:gap-14 xl:gap-20 2xl:gap-28">
           {/* Left */}
           <div className="w-full text-start max-w-3xl xl:max-w-4xl">
-            {/* Eyebrow label */}
-            <div className="hero-kicker mb-6 flex items-center justify-start gap-3">
-              <span className="block h-px w-10 bg-gold/70" />
-              <span className="font-sans text-[12px] sm:text-[13px] rtl:text-[14px] uppercase rtl:normal-case tracking-[0.25em] rtl:tracking-normal text-gold font-semibold">
-                {t("kicker")}
-              </span>
-            </div>
-
             {/* Headline */}
             <h1 className="hero-title mb-7 font-serif text-[clamp(42px,4.5vw,70px)] font-bold leading-[1.08] tracking-[-0.015em] text-white">
               {t("line1") ? (
@@ -508,7 +500,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
 
             {/* Callout badge */}
             <div className="hero-stamp absolute -bottom-6 left-0 z-30 rtl:left-auto rtl:right-0">
-              <b>3</b>
+              <b>1</b>
               <span>{t("badge")}</span>
             </div>
           </div>
@@ -516,7 +508,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
       </div>
 
       <div className="relative z-20 mt-auto w-full">
-        <MarqueeStrip />
+        <MarqueeStrip locale={locale} />
       </div>
 
       {/* Bottom subtle transition */}

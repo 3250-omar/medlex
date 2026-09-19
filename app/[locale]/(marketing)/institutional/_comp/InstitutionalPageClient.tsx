@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import InstitutionalHero from "./InstitutionalHero";
-import InstitutionalServicesGrid from "./InstitutionalServicesGrid";
-import InstitutionalStandards from "./InstitutionalStandards";
-import InstitutionalDetailRows from "./InstitutionalDetailRows";
-import InstitutionalEngagementCards from "./InstitutionalEngagementCards";
-import InstitutionalCtaBanner from "./InstitutionalCtaBanner";
+import InstitutionalServices from "./InstitutionalServices";
+import InstitutionalNotDo from "./InstitutionalNotDo";
+import InstitutionalTrackRecord from "./InstitutionalTrackRecord";
+import InstitutionalHowWeWork from "./InstitutionalHowWeWork";
+import InstitutionalEnquiry from "./InstitutionalEnquiry";
 
 interface InstitutionalPageClientProps {
   locale: string;
@@ -15,40 +14,14 @@ interface InstitutionalPageClientProps {
 export default function InstitutionalPageClient({
   locale,
 }: InstitutionalPageClientProps) {
-  const [selectedServiceIndex, setSelectedServiceIndex] = useState(0);
-
-  const handleSelectService = (index: number) => {
-    setSelectedServiceIndex(index);
-  };
-
   return (
-    <main className="min-h-screen bg-navy text-lbody">
-      {/* 01. Hero Section with 3 Badges */}
+    <main className="min-h-screen bg-fd-paper text-char selection:bg-gold/20 selection:text-navy">
       <InstitutionalHero locale={locale} />
-
-      {/* 02. Core Practice Areas Grid with Image Headers */}
-      <InstitutionalServicesGrid locale={locale} />
-
-      {/* 03. Institutional Standards & 4 Pillars */}
-      <InstitutionalStandards locale={locale} />
-
-      {/* 04. Detailed Service Deep-Dive Blocks & Spec Cards */}
-      <InstitutionalDetailRows
-        locale={locale}
-        onSelectService={handleSelectService}
-      />
-
-      {/* 05. Engagement Models & Frameworks */}
-      <InstitutionalEngagementCards locale={locale} />
-
-      {/* 06. Formal Institutional Consultation Inquiry Form */}
-      {/* <InstitutionalInquiryForm
-        locale={locale}
-        selectedServiceIndex={selectedServiceIndex}
-      /> */}
-
-      {/* 07. Bespoke Engagement Bottom Banner */}
-      <InstitutionalCtaBanner locale={locale} />
+      <InstitutionalServices locale={locale} />
+      <InstitutionalNotDo locale={locale} />
+      <InstitutionalTrackRecord locale={locale} />
+      <InstitutionalHowWeWork locale={locale} />
+      <InstitutionalEnquiry locale={locale} />
     </main>
   );
 }

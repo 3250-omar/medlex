@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { createLocalizedMetadata, CANONICAL_ORIGIN, type Locale } from "@/lib/seo/metadata";
+import {
+  createLocalizedMetadata,
+  CANONICAL_ORIGIN,
+  type Locale,
+} from "@/lib/seo/metadata";
 import { JsonLd } from "@/lib/seo/JsonLd";
 import { createBreadcrumbSchema } from "@/lib/seo/schema";
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
@@ -27,14 +31,17 @@ export default async function FoundationsLayout({
   const breadcrumbs = [
     { label: isAr ? "الرئيسية" : "Home", href: `/${locale}` },
     { label: isAr ? "المسارات" : "Pathways", href: `/${locale}#pathways` },
-    { label: isAr ? "أسس الطب النفسي الشرعي" : "Foundations of Medicolegal Psychiatry" },
+    { label: isAr ? "مِدلكس للتأسيس" : "MedLex Foundations" },
   ];
 
   const breadcrumbSchema = createBreadcrumbSchema([
     { name: isAr ? "الرئيسية" : "Home", url: `${CANONICAL_ORIGIN}/${locale}` },
-    { name: isAr ? "المسارات" : "Pathways", url: `${CANONICAL_ORIGIN}/${locale}/pathways` },
     {
-      name: isAr ? "أسس الطب النفسي الشرعي" : "Foundations of Medicolegal Psychiatry",
+      name: isAr ? "المسارات" : "Pathways",
+      url: `${CANONICAL_ORIGIN}/${locale}/pathways`,
+    },
+    {
+      name: isAr ? "مِدلكس للتأسيس" : "MedLex Foundations",
       url: `${CANONICAL_ORIGIN}/${locale}/pathways/foundations`,
     },
   ]);

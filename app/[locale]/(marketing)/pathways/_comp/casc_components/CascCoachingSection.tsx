@@ -77,8 +77,8 @@ export default function CascCoachingSection({ locale, onOpenBooking }: Props) {
           {/* Coaching Information Card */}
           <div className="w-full lg:w-1/2 max-w-xl border border-hair rounded-2xl p-8 sm:p-10 bg-white shadow-sm flex flex-col justify-between">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-navy/5 border border-navy/10 text-xs font-semibold text-navy mb-3">
-                <Sparkles className="w-3.5 h-3.5 text-gold" />
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/10 border border-gold/40 text-sm sm:text-[15px] font-bold text-navy mb-4 animate-pulse">
+                <Sparkles className="w-4 h-4 text-gold shrink-0" />
                 <span>{t("sectionTitle")}</span>
               </div>
 

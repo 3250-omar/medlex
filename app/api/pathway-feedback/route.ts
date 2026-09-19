@@ -20,7 +20,8 @@ function isFeedbackScope(value: string): value is FeedbackScope {
 }
 
 export async function GET(request: NextRequest) {
-  const scope = request.nextUrl.searchParams.get("pathway") ?? "all";
+  const rawScope = request.nextUrl.searchParams.get("pathway") ?? "all";
+  const scope = rawScope.toLowerCase();
 
   if (!isFeedbackScope(scope)) {
     return NextResponse.json({ error: "invalid_pathway" }, { status: 400 });
@@ -37,12 +38,31 @@ export async function GET(request: NextRequest) {
     },
   );
 
+  let finalRows = rpcRows ?? [];
+
+  // If no rows found and scope is foundation/foundations, try alternate name
+  if (
+    !rpcError &&
+    finalRows.length === 0 &&
+    (scope === "foundation" || scope === "foundations")
+  ) {
+    const altScope = scope === "foundation" ? "foundations" : "foundation";
+    const { data: altRows } = await admin.rpc("get_pathway_feedback", {
+      target_scope: altScope,
+      feedback_limit: 6,
+    });
+    if (altRows && altRows.length > 0) {
+      finalRows = altRows;
+    }
+  }
+
   if (rpcError) {
-    return NextResponse.json({ error: rpcError.message }, { status: 500 });
+    console.error("[pathway-feedback] RPC error:", rpcError);
+    return NextResponse.json({ data: [] });
   }
 
   const feedback = await Promise.all(
-    (rpcRows ?? []).map(async (row) => {
+    finalRows.map(async (row) => {
       let avatarUrl: string | null = null;
       if (row.avatar_path) {
         try {

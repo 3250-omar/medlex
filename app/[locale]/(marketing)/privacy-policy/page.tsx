@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import TermsSidebar from "./_comp/TermsSidebar";
+import TermsSidebar from "../terms/_comp/TermsSidebar";
 
 type PageProps = { params: Promise<{ locale: string }> };
 
@@ -8,16 +8,60 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "termsPage" });
+  const t = await getTranslations({ locale, namespace: "privacyPage" });
   return {
     title: t("title"),
     description: t("intro"),
   };
 }
 
-export default async function TermsPage({ params }: PageProps) {
+export default async function PrivacyPage({ params }: PageProps) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "termsPage" });
+  const t = await getTranslations({ locale, namespace: "privacyPage" });
+
+  const tableRows = [
+    {
+      when: t("row1When"),
+      collect: t("row1Collect"),
+      use: t("row1Use"),
+    },
+    {
+      when: t("row2When"),
+      collect: t("row2Collect"),
+      use: t("row2Use"),
+    },
+    {
+      when: t("row3When"),
+      collect: t("row3Collect"),
+      use: t("row3Use"),
+    },
+    {
+      when: t("row4When"),
+      collect: t("row4Collect"),
+      use: t("row4Use"),
+    },
+    {
+      when: t("row5When"),
+      collect: t("row5Collect"),
+      use: t("row5Use"),
+    },
+    {
+      when: t("row6When"),
+      collect: t("row6Collect"),
+      use: t("row6Use"),
+    },
+  ];
+
+  const processors = [
+    { label: t("sec4Item1Label"), desc: t("sec4Item1Desc") },
+    { label: t("sec4Item2Label"), desc: t("sec4Item2Desc") },
+    { label: t("sec4Item3Label"), desc: t("sec4Item3Desc") },
+    { label: t("sec4Item4Label"), desc: t("sec4Item4Desc") },
+    { label: t("sec4Item5Label"), desc: t("sec4Item5Desc") },
+    { label: t("sec4Item6Label"), desc: t("sec4Item6Desc") },
+    { label: t("sec4Item7Label"), desc: t("sec4Item7Desc") },
+    { label: t("sec4Item8Label"), desc: t("sec4Item8Desc") },
+  ];
 
   const sections = [
     {
@@ -25,47 +69,97 @@ export default async function TermsPage({ params }: PageProps) {
       num: 1,
       title: t("sec1Title"),
       content: (
-        <div className="space-y-4">
-          <p>{t("sec1Body1")}</p>
-          <div className="rounded-xl border border-[#DFD5C0] bg-[#F5EFE3]/80 p-4 sm:p-5 flex items-start gap-3">
-            <span
-              className="text-gold font-bold text-lg leading-none mt-0.5"
-              aria-hidden="true"
-            >
-              ⚑
-            </span>
-            <p className="text-sm sm:text-[14.5px] leading-relaxed text-char/90">
-              {t("paddleNotice")}
-            </p>
-          </div>
-        </div>
+        <p>
+          {t("sec1Body").split(" — ")[0]} —{" "}
+          <a
+            href="mailto:info@medlexsolutions.com"
+            className="text-navy! font-semibold underline hover:text-gold transition-colors"
+          >
+            info@medlexsolutions.com
+          </a>
+        </p>
       ),
     },
     {
       id: "2",
       num: 2,
       title: t("sec2Title"),
-      content: <p>{t("sec2Body")}</p>,
+      content: (
+        <div className="space-y-5">
+          {/* Responsive Table for Data Collection */}
+          <div className="overflow-x-auto rounded-xl border border-[#DFD5C0] bg-white shadow-2xs">
+            <table className="w-full text-left rtl:text-right border-collapse text-xs sm:text-[13.5px]">
+              <thead>
+                <tr className="border-b border-[#DFD5C0] bg-[#FAF8F5] text-navy! font-serif font-bold">
+                  <th className="py-3 px-4 sm:px-5 w-1/4">{t("thWhen")}</th>
+                  <th className="py-3 px-4 sm:px-5 w-5/12">{t("thCollect")}</th>
+                  <th className="py-3 px-4 sm:px-5 w-1/3">{t("thUse")}</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#EBE5D8] font-sans text-char/85">
+                {tableRows.map((row, idx) => (
+                  <tr
+                    key={idx}
+                    className="hover:bg-[#FAF8F5]/60 transition-colors"
+                  >
+                    <td className="py-3 px-4 sm:px-5 font-semibold text-navy! align-top">
+                      {row.when}
+                    </td>
+                    <td className="py-3 px-4 sm:px-5 leading-relaxed align-top">
+                      {row.collect}
+                    </td>
+                    <td className="py-3 px-4 sm:px-5 leading-relaxed align-top">
+                      {row.use}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Important Patient Data Disclaimer */}
+          <div className="rounded-xl border border-gold/40 bg-[#F5EFE3]/80 p-4 sm:p-5 flex items-start gap-3">
+            <span
+              className="text-gold font-bold text-lg leading-none mt-0.5"
+              aria-hidden="true"
+            >
+              ⚑
+            </span>
+            <p className="text-xs sm:text-[14px] leading-relaxed text-char/90 font-medium">
+              {t("sec2Disclaimer")}
+            </p>
+          </div>
+        </div>
+      ),
     },
     {
       id: "3",
       num: 3,
       title: t("sec3Title"),
-      content: (
-        <div className="space-y-3">
-          <p>{t("sec3Body1")}</p>
-          <p>{t("sec3Body2")}</p>
-        </div>
-      ),
+      content: <p>{t("sec3Body")}</p>,
     },
     {
       id: "4",
       num: 4,
       title: t("sec4Title"),
       content: (
-        <div className="space-y-3">
-          <p>{t("sec4Body1")}</p>
-          <p className="font-semibold text-navy!">{t("sec4Body2")}</p>
+        <div className="space-y-4">
+          <ul className="space-y-2.5">
+            {processors.map((item, idx) => (
+              <li key={idx} className="flex items-start gap-2.5">
+                <span className="text-gold font-bold shrink-0 mt-0.5">•</span>
+                <span>
+                  <strong className="text-navy! font-semibold">
+                    {item.label}:
+                  </strong>{" "}
+                  {item.desc}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <p className="pt-2 text-xs sm:text-[13.5px] text-char/75 leading-relaxed border-t border-[#EBE5D8]">
+            {t("sec4Transfer")}
+          </p>
         </div>
       ),
     },
@@ -73,7 +167,18 @@ export default async function TermsPage({ params }: PageProps) {
       id: "5",
       num: 5,
       title: t("sec5Title"),
-      content: <p>{t("sec5Body")}</p>,
+      content: (
+        <ul className="space-y-2">
+          {t("sec5Body")
+            .split("; ")
+            .map((item, idx) => (
+              <li key={idx} className="flex items-start gap-2.5">
+                <span className="text-gold font-bold shrink-0 mt-0.5">•</span>
+                <span>{item}</span>
+              </li>
+            ))}
+        </ul>
+      ),
     },
     {
       id: "6",
@@ -85,7 +190,18 @@ export default async function TermsPage({ params }: PageProps) {
       id: "7",
       num: 7,
       title: t("sec7Title"),
-      content: <p>{t("sec7Body")}</p>,
+      content: (
+        <p>
+          {t("sec7Body").split("info@medlexsolutions.com")[0]}
+          <a
+            href="mailto:info@medlexsolutions.com"
+            className="text-navy! font-semibold underline hover:text-gold transition-colors"
+          >
+            info@medlexsolutions.com
+          </a>
+          {t("sec7Body").split("info@medlexsolutions.com")[1]}
+        </p>
+      ),
     },
     {
       id: "8",
@@ -97,94 +213,13 @@ export default async function TermsPage({ params }: PageProps) {
       id: "9",
       num: 9,
       title: t("sec9Title"),
-      content: (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-3">
-          <div className="rounded-xl border border-[#DFD5C0] bg-white p-5 shadow-xs border-t-3 border-t-gold">
-            <h3 className="font-serif text-base sm:text-lg font-bold text-navy! mb-2">
-              {t("sec9Item1Title")}
-            </h3>
-            <p className="text-xs sm:text-[13.5px] leading-relaxed text-char/80">
-              {t("sec9Item1Desc")}
-            </p>
-          </div>
-          <div className="rounded-xl border border-[#DFD5C0] bg-white p-5 shadow-xs border-t-3 border-t-gold">
-            <h3 className="font-serif text-base sm:text-lg font-bold text-navy! mb-2">
-              {t("sec9Item2Title")}
-            </h3>
-            <p className="text-xs sm:text-[13.5px] leading-relaxed text-char/80">
-              {t("sec9Item2Desc")}
-            </p>
-          </div>
-          <div className="rounded-xl border border-[#DFD5C0] bg-white p-5 shadow-xs border-t-3 border-t-gold">
-            <h3 className="font-serif text-base sm:text-lg font-bold text-navy! mb-2">
-              {t("sec9Item3Title")}
-            </h3>
-            <p className="text-xs sm:text-[13.5px] leading-relaxed text-char/80">
-              {t("sec9Item3Desc")}
-            </p>
-          </div>
-          <div className="rounded-xl border border-[#DFD5C0] bg-white p-5 shadow-xs border-t-3 border-t-gold">
-            <h3 className="font-serif text-base sm:text-lg font-bold text-navy! mb-2">
-              {t("sec9Item4Title")}
-            </h3>
-            <p className="text-xs sm:text-[13.5px] leading-relaxed text-char/80">
-              {t("sec9Item4Desc")}
-            </p>
-          </div>
-        </div>
-      ),
+      content: <p>{t("sec9Body")}</p>,
     },
     {
       id: "10",
       num: 10,
       title: t("sec10Title"),
       content: <p>{t("sec10Body")}</p>,
-    },
-    {
-      id: "11",
-      num: 11,
-      title: t("sec11Title"),
-      content: <p>{t("sec11Body")}</p>,
-    },
-    {
-      id: "12",
-      num: 12,
-      title: t("sec12Title"),
-      content: <p>{t("sec12Body")}</p>,
-    },
-    {
-      id: "13",
-      num: 13,
-      title: t("sec13Title"),
-      content: <p>{t("sec13Body")}</p>,
-    },
-    {
-      id: "14",
-      num: 14,
-      title: t("sec14Title"),
-      content: <p>{t("sec14Body")}</p>,
-    },
-    {
-      id: "15",
-      num: 15,
-      title: t("sec15Title"),
-      content: <p>{t("sec15Body")}</p>,
-    },
-    {
-      id: "16",
-      num: 16,
-      title: t("sec16Title"),
-      content: (
-        <p>
-          <a
-            href="mailto:info@medlexsolutions.com"
-            className="text-navy! font-semibold underline hover:text-gold transition-colors"
-          >
-            info@medlexsolutions.com
-          </a>{" "}
-          · {t("sec16Body").replace(/^info@medlexsolutions\.com\s*·\s*/, "")}
-        </p>
-      ),
     },
   ];
 
@@ -205,9 +240,49 @@ export default async function TermsPage({ params }: PageProps) {
           />
         </svg>
       ),
-      title: t("highlightRefund"),
-      desc: t("highlightRefundSub"),
-      sectionId: "6",
+      title: t("highlightNoHealth"),
+      desc: t("highlightNoHealthSub"),
+      sectionId: "2",
+    },
+    {
+      icon: (
+        <svg
+          className="size-5 text-gold"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={1.75}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+          />
+        </svg>
+      ),
+      title: t("highlightController"),
+      desc: t("highlightControllerSub"),
+      sectionId: "1",
+    },
+    {
+      icon: (
+        <svg
+          className="size-5 text-gold"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={1.75}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+          />
+        </svg>
+      ),
+      title: t("highlightSecurity"),
+      desc: t("highlightSecuritySub"),
+      sectionId: "8",
     },
     {
       icon: (
@@ -225,49 +300,9 @@ export default async function TermsPage({ params }: PageProps) {
           />
         </svg>
       ),
-      title: t("highlightLicence"),
-      desc: t("highlightLicenceSub"),
-      sectionId: "4",
-    },
-    {
-      icon: (
-        <svg
-          className="size-5 text-gold"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={1.75}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      ),
-      title: t("highlightAccess"),
-      desc: t("highlightAccessSub"),
-      sectionId: "3",
-    },
-    {
-      icon: (
-        <svg
-          className="size-5 text-gold"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={1.75}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-          />
-        </svg>
-      ),
-      title: t("highlightPayment"),
-      desc: t("highlightPaymentSub"),
-      sectionId: "1",
+      title: t("highlightRights"),
+      desc: t("highlightRightsSub"),
+      sectionId: "7",
     },
   ];
 

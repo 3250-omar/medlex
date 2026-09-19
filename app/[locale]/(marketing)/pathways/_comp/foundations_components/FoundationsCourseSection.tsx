@@ -108,12 +108,14 @@ export default function FoundationsCourseSection({ locale }: Props) {
           >
             {t("joinWaitlist")}
           </a>
-          <Link
+          <a
             className="inline-block font-sans font-semibold text-[15px] px-6 py-3.5 rounded border-[1.5px] border-fd-navy bg-transparent text-fd-navy hover:bg-fd-navy hover:text-white transition-colors cursor-pointer text-center"
-            href={`/${locale}/programmes/clinicians-edge`}
+            href="/brochures/clinicians-edge-brochure.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             {t("brochure")}
-          </Link>
+          </a>
         </div>
       </div>
     </section>

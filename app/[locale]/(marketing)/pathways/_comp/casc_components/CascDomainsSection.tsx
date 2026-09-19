@@ -2,7 +2,10 @@ import Image from "next/image";
 
 export default function CascDomainsSection() {
   return (
-    <section className="py-20 lg:py-24 border-b border-hair bg-white">
+    <section
+      id="library"
+      className="py-20 lg:py-24 border-b border-hair bg-white scroll-mt-16"
+    >
       <div className="mx-auto w-full max-w-[1720px] px-6 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         <div className="flex flex-col lg:flex-row items-stretch justify-between gap-10 lg:gap-14 xl:gap-16">
           {/* Stretched Image Column (Start) */}

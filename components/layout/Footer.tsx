@@ -162,13 +162,15 @@ export default async function Footer({ locale }: { locale: string }) {
                     href="mailto:support@medlexsolutions.com"
                     className="block text-[#c7d2de] hover:text-[#c5a059] transition-colors"
                   >
-                    [support email]
+                    support@medlexsolutions.com
                   </a>
                   <a
-                    href="tel:+201019515321"
-                    className="block text-[#c7d2de] hover:text-[#c5a059] transition-colors dir-ltr w-fit"
+                    href="https://wa.me/201019515321"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-[#c7d2de] hover:text-[#c5a059] transition-colors w-fit"
                   >
-                    {t("phone")}
+                    {t("whatsapp")}
                   </a>
                   <Link
                     href={`/${locale === "en" ? "ar" : "en"}`}
@@ -186,7 +188,7 @@ export default async function Footer({ locale }: { locale: string }) {
             <p>{t("copyright")}</p>
             <div className="flex items-center gap-4">
               <Link
-                href={`/${locale}/privacy`}
+                href={`/${locale}/privacy-policy`}
                 className="hover:text-white transition-colors"
               >
                 {t("privacy")}

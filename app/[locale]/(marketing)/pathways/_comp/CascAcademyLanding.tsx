@@ -86,35 +86,33 @@ export default function CascAcademyLanding(_props: Props) {
         cascEnrolment={cascEnrolment}
         continueSlug={continueSlug}
       />
+      {/* 6. INCLUDED SECTION (WHAT YOU GET) */}
+      <CascWhatYouGetSection />
+      {/* 3. HOW A STATION WORKS (ANATOMY) */}
+      <CascHowStationWorksSection />
       {/* 9. BEFORE YOU ENROL (GIFTS) */}
       <CascGiftsSection />
+      {/* 5. DOMAINS SECTION */}
+      <CascDomainsSection />
       {/* 2. PROBLEM SECTION */}
       <CascProblemSection />
 
-      {/* 3. HOW A STATION WORKS (ANATOMY) */}
-      <CascHowStationWorksSection />
+      {/* 7. WHO IT IS FOR */}
+      <CascWhoItIsForSection />
       {/* 12. PRICING & ENROL */}
       <CascPricingSection
         locale={locale}
         cascEnrolment={cascEnrolment}
         continueSlug={continueSlug}
       />
+      {/* 11. COACHING */}
+      <CascCoachingSection locale={locale} onOpenBooking={handleOpenBooking} />
+      {/* 8. THE EXAMINER (ABOUT) */}
+      <CascExaminerSection />
+
       {/* 4. FREE STATION PREVIEW CALLOUT */}
       <CascFreeStationPreviewSection locale={locale} />
 
-      {/* 5. DOMAINS SECTION */}
-      <CascDomainsSection />
-
-      {/* 6. INCLUDED SECTION (WHAT YOU GET) */}
-      <CascWhatYouGetSection />
-
-      {/* 7. WHO IT IS FOR */}
-      <CascWhoItIsForSection />
-
-      {/* 8. THE EXAMINER (ABOUT) */}
-      <CascExaminerSection />
-      {/* 11. COACHING */}
-      <CascCoachingSection locale={locale} onOpenBooking={handleOpenBooking} />
       {/* 10. FEEDBACK SECTION */}
       <FeedbackSection pathway="casc-academy" />
 
@@ -122,11 +120,11 @@ export default function CascAcademyLanding(_props: Props) {
       <CascFaqSection />
 
       {/* 14. CLOSING BANNER */}
-      <CascClosingBannerSection
+      {/* <CascClosingBannerSection
         locale={locale}
         cascEnrolment={cascEnrolment}
         continueSlug={continueSlug}
-      />
+      /> */}
 
       {/* On-demand Private Session Booking Dialog */}
       {isDialogOpen && (

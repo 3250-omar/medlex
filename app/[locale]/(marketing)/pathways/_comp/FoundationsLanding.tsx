@@ -21,7 +21,10 @@ export default function FoundationsLanding(_props: Props) {
   const locale = useLocale();
 
   return (
-    <div id="top" className="w-full bg-fd-paper text-fd-body font-sans antialiased">
+    <div
+      id="top"
+      className="w-full bg-fd-paper text-fd-body font-sans antialiased"
+    >
       {/* 1. HERO SECTION */}
       <FoundationsHeroSection locale={locale} />
 
@@ -47,7 +50,7 @@ export default function FoundationsLanding(_props: Props) {
       <FoundationsWaitlistSection />
 
       {/* 9. FEEDBACK SECTION */}
-      <FeedbackSection pathway="foundations" />
+      <FeedbackSection pathway="foundation" />
 
       {/* 10. QUESTIONS (FAQ) */}
       <FoundationsFaqSection />

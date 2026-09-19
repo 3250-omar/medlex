@@ -8,7 +8,7 @@ import LogoLoop, { type LogoItem } from "@/components/LogoLoop";
 import { apiRequest } from "@/lib/api/client";
 import type { PathwayKey } from "./pathwayContent";
 
-export type FeedbackScope = PathwayKey | "all";
+export type FeedbackScope = PathwayKey | "all" | "foundation";
 
 type PublicFeedback = {
   feedback: string;
@@ -223,7 +223,7 @@ export default function FeedbackSection({
     }));
   }, [feedback, locale]);
 
-  if (isError || (!isPending && feedback?.length === 0)) return null;
+  if (isError || isPending || !feedback || feedback.length === 0) return null;
 
   return (
     <section

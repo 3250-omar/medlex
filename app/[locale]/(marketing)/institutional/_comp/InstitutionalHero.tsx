@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 interface InstitutionalHeroProps {
@@ -9,108 +8,117 @@ interface InstitutionalHeroProps {
 
 export default function InstitutionalHero({ locale }: InstitutionalHeroProps) {
   const t = useTranslations("institutionalPage.hero");
-  const isRtl = locale === "ar";
 
-  const metrics = [
-    {
-      label: t("metrics.0.label"),
-      value: t("metrics.0.value"),
-      detail: t("metrics.0.detail"),
-    },
-    {
-      label: t("metrics.1.label"),
-      value: t("metrics.1.value"),
-      detail: t("metrics.1.detail"),
-    },
-    {
-      label: t("metrics.2.label"),
-      value: t("metrics.2.value"),
-      detail: t("metrics.2.detail"),
-    },
+  const tickerItems = [
+    t("tickerItems.0"),
+    t("tickerItems.1"),
+    t("tickerItems.2"),
+    t("tickerItems.3"),
+    t("tickerItems.4"),
+    t("tickerItems.5"),
+    t("tickerItems.6"),
+    t("tickerItems.7"),
   ];
 
   return (
-    <section className="relative overflow-hidden bg-navy pt-32 pb-20 md:pt-44 md:pb-28 lg:pt-48 lg:pb-32 border-b border-white/10 on-navy text-lbody">
-      {/* Background Evidence Image & Atmosphere */}
-      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute right-0 top-0 h-full w-full md:w-[65%] lg:w-[55%] rtl:right-auto rtl:left-0">
-          <Image
-            src="/images/medlex-hero-evidence.webp"
-            alt="Forensic evidence and medicolegal documentation"
-            fill
-            priority
-            sizes="(max-width: 768px) 100vw, 60vw"
-            className="object-cover object-[center_30%] opacity-40 md:opacity-60 scale-105"
-          />
-          {/* Subtle warm amber/gold atmospheric glow */}
-          <div className="absolute top-10 right-10 h-96 w-96 bg-gold/15 blur-3xl pointer-events-none" />
-        </div>
-
-        {/* Directional Vignettes & Overlays for Text Contrast */}
-        <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/95 via-50% to-transparent hidden md:block rtl:hidden" />
-        <div className="absolute inset-0 bg-gradient-to-l from-navy via-navy/95 via-50% to-transparent hidden rtl:md:block" />
-        <div className="absolute inset-0 bg-navy/85 md:hidden" />
-
-        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-navy to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-navy to-transparent" />
+    <section className="relative overflow-hidden bg-fd-navy-deep text-white">
+      {/* Background Image with Gradient Overlay */}
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-no-repeat bg-[center_40%]"
+        style={{
+          backgroundImage:
+            "url('/images/institutional/institutional-hero-bg.jpg')",
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-fd-navy-deep/95 via-fd-navy-deep/85 to-fd-navy-deep/40" />
       </div>
 
-      {/* Hero Content */}
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 sm:px-8 lg:px-10">
-        <div className="max-w-3xl">
-          {/* Eyebrow */}
-          <div className="flex items-center gap-3">
-            <span className="h-px w-8 shrink-0 bg-gold" aria-hidden="true" />
-            <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-gold">
-              {t("eyebrow")}
-            </span>
-          </div>
-
-          {/* Main Title */}
-          <h1 className="mt-7 font-serif text-4xl sm:text-5xl md:text-6xl lg:text-[62px] font-bold leading-[1.08] tracking-tight text-white whitespace-pre-line">
-            {t("title")}
+      {/* Main Content Grid */}
+      <div className="relative z-10 mx-auto max-w-[1120px] px-7 pt-28 pb-20 md:pt-36 md:pb-24">
+        <div className="max-w-[720px]">
+          <h1 className="font-serif font-normal text-[clamp(38px,4.4vw,56px)] leading-[1.08] tracking-[-0.01em] text-white">
+            {locale === "ar" ? (
+              <>
+                نحن نبني القدرات والمؤسسة تحتفظ{" "}
+                <em className="font-normal italic text-fd-gold-soft">بالعمل</em>
+              </>
+            ) : (
+              <>
+                We build the capacity. Your institution keeps the{" "}
+                <em className="font-normal italic text-fd-gold-soft">work</em>
+              </>
+            )}
           </h1>
 
-          {/* Intro Description */}
-          <p className="mt-6 max-w-2xl font-sans text-base sm:text-lg leading-relaxed text-lbody md:text-[18px] md:leading-8">
-            {t("intro")}
+          <p className="mt-7 font-sans text-lg sm:text-[20px] leading-[1.6] text-lbody max-w-[50ch]">
+            {t("lead")}
           </p>
 
-          {/* Quick CTA Anchor */}
-          <div className="mt-8 flex flex-wrap items-center gap-4">
+          {/* Quick Info Strip */}
+          <div className="mt-8 flex flex-col sm:flex-row border border-fd-stone/40 rounded-md overflow-hidden bg-fd-navy-deep/70 backdrop-blur-xs">
+            <div className="flex-1 py-3.5 px-4.5 border-b sm:border-b-0 sm:border-r rtl:sm:border-r-0 rtl:sm:border-l border-fd-stone/30">
+              <small className="block font-sans text-xs text-mute tracking-wide mb-1">
+                {t("stripWhatLabel")}
+              </small>
+              <b className="font-sans text-[15px] text-white font-semibold">
+                {t("stripWhatValue")}
+              </b>
+            </div>
+            <div className="flex-1 py-3.5 px-4.5 border-b sm:border-b-0 sm:border-r rtl:sm:border-r-0 rtl:sm:border-l border-fd-stone/30">
+              <small className="block font-sans text-xs text-mute tracking-wide mb-1">
+                {t("stripLangLabel")}
+              </small>
+              <b className="font-sans text-[15px] text-white font-semibold">
+                {t("stripLangValue")}
+              </b>
+            </div>
+            <div className="flex-1 py-3.5 px-4.5">
+              <small className="block font-sans text-xs text-mute tracking-wide mb-1">
+                {t("stripLocLabel")}
+              </small>
+              <b className="font-sans text-[15px] text-white font-semibold">
+                {t("stripLocValue")}
+              </b>
+            </div>
+          </div>
+
+          {/* CTAs */}
+          <div className="mt-9 flex flex-wrap items-center gap-3.5">
             <a
-              href="#institutional-inquiry"
-              className="btn btn-gold !py-3.5 !px-8 text-sm font-semibold gap-2"
+              href="#enquiry"
+              className="inline-flex items-center justify-center font-sans font-semibold text-[15px] px-6 py-3.5 rounded bg-gold text-fd-navy-deep hover:bg-goldd transition-colors shadow-sm"
             >
-              {isRtl ? "طلب استشارة مؤسسية ←" : "Request Institutional Consultation →"}
+              {t("ctaEnquiry")}
             </a>
             <a
-              href="#services-overview"
-              className="btn btn-ghost !py-3.5 !px-8 text-sm font-semibold gap-2"
+              href="#services"
+              className="inline-flex items-center justify-center font-sans font-semibold text-[15px] px-6 py-3.5 rounded border border-white text-white hover:bg-white hover:text-navy transition-colors"
             >
-              {isRtl ? "استكشف مجالات الممارسة ↓" : "Explore Areas of Practice ↓"}
+              {t("ctaServices")}
             </a>
           </div>
         </div>
+      </div>
 
-        {/* 3 Metric / Trust Badges */}
-        <div className="mt-16 md:mt-20 pt-10 border-t border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8">
-          {metrics.map((m, idx) => (
-            <div
-              key={idx}
-              className="rounded-2xl border border-white/12 bg-deep/90 backdrop-blur-sm p-6 transition-all hover:border-gold/40 shadow-lg"
-            >
-              <div className="font-sans text-[11px] uppercase tracking-[0.2em] text-gold font-semibold">
-                {m.label}
-              </div>
-              <div className="font-serif text-2xl sm:text-3xl text-white mt-2 font-bold">
-                {m.value}
-              </div>
-              <div className="font-sans text-xs text-mute mt-1.5 leading-relaxed">
-                {m.detail}
-              </div>
-            </div>
-          ))}
+      {/* Marquee Ticker */}
+      <div
+        className="relative border-y border-white/12 bg-navy py-3.5 overflow-hidden select-none"
+        aria-hidden="true"
+      >
+        <div
+          className={`flex w-max whitespace-nowrap ${locale === "ar" ? "animate-foundations-ticker-rtl" : "animate-foundations-ticker"}`}
+        >
+          <ul className="flex items-center gap-0 list-none">
+            {tickerItems.concat(tickerItems).map((item, idx) => (
+              <li
+                key={idx}
+                className="relative font-sans text-[12.5px] font-medium tracking-[0.14em] text-lbody px-7 flex items-center"
+              >
+                <span>{item}</span>
+                <span className="inline-block size-1.5 bg-gold rotate-45 ms-7 shrink-0" />
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

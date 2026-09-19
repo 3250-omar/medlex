@@ -10,7 +10,6 @@ import HomeFAQSection from "./_comps/HomeFAQSection";
 import PathwaysSection from "./_comps/PathwaysSection";
 import StandardsSection from "./_comps/StandardsSection";
 import WhoWeAreSection from "./_comps/WhoWeAreSection";
-import FeedbackSection from "./pathways/_comp/FeedbackSection";
 
 interface HomePageProps {
   params: Promise<{ locale: string }>;
@@ -33,7 +32,6 @@ export default async function HomePage({ params }: HomePageProps) {
       <WhoWeAreSection />
       <PathwaysSection />
       <FlagshipCourseSection locale={locale} />
-      <FeedbackSection pathway="all" />
       <StandardsSection />
       <GiftsSection />
       <FounderSection locale={locale} />

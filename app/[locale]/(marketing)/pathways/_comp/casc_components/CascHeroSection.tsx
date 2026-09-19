@@ -1,9 +1,12 @@
 "use client";
 
+import { Fragment } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
+import { ArrowRight } from "lucide-react";
 import type { EnrolledCourse } from "../../../_apiCalls/academyQueries";
-import EnrolOrContinue, { btnGold, btnGhost } from "./EnrolOrContinue";
+import EnrolOrContinue from "./EnrolOrContinue";
 
 type Props = {
   locale: string;
@@ -16,141 +19,176 @@ export default function CascHeroSection({
   cascEnrolment,
   continueSlug,
 }: Props) {
+  const t = useTranslations("cascHero");
+
   return (
-    <section className="relative bg-navy text-lbody on-navy pt-20 pb-0 border-b border-white/10 overflow-hidden">
-      {/* Background image with opacity percentage */}
+    <section className="relative  text-char pt-16 sm:pt-20 pb-0 border-b border-hair overflow-hidden ">
+      {/* Background image with opacity & directional gradient */}
       <div className="absolute inset-0 pointer-events-none select-none z-0">
         <Image
           src="/images/sectionImages/casc_hero_section.jpg"
           alt="CASC examination background"
           fill
           priority
-          className="object-cover object-center opacity-90"
+          className="object-cover object-right md:object-center opacity-80"
         />
-        {/* Subtle gradient overlays blending into navy */}
-        <div className="absolute inset-0 bg-gradient-to-b from-navy/60 via-navy/85 to-navy" />
+        {/* Direction-aware gradient overlay: solid light background on content side fading gently towards the consultation */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/95 via-45% to-white/40 lg:to-transparent rtl:bg-gradient-to-l rtl:from-white rtl:via-white/95 rtl:via-45% rtl:to-white/40 rtl:lg:to-transparent " />
       </div>
 
       <div className="relative z-10 mx-auto w-full px-6 sm:px-8 lg:max-w-6xl lg:px-10">
-        {/* <p className="kicker text-gold">
-          The CASC Academy · by MedLex Foundations
-        </p> */}
-        <h1 className="mt-4 max-w-4xl font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.12] text-white">
-          Learn the CASC from the examiner’s side of the table.
-        </h1>
-        <p className="mt-6 max-w-2xl font-serif text-lg sm:text-xl lg:text-[22px] leading-relaxed text-lbody">
-          Forty-three stations, each shown failed two ways and passed once —
-          with what the examiner is thinking at every decision. Built by a
-          former CASC examiner.
+        {/* Kicker Tagline */}
+        <p className="font-serif text-sm sm:text-base font-semibold text-navy! mb-3">
+          {t("kicker")}
         </p>
 
+        {/* Main Heading */}
+        <h1 className="max-w-4xl font-serif text-3xl sm:text-5xl lg:text-[54px] font-bold leading-[1.14] text-navy!">
+          {t("titlePrefix")}
+          <span className="italic font-serif text-goldd font-normal">
+            {t("titleHighlight")}
+          </span>
+          {t("titleSuffix")}
+        </h1>
+
+        {/* Subtitle */}
+        <p className="mt-5 max-w-2xl font-serif text-base sm:text-lg lg:text-[19px] leading-relaxed text-char/85">
+          {t("subtitle")}
+        </p>
+
+        {/* 3 Step Cards */}
+        <div className="mt-9 grid grid-cols-1 md:grid-cols-[1fr_auto_1fr_auto_1fr] items-stretch gap-4 lg:gap-5">
+          {[
+            {
+              num: t("step1Number"),
+              title: t("step1Title"),
+              desc: t("step1Desc"),
+            },
+            {
+              num: t("step2Number"),
+              title: t("step2Title"),
+              desc: t("step2Desc"),
+            },
+            {
+              num: t("step3Number"),
+              title: t("step3Title"),
+              desc: t("step3Desc"),
+            },
+          ].map((step, idx) => (
+            <Fragment key={idx}>
+              <div className="h-full rounded-xl border border-[#DFD5C0] bg-[#F5EFE3]/95 backdrop-blur-sm p-5 sm:p-6 shadow-sm transition-all hover:border-goldd/60 hover:shadow-md flex flex-col justify-start">
+                <h3 className="font-serif text-base sm:text-lg font-bold text-navy! mb-2 flex items-baseline gap-2">
+                  <span className="text-goldd font-serif font-bold text-lg sm:text-xl">
+                    {step.num}
+                  </span>
+                  <span>{step.title}</span>
+                </h3>
+                <p className="font-sans text-xs sm:text-[13.5px] leading-relaxed text-char/80">
+                  {step.desc}
+                </p>
+              </div>
+
+              {idx < 2 && (
+                <div
+                  className="hidden md:flex items-center justify-center text-goldd font-bold text-lg shrink-0"
+                  aria-hidden="true"
+                >
+                  <ArrowRight className="w-5 h-5 rtl:rotate-180" />
+                </div>
+              )}
+            </Fragment>
+          ))}
+        </div>
+
+        {/* Workbook callout banner */}
+        <div className="mt-6 border-s-[3px] border-goldd ps-3.5 py-0.5 text-xs sm:text-[13.5px] text-char/85 max-w-2xl">
+          <strong className="font-bold text-navy">{t("workbookTitle")}</strong>{" "}
+          <span>{t("workbookDesc")}</span>
+        </div>
+
+        {/* CTA Buttons */}
         <div className="mt-8 flex flex-wrap items-center gap-4">
           <EnrolOrContinue
-            className={btnGold}
+            className="btn bg-navy! hover:bg-[#0E1D38]! text-white! !min-h-12 !px-7 font-semibold text-sm !rounded-lg transition-transform hover:-translate-y-0.5 shadow-sm"
+            label={t("enrolCta")}
             cascEnrolment={cascEnrolment}
             continueSlug={continueSlug}
             locale={locale}
           />
           <Link
-            className={btnGhost}
+            className="btn bg-white/90! hover:bg-white! border border-navy/30! hover:border-navy! text-navy! !min-h-12 !px-7 font-semibold text-sm !rounded-lg transition-transform hover:-translate-y-0.5 shadow-sm"
             href={`/${locale}/academy/preview/station-7-2`}
           >
-            Try a station free
+            {t("tryStationCta")}
           </Link>
         </div>
 
-        <p className="mt-5 text-[13.5px] text-mute">
-          Eight domains · 43 stations · 43 role-play practice cases · 12
-          months&apos; access
+        {/* Coaching link below CTA buttons */}
+        <p className="mt-4 text-xs sm:text-[13.5px] text-grey">
+          {t("coachingPrefix")}
+          <Link
+            href={`/${locale}/pathways/casc-academy#one-to-one-sessions`}
+            className="text-navy underline hover:text-goldd transition-colors font-medium"
+          >
+            {t("coachingLink")}
+          </Link>
         </p>
+      </div>
 
-        {/* Real 3-take consultation showcase */}
-        <div className="mt-16 border-t border-white/15 pt-8 pb-12">
-          <p className="font-serif italic text-base sm:text-lg text-lgold max-w-3xl leading-relaxed">
-            Darren Boyd, 44, is on his feet with a printout in his fist. His
-            daughter Libby, 15, is three weeks into fluoxetine — and he found
-            out from a pharmacy bag. Almost every fact he shouts is slightly
-            wrong. Seven minutes.
-          </p>
-
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-3 rounded-2xl border border-white/15 bg-deep overflow-hidden shadow-lg">
-            {/* Fail 1 */}
-            <div className="p-6 sm:p-7 border-b md:border-b-0 md:border-r border-white/15">
-              <p className="text-xs font-bold uppercase tracking-wider text-mute mb-3">
-                Fail 1 — the defence
-              </p>
-              <p className="font-serif text-[15.5px] sm:text-base leading-relaxed text-white mb-4">
-                &ldquo;Mr Boyd, I’ll stop you there, because nothing improper
-                has happened. Libby was assessed as Gillick competent. Her
-                mother attended with her. Fluoxetine is the recommended first
-                line — and with respect, that printout misreads the data.&rdquo;
-              </p>
-              <div className="border-l-2 border-gold pl-3 text-[13.5px] leading-relaxed text-lbody">
-                <b className="text-lgold font-semibold block mb-1">
-                  What the examiner is thinking
-                </b>
-                Six sentences, six accurate facts — and the station is already
-                lost. Every word answered the armour; not one answered the man.
-              </div>
-            </div>
-
-            {/* Fail 2 */}
-            <div className="p-6 sm:p-7 border-b md:border-b-0 md:border-r border-white/15">
-              <p className="text-xs font-bold uppercase tracking-wider text-mute mb-3">
-                Fail 2 — the surrender
-              </p>
-              <p className="font-serif text-[15.5px] sm:text-base leading-relaxed text-white mb-4">
-                &ldquo;Mr Boyd — I can see why you’re angry, and I’m sorry. You
-                should have been consulted, absolutely. Look — if you’re not
-                comfortable with Libby being on it, we can stop the fluoxetine
-                today and think again.&rdquo;
-              </p>
-              <div className="border-l-2 border-gold pl-3 text-[13.5px] leading-relaxed text-lbody">
-                <b className="text-lgold font-semibold block mb-1">
-                  What the examiner is thinking
-                </b>
-                The room is quieter already — and everything paying for the
-                quiet was never this doctor’s to spend. A fault conceded that
-                did not occur, and a fifteen-year-old’s working treatment
-                offered to her father, in her absence, as the price of his calm.
-              </div>
-            </div>
-
-            {/* Pass */}
-            <div className="p-6 sm:p-7 bg-deep/90">
-              <p className="text-xs font-bold uppercase tracking-wider text-gold mb-3">
-                The pass
-              </p>
-              <p className="font-serif text-[15.5px] sm:text-base leading-relaxed text-white mb-4">
-                &ldquo;Mr Boyd — I’m glad you came in, and I’m not going
-                anywhere, so let’s sit. You found out from a pharmacy bag on a
-                kitchen counter, and you’ve been reading things that would
-                frighten any parent. Before I explain anything, tell me the
-                thing that’s worrying you most.&rdquo;
-              </p>
-              <div className="border-l-2 border-gold pl-3 text-[13.5px] leading-relaxed text-lbody">
-                <b className="text-lgold font-semibold block mb-1">
-                  What the examiner is thinking
-                </b>
-                Not one fact corrected, not one protocol cited — and the
-                temperature has already dropped. The corrections can all wait.
-                They will land later precisely because they were not fired now.
-              </div>
-            </div>
+      {/* In-page Sub-navigation Bar */}
+      <div className="relative z-10 mt-14 sm:mt-16 border-t border-hair bg-white/95 backdrop-blur-md">
+        <div className="mx-auto w-full px-6 sm:px-8 lg:max-w-6xl lg:px-10 py-3 sm:py-3.5 flex items-center justify-between gap-4 overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-5 sm:gap-7">
+            <div
+              className="hidden md:block h-4 w-[1.5px] bg-char/25 shrink-0"
+              aria-hidden="true"
+            />
+            <nav className="flex items-center gap-5 sm:gap-7 text-xs sm:text-[13.5px] font-semibold text-navy">
+              <a
+                href="#included"
+                className="hover:text-goldd transition-colors whitespace-nowrap"
+              >
+                {t("navWhatYouGet")}
+              </a>
+              <a
+                href="#station"
+                className="hover:text-goldd transition-colors whitespace-nowrap"
+              >
+                {t("navHowItWorks")}
+              </a>
+              <a
+                href="#gifts"
+                className="hover:text-goldd transition-colors whitespace-nowrap"
+              >
+                {t("navFreeGuides")}
+              </a>
+              <a
+                href="#library"
+                className="hover:text-goldd transition-colors whitespace-nowrap"
+              >
+                {t("navTheLibrary")}
+              </a>
+              <a
+                href="#one-to-one-sessions"
+                className="hover:text-goldd transition-colors whitespace-nowrap"
+              >
+                {t("navCoaching")}
+              </a>
+              <a
+                href="#faq"
+                className="hover:text-goldd transition-colors whitespace-nowrap"
+              >
+                {t("navQuestions")}
+              </a>
+            </nav>
           </div>
 
-          <div className="mt-5 flex flex-wrap items-center justify-between gap-4 text-sm text-mute">
-            <span>
-              This is the opening of Station 7.2. Every station in the library
-              is built this way.
-            </span>
-            <Link
-              href={`/${locale}/academy/preview/station-7-2`}
-              className="text-gold font-semibold hover:text-lgold transition-colors inline-flex items-center gap-1"
-            >
-              Read the whole station, free →
-            </Link>
-          </div>
+          <a
+            href="#enrol"
+            className="bg-navy hover:bg-[#0E1D38] border border-navy/20 text-white px-5 py-2 rounded-lg text-xs sm:text-sm font-semibold tracking-wide shadow-sm hover:shadow-md transition-all shrink-0 whitespace-nowrap"
+          >
+            {t("navEnrol")}
+          </a>
         </div>
       </div>
     </section>

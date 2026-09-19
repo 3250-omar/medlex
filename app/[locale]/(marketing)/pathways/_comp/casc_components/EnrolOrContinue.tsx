@@ -31,7 +31,7 @@ export default function EnrolOrContinue({
       href={`/${locale}/academy/courses/casc-academy/learn/${continueSlug}`}
       className={className}
     >
-      Continue course
+      {locale === "ar" ? "متابعة الدورة" : "Continue course"}
     </Link>
   ) : (
     <SubscribeButton className={className} showArrow={false}>

@@ -55,6 +55,22 @@ export default function Header() {
     (examEndTime === null || now < examEndTime) &&
     !pathname.includes("/academy/preview");
 
+  // Dynamic pathway descriptor in brand logo
+  const getBrandDescriptor = useCallback(() => {
+    if (pathname.includes("/casc-academy")) {
+      return locale === "ar" ? "أكاديمية CASC" : "CASC Academy";
+    }
+    if (pathname.includes("/medico-legal")) {
+      return locale === "ar" ? "التدريب الطبي القانوني" : "Medico-Legal";
+    }
+    if (pathname.includes("/foundations")) {
+      return locale === "ar" ? "مِدلكس للتأسيس" : "MedLex Foundations";
+    }
+    return t("brand.descriptor");
+  }, [pathname, locale, t]);
+
+  const brandDescriptor = getBrandDescriptor();
+
   useEffect(() => {
     if (!shouldShowExamCountdown) return;
     const el = countdownRef.current;
@@ -199,12 +215,12 @@ export default function Header() {
                 aria-hidden="true"
               />
             </span>
-            <span className="flex flex-col leading-tight">
+            <span className="flex flex-col leading-tight gap-1">
               <span className="font-display text-[13px] sm:text-[14px] rtl:text-[16px] rtl:font-bold tracking-[0.2em] rtl:tracking-normal text-white">
                 {t("brand.name")}
               </span>
-              <span className="font-body text-[8px] sm:text-[9px] rtl:text-[11px] rtl:font-medium tracking-[0.15em] rtl:tracking-normal text-white/60 rtl:text-white/80 uppercase rtl:normal-case">
-                {t("brand.descriptor")}
+              <span className="font-body text-[8px] sm:text-[9px] rtl:text-[11px] rtl:font-medium tracking-[0.15em] rtl:tracking-normal text-gold uppercase rtl:normal-case">
+                {brandDescriptor}
               </span>
             </span>
           </Link>
