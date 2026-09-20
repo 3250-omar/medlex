@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const CANONICAL_ORIGIN =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://medlex-five.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://medlexsolutions.com";
 
 // "https://medlexsolutions.com";
 export const siteUrl = new URL(CANONICAL_ORIGIN);
