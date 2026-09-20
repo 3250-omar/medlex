@@ -9,6 +9,7 @@ import {
   type RawAssessment,
 } from "./cascExamEngine";
 import "./cascEditorial.css";
+import { sanitizeLessonHtml } from "./lessonSanitizer";
 
 type PreviewUnit = {
   title: string;
@@ -232,6 +233,7 @@ export default function PublicStationPreview({ locale }: Props) {
       .sort((a, b) => a.sort_order - b.sort_order)
       .map((block) => block.content.html ?? "")
       .join("\n") ?? "";
+  const sanitizedHtml = sanitizeLessonHtml(html);
   return (
     <main className="casc-experience min-h-screen bg-white" dir="ltr" lang="en">
       {!unit && !error ? (
@@ -252,7 +254,7 @@ export default function PublicStationPreview({ locale }: Props) {
         <div
           ref={containerRef}
           className="casc-content-mount"
-          dangerouslySetInnerHTML={{ __html: html }}
+          dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
         />
       ) : null}
     </main>

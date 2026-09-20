@@ -270,10 +270,10 @@ export function AuthPageContent() {
           setRecoveryPhone(phone);
           setRecoveryIdentifier(emailOrUsername);
           setRecoveryMaskedEmail(data.email || "");
-          setRecoveryCode(data.code || "");
+          setRecoveryCode("");
           setRecoveryStep("verify");
           setOtpSentNotice(
-            `A 6-digit verification code has been sent to ${data.email}. Please check your inbox and spam folder.`,
+            "If the account details match our records, a 6-digit verification code has been sent by email.",
           );
         },
         onError: (err) => {

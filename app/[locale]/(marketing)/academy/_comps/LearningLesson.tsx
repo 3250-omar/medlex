@@ -11,6 +11,7 @@ import {
 } from "../_apiCalls/learningQueries";
 import { useCompleteUnit, useOpenUnit } from "../../_apiCalls/academyQueries";
 import { openPackPdf } from "./packPdfGenerator";
+import { sanitizeLessonHtml } from "./lessonSanitizer";
 import {
   initCascInteractiveEngine,
   extractExamQuestions,
@@ -765,7 +766,7 @@ export default function LearningLesson({
         updateProgress();
         checkUnlockStatus(score, total);
         if (total > 0 && score > total * 0.5) {
-          completeUnit({ courseSlug, unitSlug, isExam: true, score, total });
+          completeUnit({ courseSlug, unitSlug });
         }
       },
       onProgress: updateProgress,
@@ -895,11 +896,7 @@ export default function LearningLesson({
     .filter(Boolean)
     .join("\n");
 
-  // Sanitize out script tags while preserving all interactive CASC DOM structures
-  const fullHtml = rawHtml.replace(
-    /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
-    "",
-  );
+  const fullHtml = sanitizeLessonHtml(rawHtml);
 
   const hasH1 = /<h1[\s>]/i.test(fullHtml);
 

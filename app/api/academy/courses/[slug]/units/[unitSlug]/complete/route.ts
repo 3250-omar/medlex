@@ -1,24 +1,31 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import type { Database } from "@/types/database";
 
 const NOINDEX_ROBOTS_HEADER = {
   "X-Robots-Tag": "noindex, nofollow, noarchive, nosnippet, noimageindex",
 };
 
-type Row = Record<string, unknown>;
+type UnitCompletionResult = {
+  completed: boolean;
+  unitId: string;
+  unitSlug: string;
+  completedUnits: number;
+  totalUnits: number;
+  progressPercent: number;
+  isCourseCompleted: boolean;
+  nextUnitSlug: string | null;
+};
 
+/**
+ * Completion is resolved by the SECURITY DEFINER RPC, which scopes the action to
+ * auth.uid() and the learner's active enrollment. The client supplies no score
+ * or completion state that could be persisted as authoritative data.
+ */
 export async function POST(
-  req: Request,
+  _: Request,
   { params }: { params: Promise<{ slug: string; unitSlug: string }> },
 ) {
   const { slug, unitSlug } = await params;
-  let body: { isExam?: boolean; score?: number; total?: number } = {};
-  try {
-    body = await req.json();
-  } catch {
-    // Body is optional
-  }
   const supabase = await createClient();
   const {
     data: { user },
@@ -31,192 +38,21 @@ export async function POST(
     );
   }
 
-  // 1. Try calling the mark_unit_completed RPC function first
-  const { data: rpcData, error: rpcError } = await supabase.rpc(
-    "mark_unit_completed",
-    {
-      target_course_slug: slug,
-      target_unit_slug: unitSlug,
-    },
+  const { data, error } = await supabase.rpc("mark_unit_completed", {
+    target_course_slug: slug,
+    target_unit_slug: unitSlug,
+  });
+
+  if (error || !data) {
+    const status = error?.message.includes("active_enrollment_required") ? 403 : 400;
+    return NextResponse.json(
+      { error: "Unable to complete this lesson." },
+      { status, headers: NOINDEX_ROBOTS_HEADER },
+    );
+  }
+
+  return NextResponse.json(
+    { data: data as unknown as UnitCompletionResult },
+    { headers: NOINDEX_ROBOTS_HEADER },
   );
-
-  // If exam was completed, also ensure unit_progress tracks exam_completed
-  if (body.isExam) {
-    try {
-      const { data: enrollment } = await supabase
-        .from("enrollments")
-        .select("id, courses!inner(slug)")
-        .eq("user_id", user.id)
-        .eq("courses.slug", slug)
-        .in("status", ["active", "paused", "completed"])
-        .order("enrolled_at", { ascending: false })
-        .limit(1)
-        .maybeSingle();
-
-      const { data: unit } = await supabase
-        .from("learning_units")
-        .select("id")
-        .eq("slug", unitSlug)
-        .maybeSingle();
-
-      if (enrollment && unit) {
-        await supabase.from("unit_progress").upsert({
-          enrollment_id: enrollment.id,
-          unit_id: unit.id,
-          status: "completed",
-          progress_percent: 100,
-          exam_completed: true,
-          exam_completed_at: new Date().toISOString(),
-          exam_score: body.score ?? null,
-          exam_total: body.total ?? null,
-          completed_at: new Date().toISOString(),
-          last_accessed_at: new Date().toISOString(),
-        });
-      }
-    } catch (examTrackErr) {
-      console.warn("[Complete Unit] Error tracking exam completion:", examTrackErr);
-    }
-  }
-
-  if (!rpcError && rpcData) {
-    return NextResponse.json({ data: rpcData }, { headers: NOINDEX_ROBOTS_HEADER });
-  }
-
-  // 2. Fallback: execute directly in case the new RPC migration hasn't been applied to remote yet
-  try {
-    // A. Find course and active enrollment
-    const courseRes = await supabase
-      .from("courses")
-      .select("id")
-      .eq("slug", slug)
-      .single();
-
-    if (courseRes.error || !courseRes.data) {
-      return NextResponse.json(
-        { error: "course_not_found" },
-        { status: 404, headers: NOINDEX_ROBOTS_HEADER },
-      );
-    }
-    const courseId = courseRes.data.id;
-
-    const enrollmentRes = await supabase
-      .from("enrollments")
-      .select("id, release_id")
-      .eq("user_id", user.id)
-      .eq("course_id", courseId)
-      .in("status", ["active", "paused", "completed"])
-      .order("enrolled_at", { ascending: false })
-      .limit(1)
-      .single();
-
-    if (enrollmentRes.error || !enrollmentRes.data) {
-      return NextResponse.json(
-        { error: "active_enrollment_required" },
-        { status: 403, headers: NOINDEX_ROBOTS_HEADER },
-      );
-    }
-    const { id: enrollmentId, release_id: releaseId } = enrollmentRes.data;
-
-    // B. Find unit
-    const unitRes = await supabase
-      .from("learning_units")
-      .select("id, sequence_number")
-      .eq("release_id", releaseId)
-      .eq("slug", unitSlug)
-      .single();
-
-    if (unitRes.error || !unitRes.data) {
-      return NextResponse.json(
-        { error: "unit_not_found" },
-        { status: 404, headers: NOINDEX_ROBOTS_HEADER },
-      );
-    }
-    const { id: unitId, sequence_number: unitSeq } = unitRes.data;
-
-    // C. Upsert unit_progress as completed (100%)
-    const progressUpsert: Database["public"]["Tables"]["unit_progress"]["Insert"] = {
-      enrollment_id: enrollmentId,
-      unit_id: unitId,
-      status: "completed",
-      progress_percent: 100,
-      completed_at: new Date().toISOString(),
-      last_accessed_at: new Date().toISOString(),
-      ...(body.isExam
-        ? {
-            exam_completed: true,
-            exam_completed_at: new Date().toISOString(),
-            exam_score: body.score ?? null,
-            exam_total: body.total ?? null,
-          }
-        : {}),
-    };
-    await supabase.from("unit_progress").upsert(progressUpsert);
-
-    // D. Update enrollment last_accessed_unit_id
-    await supabase
-      .from("enrollments")
-      .update({
-        last_accessed_unit_id: unitId,
-        updated_at: new Date().toISOString(),
-      })
-      .eq("id", enrollmentId);
-
-    // E. Calculate stats
-    const allUnitsRes = await supabase
-      .from("learning_units")
-      .select("id, slug, sequence_number")
-      .eq("release_id", releaseId)
-      .eq("is_published", true)
-      .order("sequence_number", { ascending: true });
-
-    const totalUnits = allUnitsRes.data?.length ?? 0;
-
-    const completedProgressRes = await supabase
-      .from("unit_progress")
-      .select("unit_id")
-      .eq("enrollment_id", enrollmentId)
-      .eq("status", "completed");
-
-    const completedUnits = completedProgressRes.data?.length ?? 0;
-    const progressPercent =
-      totalUnits > 0 ? Math.round((completedUnits / totalUnits) * 100) : 0;
-    const isCourseCompleted = totalUnits > 0 && completedUnits >= totalUnits;
-
-    if (isCourseCompleted) {
-      await supabase
-        .from("enrollments")
-        .update({
-          status: "completed",
-          completed_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        })
-        .eq("id", enrollmentId);
-    }
-
-    const nextUnit = allUnitsRes.data?.find(
-      (u: Row) => Number(u.sequence_number) > Number(unitSeq),
-    );
-
-    return NextResponse.json(
-      {
-        data: {
-          completed: true,
-          unitId,
-          unitSlug,
-          completedUnits,
-          totalUnits,
-          progressPercent,
-          isCourseCompleted,
-          nextUnitSlug: nextUnit?.slug ? String(nextUnit.slug) : null,
-        },
-      },
-      { headers: NOINDEX_ROBOTS_HEADER },
-    );
-  } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "server_error";
-    return NextResponse.json(
-      { error: message },
-      { status: 500, headers: NOINDEX_ROBOTS_HEADER },
-    );
-  }
 }
