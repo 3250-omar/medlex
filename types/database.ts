@@ -140,6 +140,11 @@ export interface Database {
           expires_at: string | null;
           completed_at: string | null;
           updated_at: string;
+          cancellation_waiver_accepted?: boolean;
+          cancellation_waiver_accepted_at?: string | null;
+          cancellation_waiver_text?: string | null;
+          cancellation_waiver_ip?: string | null;
+          cancellation_waiver_user_agent?: string | null;
         };
         Insert: Omit<
           Database["public"]["Tables"]["enrollments"]["Row"],
@@ -149,6 +154,11 @@ export interface Database {
           enrolled_at?: string;
           access_starts_at?: string;
           updated_at?: string;
+          cancellation_waiver_accepted?: boolean;
+          cancellation_waiver_accepted_at?: string | null;
+          cancellation_waiver_text?: string | null;
+          cancellation_waiver_ip?: string | null;
+          cancellation_waiver_user_agent?: string | null;
         };
         Update: Partial<Database["public"]["Tables"]["enrollments"]["Insert"]>;
         Relationships: [];
@@ -163,6 +173,10 @@ export interface Database {
           completed_at: string | null;
           last_accessed_at: string | null;
           updated_at: string;
+          exam_completed?: boolean;
+          exam_completed_at?: string | null;
+          exam_score?: number | null;
+          exam_total?: number | null;
         };
         Insert: {
           enrollment_id: string;
@@ -173,9 +187,45 @@ export interface Database {
           completed_at?: string | null;
           last_accessed_at?: string | null;
           updated_at?: string;
+          exam_completed?: boolean;
+          exam_completed_at?: string | null;
+          exam_score?: number | null;
+          exam_total?: number | null;
         };
         Update: Partial<
           Database["public"]["Tables"]["unit_progress"]["Insert"]
+        >;
+        Relationships: [];
+      };
+      cancellation_waivers: {
+        Row: {
+          id: string;
+          user_id: string;
+          enrollment_id: string | null;
+          course_slug: string;
+          waiver_text: string;
+          accepted: boolean;
+          accepted_at: string;
+          ip_address: string | null;
+          user_agent: string | null;
+          metadata: Record<string, unknown>;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          enrollment_id?: string | null;
+          course_slug: string;
+          waiver_text: string;
+          accepted?: boolean;
+          accepted_at?: string;
+          ip_address?: string | null;
+          user_agent?: string | null;
+          metadata?: Record<string, unknown>;
+          created_at?: string;
+        };
+        Update: Partial<
+          Database["public"]["Tables"]["cancellation_waivers"]["Insert"]
         >;
         Relationships: [];
       };

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import type { Database } from "@/types/database";
 
 const NOINDEX_ROBOTS_HEADER = {
   "X-Robots-Tag": "noindex, nofollow, noarchive, nosnippet, noimageindex",
@@ -133,20 +134,22 @@ export async function POST(
     const { id: unitId, sequence_number: unitSeq } = unitRes.data;
 
     // C. Upsert unit_progress as completed (100%)
-    const progressUpsert: Record<string, unknown> = {
+    const progressUpsert: Database["public"]["Tables"]["unit_progress"]["Insert"] = {
       enrollment_id: enrollmentId,
       unit_id: unitId,
       status: "completed",
       progress_percent: 100,
       completed_at: new Date().toISOString(),
       last_accessed_at: new Date().toISOString(),
+      ...(body.isExam
+        ? {
+            exam_completed: true,
+            exam_completed_at: new Date().toISOString(),
+            exam_score: body.score ?? null,
+            exam_total: body.total ?? null,
+          }
+        : {}),
     };
-    if (body.isExam) {
-      progressUpsert.exam_completed = true;
-      progressUpsert.exam_completed_at = new Date().toISOString();
-      progressUpsert.exam_score = body.score ?? null;
-      progressUpsert.exam_total = body.total ?? null;
-    }
     await supabase.from("unit_progress").upsert(progressUpsert);
 
     // D. Update enrollment last_accessed_unit_id
