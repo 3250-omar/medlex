@@ -72,7 +72,9 @@ export async function POST(
   if (data?.enrollmentId && body.waiverAccepted) {
     const nowIso = new Date().toISOString();
     const forwardedFor = request.headers.get("x-forwarded-for");
-    const ipAddress = forwardedFor ? forwardedFor.split(",")[0].trim() : (request.headers.get("x-real-ip") || null);
+    const ipAddress = forwardedFor
+      ? forwardedFor.split(",")[0].trim()
+      : request.headers.get("x-real-ip") || null;
     const userAgent = request.headers.get("user-agent") || null;
     const effectiveWaiverText =
       body.waiverText ||
@@ -92,23 +94,24 @@ export async function POST(
         .eq("id", data.enrollmentId);
 
       // 2. Insert into dedicated permanent cancellation_waivers audit log table
-      await (supabase as any)
-        .from("cancellation_waivers")
-        .insert({
-          user_id: user.id,
-          enrollment_id: data.enrollmentId,
-          course_slug: slug,
-          waiver_text: effectiveWaiverText,
-          accepted: true,
-          accepted_at: nowIso,
-          ip_address: ipAddress,
-          user_agent: userAgent,
-          metadata: {
-            source: "checkout_dialog",
-          },
-        });
+      await (supabase as any).from("cancellation_waivers").insert({
+        user_id: user.id,
+        enrollment_id: data.enrollmentId,
+        course_slug: slug,
+        waiver_text: effectiveWaiverText,
+        accepted: true,
+        accepted_at: nowIso,
+        ip_address: ipAddress,
+        user_agent: userAgent,
+        metadata: {
+          source: "checkout_dialog",
+        },
+      });
     } catch (auditErr) {
-      console.error("[Subscription] Failed to persist waiver audit log:", auditErr);
+      console.error(
+        "[Subscription] Failed to persist waiver audit log:",
+        auditErr,
+      );
     }
   }
 

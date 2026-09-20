@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { useLocale } from "next-intl";
 import {
   Dialog,
@@ -36,7 +36,7 @@ export interface CheckoutDialogProps {
   originalPrice?: string;
   priceBadge?: string;
   priceNote?: string;
-  features?: string[];
+  features?: readonly string[];
   /**
    * Whether to mandate the statutory 14-day cancellation waiver checkbox before payment.
    * Default: true.
@@ -62,6 +62,307 @@ export interface CheckoutDialogProps {
 export const DEFAULT_CANCELLATION_WAIVER_TEXT =
   "I want immediate access and understand that I lose my statutory 14-day cancellation right, subject to MedLex's 14-day refund policy.";
 
+export const DEFAULT_FEATURES: readonly string[] = [
+  "Full access to 43 clinical stations across 8 exam domains",
+  "Both Learn Mode with examiner thinking & timed 7-min Exam Mode",
+  "Three-person Practice Packs (candidate, role-player & observer cards)",
+  "Downloadable 12 Weeks to the CASC workbook (PDF)",
+];
+
+/* -------------------------------------------------------------------------- */
+/*             EXTRACTED SUB-COMPONENTS (Outside the Render Loop)             */
+/* -------------------------------------------------------------------------- */
+
+interface CheckoutDialogHeaderProps {
+  title?: string;
+  subtitle?: string;
+  defaultTitle: string;
+  defaultSubtitle: string;
+  isAr: boolean;
+}
+
+const CheckoutDialogHeader = React.memo(function CheckoutDialogHeader({
+  title,
+  subtitle,
+  defaultTitle,
+  defaultSubtitle,
+  isAr,
+}: CheckoutDialogHeaderProps) {
+  return (
+    <div className="py-4 px-6 sm:px-7 border-b border-[#EAE4D8] bg-[#FAF8F5] shrink-0">
+      <DialogHeader className="gap-1 text-start">
+        <div className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#9B7629] uppercase tracking-wider">
+          <ShieldCheck size={14} className="text-[#9B7629]" />
+          <span>{isAr ? "دفع آمن ومعتمد" : "Secure Enrolment"}</span>
+        </div>
+        <DialogTitle className="text-xl sm:text-2xl font-bold font-serif !text-[#1A365D] leading-snug">
+          {title || defaultTitle}
+        </DialogTitle>
+        <DialogDescription className="text-xs sm:text-[13px] font-sans !text-[#5C636C] leading-normal">
+          {subtitle || defaultSubtitle}
+        </DialogDescription>
+      </DialogHeader>
+    </div>
+  );
+});
+
+interface CheckoutOrderSummaryCardProps {
+  itemName: string;
+  itemDescription: string;
+  price: string;
+  originalPrice?: string;
+  priceBadge?: string;
+  priceNote?: string;
+  features?: readonly string[];
+}
+
+const CheckoutOrderSummaryCard = React.memo(function CheckoutOrderSummaryCard({
+  itemName,
+  itemDescription,
+  price,
+  originalPrice,
+  priceBadge,
+  priceNote,
+  features,
+}: CheckoutOrderSummaryCardProps) {
+  return (
+    <div className="rounded-2xl border border-[#E5DEC9] bg-[#FAF8F5] p-4 sm:p-4.5 space-y-3 shadow-xs">
+      <div className="flex items-start justify-between gap-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h4 className="font-serif font-bold text-base sm:text-[17px] !text-[#1A365D]">
+              {itemName}
+            </h4>
+            {priceBadge && (
+              <span className="text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-white !text-[#1A365D] border border-[#E5DEC9] shadow-xs">
+                {priceBadge}
+              </span>
+            )}
+          </div>
+          <p className="text-xs sm:text-[12.5px] text-[#5C636C] leading-relaxed">
+            {itemDescription}
+          </p>
+        </div>
+
+        <div className="text-right shrink-0">
+          <div className="text-2xl sm:text-3xl font-bold !text-[#1A365D] font-serif tabular-nums">
+            {price}
+          </div>
+          {originalPrice && (
+            <div className="text-xs text-[#8C8577] line-through tabular-nums">
+              {originalPrice}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {features && features.length > 0 && (
+        <div className="pt-2.5 border-t border-[#EAE4D8] grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
+          {features.map((feat, idx) => (
+            <div
+              key={idx}
+              className="flex items-start gap-2 text-xs sm:text-[12px] text-[#313538] leading-tight"
+            >
+              <CheckCircle2
+                size={14}
+                className="text-[#9B7629] shrink-0 mt-0.5"
+              />
+              <span>{feat}</span>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {priceNote && (
+        <div className="text-[11px] text-[#7A828E] pt-0.5">{priceNote}</div>
+      )}
+    </div>
+  );
+});
+
+interface CheckoutRefundPolicyCardProps {
+  isAr: boolean;
+}
+
+const CheckoutRefundPolicyCard = React.memo(function CheckoutRefundPolicyCard({
+  isAr,
+}: CheckoutRefundPolicyCardProps) {
+  return (
+    <div className="rounded-xl border border-emerald-200/90 bg-[#F0FDF4] p-3 sm:p-3.5 flex items-start gap-2.5 text-xs shadow-xs">
+      <ShieldCheck size={18} className="text-emerald-700 shrink-0 mt-0.5" />
+      <div className="space-y-0.5">
+        <strong className="font-semibold block text-emerald-950 text-xs sm:text-[12.5px]">
+          {isAr
+            ? "ضمان استرداد لمدة 14 يوماً وفق سياستنا العادلة"
+            : "MedLex 14-Day Fair Refund Policy"}
+        </strong>
+        <span className="text-[11px] sm:text-[11.5px] leading-relaxed block text-emerald-900/90">
+          {isAr
+            ? "يحق لك طلب استرداد كامل للمبلغ خلال 14 يوماً من الشراء بشرط ألا تكون قد أتممت أكثر من 3 محطات في وضع الامتحان (Exam Mode)."
+            : "Full refund available within 14 days of purchase, provided you have completed no more than 3 stations in Exam Mode."}
+        </span>
+      </div>
+    </div>
+  );
+});
+
+interface CheckoutWaiverSectionProps {
+  waiverAccepted: boolean;
+  hasAttemptedSubmit: boolean;
+  isProcessing: boolean;
+  waiverText: string;
+  isAr: boolean;
+  onToggle: (checked: boolean) => void;
+}
+
+const CheckoutWaiverSection = React.memo(function CheckoutWaiverSection({
+  waiverAccepted,
+  hasAttemptedSubmit,
+  isProcessing,
+  waiverText,
+  isAr,
+  onToggle,
+}: CheckoutWaiverSectionProps) {
+  return (
+    <div className="space-y-1.5">
+      <label
+        htmlFor="checkout-cancellation-waiver"
+        className={`flex items-start gap-3 p-3.5 sm:p-4 rounded-xl border transition-all cursor-pointer select-none ${
+          waiverAccepted
+            ? "border-[#D4AF37] bg-[#FEFDF9] ring-2 ring-[#D4AF37]/25 shadow-xs"
+            : hasAttemptedSubmit
+              ? "border-rose-400 bg-rose-50/90 ring-2 ring-rose-300/60 shadow-xs"
+              : "border-[#E5DEC9] bg-[#FAF8F5] hover:border-[#D4AF37]/70 hover:bg-[#FFFDF7]"
+        }`}
+      >
+        <input
+          type="checkbox"
+          id="checkout-cancellation-waiver"
+          required
+          aria-required="true"
+          checked={waiverAccepted}
+          onChange={(e) => onToggle(e.target.checked)}
+          disabled={isProcessing}
+          className="mt-1 size-4.5 rounded border-[#C5A059] text-[#1A365D] focus:ring-[#D4AF37]/40 accent-[#D4AF37] cursor-pointer shrink-0"
+        />
+        <div className="space-y-1 min-w-0 flex-1">
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span className="text-rose-600 font-extrabold leading-none text-xs">
+              *
+            </span>
+
+            <span className="text-[11px] font-semibold text-[#8A6D2B]">
+              {isAr
+                ? "موافقة إلزامية للمتابعة"
+                : "Mandatory agreement to proceed"}
+            </span>
+          </div>
+
+          <span className="text-xs sm:text-[12.5px] leading-relaxed text-[#1A365D] font-medium block">
+            {waiverText}
+          </span>
+          <span className="text-[11px] text-[#7A828E] block flex items-center gap-1 pt-0.5">
+            <HelpCircle size={11} className="inline shrink-0 text-[#8C939E]" />
+            <span>
+              {isAr
+                ? "مطلوب قانونياً لتفعيل الوصول الفوري للمحتوى الرقمي."
+                : "Required by consumer regulations for immediate supply of digital content."}
+            </span>
+          </span>
+        </div>
+      </label>
+
+      {hasAttemptedSubmit && !waiverAccepted && (
+        <div className="flex items-center gap-1.5 text-xs text-rose-600 px-1 font-medium animate-in fade-in">
+          <AlertCircle size={13} className="shrink-0" />
+          <span>
+            {isAr
+              ? "يرجى تحديد المربع أعلاه للموافقة على شروط الوصول الفوري والاستمرار."
+              : "Please check the box above to acknowledge immediate access terms before proceeding."}
+          </span>
+        </div>
+      )}
+    </div>
+  );
+});
+
+interface CheckoutActionButtonsProps {
+  canProceed: boolean;
+  isProcessing: boolean;
+  confirmLabel: string;
+  isAr: boolean;
+  onConfirm: () => void;
+  waiverAccepted: boolean;
+  customActions?: (state: {
+    waiverAccepted: boolean;
+    isProcessing: boolean;
+    handleConfirm: () => void;
+  }) => React.ReactNode;
+}
+
+const CheckoutActionButtons = React.memo(function CheckoutActionButtons({
+  canProceed,
+  isProcessing,
+  confirmLabel,
+  isAr,
+  onConfirm,
+  waiverAccepted,
+  customActions,
+}: CheckoutActionButtonsProps) {
+  if (customActions) {
+    return (
+      <>
+        {customActions({
+          waiverAccepted,
+          isProcessing,
+          handleConfirm: onConfirm,
+        })}
+      </>
+    );
+  }
+
+  return (
+    <div className="space-y-2.5 pt-1">
+      <button
+        type="button"
+        onClick={onConfirm}
+        disabled={!canProceed || isProcessing}
+        className={`w-full min-h-12 px-6 rounded-full font-bold text-sm sm:text-base transition-all flex items-center justify-center gap-2 cursor-pointer ${
+          canProceed && !isProcessing
+            ? "bg-[#D4AF37] hover:bg-[#C9A22F] text-[#1A365D] shadow-md shadow-[#D4AF37]/20 hover:shadow-lg hover:shadow-[#D4AF37]/30 hover:-translate-y-0.5 active:translate-y-0"
+            : "bg-[#EBE6DC] text-[#9A9385] border border-[#DCD5C5] cursor-not-allowed shadow-none"
+        }`}
+      >
+        {isProcessing ? (
+          <>
+            <Loader2 size={18} className="animate-spin text-current" />
+            <span>{isAr ? "جارِ المعالجة..." : "Processing..."}</span>
+          </>
+        ) : (
+          <>
+            <Lock size={15} />
+            <span>{confirmLabel}</span>
+            <ArrowRight size={16} className={isAr ? "rotate-180" : ""} />
+          </>
+        )}
+      </button>
+
+      <div className="flex items-center justify-center gap-1.5 text-[11px] text-[#7A828E] text-center">
+        <Lock size={11} className="text-[#7A828E]/80" />
+        <span>
+          {isAr
+            ? "معالجة الدفع تتم بأمان عبر Paddle (التاجر المعتمد للفواتير والضرائب)"
+            : "Payments processed securely by Paddle (Merchant of Record)"}
+        </span>
+      </div>
+    </div>
+  );
+});
+
+/* -------------------------------------------------------------------------- */
+/*                       MAIN CHECKOUT DIALOG COMPONENT                       */
+/* -------------------------------------------------------------------------- */
+
 export default function CheckoutDialog({
   open,
   onOpenChange,
@@ -73,12 +374,7 @@ export default function CheckoutDialog({
   originalPrice = "£297",
   priceBadge = "Founding Cohort",
   priceNote = "One-time payment · 12 months full access",
-  features = [
-    "Full access to 43 clinical stations across 8 exam domains",
-    "Both Learn Mode with examiner thinking & timed 7-min Exam Mode",
-    "Three-person Practice Packs (candidate, role-player & observer cards)",
-    "Downloadable 12 Weeks to the CASC workbook (PDF)",
-  ],
+  features = DEFAULT_FEATURES,
   requireCancellationWaiver = true,
   waiverText = DEFAULT_CANCELLATION_WAIVER_TEXT,
   confirmLabel,
@@ -93,17 +389,26 @@ export default function CheckoutDialog({
   const [waiverAccepted, setWaiverAccepted] = useState(false);
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false);
 
-  // Reset agreement state each time dialog opens
-  useEffect(() => {
+  // Reset agreement state each time dialog opens without triggering cascading effect renders
+  const [prevOpen, setPrevOpen] = useState(open);
+  if (open !== prevOpen) {
+    setPrevOpen(open);
     if (open) {
       setWaiverAccepted(false);
       setHasAttemptedSubmit(false);
     }
-  }, [open]);
+  }
 
   const canProceed = !requireCancellationWaiver || waiverAccepted;
 
-  const handleConfirm = async () => {
+  const handleToggleWaiver = useCallback((checked: boolean) => {
+    setWaiverAccepted(checked);
+    if (checked) {
+      setHasAttemptedSubmit(false);
+    }
+  }, []);
+
+  const handleConfirm = useCallback(async () => {
     if (!canProceed) {
       setHasAttemptedSubmit(true);
       return;
@@ -114,209 +419,81 @@ export default function CheckoutDialog({
       waiverText,
       acceptedAt: new Date().toISOString(),
     });
-  };
+  }, [canProceed, onConfirm, waiverAccepted, waiverText]);
 
-  const defaultTitle = isAr
-    ? "مراجعة وإتمام الاشتراك"
-    : "Review & Complete Enrolment";
-  const defaultSubtitle = isAr
-    ? "تحصل على وصول فوري لجميع محطات ومواد الدورة التدريبية."
-    : "You are seconds away from full immediate access to the Academy.";
-  const defaultConfirmLabel = isAr
-    ? `تأكيد الاشتراك — ${price}`
-    : `Enrol & Pay ${price}`;
+  const defaultTitle = useMemo(
+    () => (isAr ? "مراجعة وإتمام الاشتراك" : "Review & Complete Enrolment"),
+    [isAr],
+  );
+
+  const defaultSubtitle = useMemo(
+    () =>
+      isAr
+        ? "تحصل على وصول فوري لجميع محطات ومواد الدورة التدريبية."
+        : "You are seconds away from full immediate access to the Academy.",
+    [isAr],
+  );
+
+  const resolvedConfirmLabel = useMemo(
+    () =>
+      confirmLabel ||
+      (isAr ? `تأكيد الاشتراك — ${price}` : `Enrol & Pay ${price}`),
+    [confirmLabel, isAr, price],
+  );
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         showCloseButton={!isProcessing}
-        className="max-w-[540px]! p-0 overflow-hidden border border-[#DFD5C0] bg-white text-[#1A2536] shadow-2xl shadow-black/15 rounded-2xl"
+        className="!w-[94vw] !max-w-[620px] sm:!max-w-[620px] md:!max-w-[640px] !max-h-[92vh] !p-0 overflow-hidden flex flex-col !border !border-[#E5DEC9] !bg-white !text-[#23303F] shadow-2xl !rounded-3xl !ring-0 [&_[data-slot=dialog-close]]:text-[#5C636C] hover:[&_[data-slot=dialog-close]]:text-[#1A365D] hover:[&_[data-slot=dialog-close]]:!bg-[#F4EFE6] [&_[data-slot=dialog-close]]:top-4 [&_[data-slot=dialog-close]]:right-4 [&_[data-slot=dialog-close]]:size-8.5 [&_[data-slot=dialog-close]]:rounded-full transition-all"
       >
-        {/* Header with warm editorial parchment background */}
-        <div className="p-6 pb-4.5 border-b border-[#EAE3D5] bg-[#FAF7F2]">
-          <DialogHeader className="gap-1.5 text-start">
-            <div className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#8C6B28] uppercase tracking-wider mb-0.5">
-              <ShieldCheck size={14} className="text-[#8C6B28]" />
-              <span>{isAr ? "دفع آمن ومعتمد" : "Secure Enrolment"}</span>
-            </div>
-            <DialogTitle className="text-xl sm:text-2xl font-bold font-serif text-[#071326]">
-              {title || defaultTitle}
-            </DialogTitle>
-            <DialogDescription className="text-xs sm:text-[13.5px] text-[#4A5568] leading-relaxed">
-              {subtitle || defaultSubtitle}
-            </DialogDescription>
-          </DialogHeader>
-        </div>
+        {/* Memoized Header */}
+        <CheckoutDialogHeader
+          title={title}
+          subtitle={subtitle}
+          defaultTitle={defaultTitle}
+          defaultSubtitle={defaultSubtitle}
+          isAr={isAr}
+        />
 
-        {/* Body content */}
-        <div className="p-6 space-y-5 max-h-[calc(85vh-140px)] overflow-y-auto no-scrollbar bg-white">
-          {/* Order Summary Card */}
-          <div className="rounded-xl border border-[#DFD5C0] bg-[#FDFBF7] p-4 sm:p-5 space-y-3.5 shadow-xs">
-            <div className="flex items-start justify-between gap-4">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <h4 className="font-serif font-bold text-base sm:text-[17px] text-[#071326]">
-                    {itemName}
-                  </h4>
-                  {priceBadge && (
-                    <span className="text-[10.5px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-[#F5EFE3] text-[#071326] border border-[#DFD5C0]">
-                      {priceBadge}
-                    </span>
-                  )}
-                </div>
-                <p className="text-xs sm:text-[12.5px] text-[#4A5568] leading-relaxed">
-                  {itemDescription}
-                </p>
-              </div>
+        {/* Scrollable body content */}
+        <div className="p-5 sm:p-6 space-y-3.5 overflow-y-auto max-h-[calc(92vh-95px)] bg-white no-scrollbar">
+          {/* Memoized Order Summary Card */}
+          <CheckoutOrderSummaryCard
+            itemName={itemName}
+            itemDescription={itemDescription}
+            price={price}
+            originalPrice={originalPrice}
+            priceBadge={priceBadge}
+            priceNote={priceNote}
+            features={features}
+          />
 
-              <div className="text-right shrink-0">
-                <div className="text-2xl sm:text-3xl font-bold text-[#071326] font-serif tabular-nums">
-                  {price}
-                </div>
-                {originalPrice && (
-                  <div className="text-xs text-[#718096] line-through tabular-nums">
-                    {originalPrice}
-                  </div>
-                )}
-              </div>
-            </div>
+          {/* Memoized 14-Day Refund Guarantee Callout */}
+          <CheckoutRefundPolicyCard isAr={isAr} />
 
-            {features && features.length > 0 && (
-              <div className="pt-3 border-t border-[#EAE3D5] space-y-2">
-                {features.map((feat, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-start gap-2.5 text-xs sm:text-[12.5px] text-[#2D3748]"
-                  >
-                    <CheckCircle2
-                      size={14}
-                      className="text-[#8C6B28] shrink-0 mt-0.5"
-                    />
-                    <span>{feat}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {priceNote && (
-              <div className="text-[11.5px] text-[#718096] pt-1">
-                {priceNote}
-              </div>
-            )}
-          </div>
-
-          {/* 14-Day Refund Guarantee Callout */}
-          <div className="rounded-xl border border-emerald-200 bg-[#F0FDF4] p-3.5 flex items-start gap-3 text-xs shadow-xs">
-            <ShieldCheck size={18} className="text-emerald-700 shrink-0 mt-0.5" />
-            <div className="space-y-0.5">
-              <strong className="font-semibold block text-emerald-950 text-xs sm:text-[12.5px]">
-                {isAr
-                  ? "ضمان استرداد لمدة 14 يوماً وفق سياستنا العادلة"
-                  : "MedLex 14-Day Fair Refund Policy"}
-              </strong>
-              <span className="text-[11.5px] sm:text-[12px] leading-relaxed block text-emerald-900/90">
-                {isAr
-                  ? "يحق لك طلب استرداد كامل للمبلغ خلال 14 يوماً من الشراء بشرط ألا تكون قد أتممت أكثر من 3 محطات في وضع الامتحان (Exam Mode)."
-                  : "Full refund available within 14 days of purchase, provided you have completed no more than 3 stations in Exam Mode."}
-              </span>
-            </div>
-          </div>
-
-          {/* Mandatory Statutory Cancellation Waiver Checkbox */}
+          {/* Memoized Statutory Cancellation Waiver Checkbox */}
           {requireCancellationWaiver && (
-            <div className="space-y-2">
-              <label
-                htmlFor="checkout-cancellation-waiver"
-                className={`flex items-start gap-3 p-3.5 sm:p-4 rounded-xl border transition-all cursor-pointer select-none ${
-                  waiverAccepted
-                    ? "border-[#C5A059] bg-[#FFFDF7] ring-2 ring-[#C5A059]/30 shadow-xs"
-                    : hasAttemptedSubmit
-                      ? "border-red-400 bg-red-50/70 ring-1 ring-red-300"
-                      : "border-[#DFD5C0] bg-[#FAF7F0] hover:border-[#C5A059] hover:bg-[#FCF9F2]"
-                }`}
-              >
-                <input
-                  type="checkbox"
-                  id="checkout-cancellation-waiver"
-                  checked={waiverAccepted}
-                  onChange={(e) => {
-                    setWaiverAccepted(e.target.checked);
-                    if (e.target.checked) setHasAttemptedSubmit(false);
-                  }}
-                  disabled={isProcessing}
-                  className="mt-0.5 size-4.5 rounded border-[#C5A059] text-[#071326] focus:ring-[#C5A059]/40 accent-[#071326] cursor-pointer shrink-0"
-                />
-                <div className="space-y-1">
-                  <span className="text-xs sm:text-[13px] leading-relaxed text-[#071326] font-medium block">
-                    {waiverText}
-                  </span>
-                  <span className="text-[11px] text-[#718096] block flex items-center gap-1">
-                    <HelpCircle size={12} className="inline shrink-0" />
-                    <span>
-                      {isAr
-                        ? "مطلوب قانونياً لتفعيل الوصول الفوري للمحتوى الرقمي."
-                        : "Required by consumer regulations for immediate supply of digital content."}
-                    </span>
-                  </span>
-                </div>
-              </label>
-
-              {hasAttemptedSubmit && !waiverAccepted && (
-                <div className="flex items-center gap-1.5 text-xs text-red-600 px-1 animate-in fade-in">
-                  <AlertCircle size={14} className="shrink-0" />
-                  <span>
-                    {isAr
-                      ? "يرجى تحديد المربع أعلاه للموافقة على شروط الوصول الفوري والاستمرار."
-                      : "Please check the box above to acknowledge immediate access terms before proceeding."}
-                  </span>
-                </div>
-              )}
-            </div>
+            <CheckoutWaiverSection
+              waiverAccepted={waiverAccepted}
+              hasAttemptedSubmit={hasAttemptedSubmit}
+              isProcessing={isProcessing}
+              waiverText={waiverText}
+              isAr={isAr}
+              onToggle={handleToggleWaiver}
+            />
           )}
 
-          {/* Action buttons (Custom or Default) */}
-          {customActions ? (
-            customActions({
-              waiverAccepted,
-              isProcessing,
-              handleConfirm,
-            })
-          ) : (
-            <div className="space-y-3 pt-2">
-              <button
-                type="button"
-                onClick={handleConfirm}
-                disabled={!canProceed || isProcessing}
-                className={`w-full min-h-12 px-6 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm ${
-                  canProceed && !isProcessing
-                    ? "bg-[#071326] text-white hover:bg-[#0E1D38] hover:shadow-md active:scale-[0.99]"
-                    : "bg-[#F1F5F9] text-[#94A3B8] border border-[#E2E8F0] cursor-not-allowed"
-                }`}
-              >
-                {isProcessing ? (
-                  <>
-                    <Loader2 size={18} className="animate-spin text-current" />
-                    <span>{isAr ? "جارِ المعالجة..." : "Processing..."}</span>
-                  </>
-                ) : (
-                  <>
-                    <Lock size={14} />
-                    <span>{confirmLabel || defaultConfirmLabel}</span>
-                    <ArrowRight size={15} className={isAr ? "rotate-180" : ""} />
-                  </>
-                )}
-              </button>
-
-              <div className="flex items-center justify-center gap-1.5 text-[11.5px] text-[#718096] text-center">
-                <Lock size={12} className="text-[#94A3B8]" />
-                <span>
-                  {isAr
-                    ? "معالجة الدفع تتم بأمان عبر Paddle (التاجر المعتمد للفواتير والضرائب)"
-                    : "Payments processed securely by Paddle (Merchant of Record)"}
-                </span>
-              </div>
-            </div>
-          )}
+          {/* Memoized Action buttons */}
+          <CheckoutActionButtons
+            canProceed={canProceed}
+            isProcessing={isProcessing}
+            confirmLabel={resolvedConfirmLabel}
+            isAr={isAr}
+            onConfirm={handleConfirm}
+            waiverAccepted={waiverAccepted}
+            customActions={customActions}
+          />
         </div>
       </DialogContent>
     </Dialog>
