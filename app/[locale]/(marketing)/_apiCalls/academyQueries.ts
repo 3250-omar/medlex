@@ -93,12 +93,32 @@ export function useCurrentUser() {
   });
 }
 
+export type SubscribeParams =
+  | string
+  | {
+      slug: string;
+      waiverAccepted?: boolean;
+      waiverText?: string;
+    };
+
 export function useSubscribeToCourse() {
   return useMutation({
-    mutationFn: (slug: string) =>
-      apiRequest<Subscription>(`/api/courses/${slug}/subscribe`, {
+    mutationFn: (params: SubscribeParams) => {
+      const slug = typeof params === "string" ? params : params.slug;
+      const body =
+        typeof params === "object"
+          ? {
+              waiverAccepted: params.waiverAccepted,
+              waiverText: params.waiverText,
+            }
+          : undefined;
+
+      return apiRequest<Subscription>(`/api/courses/${slug}/subscribe`, {
         method: "POST",
-      }),
+        headers: body ? { "Content-Type": "application/json" } : undefined,
+        body: body ? JSON.stringify(body) : undefined,
+      });
+    },
   });
 }
 
@@ -143,13 +163,29 @@ export function useCompleteUnit() {
     mutationFn: ({
       courseSlug,
       unitSlug,
+      isExam,
+      score,
+      total,
     }: {
       courseSlug: string;
       unitSlug: string;
+      isExam?: boolean;
+      score?: number;
+      total?: number;
     }) =>
       apiRequest<UnitCompletionResult>(
         `/api/academy/courses/${courseSlug}/units/${unitSlug}/complete`,
-        { method: "POST" },
+        {
+          method: "POST",
+          headers:
+            isExam !== undefined
+              ? { "Content-Type": "application/json" }
+              : undefined,
+          body:
+            isExam !== undefined
+              ? JSON.stringify({ isExam, score, total })
+              : undefined,
+        },
       ),
     onSuccess: (_data, variables) => {
       void queryClient.invalidateQueries({
@@ -159,6 +195,34 @@ export function useCompleteUnit() {
         queryKey: academyQueryKeys.course(variables.courseSlug),
       });
     },
+  });
+}
+
+export type RefundEligibilityResult = {
+  enrolled: boolean;
+  enrollmentId?: string;
+  enrolledAt?: string;
+  daysElapsed?: number;
+  isWithin14Days?: boolean;
+  examModeCompletions?: number;
+  maxAllowedExamCompletions?: number;
+  completedStationsCount?: number;
+  cancellationWaiverAccepted?: boolean;
+  cancellationWaiverAcceptedAt?: string | null;
+  cancellationWaiverText?: string | null;
+  isRefundEligible?: boolean;
+  reason?: string;
+};
+
+export function useRefundEligibility(courseSlug: string, enabled = true) {
+  return useQuery({
+    queryKey: ["refundEligibility", courseSlug],
+    queryFn: () =>
+      apiRequest<RefundEligibilityResult>(
+        `/api/courses/${courseSlug}/refund-eligibility`,
+      ),
+    enabled: Boolean(courseSlug) && enabled,
+    staleTime: 30_000,
   });
 }
 

@@ -1768,7 +1768,7 @@ html[data-theme="dark"] .casc-experience .done h2 {
 .casc-lesson-menu {
   position: fixed;
   z-index: 100;
-  top: 96px;
+  top: 116px;
   right: 16px;
   pointer-events: none;
 }

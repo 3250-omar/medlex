@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { Check, FileText, Layers, Stethoscope } from "lucide-react";
+import { Check, Compass, FileText, Layers, Stethoscope } from "lucide-react";
 import CollapsedMenu, {
   type CollapsedMenuGroup,
   type CollapsedMenuItem,
@@ -159,11 +159,26 @@ export default function CourseLessonMenu({
     >
       <CollapsedMenu
         groups={menuGroups}
-        topAction={{
-          label: "View your workbook",
-          href: "/gifts/Twelve%20Weeks%20to%20the%20CASC.pdf",
-          icon: <FileText size={16} />,
-        }}
+        topActions={[
+          {
+            label: "Course guide",
+            description:
+              "A quick guide to help you complete this course the right way .",
+            href: `/${locale}/academy/courses/${courseSlug}?intro=true`,
+            icon: <Compass size={16} className="text-gold" />,
+            className:
+              "border-gold/40 bg-[#071326]/90 text-gold hover:border-gold hover:bg-[#0c1f3d] hover:text-[#f7eed9] focus-visible:ring-gold/60",
+            target: "_blank",
+          },
+          {
+            label: "View your workbook",
+            href: "/gifts/Twelve%20Weeks%20to%20the%20CASC.pdf",
+            icon: <FileText size={16} />,
+            className:
+              "border-amber-300/40 bg-amber-950/80 text-amber-200 hover:border-amber-200/70 hover:bg-amber-900/90 focus-visible:ring-amber-300/60",
+            target: "_blank",
+          },
+        ]}
         value={currentUnitSlug}
         expandedWidthClassName="w-72"
         collapsedWidthClassName="w-[64px]"

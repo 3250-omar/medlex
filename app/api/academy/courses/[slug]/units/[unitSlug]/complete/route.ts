@@ -8,10 +8,16 @@ const NOINDEX_ROBOTS_HEADER = {
 type Row = Record<string, unknown>;
 
 export async function POST(
-  _: Request,
+  req: Request,
   { params }: { params: Promise<{ slug: string; unitSlug: string }> },
 ) {
   const { slug, unitSlug } = await params;
+  let body: { isExam?: boolean; score?: number; total?: number } = {};
+  try {
+    body = await req.json();
+  } catch {
+    // Body is optional
+  }
   const supabase = await createClient();
   const {
     data: { user },
@@ -32,6 +38,44 @@ export async function POST(
       target_unit_slug: unitSlug,
     },
   );
+
+  // If exam was completed, also ensure unit_progress tracks exam_completed
+  if (body.isExam) {
+    try {
+      const { data: enrollment } = await supabase
+        .from("enrollments")
+        .select("id, courses!inner(slug)")
+        .eq("user_id", user.id)
+        .eq("courses.slug", slug)
+        .in("status", ["active", "paused", "completed"])
+        .order("enrolled_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      const { data: unit } = await supabase
+        .from("learning_units")
+        .select("id")
+        .eq("slug", unitSlug)
+        .maybeSingle();
+
+      if (enrollment && unit) {
+        await supabase.from("unit_progress").upsert({
+          enrollment_id: enrollment.id,
+          unit_id: unit.id,
+          status: "completed",
+          progress_percent: 100,
+          exam_completed: true,
+          exam_completed_at: new Date().toISOString(),
+          exam_score: body.score ?? null,
+          exam_total: body.total ?? null,
+          completed_at: new Date().toISOString(),
+          last_accessed_at: new Date().toISOString(),
+        });
+      }
+    } catch (examTrackErr) {
+      console.warn("[Complete Unit] Error tracking exam completion:", examTrackErr);
+    }
+  }
 
   if (!rpcError && rpcData) {
     return NextResponse.json({ data: rpcData }, { headers: NOINDEX_ROBOTS_HEADER });
@@ -89,14 +133,21 @@ export async function POST(
     const { id: unitId, sequence_number: unitSeq } = unitRes.data;
 
     // C. Upsert unit_progress as completed (100%)
-    await supabase.from("unit_progress").upsert({
+    const progressUpsert: Record<string, unknown> = {
       enrollment_id: enrollmentId,
       unit_id: unitId,
       status: "completed",
       progress_percent: 100,
       completed_at: new Date().toISOString(),
       last_accessed_at: new Date().toISOString(),
-    });
+    };
+    if (body.isExam) {
+      progressUpsert.exam_completed = true;
+      progressUpsert.exam_completed_at = new Date().toISOString();
+      progressUpsert.exam_score = body.score ?? null;
+      progressUpsert.exam_total = body.total ?? null;
+    }
+    await supabase.from("unit_progress").upsert(progressUpsert);
 
     // D. Update enrollment last_accessed_unit_id
     await supabase

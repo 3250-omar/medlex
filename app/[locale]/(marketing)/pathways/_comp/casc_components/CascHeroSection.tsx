@@ -22,7 +22,7 @@ export default function CascHeroSection({
   const t = useTranslations("cascHero");
 
   return (
-    <section className="relative  text-char pt-16 sm:pt-20 pb-0 border-b border-hair overflow-hidden ">
+    <section className="relative text-char flex flex-col justify-between min-h-[calc(100vh-125px)] min-h-[calc(100dvh-125px)] pt-12 sm:pt-16 lg:pt-20 pb-0 border-b border-hair overflow-hidden">
       {/* Background image with opacity & directional gradient */}
       <div className="absolute inset-0 pointer-events-none select-none z-0">
         <Image
@@ -36,7 +36,7 @@ export default function CascHeroSection({
         <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/95 via-45% to-white/40 lg:to-transparent rtl:bg-gradient-to-l rtl:from-white rtl:via-white/95 rtl:via-45% rtl:to-white/40 rtl:lg:to-transparent " />
       </div>
 
-      <div className="relative z-10 mx-auto w-full px-6 sm:px-8 lg:max-w-6xl lg:px-10">
+      <div className="relative z-10 mx-auto w-full px-6 sm:px-8 lg:max-w-6xl lg:px-10 pb-8 sm:pb-12">
         {/* Kicker Tagline */}
         <p className="font-serif text-sm sm:text-base font-semibold text-navy! mb-3">
           {t("kicker")}
@@ -136,7 +136,7 @@ export default function CascHeroSection({
       </div>
 
       {/* In-page Sub-navigation Bar */}
-      <div className="relative z-10 mt-14 sm:mt-16 border-t border-hair bg-white/95 backdrop-blur-md">
+      <div className="relative z-10 mt-auto border-t border-hair bg-white/95 backdrop-blur-md">
         <div className="mx-auto w-full px-6 sm:px-8 lg:max-w-6xl lg:px-10 py-3 sm:py-3.5 flex items-center justify-between gap-4 overflow-x-auto no-scrollbar">
           <div className="flex items-center gap-5 sm:gap-7">
             <div

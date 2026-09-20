@@ -55,6 +55,15 @@ function getSearchableTitle(title: React.ReactNode): string {
   return "";
 }
 
+export interface CollapsedMenuAction {
+  label: string;
+  href: string;
+  icon: React.ReactNode;
+  description?: string;
+  target?: string;
+  className?: string;
+}
+
 export interface CollapsedMenuProps extends Omit<
   React.HTMLAttributes<HTMLDivElement>,
   "onSelect"
@@ -65,11 +74,10 @@ export interface CollapsedMenuProps extends Omit<
   items?: CollapsedMenuItem[];
 
   /** Optional action displayed above the menu items. */
-  topAction?: {
-    label: string;
-    href: string;
-    icon: React.ReactNode;
-  };
+  topAction?: CollapsedMenuAction;
+
+  /** Optional list of actions displayed above the menu items. */
+  topActions?: CollapsedMenuAction[];
 
   /**
    * Categorized / grouped menu items
@@ -271,6 +279,7 @@ const CollapsedMenuItemButton = React.memo(function CollapsedMenuItemButton({
 export function CollapsedMenu({
   items,
   topAction,
+  topActions,
   groups,
   searchIndex,
   isSearchString,
@@ -296,6 +305,12 @@ export function CollapsedMenu({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  const effectiveTopActions: CollapsedMenuAction[] = React.useMemo(() => {
+    if (topActions && topActions.length > 0) return topActions;
+    if (topAction) return [topAction];
+    return [];
+  }, [topActions, topAction]);
 
   const menuRef = React.useRef<HTMLDivElement>(null);
   const topActionRef = React.useRef<HTMLDivElement>(null);
@@ -337,6 +352,7 @@ export function CollapsedMenu({
     if (actionNode) {
       actionNode.style.left = "";
       actionNode.style.right = "";
+      actionNode.style.alignItems = "";
     }
     if (menuRef.current) {
       menuRef.current.style.transform = "";
@@ -403,7 +419,9 @@ export function CollapsedMenu({
         setIsDragging(true);
         if (activeTargetRef.current && activePointerIdRef.current !== null) {
           try {
-            activeTargetRef.current.setPointerCapture(activePointerIdRef.current);
+            activeTargetRef.current.setPointerCapture(
+              activePointerIdRef.current,
+            );
             pointerCapturedRef.current = true;
           } catch {
             // pointer capture fallback
@@ -425,7 +443,10 @@ export function CollapsedMenu({
       // Allow moving even on compact laptop displays while ensuring the grip remains visible
       const maxY = Math.max(
         minY,
-        windowHeight - PAD - Math.min(dragStart.height, 80) - dragStart.bottomSpace,
+        windowHeight -
+          PAD -
+          Math.min(dragStart.height, 80) -
+          dragStart.bottomSpace,
       );
       const targetY = Math.max(minY, Math.min(maxY, rawY));
 
@@ -455,9 +476,11 @@ export function CollapsedMenu({
         if (isRight) {
           actionNode.style.left = "auto";
           actionNode.style.right = "0";
+          actionNode.style.alignItems = "flex-end";
         } else {
           actionNode.style.left = "0";
           actionNode.style.right = "auto";
+          actionNode.style.alignItems = "flex-start";
         }
       }
 
@@ -485,7 +508,9 @@ export function CollapsedMenu({
         activePointerIdRef.current !== null
       ) {
         try {
-          activeTargetRef.current.releasePointerCapture(activePointerIdRef.current);
+          activeTargetRef.current.releasePointerCapture(
+            activePointerIdRef.current,
+          );
         } catch {
           // pointer may have already been released
         }
@@ -506,6 +531,7 @@ export function CollapsedMenu({
       if (actionNode) {
         actionNode.style.left = "";
         actionNode.style.right = "";
+        actionNode.style.alignItems = "";
       }
 
       if (menuRef.current) {
@@ -596,7 +622,7 @@ export function CollapsedMenu({
       // Pin right edge so when it expands or opens, it expands TO THE LEFT into the viewport
       const rightDistance = Math.max(
         PAD,
-        position.rightOffset ?? (windowWidth - position.x - 64),
+        position.rightOffset ?? windowWidth - position.x - 64,
       );
       return {
         ...style,
@@ -899,46 +925,64 @@ export function CollapsedMenu({
         )}
         {...props}
       >
-        {topAction && (
+        {effectiveTopActions.length > 0 && (
           <div
             ref={topActionRef}
             data-mobile-workbook
             className={cn(
-              "absolute bottom-full mb-3 z-10 pointer-events-auto max-w-[calc(100vw-1rem)]",
-              isRightSide ? "right-0 left-auto" : "left-0 right-auto",
+              "absolute bottom-full mb-2.5 z-10 pointer-events-auto max-w-[calc(100vw-1rem)] flex flex-col gap-2",
+              isRightSide
+                ? "right-0 left-auto items-end"
+                : "left-0 right-auto items-start",
             )}
           >
-            <Tooltip>
-              <TooltipTrigger
-                render={(triggerProps) => (
-                  <a
-                    {...triggerProps}
-                    href={topAction.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={topAction.label}
-                    className={cn(
-                      "flex min-h-11 items-center rounded-2xl border border-amber-300/40 bg-amber-950/80 px-3 text-amber-200 shadow-lg shadow-black/25 backdrop-blur-md transition-colors hover:border-amber-200/70 hover:bg-amber-900/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/60",
-                      "h-11 w-max max-w-[calc(100vw-2rem)] justify-start gap-2 px-3",
-                      "max-md:!size-10 max-md:!min-h-10 max-md:!w-10 max-md:!justify-center max-md:!gap-0 max-md:!px-0",
-                    )}
-                  >
-                    <span className="shrink-0 [&_svg]:size-4.5">
-                      {topAction.icon}
-                    </span>
-                    <span className="whitespace-nowrap truncate text-sm font-semibold max-md:!hidden">
-                      {topAction.label}
-                    </span>
-                  </a>
-                )}
-              />
-              <TooltipContent
-                side={isRightSide ? "left" : "right"}
-                sideOffset={10}
-              >
-                {topAction.label}
-              </TooltipContent>
-            </Tooltip>
+            {effectiveTopActions.map((action, idx) => (
+              <Tooltip key={idx}>
+                <TooltipTrigger
+                  render={(triggerProps) => (
+                    <a
+                      {...triggerProps}
+                      href={action.href}
+                      target={action.target ?? "_blank"}
+                      rel="noopener noreferrer"
+                      aria-label={action.label}
+                      className={cn(
+                        "flex min-h-10 items-center rounded-2xl border px-3 shadow-lg shadow-black/25 backdrop-blur-md transition-all focus-visible:outline-none focus-visible:ring-2",
+                        "h-10 w-max max-w-[calc(100vw-2rem)] justify-start gap-2 px-3",
+                        "max-md:!size-10 max-md:!min-h-10 max-md:!w-10 max-md:!justify-center max-md:!gap-0 max-md:!px-0",
+                        action.className ||
+                          "border-amber-300/40 bg-amber-950/80 text-amber-200 hover:border-amber-200/70 hover:bg-amber-900/90 focus-visible:ring-amber-300/60",
+                      )}
+                    >
+                      <span className="shrink-0 [&_svg]:size-4">
+                        {action.icon}
+                      </span>
+                      <span className="whitespace-nowrap truncate text-sm font-semibold max-md:!hidden">
+                        {action.label}
+                      </span>
+                    </a>
+                  )}
+                />
+                <TooltipContent
+                  side={isRightSide ? "left" : "right"}
+                  sideOffset={10}
+                  className="max-w-xs"
+                >
+                  {action.description ? (
+                    <div className="flex flex-col gap-0.5 py-0.5 max-w-[240px]">
+                      <span className="font-semibold text-xs text-gold">
+                        {action.label}
+                      </span>
+                      <span className="text-[11.5px] text-muted leading-relaxed">
+                        {action.description}
+                      </span>
+                    </div>
+                  ) : (
+                    action.label
+                  )}
+                </TooltipContent>
+              </Tooltip>
+            ))}
           </div>
         )}
 

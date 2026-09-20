@@ -18,9 +18,11 @@ export default async function PrivacyLayout({
   params,
 }: {
   children: ReactNode;
-  params: Promise<{ locale: string }>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  params?: Promise<any>;
 }) {
-  const { locale } = await params;
+  const resolvedParams = params ? await params : { locale: "en" };
+  const locale = resolvedParams.locale ?? "en";
   const isAr = locale === "ar";
 
   const schema = createWebPageSchema(

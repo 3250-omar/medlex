@@ -526,7 +526,13 @@ export default function LearningLesson({
         event.preventDefault();
         acts.finish = 1;
         updateProgress();
-        completeUnit({ courseSlug, unitSlug });
+        completeUnit({
+          courseSlug,
+          unitSlug,
+          isExam: true,
+          score: examResultRef.current?.score,
+          total: examResultRef.current?.total,
+        });
         const destUrl = examNextLink.getAttribute("href");
         if (destUrl && destUrl !== "#") {
           router.push(destUrl);
@@ -759,7 +765,7 @@ export default function LearningLesson({
         updateProgress();
         checkUnlockStatus(score, total);
         if (total > 0 && score > total * 0.5) {
-          completeUnit({ courseSlug, unitSlug });
+          completeUnit({ courseSlug, unitSlug, isExam: true, score, total });
         }
       },
       onProgress: updateProgress,
