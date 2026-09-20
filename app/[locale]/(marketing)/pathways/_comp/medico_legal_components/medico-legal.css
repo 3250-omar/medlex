@@ -527,6 +527,7 @@
 .medico-legal-landing .rung .num {
   font-family: var(--serif);
   font-size: 22px;
+  line-height: 1.25;
   color: var(--gold);
   font-weight: 500;
   padding-top: 2px;

@@ -842,9 +842,9 @@
       "hero": {
         "headline": "Where medicine is asked to <em>answer</em> to the court",
         "answer": "answer",
-        "lead": "Structured, practice-based education for psychiatrists, psychologists and legal professionals — from a first forensic report to an opinion that stands up under cross-examination.",
-        "deliveryLabel": "Delivery",
-        "deliveryValue": "Live interactive online",
+        "lead": "Structured, practice-based education for psychiatrists, psychologists and legal professionals. Take a single masterclass to close one gap, a workshop series to build a full skill, or a complete programme when you want certified competence — in any order, starting wherever you are.",
+        "deliveryLabel": "Choose",
+        "deliveryValue": "Masterclass · Workshop series · Programme",
         "languagesLabel": "Languages",
         "languagesValue": "English · Arabic",
         "statusLabel": "Status",
@@ -852,7 +852,7 @@
         "joinWaitlist": "Join the waitlist",
         "flagshipBtn": "The flagship programme",
         "badgeNumber": "4",
-        "badgeText": "Progressive levels, from a single masterclass to advanced certification",
+        "badgeText": "Formats. No prerequisites — take one, or take them all.",
         "ticker": [
           "WRITING PSYCHIATRIC EVIDENCE",
           "COURT-READY REPORTING STANDARDS",
@@ -896,38 +896,38 @@
       },
       "levels": {
         "kicker": "Progressive Competency Architecture",
-        "title": "Four levels. Each one prepares you for the next.",
-        "lead": "A progressive framework built on recognised professional competency frameworks, so that learning is consistent, cumulative and measurable. Enter at the level that matches your practice.",
+        "title": "Four ways in. Start wherever you need to.",
+        "lead": "Each format stands on its own. Take one masterclass to close a specific gap, several across a theme, a workshop series to build a full skill, or a complete programme when you want structured, certified competence. There are no prerequisites and no fixed order — choose what matches the gap you actually have.",
         "badgeNumber": "4",
-        "badgeText": "Progressive levels, from a single masterclass to advanced certification",
+        "badgeText": "Formats. No prerequisites — take one, or take them all.",
         "items": [
           {
-            "num": "Level 1",
+            "num": "Masterclass",
             "badge": "Foundation Entry",
             "title": "Foundation Masterclasses",
             "meta": "Single topic · 3–6 hours · CPD-focused",
-            "description": "Fourteen masterclasses already designed across three core themes — the structured entry point to the pathway. Each takes one question a court asks and teaches the reasoning behind a defensible answer."
+            "description": "Fourteen masterclasses already designed across three core themes — the quickest way to close one specific gap. Each takes one question a court asks and teaches the reasoning behind a defensible answer."
           },
           {
-            "num": "Level 2",
+            "num": "Workshop series",
             "badge": "Primary Offering",
             "title": "Professional Skills Programmes",
             "meta": "Multi-session · 10–14 hours · materials and assignments between sessions",
             "description": "Practical skills development and the pathway's primary offering. Four to six workshops around a single simulated case, with work produced between sessions and reviewed in the next. Home of Writing Psychiatric Evidence."
           },
           {
-            "num": "Level 3",
+            "num": "Programme",
             "badge": "Comprehensive",
             "title": "Foundations of Forensic Psychiatry & Medico-Legal Practice",
             "meta": "Three-month blended programme",
             "description": "Structured professional competence across the medico-legal field: assessment, formulation, report writing, and giving evidence — with supervision and assessed work throughout."
           },
           {
-            "num": "Level 4",
+            "num": "Certification",
             "badge": "Future Pathway",
             "title": "Advanced Professional Certification",
             "meta": "Twelve-month programme · future pathway",
-            "description": "The advanced specialist pathway, built in sequence once the earlier levels are established: supervised casework, assessed reports, and a portfolio of practice."
+            "description": "The advanced specialist pathway, for practitioners who want assessed, documented competence: supervised casework, assessed reports, and a portfolio of practice."
           }
         ]
       },
