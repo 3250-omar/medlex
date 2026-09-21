@@ -89,7 +89,7 @@ courses -> feedbacks -> public_course_feedbacks (read-only view)
 | `point_ledger` | UUID PK; user -> auth users (cascade); optional enrollment (set null); points/reason/source; timestamp | Idempotent point accounting. Unique `(user_id, source_type, source_id)`. |
 | `certificates` | UUID PK; unique certificate number; unique enrollment -> enrollments (restrict); recipient/course/release snapshots; issue/revocation/storage fields | One certificate per enrollment. |
 | `certificate_download_events` | Identity bigint PK; certificate -> certificates (cascade); optional user -> auth users (set null); timestamp | Certificate download audit. |
-| `feedbacks` | UUID PK; user -> auth users (cascade); course -> courses (cascade); nonblank text; timestamps | One learner feedback record per course. |
+| `feedbacks` | UUID PK; user -> auth users (cascade); course -> courses (cascade); nonblank text; `is_approved` boolean (default true); timestamps | One learner feedback record per course. |
 
 ### Private 1:1 Sessions (CASC Coaching)
 

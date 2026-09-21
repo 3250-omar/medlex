@@ -1,6 +1,14 @@
 -- Migration: Create get_pathway_feedback RPC
 -- Retrieves approved pathway feedback with course name, certificate download date, and user profile details in a single query.
 
+-- Ensure feedbacks table has is_approved column and index
+alter table public.feedbacks
+  add column if not exists is_approved boolean not null default true;
+
+comment on column public.feedbacks.is_approved is 'Moderation status for displaying feedback on public pages.';
+
+create index if not exists feedbacks_is_approved_idx on public.feedbacks (is_approved);
+
 create or replace function public.get_pathway_feedback(
   target_scope text default 'all',
   feedback_limit int default 6
