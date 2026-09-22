@@ -1,23 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { AuthDownloadButton } from "@/components/ui/auth-download-button";
 
 export default function MedicoLegalGiftSection() {
   const t = useTranslations("pathwayPages.medicoLegalLanding.gift");
-  const [email, setEmail] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!email || !email.includes("@")) return;
-
-    setSubmitting(true);
-    await new Promise((r) => setTimeout(r, 600));
-    setSubmitting(false);
-    setSubmitted(true);
-  }
 
   return (
     <section className="gift" id="gift">
@@ -38,36 +25,46 @@ export default function MedicoLegalGiftSection() {
             <div className="gift-tag">{t("tag")}</div>
             <h2>{t("title")}</h2>
             <p className="lead">{t("lead")}</p>
-            {submitted ? (
-              <div
-                style={{
-                  marginTop: "24px",
-                  padding: "16px 20px",
-                  background: "#14284B",
-                  color: "#fff",
-                  borderRadius: "4px",
-                  fontSize: "15px",
-                  fontWeight: 500,
-                  maxWidth: "560px",
+            <div
+              className="gift-form"
+              style={{
+                display: "flex",
+                gap: "10px",
+                flexWrap: "wrap",
+                marginTop: "20px",
+              }}
+            >
+              {/* <input
+                type="email"
+                placeholder={t.has("inputPlaceholder") ? t("inputPlaceholder") : "Your professional email"}
+                aria-label="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              /> */}
+              <AuthDownloadButton
+                fileUrl="/gifts/MedLex_Medico-Legal_Pathway_Guide.pdf"
+                resourceName={{
+                  en: "Medico-Legal Guide",
+                  ar: "دليل الطب النفسي القانوني",
                 }}
-              >
-                {t("successTitle")} — {t("successDesc", { email })}
-              </div>
-            ) : (
-              <form className="gift-form" onSubmit={handleSubmit}>
-                <input
-                  type="email"
-                  placeholder={t.has("inputPlaceholder") ? t("inputPlaceholder") : "Your professional email"}
-                  aria-label="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                <button type="submit" disabled={submitting}>
-                  {submitting ? "..." : (t.has("buttonText") ? t("buttonText") : "Send me the guide")}
-                </button>
-              </form>
-            )}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontWeight: 700,
+                  fontSize: "15px",
+                  padding: "15px 24px",
+                  borderRadius: "4px",
+                  background: "var(--navy, #14284B)",
+                  color: "#fff",
+                  textDecoration: "none",
+                  whiteSpace: "nowrap",
+                  cursor: "pointer",
+                  transition: "opacity 0.2s",
+                }}
+              />
+            </div>
             <p className="gift-note">{t("note")}</p>
           </div>
         </div>

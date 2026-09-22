@@ -1,23 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { AuthDownloadButton } from "@/components/ui/auth-download-button";
 
 export default function FoundationsGiftSection() {
   const t = useTranslations("pathwayPages.foundationsLanding.gift");
-  const [email, setEmail] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!email || !email.includes("@")) return;
-
-    setSubmitting(true);
-    await new Promise((r) => setTimeout(r, 600));
-    setSubmitting(false);
-    setSubmitted(true);
-  }
 
   return (
     <section
@@ -65,41 +52,29 @@ export default function FoundationsGiftSection() {
               })}
             </p>
 
-            {submitted ? (
-              <div className="mt-6 p-4.5 sm:p-5 bg-fd-navy text-white rounded text-[15.5px] font-medium max-w-[560px] leading-[1.5]">
-                {t("successTitle")} — {t("successDesc", { email })}
-              </div>
-            ) : (
-              <form
-                className="flex flex-col sm:flex-row gap-2.5 mt-7 max-w-[560px]"
-                onSubmit={handleSubmit}
-              >
-                <input
-                  type="email"
-                  placeholder={
-                    t.has("inputPlaceholder")
-                      ? t("inputPlaceholder")
-                      : "Your professional email"
-                  }
-                  aria-label="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="flex-1 min-w-0 font-sans text-[16px] px-4 py-3.5 border-[1.5px] border-fd-navy rounded bg-white text-fd-ink placeholder:text-fd-muted focus:outline-none focus:ring-2 focus:ring-fd-gold"
-                  required
-                />
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="font-sans font-bold text-[15px] px-5.5 py-3.5 rounded bg-fd-navy hover:bg-fd-navy-deep text-white whitespace-nowrap transition-colors cursor-pointer border-0 disabled:opacity-70"
-                >
-                  {submitting
-                    ? "..."
-                    : t.has("buttonText")
-                      ? t("buttonText")
-                      : "Send me the guide"}
-                </button>
-              </form>
-            )}
+            <div className="flex flex-col sm:flex-row gap-2.5 mt-7 max-w-[560px]">
+              {/* <input
+                type="email"
+                placeholder={
+                  t.has("inputPlaceholder")
+                    ? t("inputPlaceholder")
+                    : "Your professional email"
+                }
+                aria-label="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="flex-1 min-w-0 font-sans text-[16px] px-4 py-3.5 border-[1.5px] border-fd-navy rounded bg-white text-fd-ink placeholder:text-fd-muted focus:outline-none focus:ring-2 focus:ring-fd-gold"
+                required
+              /> */}
+              <AuthDownloadButton
+                fileUrl="/gifts/MedLex_Foundations_Pathway_Guide.pdf"
+                resourceName={{
+                  en: "Foundations Guide",
+                  ar: "دليل مسار التأسيس",
+                }}
+                className="font-sans font-bold text-[15px] px-5.5 py-3.5 rounded bg-fd-navy hover:bg-fd-navy-deep text-white whitespace-nowrap transition-colors cursor-pointer border-0 inline-flex items-center justify-center text-center"
+              />
+            </div>
             <p className="mt-3 text-[13.5px] text-fd-muted">{t("note")}</p>
           </div>
         </div>

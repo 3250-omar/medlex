@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { AuthDownloadButton } from "@/components/ui/auth-download-button";
 
 interface FlagshipCourseSectionProps {
   locale: string;
@@ -18,37 +18,6 @@ export default function FlagshipCourseSection({
   locale,
 }: FlagshipCourseSectionProps) {
   const t = useTranslations("home.flagship");
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<
-    "idle" | "loading" | "success" | "error"
-  >("idle");
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const handleProspectusSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || status === "loading") return;
-
-    setStatus("loading");
-    setErrorMessage("");
-
-    try {
-      const res = await fetch("/api/gifts/interest", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, type: "prospectus", locale }),
-      });
-
-      if (res.ok) {
-        setStatus("success");
-      } else {
-        setStatus("error");
-        setErrorMessage("Something went wrong. Please try again.");
-      }
-    } catch {
-      setStatus("error");
-      setErrorMessage("Something went wrong. Please try again.");
-    }
-  };
 
   return (
     <section
@@ -144,52 +113,24 @@ export default function FlagshipCourseSection({
 
             {/* Right: Email capture field */}
             <div className="w-full lg:w-auto shrink-0">
-              {status === "success" ? (
-                <div className="flex items-center gap-2 rounded-md border border-gold/30 bg-gold/10 px-5 py-3 font-sans text-sm font-medium text-gold">
-                  <svg
-                    className="h-4 w-4 shrink-0"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span>{t("prospectus.success")}</span>
-                </div>
-              ) : (
-                <form
-                  onSubmit={handleProspectusSubmit}
-                  className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3"
-                >
-                  <input
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder={t("prospectus.placeholder")}
-                    className="w-full sm:w-72 rounded-md bg-white px-4 py-3 font-sans text-sm text-navy placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-gold/60 transition-all"
-                  />
-                  <button
-                    type="submit"
-                    disabled={status === "loading"}
-                    className="rounded-md bg-[#C5A880] hover:bg-[#BFA06C] active:bg-[#B3935D] text-[#0B1B33] px-5 py-3 font-sans text-sm font-semibold whitespace-nowrap transition-colors shadow-sm disabled:opacity-60 cursor-pointer"
-                  >
-                    {status === "loading"
-                      ? t("prospectus.sending")
-                      : t("prospectus.button")}
-                  </button>
-                </form>
-              )}
-              {status === "error" && (
-                <p className="mt-2 font-sans text-xs text-red-400">
-                  {errorMessage}
-                </p>
-              )}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                {/* <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder={t("prospectus.placeholder")}
+                  className="w-full sm:w-72 rounded-md bg-white px-4 py-3 font-sans text-sm text-navy placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-gold/60 transition-all"
+                /> */}
+                <AuthDownloadButton
+                  fileUrl="/gifts/MedLex_homePage_Prospectus_2026-27.pdf"
+                  resourceName={{
+                    en: "Prospectus",
+                    ar: "دليل البرامج",
+                  }}
+                  className="rounded-md bg-[#C5A880] hover:bg-[#BFA06C] active:bg-[#B3935D] text-[#0B1B33] px-6 py-3 font-sans text-sm font-semibold whitespace-nowrap transition-colors shadow-sm cursor-pointer inline-flex items-center justify-center text-center"
+                />
+              </div>
             </div>
           </div>
         </div>

@@ -28,16 +28,32 @@ export async function GET() {
     );
 
   const db = supabase as unknown as Client;
-  const result = (await db
-    .from("enrollments")
-    .select(
-      "id, status, enrolled_at, expires_at, last_accessed_unit_id, courses!inner(slug, title_en, title_ar, description_en, description_ar), course_releases!inner(learning_units(id, slug, sequence_number, is_published)), unit_progress(unit_id, status, progress_percent)",
-    )
-    .in("status", ["active", "paused", "completed"])
-    .order("enrolled_at", { ascending: false })) as {
-    data: Row[] | null;
-    error: { message: string } | null;
-  };
+  const nowIso = new Date().toISOString();
+
+  const [result, bookingsResult] = await Promise.all([
+    db
+      .from("enrollments")
+      .select(
+        "id, status, enrolled_at, expires_at, last_accessed_unit_id, courses!inner(id, slug, title_en, title_ar, description_en, description_ar), course_releases!inner(learning_units(id, slug, sequence_number, is_published)), unit_progress(unit_id, status, progress_percent)",
+      )
+      .in("status", ["active", "paused", "completed"])
+      .order("enrolled_at", { ascending: false }) as unknown as Promise<{
+      data: Row[] | null;
+      error: { message: string } | null;
+    }>,
+    supabase
+      .from("sessions_booking")
+      .select("id, course_id, starts_at, ends_at, status, session_link, funding_type")
+      .eq("user_id", user.id)
+      .gt("starts_at", nowIso)
+      .in("status", [
+        "pending_payment",
+        "confirmed",
+        "fulfillment_pending",
+        "ready",
+      ])
+      .order("starts_at", { ascending: true }),
+  ]);
 
   if (result.error)
     return NextResponse.json(
@@ -45,8 +61,48 @@ export async function GET() {
       { status: 500 },
     );
 
+  const rawBookings = bookingsResult.data ?? [];
+  const bookingIds = rawBookings.map((b) => b.id);
+  let meetingsMap = new Map<
+    string,
+    { meeting_status: string; email_status: string; join_url: string | null }
+  >();
+
+  if (bookingIds.length > 0) {
+    const { data: meetingsData } = await supabase
+      .from("private_session_meetings")
+      .select("booking_id, meeting_status, email_status, join_url")
+      .in("booking_id", bookingIds);
+
+    if (meetingsData) {
+      meetingsMap = new Map(meetingsData.map((m) => [m.booking_id, m]));
+    }
+  }
+
+  const bookingsByCourseId = new Map<string, Row[]>();
+  for (const b of rawBookings) {
+    const cid = b.course_id;
+    if (!cid) continue;
+    const m = meetingsMap.get(b.id);
+    const list = bookingsByCourseId.get(cid) || [];
+    list.push({
+      id: b.id,
+      startsAt: b.starts_at,
+      endsAt: b.ends_at,
+      status: b.status,
+      fundingType: b.funding_type,
+      joinUrl: m?.join_url || b.session_link || null,
+      sessionLink: b.session_link || m?.join_url || null,
+      meetingStatus: m?.meeting_status || "pending",
+      emailStatus: m?.email_status || "pending",
+    });
+    bookingsByCourseId.set(cid, list);
+  }
+
   const courses = (result.data ?? []).map((enrollment) => {
     const course = enrollment.courses as Row;
+    const courseId = String(course?.id ?? "");
+    const privateSessions = bookingsByCourseId.get(courseId) || [];
     const releases = Array.isArray(enrollment.course_releases)
       ? enrollment.course_releases
       : enrollment.course_releases &&
@@ -143,6 +199,7 @@ export async function GET() {
       completedUnits,
       totalUnits,
       progressPercent,
+      privateSessions,
     };
   });
 

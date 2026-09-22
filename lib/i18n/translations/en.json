@@ -2104,5 +2104,32 @@
     "sec2Item5": "Small-group sessions that do not fill within [30] days of booking: refund, or transfer to a one-to-one session at the difference in price",
     "sec3Title": "How to ask",
     "sec3Body": "Email info@medlexsolutions.com with the name and email you used at purchase, and we reply within 2 working days"
+  },
+  "enrolledCourses": {
+    "errorTitle": "We could not load your courses.",
+    "errorDescription": "Please check your connection and try again.",
+    "tryAgain": "Try again",
+    "emptyTitle": "No enrolled courses yet.",
+    "emptyDescription": "Your active courses will appear here once you subscribe.",
+    "explorePathways": "Explore pathways",
+    "reviewCourse": "Review course",
+    "resumeCourse": "Resume course",
+    "startCourse": "Start course",
+    "lessonsCompleted": "{completed} of {total} lessons completed",
+    "completed": "Completed",
+    "inProgress": "In progress",
+    "certificate": "Certificate",
+    "viewCertificate": "View Certificate of Completion",
+    "liveSession": "Live Session",
+    "liveSessionWithDate": "Live Session ({date})",
+    "multipleSessions": "{count} Private Sessions",
+    "tooltipSingle": "Click to join the meeting",
+    "tooltipMultiple": "Click to view your scheduled sessions",
+    "dialog": {
+      "subtitle": "Your booked private coaching sessions for this course",
+      "joinSession": "Join Session",
+      "linkPending": "Link pending",
+      "close": "Close"
+    }
   }
 }

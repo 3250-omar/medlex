@@ -93,9 +93,35 @@ async function fetchFallbackSummary(
         .order("created_at", { ascending: true }),
     ]);
 
+  const upcomingBookings = (bookingsResult.data ?? []).map((b) => {
+    const m = (Array.isArray(b.meeting) ? b.meeting[0] : b.meeting) as
+      | Row
+      | undefined;
+    const c = (Array.isArray(b.course) ? b.course[0] : b.course) as
+      | Row
+      | undefined;
+    return {
+      id: String(b.id),
+      courseSlug: String(c?.slug ?? "casc-academy"),
+      startsAt: String(b.starts_at),
+      endsAt: String(b.ends_at),
+      status: String(b.status),
+      fundingType: String(b.funding_type),
+      joinUrl: (m?.join_url as string) || (b.session_link as string) || null,
+      sessionLink:
+        (b.session_link as string) || (m?.join_url as string) || null,
+      meetingStatus: (m?.meeting_status as string) || "pending",
+      emailStatus: (m?.email_status as string) || "pending",
+    };
+  });
+
   const enrolledCourses: EnrolledCourse[] = (enrollmentsResult.data ?? []).map(
     (enrollment) => {
       const course = (enrollment.courses ?? {}) as unknown as Row;
+      const courseSlug = String(course.slug ?? "");
+      const coursePrivateSessions = upcomingBookings.filter(
+        (b) => b.courseSlug === courseSlug,
+      );
       const releases = Array.isArray(enrollment.course_releases)
         ? enrollment.course_releases
         : enrollment.course_releases &&
@@ -174,7 +200,7 @@ async function fetchFallbackSummary(
         enrollmentId: String(enrollment.id),
         status: String(enrollment.status),
         expiresAt: enrollment.expires_at ? String(enrollment.expires_at) : null,
-        slug: String(course.slug ?? ""),
+        slug: courseSlug,
         titleEn: String(course.title_en ?? ""),
         titleAr: course.title_ar ? String(course.title_ar) : null,
         descriptionEn: course.description_en
@@ -188,31 +214,10 @@ async function fetchFallbackSummary(
         completedUnits,
         totalUnits,
         progressPercent,
+        privateSessions: coursePrivateSessions,
       };
     },
   );
-
-  const upcomingBookings = (bookingsResult.data ?? []).map((b) => {
-    const m = (Array.isArray(b.meeting) ? b.meeting[0] : b.meeting) as
-      | Row
-      | undefined;
-    const c = (Array.isArray(b.course) ? b.course[0] : b.course) as
-      | Row
-      | undefined;
-    return {
-      id: String(b.id),
-      courseSlug: String(c?.slug ?? "casc-academy"),
-      startsAt: String(b.starts_at),
-      endsAt: String(b.ends_at),
-      status: String(b.status),
-      fundingType: String(b.funding_type),
-      joinUrl: (m?.join_url as string) || (b.session_link as string) || null,
-      sessionLink:
-        (b.session_link as string) || (m?.join_url as string) || null,
-      meetingStatus: (m?.meeting_status as string) || "pending",
-      emailStatus: (m?.email_status as string) || "pending",
-    };
-  });
 
   const packages = (entitlementsResult.data ?? []).map((e) => {
     const c = (Array.isArray(e.course) ? e.course[0] : e.course) as

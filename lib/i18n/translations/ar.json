@@ -2104,5 +2104,32 @@
     "sec2Item5": "جلسات المجموعات الصغيرة التي لا يكتمل عددها خلال [30] يوماً من الحجز: تُسترد قيمتها، أو تُحوّل إلى جلسة تدريب فردي مع دفع فارق السعر",
     "sec3Title": "كيفية تقديم الطلب",
     "sec3Body": "أرسل بريداً إلكترونياً إلى info@medlexsolutions.com متضمناً الاسم والبريد الإلكتروني اللذين استخدمتهما عند الشراء، وسنرد عليك في غضون يومي عمل"
+  },
+  "enrolledCourses": {
+    "errorTitle": "تعذر تحميل الكورسات الخاصة بك.",
+    "errorDescription": "يرجى التحقق من اتصالك والمحاولة مرة أخرى.",
+    "tryAgain": "إعادة المحاولة",
+    "emptyTitle": "لم تسجل في أي كورس بعد.",
+    "emptyDescription": "ستظهر كورساتك النشطة هنا بمجرد الاشتراك.",
+    "explorePathways": "استكشف المسارات",
+    "reviewCourse": "مراجعة الكورس",
+    "resumeCourse": "متابعة الكورس",
+    "startCourse": "ابدأ الكورس",
+    "lessonsCompleted": "{completed} من أصل {total} درس مكتمل",
+    "completed": "مكتمل",
+    "inProgress": "قيد التقدم",
+    "certificate": "الشهادة",
+    "viewCertificate": "عرض شهادة الإتمام",
+    "liveSession": "جلسة خاصة",
+    "liveSessionWithDate": "جلسة خاصة ({date})",
+    "multipleSessions": "{count} جلسات خاصة",
+    "tooltipSingle": "اضغط للانضمام إلى الاجتماع",
+    "tooltipMultiple": "اضغط لعرض مواعيد وجلسات الكورس",
+    "dialog": {
+      "subtitle": "قائمة الجلسات الخاصة المباشرة المحجوزة لهذا الكورس",
+      "joinSession": "انضم للجلسة",
+      "linkPending": "الرابط قيد التجهيز",
+      "close": "إغلاق"
+    }
   }
 }
