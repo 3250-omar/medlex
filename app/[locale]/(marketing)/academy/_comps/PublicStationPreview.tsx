@@ -11,19 +11,20 @@ import {
 import "./cascEditorial.css";
 import { sanitizeLessonHtml } from "./lessonSanitizer";
 
-type PreviewUnit = {
+export type PreviewUnit = {
   title: string;
   assessments?: RawAssessment[];
   content_blocks: Array<{ sort_order: number; content: { html?: string } }>;
 };
-type Props = { locale: string };
+type Props = { locale: string; initialUnit?: PreviewUnit | null };
 
-export default function PublicStationPreview({ locale }: Props) {
-  const [unit, setUnit] = useState<PreviewUnit | null>(null);
+export default function PublicStationPreview({ locale, initialUnit }: Props) {
+  const [unit, setUnit] = useState<PreviewUnit | null>(initialUnit ?? null);
   const [error, setError] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (initialUnit) return;
     fetch("/api/academy/casc-preview")
       .then(async (response) => {
         if (!response.ok) throw new Error("Preview unavailable");
@@ -31,7 +32,7 @@ export default function PublicStationPreview({ locale }: Props) {
       })
       .then(({ data }) => setUnit(data))
       .catch(() => setError(true));
-  }, []);
+  }, [initialUnit]);
 
   useEffect(() => {
     const root = containerRef.current;

@@ -1,9 +1,17 @@
 import type { Metadata } from "next";
-import { createLocalizedMetadata, CANONICAL_ORIGIN, type Locale } from "@/lib/seo/metadata";
+import {
+  createLocalizedMetadata,
+  CANONICAL_ORIGIN,
+  type Locale,
+} from "@/lib/seo/metadata";
 import { JsonLd } from "@/lib/seo/JsonLd";
-import { createLearningResourceSchema, createBreadcrumbSchema } from "@/lib/seo/schema";
+import {
+  createLearningResourceSchema,
+  createBreadcrumbSchema,
+} from "@/lib/seo/schema";
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import PublicStationPreview from "../../_comps/PublicStationPreview";
+import { getPublicPreviewStation } from "@/lib/academy/preview";
 
 interface StationPreviewPageProps {
   params: Promise<{ locale: string }>;
@@ -20,11 +28,15 @@ export default async function StationPreviewPage({
   params,
 }: StationPreviewPageProps) {
   const { locale } = await params;
+  const unit = await getPublicPreviewStation();
   const isAr = locale === "ar";
 
   const breadcrumbs = [
     { label: isAr ? "الرئيسية" : "Home", href: `/${locale}` },
-    { label: isAr ? "أكاديمية CASC" : "CASC Academy", href: `/${locale}/pathways/casc-academy` },
+    {
+      label: isAr ? "أكاديمية CASC" : "CASC Academy",
+      href: `/${locale}/pathways/casc-academy`,
+    },
     { label: isAr ? "معاينة المحطة 7.2" : "Station 7.2 Preview" },
   ];
 
@@ -49,7 +61,7 @@ export default async function StationPreviewPage({
           <Breadcrumbs items={breadcrumbs} />
         </div>
       </div>
-      <PublicStationPreview locale={locale} />
+      <PublicStationPreview locale={locale} initialUnit={unit} />
     </>
   );
 }

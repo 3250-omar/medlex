@@ -27,7 +27,7 @@ const EXPECTED_ROUTES = [
   { key: "faq", path: "/faq" },
   { key: "stationPreview", path: "/academy/preview/station-7-2" },
   { key: "register", path: "/register" },
-  { key: "privacy", path: "/privacy" },
+  { key: "privacy", path: "/privacy-policy" },
   { key: "terms", path: "/terms" },
   { key: "refundPolicy", path: "/refund-policy" },
 ];
@@ -61,6 +61,10 @@ for (const route of EXPECTED_ROUTES) {
     metadataContent.includes(`key: "${route.key}"`) ||
       metadataContent.includes(`${route.key}:`),
     `Route '${route.key}' is present in SEO_ROUTES_REGISTRY`,
+  );
+  assert(
+    metadataContent.includes(`path: "${route.path}"`),
+    `Route '${route.key}' has expected path '${route.path}' in SEO_ROUTES_REGISTRY`,
   );
 }
 
