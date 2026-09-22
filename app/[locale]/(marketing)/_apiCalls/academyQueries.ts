@@ -70,6 +70,7 @@ export type EnrolledCourse = {
   completedUnits: number;
   totalUnits: number;
   progressPercent: number;
+  privateSessions?: UserUpcomingBooking[];
 };
 
 export const academyQueryKeys = {

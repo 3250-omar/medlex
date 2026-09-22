@@ -1,11 +1,13 @@
 "use client";
 
-import { useCallback, useContext, useState } from "react";
-import { useTranslations } from "next-intl";
-import { Loader2 } from "lucide-react";
+import { useCallback, useState } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
+import { Download } from "lucide-react";
 import confetti from "canvas-confetti";
 import { useQueryClient } from "@tanstack/react-query";
-import { InterestDialogContext } from "@/components/marketing/InterestDialog";
+import { AuthDownloadButton } from "@/components/ui/auth-download-button";
 import {
   academyQueryKeys,
   type GiftStatus,
@@ -15,17 +17,15 @@ import {
 
 export default function CascGiftsSection() {
   const t = useTranslations("cascGifts");
-  const dialog = useContext(InterestDialogContext);
+  const locale = useLocale();
+  const pathname = usePathname();
+  const router = useRouter();
   const { data: user } = useCurrentUser();
   const { data: _giftStatus } = useGiftStatus(Boolean(user));
   const queryClient = useQueryClient();
 
-  const [email, setEmail] = useState("");
-  const [downloading, setDownloading] = useState<"1" | "2" | "both" | null>(
-    null,
-  );
+  const [, setDownloading] = useState<"1" | "2" | null>(null);
   const [downloadError, setDownloadError] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
 
   const triggerCelebration = useCallback(() => {
     const count = 200;
@@ -117,29 +117,6 @@ export default function CascGiftsSection() {
     }
   }
 
-  async function handleSendBoth(e: React.FormEvent) {
-    e.preventDefault();
-    if (!email || !email.includes("@")) {
-      return;
-    }
-
-    setDownloading("both");
-    setDownloadError(false);
-
-    const s1 = await downloadResource("1", "The Examiner's Briefing.pdf");
-    await new Promise((r) => setTimeout(r, 350));
-    const s2 = await downloadResource("2", "The Examiner's Error Log.pdf");
-
-    setDownloading(null);
-
-    if (s1 || s2) {
-      triggerCelebration();
-      setSubmitted(true);
-    } else {
-      setDownloadError(true);
-    }
-  }
-
   return (
     <section
       id="gifts"
@@ -157,9 +134,15 @@ export default function CascGiftsSection() {
 
             {/* Book 1: The Examiner's Briefing (Back / Left) */}
             <div
-              onClick={() =>
-                void handleDownloadSingle("1", "The Examiner's Briefing.pdf")
-              }
+              onClick={() => {
+                if (!user) {
+                  router.push(
+                    `/${locale}/auth?tab=sign-in&redirect=${encodeURIComponent(pathname || `/${locale}/pathways/casc`)}`,
+                  );
+                  return;
+                }
+                void handleDownloadSingle("1", "The Examiner's Briefing.pdf");
+              }}
               className="group relative w-44 sm:w-52 md:w-56 aspect-[3/4.3] rounded-[4px] border-l-[10px] sm:border-l-[12px] border-[#B8933D] bg-gradient-to-br from-[#1B3766] via-[#142A4E] to-[#0E1D38] p-4 sm:p-5 text-white shadow-[0_22px_45px_rgba(20,40,75,0.38)] -rotate-[4.5deg] transition-all duration-300 hover:-translate-y-2 hover:rotate-[-5.5deg] hover:shadow-[0_28px_55px_rgba(20,40,75,0.48)] cursor-pointer z-10 flex flex-col justify-between"
               title={t("book1Tooltip")}
             >
@@ -187,7 +170,9 @@ export default function CascGiftsSection() {
                 </p>
                 <h3 className="font-serif text-xl sm:text-[24px] font-bold leading-[1.15] text-white tracking-tight">
                   {t("book1TitlePrefix")}
-                  <span className="block mt-0.5 font-bold">{t("book1TitleSuffix")}</span>
+                  <span className="block mt-0.5 font-bold">
+                    {t("book1TitleSuffix")}
+                  </span>
                 </h3>
               </div>
 
@@ -201,9 +186,15 @@ export default function CascGiftsSection() {
 
             {/* Book 2: The Examiner's Error Log (Front / Right) */}
             <div
-              onClick={() =>
-                void handleDownloadSingle("2", "The Examiner's Error Log.pdf")
-              }
+              onClick={() => {
+                if (!user) {
+                  router.push(
+                    `/${locale}/auth?tab=sign-in&redirect=${encodeURIComponent(pathname || `/${locale}/pathways/casc`)}`,
+                  );
+                  return;
+                }
+                void handleDownloadSingle("2", "The Examiner's Error Log.pdf");
+              }}
               className="group relative w-44 sm:w-52 md:w-56 aspect-[3/4.3] rounded-[4px] border-l-[10px] sm:border-l-[12px] border-[#B8933D] bg-gradient-to-br from-[#1C3A6B] via-[#142A4E] to-[#0C1A32] p-4 sm:p-5 text-white shadow-[-8px_25px_50px_rgba(15,29,56,0.42)] rotate-[2.5deg] -ml-20 sm:-ml-24 mt-8 sm:mt-10 transition-all duration-300 hover:-translate-y-2 hover:rotate-[1.5deg] hover:shadow-[-8px_32px_60px_rgba(15,29,56,0.52)] cursor-pointer z-20 flex flex-col justify-between"
               title={t("book2Tooltip")}
             >
@@ -231,7 +222,9 @@ export default function CascGiftsSection() {
                 </p>
                 <h3 className="font-serif text-xl sm:text-[24px] font-bold leading-[1.15] text-white tracking-tight">
                   {t("book2TitlePrefix")}
-                  <span className="block mt-0.5 font-bold">{t("book2TitleSuffix")}</span>
+                  <span className="block mt-0.5 font-bold">
+                    {t("book2TitleSuffix")}
+                  </span>
                 </h3>
               </div>
 
@@ -261,12 +254,9 @@ export default function CascGiftsSection() {
               {t("description")}
             </p>
 
-            {/* Email form */}
-            <form
-              onSubmit={handleSendBoth}
-              className="mt-7 flex flex-col sm:flex-row gap-2.5 max-w-[520px]"
-            >
-              <input
+            {/* Email form replaced with Auth-aware action */}
+            <div className="mt-7 flex flex-col sm:flex-row gap-2.5 max-w-[540px] justify-center items-center">
+              {/* <input
                 type="email"
                 required
                 value={email}
@@ -274,62 +264,37 @@ export default function CascGiftsSection() {
                 placeholder={t("emailPlaceholder")}
                 aria-label={t("emailAriaLabel")}
                 className="flex-1 min-w-0 bg-white border-[1.5px] border-[#0E1D38] text-[#0E1D38] placeholder:text-[#8C93A0] rounded-[4px] px-4 py-3 sm:py-3.5 text-[15px] font-sans focus:outline-none focus:ring-2 focus:ring-[#B8933D]"
-              />
-              <button
-                type="submit"
-                disabled={downloading !== null}
-                className="bg-[#0E1D38] hover:bg-[#1A365D] active:bg-[#0A162B] text-white font-medium text-[15px] px-6 py-3 sm:py-3.5 rounded-[4px] transition-colors duration-200 whitespace-nowrap cursor-pointer flex items-center justify-center gap-2 shrink-0 disabled:opacity-70 shadow-xs"
-              >
-                {downloading === "both" ? (
-                  <>
-                    <Loader2
-                      className="animate-spin text-white shrink-0"
-                      size={16}
-                    />
-                    <span>{t("sendingButton")}</span>
-                  </>
-                ) : (
-                  t("submitButton")
+              /> */}
+              <div className="flex flex-col sm:flex-col flex-wrap gap-2.5 ">
+                <AuthDownloadButton
+                  fileUrl="/gifts/The%20Examiner's%20Briefing.pdf"
+                  fileName="The Examiner's Briefing.pdf"
+                  resourceName={{
+                    en: "The Examiner's Briefing",
+                    ar: "The Examiner's Briefing",
+                  }}
+                  loginLabel={
+                    locale === "ar"
+                      ? "تسجيل الدخول لتحميل أدلة CASC"
+                      : "Login to download CASC Guides"
+                  }
+                  icon={<Download className="w-4 h-4 shrink-0" />}
+                  className="bg-[#0E1D38] hover:bg-[#1A365D] active:bg-[#0A162B] text-white font-medium text-[14px] px-5 py-3 sm:py-3.5 rounded-[4px] transition-colors duration-200 whitespace-nowrap cursor-pointer flex items-center justify-center gap-2 shadow-xs"
+                />
+                {user && (
+                  <AuthDownloadButton
+                    fileUrl="/gifts/The%20Examiner's%20Error%20Log.pdf"
+                    fileName="The Examiner's Error Log.pdf"
+                    resourceName={{
+                      en: "The Examiner's Error Log",
+                      ar: "The Examiner's Error Log",
+                    }}
+                    icon={<Download className="w-4 h-4 shrink-0" />}
+                    className="bg-[#0E1D38] hover:bg-[#1A365D] active:bg-[#0A162B] text-white font-medium text-[14px] px-5 py-3 sm:py-3.5 rounded-[4px] transition-colors duration-200 whitespace-nowrap cursor-pointer flex items-center justify-center gap-2 shadow-xs"
+                  />
                 )}
-              </button>
-            </form>
-
-            {submitted && (
-              <div className="mt-4 p-3.5 rounded-[4px] bg-[#0E1D38]! text-white max-w-[520px] text-xs sm:text-sm">
-                <p className="font-semibold text-[#E8D4A0]">
-                  {t("successHeading")}
-                </p>
-                <p className="text-white/80 mt-1 text-xs">
-                  {t("successFallback")}
-                </p>
-                <div className="flex flex-wrap gap-2 mt-2">
-                  <button
-                    type="button"
-                    onClick={() =>
-                      void handleDownloadSingle(
-                        "1",
-                        "The Examiner's Briefing.pdf",
-                      )
-                    }
-                    className="text-xs bg-white/10 hover:bg-white/20 text-[#D9C08A] px-2.5 py-1 rounded transition-colors cursor-pointer"
-                  >
-                    The Examiner&apos;s Briefing.pdf
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      void handleDownloadSingle(
-                        "2",
-                        "The Examiner's Error Log.pdf",
-                      )
-                    }
-                    className="text-xs bg-white/10 hover:bg-white/20 text-[#D9C08A] px-2.5 py-1 rounded transition-colors cursor-pointer"
-                  >
-                    The Examiner&apos;s Error Log.pdf
-                  </button>
-                </div>
               </div>
-            )}
+            </div>
 
             {downloadError && (
               <p role="alert" className="text-xs text-red-600 mt-2">

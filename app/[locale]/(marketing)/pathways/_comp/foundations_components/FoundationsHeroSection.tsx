@@ -5,7 +5,7 @@ type Props = {
   locale?: string;
 };
 
-export default function FoundationsHeroSection({ locale: _locale }: Props) {
+export default function FoundationsHeroSection({ locale = "en" }: Props) {
   const t = useTranslations("pathwayPages.foundationsLanding.hero");
 
   const tickerItems =
@@ -74,6 +74,15 @@ export default function FoundationsHeroSection({ locale: _locale }: Props) {
               href="#gift"
             >
               {t("freeGuideBtn")}
+            </a>
+            <a
+              className="inline-block font-sans font-semibold text-[15px] px-6 py-3.5 rounded border-[1.5px] border-white bg-transparent text-white hover:bg-white hover:text-fd-navy transition-colors cursor-pointer text-center"
+              href="/gifts/MedLex_Foundations_Pathway_Guide.pdf"
+              download="MedLex_Foundations_Pathway_Guide.pdf"
+            >
+              {locale === "ar"
+                ? "تحميل الدليل التعريفي"
+                : "Download Prospectus"}
             </a>
           </div>
         </div>

@@ -96,6 +96,15 @@ export default function InstitutionalHero({ locale }: InstitutionalHeroProps) {
             >
               {t("ctaServices")}
             </a>
+            <a
+              href="/gifts/MedLex_Institutional_Guide.pdf"
+              download="MedLex_Institutional_Guide.pdf"
+              className="inline-flex items-center justify-center font-sans font-semibold text-[15px] px-6 py-3.5 rounded border border-white text-white hover:bg-white hover:text-navy transition-colors"
+            >
+              {locale === "ar"
+                ? "تحميل الدليل التعريفي"
+                : "Download Prospectus"}
+            </a>
           </div>
         </div>
       </div>

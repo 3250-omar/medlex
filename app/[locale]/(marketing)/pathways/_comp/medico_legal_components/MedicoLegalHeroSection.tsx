@@ -52,6 +52,15 @@ export default function MedicoLegalHeroSection({ locale: _locale }: Props) {
               <a className="btn ghost" href="#flagship">
                 {t("flagshipBtn")}
               </a>
+              <a
+                className="btn ghost"
+                href="/gifts/MedLex_Medico-Legal_Pathway_Guide.pdf"
+                download="MedLex_Medico-Legal_Pathway_Guide.pdf"
+              >
+                {_locale === "ar"
+                  ? "تحميل الدليل التعريفي"
+                  : "Download Prospectus"}
+              </a>
             </div>
           </div>
         </div>

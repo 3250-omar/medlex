@@ -4,6 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "env:dev": "node scripts/switch-env.mjs dev",
+    "env:prod": "node scripts/switch-env.mjs prod",
+    "dev:dev": "node scripts/switch-env.mjs dev && next dev",
+    "dev:prod": "node scripts/switch-env.mjs prod && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",

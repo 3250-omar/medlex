@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/api/client";
+import type { UserUpcomingBooking } from "./academyQueries";
 
 export interface PublicCourse {
   id: string;
@@ -15,6 +16,7 @@ export interface PublicCourse {
   points_on_completion: number;
   is_published: boolean;
   created_at: string;
+  privateSessions?: UserUpcomingBooking[];
 }
 
 export const courseQueryKeys = {

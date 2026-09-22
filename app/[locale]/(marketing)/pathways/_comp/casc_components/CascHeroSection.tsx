@@ -4,7 +4,7 @@ import { Fragment } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Download } from "lucide-react";
 import type { EnrolledCourse } from "../../../_apiCalls/academyQueries";
 import EnrolOrContinue from "./EnrolOrContinue";
 
@@ -121,6 +121,16 @@ export default function CascHeroSection({
           >
             {t("tryStationCta")}
           </Link>
+          <a
+            href="/gifts/MedLex_CASC_Academy_Course_Guide.pdf"
+            download="MedLex_CASC_Academy_Course_Guide.pdf"
+            className="btn bg-white/90! hover:bg-white! border border-navy/30! hover:border-navy! text-navy! !min-h-12 !px-7 font-semibold text-sm !rounded-lg transition-transform hover:-translate-y-0.5 shadow-sm inline-flex items-center gap-2"
+          >
+            <Download className="w-4 h-4 shrink-0" />
+            <span>
+              {locale === "ar" ? "تحميل الدليل التعريفي" : "Download Prospectus"}
+            </span>
+          </a>
         </div>
 
         {/* Coaching link below CTA buttons */}

@@ -26,22 +26,22 @@ The implementation will cover technical SEO, localized metadata, structured data
 
 All 14 public paths are indexable in both languages, producing 28 sitemap URLs.
 
-| Public path | Primary search intent and title phrase | Structured data |
-|---|---|---|
-| `/` | Forensic Psychiatry Education & CASC Training | `WebSite` and `Organization` |
-| `/founder` | Dr Ahmed Abouelghit — Consultant Forensic Psychiatrist | `ProfilePage` with `Person` |
-| `/pathways` | Psychiatry Education Pathways | `CollectionPage` and `ItemList` linking the three pathways |
-| `/pathways/medico-legal` | Medicolegal Psychiatry & Expert Report Writing | `WebPage`/educational programme plus breadcrumbs |
-| `/pathways/casc-academy` | MRCPsych CASC Preparation & Coaching | Truthful `Course` data plus breadcrumbs |
-| `/pathways/foundations` | Foundations of Medicolegal Psychiatry | Educational programme plus breadcrumbs |
-| `/institutional` | Forensic Psychiatry Services for Courts & Institutions | `Service` with MedLex as provider |
-| `/contact` | Courses & Institutional Enquiries | `ContactPage` and verified contact points |
-| `/faq` | Courses, CASC & Medicolegal Training FAQ | `FAQPage`, matching only visible questions and answers |
-| `/academy/preview/station-7-2` | Free MRCPsych CASC Station Preview | `LearningResource` plus breadcrumbs |
-| `/register` | Register Your Interest in MedLex Programmes | `WebPage` |
-| `/privacy` | Privacy Policy | `WebPage` |
-| `/terms` | Terms and Conditions | `WebPage` |
-| `/refund-policy` | Refund Policy | `WebPage` |
+| Public path                    | Primary search intent and title phrase                 | Structured data                                            |
+| ------------------------------ | ------------------------------------------------------ | ---------------------------------------------------------- |
+| `/`                            | Forensic Psychiatry Education & CASC Training          | `WebSite` and `Organization`                               |
+| `/founder`                     | Dr Ahmed Abouelghit — Consultant Forensic Psychiatrist | `ProfilePage` with `Person`                                |
+| `/pathways`                    | Psychiatry Education Pathways                          | `CollectionPage` and `ItemList` linking the three pathways |
+| `/pathways/medico-legal`       | Medicolegal Psychiatry & Expert Report Writing         | `WebPage`/educational programme plus breadcrumbs           |
+| `/pathways/casc-academy`       | MRCPsych CASC Preparation & Coaching                   | Truthful `Course` data plus breadcrumbs                    |
+| `/pathways/foundations`        | Foundations of Medicolegal Psychiatry                  | Educational programme plus breadcrumbs                     |
+| `/institutional`               | Forensic Psychiatry Services for Courts & Institutions | `Service` with MedLex as provider                          |
+| `/contact`                     | Courses & Institutional Enquiries                      | `ContactPage` and verified contact points                  |
+| `/faq`                         | Courses, CASC & Medicolegal Training FAQ               | `FAQPage`, matching only visible questions and answers     |
+| `/academy/preview/station-7-2` | Free MRCPsych CASC Station Preview                     | `LearningResource` plus breadcrumbs                        |
+| `/register`                    | Register Your Interest in MedLex Programmes            | `WebPage`                                                  |
+| `/privacy-policy`              | Privacy Policy                                         | `WebPage`                                                  |
+| `/terms`                       | Terms and Conditions                                   | `WebPage`                                                  |
+| `/refund-policy`               | Refund Policy                                          | `WebPage`                                                  |
 
 The following remain excluded from search and the sitemap:
 
