@@ -106,6 +106,7 @@ courses -> feedbacks -> public_course_feedbacks (read-only view)
 | `private_session_meetings` | UUID PK; unique `booking_id`, `provider`, `provider_event_id`, `conference_id`, `join_url`, `meeting_status`, `email_status`, retry counts | Google Meet and delivery tracking. |
 | `private_session_outbox` | UUID PK; `booking_id`, `job_type`, unique `deduplication_key`, `status`, `available_at`, `locked_at`, `locked_by`, `attempt_count`, `max_attempts` | Transactional outbox with `SKIP LOCKED` leasing. |
 | `private_session_audit_events` | UUID PK; `actor_type`, `actor_id`, `entity_type`, `entity_id`, `action`, `before_state`, `after_state`, `correlation_id`, `created_at`; append-only trigger | Immutable security audit trail. |
+| `offer_country_prices` | UUID PK; `offer_id` -> private_session_offers (cascade); `country_code` (ISO 3166-1 alpha-2 or `__OTHER__`); `price_minor`, `currency` (ISO 4217); `is_active`; timestamps; unique `(offer_id, country_code)` | Per-country pricing overrides for session offers. `__OTHER__` serves as fallback for unmatched countries. Resolution order: exact country → `__OTHER__` → default offer price. |
 
 
 ## View, storage, and security

@@ -12,10 +12,7 @@ import {
 } from "@/lib/private-sessions/http";
 // TODO: Re-import paymentAdapter once Paymob payment integration is enabled
 // import { paymentAdapter } from "@/lib/private-sessions/payment";
-import {
-  fulfillBookingImmediately,
-  processOutboxBatch,
-} from "@/lib/private-sessions/fulfillment";
+import { fulfillBookingImmediately } from "@/lib/private-sessions/fulfillment";
 
 export async function POST(req: NextRequest) {
   const correlationId = getCorrelationId(req);
@@ -70,6 +67,11 @@ export async function POST(req: NextRequest) {
     const returnUrl = `${origin}/pathways/casc-academy?oneToOne=open`;
     const admin = createAdminClient();
 
+    // Resolve country code from middleware-injected header
+    const countryCode = (
+      req.headers.get("x-user-country") || "EG"
+    ).toUpperCase();
+
     if (payload.mode === "direct") {
       // Direct session booking checkout
       const { data: holdData, error: holdError } = await supabase.rpc(
@@ -78,6 +80,7 @@ export async function POST(req: NextRequest) {
           p_slot_id: payload.slotId,
           p_course_slug: payload.courseSlug,
           p_idempotency_key: idempotencyKey,
+          p_country_code: countryCode,
         },
       );
 
@@ -95,7 +98,7 @@ export async function POST(req: NextRequest) {
           );
         }
         return internalError(holdError.message, correlationId);
-      }
+      } 
 
       const hold = Array.isArray(holdData) ? holdData[0] : holdData;
       if (!hold || !hold.payment_attempt_id) {
@@ -205,6 +208,37 @@ export async function POST(req: NextRequest) {
         );
       }
 
+      // Resolve country-specific price for the package offer
+      let resolvedPriceMinor = offer.price_minor;
+      let resolvedCurrency = offer.currency;
+
+      const { data: countryPriceRow } = await admin
+        .from("offer_country_prices")
+        .select("price_minor, currency")
+        .eq("offer_id", offer.id)
+        .eq("country_code", countryCode)
+        .eq("is_active", true)
+        .maybeSingle();
+
+      if (countryPriceRow) {
+        resolvedPriceMinor = countryPriceRow.price_minor;
+        resolvedCurrency = countryPriceRow.currency;
+      } else {
+        // Try __OTHER__ fallback
+        const { data: otherPriceRow } = await admin
+          .from("offer_country_prices")
+          .select("price_minor, currency")
+          .eq("offer_id", offer.id)
+          .eq("country_code", "__OTHER__")
+          .eq("is_active", true)
+          .maybeSingle();
+
+        if (otherPriceRow) {
+          resolvedPriceMinor = otherPriceRow.price_minor;
+          resolvedCurrency = otherPriceRow.currency;
+        }
+      }
+
       // Create package payment attempt
       const attemptId = crypto.randomUUID();
       const { data: attempt, error: attemptError } = await admin
@@ -218,8 +252,8 @@ export async function POST(req: NextRequest) {
           purpose: "package",
           slot_id: null,
           quantity_snapshot: offer.session_count,
-          amount_minor: offer.price_minor,
-          currency: offer.currency,
+          amount_minor: resolvedPriceMinor,
+          currency: resolvedCurrency,
           provider: "paymob",
           status: "pending",
           hold_expires_at: null,

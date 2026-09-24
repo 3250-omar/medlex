@@ -46,6 +46,14 @@ export async function proxy(request: NextRequest) {
 
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-next-intl-locale", locale);
+
+  // Country detection: Vercel sets x-vercel-ip-country automatically on edge
+  const countryCode =
+    request.headers.get("x-vercel-ip-country") ||
+    request.headers.get("cf-ipcountry") ||
+    "EG"; // Fallback to Egypt for local dev
+  requestHeaders.set("x-user-country", countryCode.toUpperCase());
+
   let response = NextResponse.next({ request: { headers: requestHeaders } });
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
