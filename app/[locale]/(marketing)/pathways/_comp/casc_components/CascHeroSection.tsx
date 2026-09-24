@@ -3,23 +3,23 @@
 import { Fragment } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { ArrowRight, Download } from "lucide-react";
 import type { EnrolledCourse } from "../../../_apiCalls/academyQueries";
 import EnrolOrContinue from "./EnrolOrContinue";
 
 type Props = {
-  locale: string;
   cascEnrolment?: EnrolledCourse;
   continueSlug?: string | null;
 };
 
 export default function CascHeroSection({
-  locale,
   cascEnrolment,
   continueSlug,
 }: Props) {
+  const locale = useLocale();
   const t = useTranslations("cascHero");
+  const isAr = locale === "ar";
 
   return (
     <section className="relative text-char flex flex-col justify-between min-h-[calc(100vh-125px)] min-h-[calc(100dvh-125px)] pt-12 sm:pt-16 lg:pt-20 pb-0 border-b border-hair overflow-hidden">
@@ -128,7 +128,9 @@ export default function CascHeroSection({
           >
             <Download className="w-4 h-4 shrink-0" />
             <span>
-              {locale === "ar" ? "تحميل الدليل التعريفي" : "Download Prospectus"}
+              {locale === "ar"
+                ? "تحميل الدليل التعريفي"
+                : "Download Prospectus"}
             </span>
           </a>
         </div>

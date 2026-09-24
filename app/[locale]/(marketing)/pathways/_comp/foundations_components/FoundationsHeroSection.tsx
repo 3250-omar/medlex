@@ -8,8 +8,7 @@ type Props = {
 export default function FoundationsHeroSection({ locale = "en" }: Props) {
   const t = useTranslations("pathwayPages.foundationsLanding.hero");
 
-  const tickerItems =
-    (t.raw("ticker") as string[]) || DEFAULT_TICKER_ITEMS;
+  const tickerItems = (t.raw("ticker") as string[]) || DEFAULT_TICKER_ITEMS;
 
   return (
     <section className="relative overflow-hidden bg-fd-navy-deep bg-[url('/images/foundations/hero_bg.jpg')] bg-cover bg-center text-white">
@@ -24,7 +23,9 @@ export default function FoundationsHeroSection({ locale = "en" }: Props) {
           <h1 className="font-serif text-[clamp(40px,5vw,66px)] font-normal leading-[1.08] tracking-[-0.02em] text-white">
             {t.rich("headline", {
               em: (chunks) => (
-                <em className="italic font-normal text-fd-gold-soft">{chunks}</em>
+                <em className="italic font-normal text-fd-gold-soft">
+                  {chunks}
+                </em>
               ),
             })}
           </h1>
@@ -77,8 +78,16 @@ export default function FoundationsHeroSection({ locale = "en" }: Props) {
             </a>
             <a
               className="inline-block font-sans font-semibold text-[15px] px-6 py-3.5 rounded border-[1.5px] border-white bg-transparent text-white hover:bg-white hover:text-fd-navy transition-colors cursor-pointer text-center"
-              href="/gifts/MedLex_Foundations_Pathway_Guide.pdf"
-              download="MedLex_Foundations_Pathway_Guide.pdf"
+              href={
+                locale === "ar"
+                  ? "/gifts/ar/foundation_prospectus.pdf"
+                  : "/gifts/MedLex_Foundations_Pathway_Guide.pdf"
+              }
+              download={
+                locale === "ar"
+                  ? "MedLex_Foundations_Pathway_Guide_AR.pdf"
+                  : "MedLex_Foundations_Pathway_Guide.pdf"
+              }
             >
               {locale === "ar"
                 ? "تحميل الدليل التعريفي"

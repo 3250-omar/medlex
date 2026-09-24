@@ -82,7 +82,6 @@ export default function CascAcademyLanding(_props: Props) {
     <main id="top" className="bg-white text-char">
       {/* 1. HERO SECTION */}
       <CascHeroSection
-        locale={locale}
         cascEnrolment={cascEnrolment}
         continueSlug={continueSlug}
       />
