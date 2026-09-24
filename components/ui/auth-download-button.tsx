@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { useCurrentUser } from "@/app/[locale]/(marketing)/_apiCalls/academyQueries";
 import { cn } from "@/lib/utils";
@@ -45,25 +45,22 @@ export function AuthDownloadButton({
   const { data: user } = useCurrentUser();
   const locale = useLocale();
   const pathname = usePathname();
+  const t = useTranslations("common");
 
   const resolvedFileName =
     fileName || decodeURIComponent(fileUrl.split("/").pop() || "download.pdf");
 
   const defaultLoginText = resourceName
-    ? locale === "ar"
-      ? `تسجيل الدخول لتحميل ${resourceName.ar}`
-      : `Login to download ${resourceName.en}`
-    : locale === "ar"
-      ? "تسجيل الدخول للتحميل"
-      : "Login to download";
+    ? t("loginToDownloadResource", {
+        name: locale === "ar" ? resourceName.ar : resourceName.en,
+      })
+    : t("loginToDownload");
 
   const defaultDownloadText = resourceName
-    ? locale === "ar"
-      ? `تحميل ${resourceName.ar}`
-      : `Download ${resourceName.en}`
-    : locale === "ar"
-      ? "تحميل"
-      : "Download";
+    ? t("downloadResource", {
+        name: locale === "ar" ? resourceName.ar : resourceName.en,
+      })
+    : t("download");
 
   const redirectPath = pathname || `/${locale}`;
   const authUrl = `/${locale}/auth?tab=sign-in&redirect=${encodeURIComponent(redirectPath)}`;

@@ -205,7 +205,7 @@ export default async function Footer({ locale }: { locale: string }) {
                 href={`/${locale}/refund-policy`}
                 className="hover:text-white transition-colors"
               >
-                {locale === "ar" ? "سياسة الاسترداد" : "Refund Policy"}
+                {t("refund")}
               </Link>
             </div>
           </div>

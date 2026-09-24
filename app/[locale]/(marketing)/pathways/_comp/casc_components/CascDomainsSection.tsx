@@ -1,6 +1,9 @@
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export default function CascDomainsSection() {
+  const t = useTranslations("cascDomains");
+
   return (
     <section
       id="library"
@@ -24,13 +27,12 @@ export default function CascDomainsSection() {
           {/* Content Column (End) */}
           <div className="w-full lg:w-3/5 xl:w-[62%] 2xl:w-[60%] flex flex-col justify-between">
             <div>
-              <p className="kicker text-goldd">The library</p>
+              <p className="kicker text-goldd">{t("kicker")}</p>
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-[40px] font-bold leading-tight text-navy!">
-                Eight domains. Forty-three stations.
+                {t("title")}
               </h2>
               <p className="mt-4 font-serif text-lg sm:text-xl text-char leading-relaxed max-w-3xl">
-                Organised the way examiners think, each domain with its own hub
-                and the stations that test it.
+                {t("subtitle")}
               </p>
             </div>
 
@@ -38,43 +40,43 @@ export default function CascDomainsSection() {
               {[
                 {
                   num: "1",
-                  title: "Communication & Rapport",
-                  sub: "The grammar of every consultation.",
+                  title: t("d1Title"),
+                  sub: t("d1Sub"),
                 },
                 {
                   num: "2",
-                  title: "Information Giving",
-                  sub: "The difference between a leaflet and a lightbulb.",
+                  title: t("d2Title"),
+                  sub: t("d2Sub"),
                 },
                 {
                   num: "3",
-                  title: "Risk Assessment",
-                  sub: "Where marks are lost fastest and most quietly.",
+                  title: t("d3Title"),
+                  sub: t("d3Sub"),
                 },
                 {
                   num: "4",
-                  title: "Mental State Examination",
-                  sub: "Phenomenology, and the questions that get you there.",
+                  title: t("d4Title"),
+                  sub: t("d4Sub"),
                 },
                 {
                   num: "5",
-                  title: "Capacity, Consent & the Law",
-                  sub: "Decision-specific, time-specific, defensible.",
+                  title: t("d5Title"),
+                  sub: t("d5Sub"),
                 },
                 {
                   num: "6",
-                  title: "Management & Emergencies",
-                  sub: "The ward at three in the morning.",
+                  title: t("d6Title"),
+                  sub: t("d6Sub"),
                 },
                 {
                   num: "7",
-                  title: "Difficult Conversations",
-                  sub: "Families, complaints, colleagues, apologies.",
+                  title: t("d7Title"),
+                  sub: t("d7Sub"),
                 },
                 {
                   num: "8",
-                  title: "Physical Examination",
-                  sub: "The examinations psychiatry cannot delegate.",
+                  title: t("d8Title"),
+                  sub: t("d8Sub"),
                 },
               ].map((d) => (
                 <div

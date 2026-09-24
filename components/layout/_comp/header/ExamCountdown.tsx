@@ -71,7 +71,7 @@ export const ExamCountdown = memo(function ExamCountdown({
           />
           {isExamDay ? (
             <p className="whitespace-nowrap px-1 text-xs font-semibold text-gold sm:text-base">
-              {t("today")} — {locale === "ar" ? "بالتوفيق" : "Good luck"}
+              {t("today")} — {t("goodLuck")}
             </p>
           ) : (
             <>
@@ -173,7 +173,7 @@ export const ExamCountdown = memo(function ExamCountdown({
           type="button"
           onClick={onDismiss}
           className="ms-1 sm:ms-2 shrink-0 rounded-full p-1 text-white/40 transition-colors hover:bg-white/10 hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50"
-          aria-label={locale === "ar" ? "إغلاق" : "Close"}
+          aria-label={t("close")}
         >
           <X className="size-3.5 sm:size-4" aria-hidden="true" />
         </button>

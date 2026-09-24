@@ -23,7 +23,10 @@
   "brand": {
     "name": "MEDLEX",
     "descriptor": "Where medicine meets justice",
-    "home": "MedLex — home"
+    "home": "MedLex — home",
+    "cascAcademy": "CASC Academy",
+    "medicoLegal": "Medico-Legal",
+    "foundations": "MedLex Foundations"
   },
   "language": "العربية",
   "direction": "ltr",
@@ -49,7 +52,8 @@
     "email": "support@medlexsolutions.com",
     "phone": "+20 101 951 5321",
     "whatsapp": "Contact on WhatsApp",
-    "copyright": "© 2026 MedLex Solutions · medlexsolutions.com"
+    "copyright": "© 2026 MedLex Solutions · medlexsolutions.com",
+    "refund": "Refund Policy"
   },
   "registration": {
     "title": "Register your interest",
@@ -139,7 +143,8 @@
       "enrolled": "Enrolled",
       "eyebrow": "Three Educational Pathways",
       "title": "One platform. Three ways in.",
-      "intro": "Each pathway has its own audience, its own pace and its own next step. Choose the one that belongs to you."
+      "intro": "Each pathway has its own audience, its own pace and its own next step. Choose the one that belongs to you.",
+      "exploreAll": "Explore complete pathways overview"
     },
     "who": {
       "audiences": [
@@ -422,14 +427,18 @@
       "intro": "Choose the pathway that concerns you and we will write to you about that one alone — no general mailings",
       "fields": {
         "fullName": "Full Name",
+        "fullNamePlaceholder": "e.g. Dr. Ahmed Mostafa",
         "email": "Email",
         "phone": "Phone Number",
         "phonePlaceholder": "e.g. +20 101 234 5678",
         "professionalRole": "Professional Role",
+        "rolePlaceholder": "e.g. Consultant Psychiatrist",
         "organisation": "Organisation (Optional)",
+        "organisationPlaceholder": "e.g. Ministry of Justice / Hospital Group",
         "pathway": "Pathway of Interest",
         "pathwayPlaceholder": "Select a pathway...",
-        "notes": "Notes (Optional)"
+        "notes": "Notes (Optional)",
+        "notesPlaceholder": "Add any questions, cohort timing, or notes..."
       },
       "pathways": [
         "Writing Psychiatric Evidence",
@@ -851,6 +860,7 @@
         "statusValue": "Waitlist open",
         "joinWaitlist": "Join the waitlist",
         "flagshipBtn": "The flagship programme",
+        "downloadProspectus": "Download Prospectus",
         "badgeNumber": "4",
         "badgeText": "Formats. No prerequisites — take one, or take them all.",
         "ticker": [
@@ -1101,6 +1111,7 @@
         "statusValue": "First course coming soon",
         "joinWaitlist": "Join the waitlist",
         "freeGuideBtn": "Get the free guide",
+        "downloadProspectus": "Download Prospectus",
         "ticker": [
           "HOW THE SYSTEM WORKS",
           "COMMUNICATION AT WORK",
@@ -1443,7 +1454,7 @@
   },
   "institutionalPage": {
     "hero": {
-      "title": "We build the capacity. Your institution keeps the work",
+      "title": "We build the capacity. Your institution keeps the <em>work</em>",
       "lead": "MedLex works with courts, ministries, health authorities and legal bodies on training, policy and advisory. Our role is to build your capability; the casework, and the opinion, remain yours",
       "stripWhatLabel": "What we do",
       "stripWhatValue": "Training · Policy · Advisory",
@@ -1453,6 +1464,7 @@
       "stripLocValue": "Egypt · the Gulf · UK",
       "ctaEnquiry": "Make an enquiry",
       "ctaServices": "What we provide",
+      "downloadProspectus": "Download Prospectus",
       "tickerItems": [
         "INSTITUTIONAL TRAINING",
         "MEDICO-LEGAL GOVERNANCE",
@@ -1611,7 +1623,9 @@
     "daysShort": "days",
     "hoursShort": "hrs",
     "minutesShort": "min",
-    "secondsShort": "sec"
+    "secondsShort": "sec",
+    "goodLuck": "Good luck",
+    "close": "Close"
   },
   "feedbackSection": {
     "eyebrow": "Candidate feedback",
@@ -1692,7 +1706,32 @@
     "localTime": "Your local time",
     "emailPendingNotice": "Your meeting is being prepared. You'll receive a confirmation email with your Google Meet link shortly.",
     "packageCreditsReady": "Your session credits are now available. Schedule your sessions whenever you're ready.",
-    "contactSupport": "Contact Support"
+    "contactSupport": "Contact Support",
+    "singleSession": "Single Session",
+    "sessionDurationOnline": "60 minutes online",
+    "sessionPackages": "Session Packages",
+    "saveUpTo20": "Save up to 20% on 10",
+    "upcomingConfirmed": "Upcoming Confirmed Session",
+    "confirmed": "Confirmed",
+    "joinGoogleMeet": "Join Google Meet Session",
+    "availableCredits": "credits",
+    "saveUpToDiscount": "Save up to 20%",
+    "save10": "Save 10%",
+    "save20": "Save 20%",
+    "bestValue": "Best Value",
+    "perSession": "per session",
+    "sessionsCount": "sessions",
+    "oneSessionCredit": "1 session credit",
+    "confirmSubscription": "Confirm Session Subscription",
+    "morningSessions": "Morning Sessions",
+    "afternoonSessions": "Afternoon Sessions",
+    "eveningSessions": "Evening Sessions",
+    "daysAvailable": "days",
+    "slotsAvailable": "slots available",
+    "selectedSlotLabel": "Selected session slot:",
+    "continueToConfirmation": "Continue to Confirmation",
+    "noActiveCreditsError": "No active session credits available",
+    "generalError": "An error occurred while processing your request"
   },
   "seo": {
     "home": {
@@ -1855,6 +1894,7 @@
     "workbookDesc": "— included, and guides you through all three steps, week by week.",
     "enrolCta": "Enrol — £147 for the founding hundred",
     "tryStationCta": "Try a station free",
+    "downloadProspectus": "Download Prospectus",
     "coachingPrefix": "Need more than the course? One-to-one coaching with the examiner is available separately — ",
     "coachingLink": "see coaching",
     "navWhatYouGet": "What you get",
@@ -1919,7 +1959,10 @@
     "successHeading": "Both resources are downloading!",
     "successFallback": "If your browser blocked the second download, click directly:",
     "downloadError": "Unable to download the resources. Please try again.",
-    "footnote": "Both PDFs, immediately. Then occasional notes from the examiner's side of the table — unsubscribe in one click. No card, no commitment."
+    "footnote": "Both PDFs, immediately. Then occasional notes from the examiner's side of the table — unsubscribe in one click. No card, no commitment.",
+    "loginToDownload": "Login to download CASC Guides",
+    "book1Name": "The Examiner's Briefing",
+    "book2Name": "The Examiner's Error Log"
   },
   "cascProblem": {
     "titleLine1": "Most candidates who fail",
@@ -1936,6 +1979,108 @@
     "description": "Station 7.2, complete and free, no login. Then 43 stations, the workbook, the practice group and 6 months' access for £147.",
     "tryStationButton": "Try a station free",
     "enrolButton": "Enrol"
+  },
+  "cascWhatYouGet": {
+    "kicker": "What you get",
+    "title": "Everything a candidate needs, in one place.",
+    "subtitle": "Enrolment gives you the whole of it — the library and the four things built around it.",
+    "item1Title": "The station library",
+    "item1How": "Online · phone, tablet, desktop",
+    "item1Desc": "43 stations across 8 domains, each with two failing takes, a passing take, the examiner's reasoning, seven decision points, take-home principles, a timed Exam Mode and a three-person practice pack.",
+    "item2Title": "Twelve weeks to the CASC",
+    "item2How": "Fillable workbook · type or print",
+    "item2Desc": "A planning workbook: four routes depending on the weeks you have, twelve weekly planner pages, a station log, a domain tracker, mock debrief sheets, the last fourteen days, and a chapter for candidates resitting.",
+    "item3Title": "The candidates' WhatsApp group",
+    "item3How": "Everyone enrolled · all time zones",
+    "item3Desc": "It exists to solve the problem that actually stops people practising — not motivation, but finding two other people who are free on Tuesday evening. Find a trio, fix a time, swap the stations you found hardest.",
+    "item4Title": "The examiner's notes",
+    "item4How": "By email · through your preparation",
+    "item4Desc": "Short notes from the examiner's side of the table, sent as you work through the library: one thing examiners see, one thing to practise this week, and the station it lives in.",
+    "item5Title": "Your certificate",
+    "item5How": "On completion · in your name",
+    "item5Desc": "Issued when you finish, recording the 43 stations and 8 domains you worked through."
+  },
+  "cascDomains": {
+    "kicker": "The library",
+    "title": "Eight domains. Forty-three stations.",
+    "subtitle": "Organised the way examiners think, each domain with its own hub and the stations that test it.",
+    "d1Title": "Communication & Rapport",
+    "d1Sub": "The grammar of every consultation.",
+    "d2Title": "Information Giving",
+    "d2Sub": "The difference between a leaflet and a lightbulb.",
+    "d3Title": "Risk Assessment",
+    "d3Sub": "Where marks are lost fastest and most quietly.",
+    "d4Title": "Mental State Examination",
+    "d4Sub": "Phenomenology, and the questions that get you there.",
+    "d5Title": "Capacity, Consent & the Law",
+    "d5Sub": "Decision-specific, time-specific, defensible.",
+    "d6Title": "Management & Emergencies",
+    "d6Sub": "The ward at three in the morning.",
+    "d7Title": "Difficult Conversations",
+    "d7Sub": "Families, complaints, colleagues, apologies.",
+    "d8Title": "Physical Examination",
+    "d8Sub": "The examinations psychiatry cannot delegate."
+  },
+  "cascWhoItIsFor": {
+    "title": "Who it is for",
+    "mainDesc": "You are sitting the MRCPsych CASC, you have done the reading, and you know the gap is in performance rather than knowledge — or you are resitting and cannot afford to prepare the same way again.",
+    "quote": "The exam is not judged on what you know. It is judged on what the examiner watches you do with it.",
+    "alsoForTitle": "Also for",
+    "alsoForDesc": "Candidates sitting other psychiatry clinical examinations built on observed stations — the Arab Board and national board OSCEs among them. The marking language here is the CASC's; the skills underneath it — structure under time, the alliance before the assessment, the risk question that actually gets answered — are the foundations of psychiatric practice anywhere.",
+    "notForTitle": "Not for",
+    "notForDesc": "Anyone who wants model answers to memorise. This course will not give you scripts. It will show you why the scripts fail."
+  },
+  "cascPricing": {
+    "kicker": "Enrol",
+    "title": "The founding hundred.",
+    "desc1": "The first hundred candidates pay £147. After that the price is £247. This is not a countdown timer: there are a hundred places at the founding price, and when they are gone, they are gone.",
+    "desc2": "In exchange, I ask for one thing — a short piece of honest feedback once you have worked through it.",
+    "price": "£147",
+    "priceSubtitle": "for the founding hundred · then £247",
+    "feat1": "The full 43-station library",
+    "feat2": "Twelve Weeks to the CASC — the workbook",
+    "feat3": "The candidates' WhatsApp group",
+    "feat4": "The examiner's notes by email",
+    "feat5": "Your certificate on completion",
+    "feat6": "6 months' access — extended free by three months if you resit",
+    "cta": "Enrol now — £147"
+  },
+  "cascExaminer": {
+    "caption": "Dr Ahmed Abouelghit · former CASC examiner",
+    "kicker": "The examiner",
+    "name": "Dr Ahmed Abouelghit",
+    "role": "Consultant Forensic Psychiatrist · former CASC examiner",
+    "bio1": "UK-trained Consultant Forensic Psychiatrist and Forensic Psychiatry Training Programme Director, with senior experience across clinical psychiatry, medico-legal practice, teaching and service leadership.",
+    "bio2": "He has sat on the other side of the table. He knows where the mark is actually decided in each station — and it is rarely where candidates think. It is the four seconds after a patient says something unexpected. It is the risk question asked in a form that lets the patient say no. It is the capacity assessment that is fluent and general when it needed to be specific to one decision on one afternoon. It is the examination performed perfectly in silence on a man who was never told why.",
+    "bio3": "These are the things that are easily missed and cost a great deal, and they are what this course is built around: not what to know, but what an examiner is watching for while you say it."
+  },
+  "cascFaq": {
+    "title": "Questions",
+    "q1": "How long do I have access?",
+    "a1": "Six months from the day you enrol — long enough to prepare, sit, and if it comes to it, resit at the following diet. If your access runs out before a resit, show us the booking and you get three further months at no charge.",
+    "q2": "How long does a station take?",
+    "a2": "About forty-five minutes to work through properly in Learn Mode, plus seven minutes for Exam Mode. The library is ordered so that a domain can be walked in a sitting.",
+    "q3": "Does it work on my phone?",
+    "a3": "Yes — every station is built for the phone screen first, and tested there.",
+    "q4": "Is this a substitute for practising with colleagues?",
+    "a4": "No, and it says so repeatedly inside the course. It gives you the stations, the marking standard and a group to find people in. You still have to open your mouth in front of someone.",
+    "q5": "Can I share it with colleagues?",
+    "a5": "The workbook, yes — it is designed to travel. The library, no: it lives inside your account, and the practice packs are written so that you bring colleagues to it rather than the other way round.",
+    "q6": "I have already failed once. Is this useful?",
+    "a6": "The workbook has a chapter written specifically for resits, and the honest answer is in it: if you failed on structure, timing or communication, more reading will not touch it.",
+    "q7": "Do I need to be in the UK?",
+    "a7": "No. Everything is online and the group spans several time zones.",
+    "q8": "Is this endorsed by the Royal College of Psychiatrists?",
+    "a8": "No. It is an independent course."
+  },
+  "cascClosingBanner": {
+    "title": "The candidates who pass are rarely the ones who knew the most",
+    "subtitle": "They are the ones who practised out loud, on purpose, with someone watching — and who knew, before they walked in, which four seconds of each station the mark actually turns on",
+    "tryStation": "Try a station free"
+  },
+  "enrolOrContinue": {
+    "continueCourse": "Continue course",
+    "defaultLabel": "Enrol — £147 for the founding hundred"
   },
   "termsPage": {
     "kicker": "Legal & Terms",
@@ -2106,6 +2251,9 @@
     "sec3Body": "Email info@medlexsolutions.com with the name and email you used at purchase, and we reply within 2 working days"
   },
   "enrolledCourses": {
+    "kicker": "Learner Academy",
+    "pageTitle": "Your courses",
+    "pageDescription": "Continue from where you left off, see your momentum at a glance, and return to the work that matters to you.",
     "errorTitle": "We could not load your courses.",
     "errorDescription": "Please check your connection and try again.",
     "tryAgain": "Try again",
@@ -2131,5 +2279,95 @@
       "linkPending": "Link pending",
       "close": "Close"
     }
+  },
+  "common": {
+    "download": "Download",
+    "loginToDownload": "Login to download",
+    "downloadResource": "Download {name}",
+    "loginToDownloadResource": "Login to download {name}",
+    "loading": "Loading"
+  },
+  "checkout": {
+    "secureEnrolment": "Secure Enrolment",
+    "refundGuaranteeTitle": "MedLex 14-Day Fair Refund Policy",
+    "refundGuaranteeDesc": "Full refund available within 14 days of purchase, provided you have completed no more than 3 stations in Exam Mode.",
+    "mandatoryAgreement": "Mandatory agreement to proceed",
+    "regulatoryRequirement": "Required by consumer regulations for immediate supply of digital content.",
+    "mustAcceptWaiver": "Please check the box above to acknowledge immediate access terms before proceeding.",
+    "processing": "Processing...",
+    "paddleSecurity": "Payments processed securely by Paddle (Merchant of Record)",
+    "reviewTitle": "Review & Complete Enrolment",
+    "reviewSubtitle": "You are seconds away from full immediate access to the Academy.",
+    "enrolAndPay": "Enrol & Pay {price}",
+    "defaultItemName": "The CASC Academy — Complete Access",
+    "defaultItemDescription": "Instant access to 43 interactive psychiatric stations, Learn Mode & 7-min Exam Mode, and practice cards.",
+    "defaultPriceBadge": "Founding Cohort",
+    "defaultPriceNote": "One-time payment · 12 months full access",
+    "defaultWaiverText": "I want immediate access and understand that I lose my statutory 14-day cancellation right, subject to MedLex's 14-day refund policy.",
+    "defaultFeatures": [
+      "Full access to 43 clinical stations across 8 exam domains",
+      "Both Learn Mode with examiner thinking & timed 7-min Exam Mode",
+      "Three-person Practice Packs (candidate, role-player & observer cards)",
+      "Downloadable 12 Weeks to the CASC workbook (PDF)"
+    ]
+  },
+  "marquee": {
+    "ariaLabel": "MedLex areas of expertise",
+    "items": [
+      "MEDICO-LEGAL EDUCATION",
+      "COURT-READY REPORTING STANDARDS",
+      "UK-TRAINED CONSULTANT LEADERSHIP",
+      "THE CASC ACADEMY",
+      "MEDLEX FOUNDATIONS",
+      "WRITING PSYCHIATRIC EVIDENCE",
+      "CASC EXAMINATION PREPARATION",
+      "CLINICAL LEADERSHIP"
+    ]
+  },
+  "academyLanding": {
+    "kicker": "The MedLex Academy",
+    "title": "A calmer way to keep learning.",
+    "subtitle": "Your courses, progress, points, and certificates in one focused learning space.",
+    "features": [
+      {
+        "step": "01 / Continue",
+        "title": "Pick up where you left off",
+        "description": "Resume a lesson, see your next action, and keep your learning momentum visible."
+      },
+      {
+        "step": "02 / Prove",
+        "title": "Complete with confidence",
+        "description": "Structured checkpoints and exam modes turn knowledge into a documented achievement."
+      },
+      {
+        "step": "03 / Carry",
+        "title": "Take your record with you",
+        "description": "Certificates, points, and course history stay connected to your professional journey."
+      }
+    ],
+    "viewCatalogue": "View the catalogue →"
+  },
+  "academyDashboard": {
+    "kicker": "Academy / Dashboard preview",
+    "title": "Good to see you.",
+    "workspace": "Learner workspace",
+    "continueLearning": "Continue learning",
+    "continueModule": "Continue module →",
+    "yourRecord": "Your record",
+    "pointsEarned": "Points earned",
+    "certificate": "Certificate"
+  },
+  "error": {
+    "kicker": "Something went wrong",
+    "title": "An unexpected error occurred.",
+    "description": "Please try again. If the problem persists, contact",
+    "tryAgain": "Try again"
+  },
+  "notFound": {
+    "kicker": "404 — Page not found",
+    "title": "This page does not exist.",
+    "description": "The page you are looking for may have moved or may never have existed.",
+    "returnHome": "Return home",
+    "viewPathways": "View pathways"
   }
 }

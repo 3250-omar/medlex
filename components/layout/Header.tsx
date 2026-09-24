@@ -58,16 +58,16 @@ export default function Header() {
   // Dynamic pathway descriptor in brand logo
   const getBrandDescriptor = useCallback(() => {
     if (pathname.includes("/casc-academy")) {
-      return locale === "ar" ? "أكاديمية CASC" : "CASC Academy";
+      return t("brand.cascAcademy");
     }
     if (pathname.includes("/medico-legal")) {
-      return locale === "ar" ? "التدريب الطبي القانوني" : "Medico-Legal";
+      return t("brand.medicoLegal");
     }
     if (pathname.includes("/foundations")) {
-      return locale === "ar" ? "مِدلكس للتأسيس" : "MedLex Foundations";
+      return t("brand.foundations");
     }
     return t("brand.descriptor");
-  }, [pathname, locale, t]);
+  }, [pathname, t]);
 
   const brandDescriptor = getBrandDescriptor();
 

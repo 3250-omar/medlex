@@ -1,52 +1,54 @@
 import Image from "next/image";
-
-const whatYouGetItems = [
-  {
-    title: "The station library",
-    how: "Online · phone, tablet, desktop",
-    desc: "43 stations across 8 domains, each with two failing takes, a passing take, the examiner's reasoning, seven decision points, take-home principles, a timed Exam Mode and a three-person practice pack.",
-    image: "/images/sectionImages/station_section.png",
-  },
-  {
-    title: "Twelve weeks to the CASC",
-    how: "Fillable workbook · type or print",
-    desc: "A planning workbook: four routes depending on the weeks you have, twelve weekly planner pages, a station log, a domain tracker, mock debrief sheets, the last fourteen days, and a chapter for candidates resitting.",
-    image: "/images/sectionImages/book_section.png",
-  },
-  {
-    title: "The candidates' WhatsApp group",
-    how: "Everyone enrolled · all time zones",
-    desc: "It exists to solve the problem that actually stops people practising — not motivation, but finding two other people who are free on Tuesday evening. Find a trio, fix a time, swap the stations you found hardest.",
-    image: "/images/sectionImages/whatsapp_section.jpeg",
-  },
-  {
-    title: "The examiner's notes",
-    how: "By email · through your preparation",
-    desc: "Short notes from the examiner's side of the table, sent as you work through the library: one thing examiners see, one thing to practise this week, and the station it lives in.",
-    image: "/images/sectionImages/new.jpg",
-  },
-  {
-    title: "Your certificate",
-    how: "On completion · in your name",
-    desc: "Issued when you finish, recording the 43 stations and 8 domains you worked through.",
-    image: "/images/sectionImages/certificate_section.jpeg",
-  },
-];
+import { useTranslations } from "next-intl";
 
 export default function CascWhatYouGetSection() {
+  const t = useTranslations("cascWhatYouGet");
+
+  const whatYouGetItems = [
+    {
+      title: t("item1Title"),
+      how: t("item1How"),
+      desc: t("item1Desc"),
+      image: "/images/sectionImages/station_section.png",
+    },
+    {
+      title: t("item2Title"),
+      how: t("item2How"),
+      desc: t("item2Desc"),
+      image: "/images/sectionImages/book_section.png",
+    },
+    {
+      title: t("item3Title"),
+      how: t("item3How"),
+      desc: t("item3Desc"),
+      image: "/images/sectionImages/whatsapp_section.jpeg",
+    },
+    {
+      title: t("item4Title"),
+      how: t("item4How"),
+      desc: t("item4Desc"),
+      image: "/images/sectionImages/new.jpg",
+    },
+    {
+      title: t("item5Title"),
+      how: t("item5How"),
+      desc: t("item5Desc"),
+      image: "/images/sectionImages/certificate_section.jpeg",
+    },
+  ];
+
   return (
     <section
       id="included"
       className="py-20 lg:py-24 border-b border-white/10 bg-navy text-lbody on-navy scroll-mt-16"
     >
       <div className="mx-auto w-full px-6 sm:px-8 lg:max-w-6xl lg:px-10">
-        <p className="kicker text-gold">What you get</p>
+        <p className="kicker text-gold">{t("kicker")}</p>
         <h2 className="font-serif text-3xl sm:text-4xl lg:text-[40px] font-bold leading-tight text-white">
-          Everything a candidate needs, in one place.
+          {t("title")}
         </h2>
         <p className="mt-4 font-serif text-lg sm:text-xl text-lbody max-w-3xl leading-relaxed">
-          Enrolment gives you the whole of it — the library and the four things
-          built around it.
+          {t("subtitle")}
         </p>
 
         <div className="mt-16 space-y-16 md:space-y-20 lg:space-y-24">

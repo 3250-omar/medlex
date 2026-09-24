@@ -135,8 +135,7 @@ export const PrivateSessionChoiceStep = React.memo(
                   {t("choiceRedeemTitle")}
                 </span>
                 <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-600 text-white">
-                  {totalRemainingCredits}{" "}
-                  {locale === "ar" ? "رصيد متاح" : "credits"}
+                  {t("availableCredits", { count: totalRemainingCredits })}
                 </span>
               </div>
               <p className="text-xs text-char/75">
@@ -183,7 +182,7 @@ export const PrivateSessionChoiceStep = React.memo(
                 {t("choicePackageTitle")}
               </span>
               <span className="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-gold/20 text-navy!">
-                {locale === "ar" ? "خصم يصل 20%" : "Save up to 20%"}
+                {t("saveUpToDiscount")}
               </span>
             </div>
             <p className="text-xs text-char/70">{t("choicePackageDesc")}</p>

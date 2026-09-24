@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import type { EnrolledCourse } from "../../../_apiCalls/academyQueries";
 import SubscribeButton from "../SubscribeButton";
 
@@ -21,21 +22,24 @@ export type EnrolOrContinueProps = {
 
 export default function EnrolOrContinue({
   className,
-  label = "Enrol — £147 for the founding hundred",
+  label,
   cascEnrolment,
   continueSlug,
   locale,
 }: EnrolOrContinueProps) {
+  const t = useTranslations("enrolOrContinue");
+  const buttonLabel = label || t("defaultLabel");
+
   return cascEnrolment && continueSlug ? (
     <Link
       href={`/${locale}/academy/courses/casc-academy/learn/${continueSlug}`}
       className={className}
     >
-      {locale === "ar" ? "متابعة الدورة" : "Continue course"}
+      {t("continueCourse")}
     </Link>
   ) : (
     <SubscribeButton className={className} showArrow={false}>
-      {label}
+      {buttonLabel}
     </SubscribeButton>
   );
 }

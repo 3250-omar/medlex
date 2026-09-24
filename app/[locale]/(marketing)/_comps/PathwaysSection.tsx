@@ -198,7 +198,7 @@ export default function PathwaysSection() {
             href={`/${locale}/pathways`}
             className="inline-flex items-center gap-2 font-sans text-sm font-semibold text-gold hover:text-white transition-colors border border-gold/30 hover:border-gold px-6 py-2.5 rounded-full"
           >
-            <span>{locale === "ar" ? "استكشف الدليل الشامل لجميع المسارات" : "Explore complete pathways overview"}</span>
+            <span>{t("pathways.exploreAll")}</span>
             <span aria-hidden="true">→</span>
           </Link>
         </div>
