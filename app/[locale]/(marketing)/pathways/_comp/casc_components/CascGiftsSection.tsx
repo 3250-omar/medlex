@@ -271,13 +271,9 @@ export default function CascGiftsSection() {
                   fileName="The Examiner's Briefing.pdf"
                   resourceName={{
                     en: "The Examiner's Briefing",
-                    ar: "The Examiner's Briefing",
+                    ar: t("book1Name"),
                   }}
-                  loginLabel={
-                    locale === "ar"
-                      ? "تسجيل الدخول لتحميل أدلة CASC"
-                      : "Login to download CASC Guides"
-                  }
+                  loginLabel={t("loginToDownload")}
                   icon={<Download className="w-4 h-4 shrink-0" />}
                   className="bg-[#0E1D38] hover:bg-[#1A365D] active:bg-[#0A162B] text-white font-medium text-[14px] px-5 py-3 sm:py-3.5 rounded-[4px] transition-colors duration-200 whitespace-nowrap cursor-pointer flex items-center justify-center gap-2 shadow-xs"
                 />
@@ -287,8 +283,9 @@ export default function CascGiftsSection() {
                     fileName="The Examiner's Error Log.pdf"
                     resourceName={{
                       en: "The Examiner's Error Log",
-                      ar: "The Examiner's Error Log",
+                      ar: t("book2Name"),
                     }}
+                    loginLabel={t("loginToDownload")}
                     icon={<Download className="w-4 h-4 shrink-0" />}
                     className="bg-[#0E1D38] hover:bg-[#1A365D] active:bg-[#0A162B] text-white font-medium text-[14px] px-5 py-3 sm:py-3.5 rounded-[4px] transition-colors duration-200 whitespace-nowrap cursor-pointer flex items-center justify-center gap-2 shadow-xs"
                   />

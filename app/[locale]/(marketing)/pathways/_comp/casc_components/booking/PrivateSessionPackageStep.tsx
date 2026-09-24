@@ -39,7 +39,7 @@ export const PrivateSessionPackageStep = React.memo(
           {packageOffers.map((offer) => {
             const isSelected = selectedOfferId === offer.id;
             const isTen = offer.sessionCount === 10;
-            const savingsLabel = isTen ? "Save 20%" : "Save 10%";
+            const savingsLabel = isTen ? t("save20") : t("save10");
             const perSessionMinor = Math.round(
               offer.priceMinor / offer.sessionCount,
             );
@@ -58,7 +58,7 @@ export const PrivateSessionPackageStep = React.memo(
                 {isTen && (
                   <span className="absolute -top-2.5 end-3 inline-flex items-center gap-1 rounded-full bg-gold px-2.5 py-0.5 text-xs font-semibold text-navy shadow-xs">
                     <Sparkles className="w-3 h-3" />
-                    {locale === "ar" ? "أفضل قيمة" : "Best Value"}
+                    {t("bestValue")}
                   </span>
                 )}
 
@@ -88,7 +88,7 @@ export const PrivateSessionPackageStep = React.memo(
                   </div>
                   <div className="text-xs text-char/60 mt-0.5">
                     {formatPrice(perSessionMinor, offer.currency)}{" "}
-                    {locale === "ar" ? "لكل جلسة" : "per session"}
+                    {t("perSession")}
                   </div>
                 </div>
               </button>

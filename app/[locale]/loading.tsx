@@ -1,8 +1,12 @@
+import { useTranslations } from "next-intl";
+
 export default function LocaleLoading() {
+  const t = useTranslations("common");
+
   return (
     <div
       className="flex min-h-screen items-center justify-center bg-paper"
-      aria-label="Loading"
+      aria-label={t("loading")}
       aria-live="polite"
     >
       <div className="flex flex-col items-center gap-4">
@@ -27,7 +31,7 @@ export default function LocaleLoading() {
           />
         </svg>
         <span className="font-body text-[9px] uppercase tracking-[0.3em] text-muted">
-          Loading
+          {t("loading")}
         </span>
       </div>
     </div>

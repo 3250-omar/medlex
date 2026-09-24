@@ -89,9 +89,7 @@ export default function FoundationsHeroSection({ locale = "en" }: Props) {
                   : "MedLex_Foundations_Pathway_Guide.pdf"
               }
             >
-              {locale === "ar"
-                ? "تحميل الدليل التعريفي"
-                : "Download Prospectus"}
+              {t("downloadProspectus")}
             </a>
           </div>
         </div>

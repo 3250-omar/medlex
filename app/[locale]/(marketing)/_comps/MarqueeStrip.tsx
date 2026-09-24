@@ -1,36 +1,16 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import LogoLoop from "@/components/LogoLoop";
 
 interface MarqueeStripProps {
   locale?: string;
 }
 
-const ITEMS_EN = [
-  "MEDICO-LEGAL EDUCATION",
-  "COURT-READY REPORTING STANDARDS",
-  "UK-TRAINED CONSULTANT LEADERSHIP",
-  "THE CASC ACADEMY",
-  "MEDLEX FOUNDATIONS",
-  "WRITING PSYCHIATRIC EVIDENCE",
-  "CASC EXAMINATION PREPARATION",
-  "CLINICAL LEADERSHIP",
-];
-
-const ITEMS_AR = [
-  "التعليم الطبي القانوني",
-  "معايير التقارير الجاهزة للمحاكم",
-  "قيادة استشارية بتدريب بريطاني",
-  "أكاديمية CASC",
-  "مِدلكس للتأسيس",
-  "كتابة الأدلة النفسية",
-  "التحضير لامتحان CASC",
-  "القيادة السريرية",
-];
-
 export default function MarqueeStrip({ locale }: MarqueeStripProps) {
+  const t = useTranslations("marquee");
   const isRtl = locale === "ar";
-  const items = isRtl ? ITEMS_AR : ITEMS_EN;
+  const items = (t.raw("items") as string[]) || [];
 
   const marqueeItems = items.map((item) => ({
     ariaLabel: item,
@@ -50,7 +30,7 @@ export default function MarqueeStrip({ locale }: MarqueeStripProps) {
         gap={0}
         fadeOut
         fadeOutColor="#142A49"
-        ariaLabel="MedLex areas of expertise"
+        ariaLabel={t("ariaLabel")}
       />
     </div>
   );

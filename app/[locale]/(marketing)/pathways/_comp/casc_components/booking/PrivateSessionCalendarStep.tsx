@@ -173,19 +173,19 @@ export const PrivateSessionCalendarStep = React.memo(
     const periods = [
       {
         id: "morning",
-        label: locale === "ar" ? "الفترة الصباحية" : "Morning Sessions",
+        label: t("morningSessions"),
         icon: Sunrise,
         slots: groupedSlots.morning,
       },
       {
         id: "afternoon",
-        label: locale === "ar" ? "فترة بعد الظهر" : "Afternoon Sessions",
+        label: t("afternoonSessions"),
         icon: Sun,
         slots: groupedSlots.afternoon,
       },
       {
         id: "evening",
-        label: locale === "ar" ? "الفترة المسائية" : "Evening Sessions",
+        label: t("eveningSessions"),
         icon: Sunset,
         slots: groupedSlots.evening,
       },
@@ -209,7 +209,7 @@ export const PrivateSessionCalendarStep = React.memo(
           <div className="flex items-center justify-between">
             <label className="text-xs font-bold text-navy uppercase tracking-wider">
               {t("selectDate")} ({availableDates.length}{" "}
-              {locale === "ar" ? "أيام متاحة" : "days"})
+              {t("daysAvailable")})
             </label>
             <div className="flex items-center gap-1">
               <button
@@ -309,7 +309,7 @@ export const PrivateSessionCalendarStep = React.memo(
             </label>
             <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-navy/10 text-navy">
               {activeDateSlots.length}{" "}
-              {locale === "ar" ? "مواعيد متاحة" : "slots available"}
+              {t("slotsAvailable")}
             </span>
           </div>
 
@@ -398,9 +398,7 @@ export const PrivateSessionCalendarStep = React.memo(
               </div>
               <div>
                 <div className="text-xs text-char/60 font-medium">
-                  {locale === "ar"
-                    ? "الموعد المختار حالياً:"
-                    : "Selected session slot:"}
+                  {t("selectedSlotLabel")}
                 </div>
                 <div className="text-sm font-bold text-navy font-serif">
                   {
@@ -420,11 +418,7 @@ export const PrivateSessionCalendarStep = React.memo(
               onClick={() => onSelectSlot(selectedSlot)}
               className="w-full sm:w-auto min-h-[44px] px-6 py-2.5 rounded-xl bg-navy text-white text-xs sm:text-sm font-semibold hover:bg-navy/90 transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-gold"
             >
-              <span>
-                {locale === "ar"
-                  ? "متابعة لتأكيد الحجز"
-                  : "Continue to Confirmation"}
-              </span>
+              <span>{t("continueToConfirmation")}</span>
               <NextIcon className="w-4 h-4" />
             </button>
           </div>

@@ -204,7 +204,7 @@ export default function PrivateSessionDialog({
           (e) => e.remaining > 0,
         );
         if (!activeEntitlement) {
-          setErrorMessage("No active session credits available");
+          setErrorMessage(t("noActiveCreditsError"));
           return;
         }
 
@@ -222,9 +222,7 @@ export default function PrivateSessionDialog({
       }
     } catch (err: unknown) {
       setErrorMessage(
-        err instanceof Error
-          ? err.message
-          : "An error occurred while processing your request",
+        err instanceof Error ? err.message : t("generalError"),
       );
     }
   }, [

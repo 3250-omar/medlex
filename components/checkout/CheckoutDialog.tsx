@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useCallback, useMemo } from "react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -86,14 +86,14 @@ const CheckoutDialogHeader = React.memo(function CheckoutDialogHeader({
   subtitle,
   defaultTitle,
   defaultSubtitle,
-  isAr,
 }: CheckoutDialogHeaderProps) {
+  const t = useTranslations("checkout");
   return (
     <div className="py-4 px-6 sm:px-7 border-b border-[#EAE4D8] bg-[#FAF8F5] shrink-0">
       <DialogHeader className="gap-1 text-start">
         <div className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#9B7629] uppercase tracking-wider">
           <ShieldCheck size={14} className="text-[#9B7629]" />
-          <span>{isAr ? "دفع آمن ومعتمد" : "Secure Enrolment"}</span>
+          <span>{t("secureEnrolment")}</span>
         </div>
         <DialogTitle className="text-xl sm:text-2xl font-bold font-serif !text-[#1A365D] leading-snug">
           {title || defaultTitle}
@@ -185,21 +185,18 @@ interface CheckoutRefundPolicyCardProps {
 }
 
 const CheckoutRefundPolicyCard = React.memo(function CheckoutRefundPolicyCard({
-  isAr,
+  isAr: _isAr,
 }: CheckoutRefundPolicyCardProps) {
+  const t = useTranslations("checkout");
   return (
     <div className="rounded-xl border border-emerald-200/90 bg-[#F0FDF4] p-3 sm:p-3.5 flex items-start gap-2.5 text-xs shadow-xs">
       <ShieldCheck size={18} className="text-emerald-700 shrink-0 mt-0.5" />
       <div className="space-y-0.5">
         <strong className="font-semibold block text-emerald-950 text-xs sm:text-[12.5px]">
-          {isAr
-            ? "ضمان استرداد لمدة 14 يوماً وفق سياستنا العادلة"
-            : "MedLex 14-Day Fair Refund Policy"}
+          {t("refundGuaranteeTitle")}
         </strong>
         <span className="text-[11px] sm:text-[11.5px] leading-relaxed block text-emerald-900/90">
-          {isAr
-            ? "يحق لك طلب استرداد كامل للمبلغ خلال 14 يوماً من الشراء بشرط ألا تكون قد أتممت أكثر من 3 محطات في وضع الامتحان (Exam Mode)."
-            : "Full refund available within 14 days of purchase, provided you have completed no more than 3 stations in Exam Mode."}
+          {t("refundGuaranteeDesc")}
         </span>
       </div>
     </div>
@@ -220,9 +217,10 @@ const CheckoutWaiverSection = React.memo(function CheckoutWaiverSection({
   hasAttemptedSubmit,
   isProcessing,
   waiverText,
-  isAr,
+  isAr: _isAr,
   onToggle,
 }: CheckoutWaiverSectionProps) {
+  const t = useTranslations("checkout");
   return (
     <div className="space-y-1.5">
       <label
@@ -252,9 +250,7 @@ const CheckoutWaiverSection = React.memo(function CheckoutWaiverSection({
             </span>
 
             <span className="text-[11px] font-semibold text-[#8A6D2B]">
-              {isAr
-                ? "موافقة إلزامية للمتابعة"
-                : "Mandatory agreement to proceed"}
+              {t("mandatoryAgreement")}
             </span>
           </div>
 
@@ -264,9 +260,7 @@ const CheckoutWaiverSection = React.memo(function CheckoutWaiverSection({
           <span className="text-[11px] text-[#7A828E] block flex items-center gap-1 pt-0.5">
             <HelpCircle size={11} className="inline shrink-0 text-[#8C939E]" />
             <span>
-              {isAr
-                ? "مطلوب قانونياً لتفعيل الوصول الفوري للمحتوى الرقمي."
-                : "Required by consumer regulations for immediate supply of digital content."}
+              {t("regulatoryRequirement")}
             </span>
           </span>
         </div>
@@ -276,9 +270,7 @@ const CheckoutWaiverSection = React.memo(function CheckoutWaiverSection({
         <div className="flex items-center gap-1.5 text-xs text-rose-600 px-1 font-medium animate-in fade-in">
           <AlertCircle size={13} className="shrink-0" />
           <span>
-            {isAr
-              ? "يرجى تحديد المربع أعلاه للموافقة على شروط الوصول الفوري والاستمرار."
-              : "Please check the box above to acknowledge immediate access terms before proceeding."}
+            {t("mustAcceptWaiver")}
           </span>
         </div>
       )}
@@ -309,6 +301,8 @@ const CheckoutActionButtons = React.memo(function CheckoutActionButtons({
   waiverAccepted,
   customActions,
 }: CheckoutActionButtonsProps) {
+  const t = useTranslations("checkout");
+
   if (customActions) {
     return (
       <>
@@ -336,7 +330,7 @@ const CheckoutActionButtons = React.memo(function CheckoutActionButtons({
         {isProcessing ? (
           <>
             <Loader2 size={18} className="animate-spin text-current" />
-            <span>{isAr ? "جارِ المعالجة..." : "Processing..."}</span>
+            <span>{t("processing")}</span>
           </>
         ) : (
           <>
@@ -350,9 +344,7 @@ const CheckoutActionButtons = React.memo(function CheckoutActionButtons({
       <div className="flex items-center justify-center gap-1.5 text-[11px] text-[#7A828E] text-center">
         <Lock size={11} className="text-[#7A828E]/80" />
         <span>
-          {isAr
-            ? "معالجة الدفع تتم بأمان عبر Paddle (التاجر المعتمد للفواتير والضرائب)"
-            : "Payments processed securely by Paddle (Merchant of Record)"}
+          {t("paddleSecurity")}
         </span>
       </div>
     </div>
@@ -368,15 +360,15 @@ export default function CheckoutDialog({
   onOpenChange,
   title,
   subtitle,
-  itemName = "The CASC Academy — Complete Access",
-  itemDescription = "Instant access to 43 interactive psychiatric stations, Learn Mode & 7-min Exam Mode, and practice cards.",
+  itemName,
+  itemDescription,
   price = "£147",
   originalPrice = "£297",
-  priceBadge = "Founding Cohort",
-  priceNote = "One-time payment · 12 months full access",
-  features = DEFAULT_FEATURES,
+  priceBadge,
+  priceNote,
+  features,
   requireCancellationWaiver = true,
-  waiverText = DEFAULT_CANCELLATION_WAIVER_TEXT,
+  waiverText,
   confirmLabel,
   isProcessing = false,
   onConfirm,
@@ -384,6 +376,28 @@ export default function CheckoutDialog({
 }: CheckoutDialogProps) {
   const locale = useLocale();
   const isAr = locale === "ar";
+  const t = useTranslations("checkout");
+
+  const resolvedItemName = itemName || t("defaultItemName");
+  const resolvedItemDescription =
+    itemDescription || t("defaultItemDescription");
+  const resolvedPriceBadge =
+    priceBadge !== undefined ? priceBadge : t("defaultPriceBadge");
+  const resolvedPriceNote =
+    priceNote !== undefined ? priceNote : t("defaultPriceNote");
+  const resolvedWaiverText = waiverText || t("defaultWaiverText");
+  const resolvedFeatures = useMemo(() => {
+    if (features) return features;
+    try {
+      const defaultFeats = t.raw("defaultFeatures") as string[];
+      if (Array.isArray(defaultFeats) && defaultFeats.length > 0) {
+        return defaultFeats;
+      }
+    } catch {
+      // fallback
+    }
+    return DEFAULT_FEATURES;
+  }, [features, t]);
 
   // Checkbox MUST NOT be checked by default. User must check it explicitly.
   const [waiverAccepted, setWaiverAccepted] = useState(false);
@@ -416,29 +430,26 @@ export default function CheckoutDialog({
 
     await onConfirm({
       waiverAccepted,
-      waiverText,
+      waiverText: resolvedWaiverText,
       acceptedAt: new Date().toISOString(),
     });
-  }, [canProceed, onConfirm, waiverAccepted, waiverText]);
+  }, [canProceed, onConfirm, waiverAccepted, resolvedWaiverText]);
 
   const defaultTitle = useMemo(
-    () => (isAr ? "مراجعة وإتمام الاشتراك" : "Review & Complete Enrolment"),
-    [isAr],
+    () => t("reviewTitle"),
+    [t],
   );
 
   const defaultSubtitle = useMemo(
-    () =>
-      isAr
-        ? "تحصل على وصول فوري لجميع محطات ومواد الدورة التدريبية."
-        : "You are seconds away from full immediate access to the Academy.",
-    [isAr],
+    () => t("reviewSubtitle"),
+    [t],
   );
 
   const resolvedConfirmLabel = useMemo(
     () =>
       confirmLabel ||
-      (isAr ? `تأكيد الاشتراك — ${price}` : `Enrol & Pay ${price}`),
-    [confirmLabel, isAr, price],
+      t("enrolAndPay", { price }),
+    [confirmLabel, t, price],
   );
 
   return (
@@ -460,13 +471,13 @@ export default function CheckoutDialog({
         <div className="p-5 sm:p-6 space-y-3.5 overflow-y-auto max-h-[calc(92vh-95px)] bg-white no-scrollbar">
           {/* Memoized Order Summary Card */}
           <CheckoutOrderSummaryCard
-            itemName={itemName}
-            itemDescription={itemDescription}
+            itemName={resolvedItemName}
+            itemDescription={resolvedItemDescription}
             price={price}
             originalPrice={originalPrice}
-            priceBadge={priceBadge}
-            priceNote={priceNote}
-            features={features}
+            priceBadge={resolvedPriceBadge}
+            priceNote={resolvedPriceNote}
+            features={resolvedFeatures}
           />
 
           {/* Memoized 14-Day Refund Guarantee Callout */}
@@ -478,7 +489,7 @@ export default function CheckoutDialog({
               waiverAccepted={waiverAccepted}
               hasAttemptedSubmit={hasAttemptedSubmit}
               isProcessing={isProcessing}
-              waiverText={waiverText}
+              waiverText={resolvedWaiverText}
               isAr={isAr}
               onToggle={handleToggleWaiver}
             />

@@ -90,8 +90,7 @@ export const PrivateSessionSummaryStep = React.memo(function PrivateSessionSumma
             <div className="flex justify-between pt-2">
               <span className="text-char/60">{t("packageQuantity")}</span>
               <span className="font-semibold text-navy">
-                {selectedOffer.sessionCount}{" "}
-                {locale === "ar" ? "جلسات" : "sessions"}
+                {t("sessionsCount", { count: selectedOffer.sessionCount })}
               </span>
             </div>
           )}
@@ -108,7 +107,7 @@ export const PrivateSessionSummaryStep = React.memo(function PrivateSessionSumma
           {mode === "redeem" && (
             <div className="flex justify-between pt-2 text-sm font-bold text-emerald-800">
               <span>{t("totalPrice")}</span>
-              <span>{locale === "ar" ? "1 رصيد جلسة" : "1 session credit"}</span>
+              <span>{t("oneSessionCredit")}</span>
             </div>
           )}
         </div>
@@ -130,11 +129,7 @@ export const PrivateSessionSummaryStep = React.memo(function PrivateSessionSumma
           className="min-h-[44px] px-6 py-2.5 rounded-xl bg-navy text-white text-xs sm:text-sm font-semibold hover:bg-navy/90 transition-all shadow-sm flex items-center gap-2 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-gold disabled:opacity-60"
         >
           {isSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
-          {mode === "redeem"
-            ? t("confirmRedemption")
-            : locale === "ar"
-              ? "تأكيد الاشتراك في الجلسة"
-              : "Confirm Session Subscription"}
+          {mode === "redeem" ? t("confirmRedemption") : t("confirmSubscription")}
         </button>
       </div>
     </div>

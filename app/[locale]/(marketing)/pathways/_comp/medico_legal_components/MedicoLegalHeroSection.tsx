@@ -57,9 +57,7 @@ export default function MedicoLegalHeroSection({ locale: _locale }: Props) {
                 href="/gifts/MedLex_Medico-Legal_Pathway_Guide.pdf"
                 download="MedLex_Medico-Legal_Pathway_Guide.pdf"
               >
-                {_locale === "ar"
-                  ? "تحميل الدليل التعريفي"
-                  : "Download Prospectus"}
+                {t("downloadProspectus")}
               </a>
             </div>
           </div>
