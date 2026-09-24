@@ -1,14 +1,11 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
-interface InstitutionalHeroProps {
-  locale: string;
-}
-
-export default function InstitutionalHero({ locale }: InstitutionalHeroProps) {
+export default function InstitutionalHero() {
   const t = useTranslations("institutionalPage.hero");
-
+  const locale = useLocale();
+  const isAr = locale === "ar";
   const tickerItems = [
     t("tickerItems.0"),
     t("tickerItems.1"),
@@ -97,13 +94,19 @@ export default function InstitutionalHero({ locale }: InstitutionalHeroProps) {
               {t("ctaServices")}
             </a>
             <a
-              href="/gifts/MedLex_Institutional_Guide.pdf"
-              download="MedLex_Institutional_Guide.pdf"
+              href={
+                isAr
+                  ? "/gifts/ar/institutional_prospectus.pdf"
+                  : "/gifts/MedLex_Institutional_Guide.pdf"
+              }
+              download={
+                isAr
+                  ? "MedLex_Institutional_Guide_AR.pdf"
+                  : "MedLex_Institutional_Guide.pdf"
+              }
               className="inline-flex items-center justify-center font-sans font-semibold text-[15px] px-6 py-3.5 rounded border border-white text-white hover:bg-white hover:text-navy transition-colors"
             >
-              {locale === "ar"
-                ? "تحميل الدليل التعريفي"
-                : "Download Prospectus"}
+              {isAr ? "تحميل الدليل التعريفي" : "Download Prospectus"}
             </a>
           </div>
         </div>

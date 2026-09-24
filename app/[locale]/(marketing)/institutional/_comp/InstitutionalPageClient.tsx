@@ -16,7 +16,7 @@ export default function InstitutionalPageClient({
 }: InstitutionalPageClientProps) {
   return (
     <main className="min-h-screen bg-fd-paper text-char selection:bg-gold/20 selection:text-navy">
-      <InstitutionalHero locale={locale} />
+      <InstitutionalHero />
       <InstitutionalServices locale={locale} />
       <InstitutionalNotDo locale={locale} />
       <InstitutionalTrackRecord locale={locale} />
