@@ -51,23 +51,75 @@ export async function GET(req: NextRequest) {
       return internalError("Failed to fetch session offers", correlationId);
     }
 
+    // 3. Resolve country-specific prices
+    const countryCode = (
+      req.headers.get("x-user-country") || "EG"
+    ).toUpperCase();
+
+    const offerIds = (offersData || []).map((o) => o.id);
+    let countryPriceMap = new Map<
+      string,
+      { price_minor: number; currency: string }
+    >();
+
+    if (offerIds.length > 0) {
+      // Try exact country match first
+      const { data: exactPrices } = await supabase
+        .from("offer_country_prices")
+        .select("offer_id, price_minor, currency")
+        .in("offer_id", offerIds)
+        .eq("country_code", countryCode)
+        .eq("is_active", true);
+
+      if (exactPrices && exactPrices.length > 0) {
+        countryPriceMap = new Map(
+          exactPrices.map((p) => [p.offer_id, p]),
+        );
+      }
+
+      // For offers without an exact match, try __OTHER__ fallback
+      const missingOfferIds = offerIds.filter(
+        (id) => !countryPriceMap.has(id),
+      );
+      if (missingOfferIds.length > 0) {
+        const { data: otherPrices } = await supabase
+          .from("offer_country_prices")
+          .select("offer_id, price_minor, currency")
+          .in("offer_id", missingOfferIds)
+          .eq("country_code", "__OTHER__")
+          .eq("is_active", true);
+
+        if (otherPrices) {
+          for (const p of otherPrices) {
+            if (!countryPriceMap.has(p.offer_id)) {
+              countryPriceMap.set(p.offer_id, p);
+            }
+          }
+        }
+      }
+    }
+
     // Determine requested locale (from referer or accept-language)
     const referer = req.headers.get("referer") || "";
     const isArabic =
       referer.includes("/ar/") ||
       req.nextUrl.searchParams.get("locale") === "ar";
 
-    const formattedOffers = (offersData || []).map((o) => ({
-      id: o.id,
-      code: o.code,
-      kind: o.kind,
-      sessionCount: o.session_count,
-      priceMinor: o.price_minor,
-      currency: o.currency,
-      title: isArabic ? o.title_ar : o.title_en,
-      titleEn: o.title_en,
-      titleAr: o.title_ar,
-    }));
+    const formattedOffers = (offersData || []).map((o) => {
+      const countryPrice = countryPriceMap.get(o.id);
+      return {
+        id: o.id,
+        code: o.code,
+        kind: o.kind,
+        sessionCount: o.session_count,
+        priceMinor: countryPrice?.price_minor ?? o.price_minor,
+        currency: countryPrice?.currency ?? o.currency,
+        title: isArabic ? o.title_ar : o.title_en,
+        titleEn: o.title_en,
+        titleAr: o.title_ar,
+        countryCode,
+      };
+    });
 
     // 3. Check authentication and retrieve learner data if signed in
     const {

@@ -369,6 +369,30 @@ export interface Database {
         Update: Partial<Database["public"]["Tables"]["private_session_offers"]["Insert"]>;
         Relationships: [];
       };
+      offer_country_prices: {
+        Row: {
+          id: string;
+          offer_id: string;
+          country_code: string;
+          price_minor: number;
+          currency: string;
+          is_active: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          offer_id: string;
+          country_code: string;
+          price_minor: number;
+          currency?: string;
+          is_active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["offer_country_prices"]["Insert"]>;
+        Relationships: [];
+      };
       private_session_slots: {
         Row: {
           id: string;
@@ -805,6 +829,7 @@ export interface Database {
 }
 
 export type PrivateSessionOfferRow = Database["public"]["Tables"]["private_session_offers"]["Row"];
+export type OfferCountryPriceRow = Database["public"]["Tables"]["offer_country_prices"]["Row"];
 export type PrivateSessionSlotRow = Database["public"]["Tables"]["private_session_slots"]["Row"];
 export type SessionPaymentAttemptRow = Database["public"]["Tables"]["session_payment_attempts"]["Row"];
 export type SessionPaymentWebhookEventRow = Database["public"]["Tables"]["session_payment_webhook_events"]["Row"];
