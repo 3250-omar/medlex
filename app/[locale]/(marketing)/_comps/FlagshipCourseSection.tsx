@@ -123,11 +123,7 @@ export default function FlagshipCourseSection({
                   className="w-full sm:w-72 rounded-md bg-white px-4 py-3 font-sans text-sm text-navy placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-gold/60 transition-all"
                 /> */}
                 <AuthDownloadButton
-                  fileUrl={
-                    locale === "ar"
-                      ? "/gifts/ar/homePage_prospectus.pdf"
-                      : "/gifts/MedLex_homePage_Prospectus_2026-27.pdf"
-                  }
+                  fileUrl={"/gifts/MedLex_homePage_Prospectus_2026-27.pdf"}
                   resourceName={{
                     en: "Prospectus",
                     ar: "دليل البرامج",

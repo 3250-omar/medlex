@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 type Props = {
   locale: string;
@@ -8,7 +8,7 @@ type Props = {
 
 export default function MedicoLegalHeroSection({ locale: _locale }: Props) {
   const t = useTranslations("pathwayPages.medicoLegalLanding.hero");
-
+  const locale = useLocale();
   const tickerItems = (t.raw("ticker") as string[]) || [
     "WRITING PSYCHIATRIC EVIDENCE",
     "COURT-READY REPORTING STANDARDS",
@@ -54,8 +54,16 @@ export default function MedicoLegalHeroSection({ locale: _locale }: Props) {
               </a>
               <a
                 className="btn ghost"
-                href="/gifts/MedLex_Medico-Legal_Pathway_Guide.pdf"
-                download="MedLex_Medico-Legal_Pathway_Guide.pdf"
+                href={
+                  locale === "ar"
+                    ? "/gifts/ar/medical_legal_prospectus.pdf"
+                    : "/gifts/MedLex_Medico-Legal_Pathway_Guide.pdf"
+                }
+                download={
+                  locale === "ar"
+                    ? "medical_legal_prospectus.pdf"
+                    : "MedLex_Medico-Legal_Pathway_Guide.pdf"
+                }
               >
                 {t("downloadProspectus")}
               </a>
