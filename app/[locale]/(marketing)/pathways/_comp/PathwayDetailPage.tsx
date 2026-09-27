@@ -19,6 +19,7 @@ type PathwayDetailPageProps = {
   pathway: PathwayKey;
   content: PathwayContent;
   labels: PathwayLabels;
+  courseData?: { price: number; currency: string } | null;
 };
 
 export default function PathwayDetailPage({
@@ -26,17 +27,36 @@ export default function PathwayDetailPage({
   pathway,
   content,
   labels,
+  courseData,
 }: PathwayDetailPageProps) {
   if (pathway === "casc-academy") {
-    return <CascAcademyLanding content={content} labels={labels} />;
+    return (
+      <CascAcademyLanding
+        content={content}
+        labels={labels}
+        courseData={courseData}
+      />
+    );
   }
 
   if (pathway === "medico-legal") {
-    return <MedicoLegalLanding content={content} labels={labels} />;
+    return (
+      <MedicoLegalLanding
+        content={content}
+        labels={labels}
+        courseData={courseData}
+      />
+    );
   }
 
   if (pathway === "foundations") {
-    return <FoundationsLanding content={content} labels={labels} />;
+    return (
+      <FoundationsLanding
+        content={content}
+        labels={labels}
+        courseData={courseData}
+      />
+    );
   }
 
   return (

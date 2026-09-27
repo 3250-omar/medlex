@@ -6,12 +6,14 @@ type Props = {
   locale: string;
   cascEnrolment?: EnrolledCourse;
   continueSlug?: string | null;
+  courseData?: { price: number; currency: string } | null;
 };
 
 export default function CascPricingSection({
   locale,
   cascEnrolment,
   continueSlug,
+  courseData,
 }: Props) {
   const t = useTranslations("cascPricing");
 
@@ -23,6 +25,15 @@ export default function CascPricingSection({
     t("feat5"),
     t("feat6"),
   ];
+
+  // Dynamic price display
+  const priceDisplay = courseData
+    ? new Intl.NumberFormat(locale, {
+        style: "currency",
+        currency: courseData.currency,
+        maximumFractionDigits: 0,
+      }).format(courseData.price)
+    : t("price");
 
   return (
     <section
@@ -45,7 +56,7 @@ export default function CascPricingSection({
 
         <div className="bg-white text-char rounded-2xl p-8 sm:p-10 border-t-8 border-gold shadow-xl">
           <div className="font-serif text-5xl sm:text-6xl font-bold text-navy! leading-none">
-            {t("price")}
+            {priceDisplay}
           </div>
           <div className="text-sm text-grey mt-2 mb-6">
             {t("priceSubtitle")}
@@ -69,6 +80,7 @@ export default function CascPricingSection({
             cascEnrolment={cascEnrolment}
             continueSlug={continueSlug}
             locale={locale}
+            courseData={courseData}
           />
         </div>
       </div>
