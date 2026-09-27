@@ -28,12 +28,6 @@ export default async function TermsPage({ params }: PageProps) {
         <div className="space-y-4">
           <p>{t("sec1Body1")}</p>
           <div className="rounded-xl border border-[#DFD5C0] bg-[#F5EFE3]/80 p-4 sm:p-5 flex items-start gap-3">
-            <span
-              className="text-gold font-bold text-lg leading-none mt-0.5"
-              aria-hidden="true"
-            >
-              ⚑
-            </span>
             <p className="text-sm sm:text-[14.5px] leading-relaxed text-char/90">
               {t("paddleNotice")}
             </p>

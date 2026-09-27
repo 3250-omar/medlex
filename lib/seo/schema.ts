@@ -19,7 +19,7 @@ export function createOrganizationSchema() {
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "Customer Support",
-      email: "support@medlexsolutions.com",
+      email: "info@medlexsolutions.com",
       telephone: "+201019515321",
       availableLanguage: ["English", "Arabic"],
     },
@@ -162,7 +162,7 @@ export function createContactPageSchema(locale: string) {
     mainEntity: {
       "@type": "Organization",
       name: "MedLex",
-      email: "support@medlexsolutions.com",
+      email: "info@medlexsolutions.com",
       telephone: "+201019515321",
     },
   };

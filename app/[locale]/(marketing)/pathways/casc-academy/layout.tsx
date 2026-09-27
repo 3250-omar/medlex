@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { JsonLd } from "@/lib/seo/JsonLd";
-import { createLocalizedMetadata, CANONICAL_ORIGIN, type Locale } from "@/lib/seo/metadata";
+import {
+  createLocalizedMetadata,
+  CANONICAL_ORIGIN,
+  type Locale,
+} from "@/lib/seo/metadata";
 import { createCourseSchema, createBreadcrumbSchema } from "@/lib/seo/schema";
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
 
@@ -32,7 +36,10 @@ export default async function CascAcademyLayout({
 
   const breadcrumbSchema = createBreadcrumbSchema([
     { name: isAr ? "الرئيسية" : "Home", url: `${CANONICAL_ORIGIN}/${locale}` },
-    { name: isAr ? "المسارات" : "Pathways", url: `${CANONICAL_ORIGIN}/${locale}/pathways` },
+    {
+      name: isAr ? "المسارات" : "Pathways",
+      url: `${CANONICAL_ORIGIN}/${locale}/pathways`,
+    },
     {
       name: isAr ? "أكاديمية CASC" : "CASC Academy",
       url: `${CANONICAL_ORIGIN}/${locale}/pathways/casc-academy`,

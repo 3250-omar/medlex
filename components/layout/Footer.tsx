@@ -159,10 +159,10 @@ export default async function Footer({ locale }: { locale: string }) {
                 </h3>
                 <div className="space-y-3 font-sans text-sm">
                   <a
-                    href="mailto:support@medlexsolutions.com"
+                    href="mailto:info@medlexsolutions.com"
                     className="block text-[#c7d2de] hover:text-[#c5a059] transition-colors"
                   >
-                    support@medlexsolutions.com
+                    info@medlexsolutions.com
                   </a>
                   <a
                     href="https://wa.me/201019515321"

@@ -74,7 +74,7 @@ export async function sendEmail({
     process.env.SMTP_FROM?.trim() ||
     `MedLex System <onboarding@resend.dev>`;
   const defaultReplyTo =
-    process.env.SMTP_REPLY_TO || "support@medlexsolutions.com";
+    process.env.SMTP_REPLY_TO || "info@medlexsolutions.com";
 
   if (!resend) {
     if (process.env.NODE_ENV === "production") {
