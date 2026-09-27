@@ -2,6 +2,18 @@ import createNextIntlPlugin from "next-intl/plugin";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.supabase.co",
+      },
+      {
+        protocol: "https",
+        hostname: "ckgoyhcvbopghoaahfmo.supabase.co",
+      },
+    ],
+  },
   async headers() {
     return [
       {

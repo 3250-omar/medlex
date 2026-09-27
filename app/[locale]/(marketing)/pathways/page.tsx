@@ -27,7 +27,7 @@ export default async function PathwaysPage({
     "/pathways",
     t("title"),
     t("intro"),
-    [] // We can keep it empty for now or populate it statically if needed, but SEO schema ideally should wait. Since this is an async server component, it's fine to keep basic schema.
+    [], // We can keep it empty for now or populate it statically if needed, but SEO schema ideally should wait. Since this is an async server component, it's fine to keep basic schema.
   );
 
   return (

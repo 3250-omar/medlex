@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { label: "Founder", href: "/founder" },
   { label: "FAQ", href: "/faq" },
   { label: "Institutional", href: "/institutional" },
+  { label: "Blogs", href: "/blogs" },
   { label: "Contact", href: "/contact" },
 ] as const;
 
@@ -26,6 +27,7 @@ const Navigation = memo(function Navigation({
     t("nav.founder"),
     t("nav.faq"),
     t("nav.institutional"),
+    t("nav.blogs"),
     t("nav.contact"),
   ];
   const items = showCourses

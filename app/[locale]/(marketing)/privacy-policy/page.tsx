@@ -57,7 +57,6 @@ export default async function PrivacyPage({ params }: PageProps) {
     { label: t("sec4Item2Label"), desc: t("sec4Item2Desc") },
     { label: t("sec4Item3Label"), desc: t("sec4Item3Desc") },
     { label: t("sec4Item4Label"), desc: t("sec4Item4Desc") },
-    { label: t("sec4Item5Label"), desc: t("sec4Item5Desc") },
     { label: t("sec4Item6Label"), desc: t("sec4Item6Desc") },
     { label: t("sec4Item7Label"), desc: t("sec4Item7Desc") },
     { label: t("sec4Item8Label"), desc: t("sec4Item8Desc") },
@@ -119,12 +118,6 @@ export default async function PrivacyPage({ params }: PageProps) {
 
           {/* Important Patient Data Disclaimer */}
           <div className="rounded-xl border border-gold/40 bg-[#F5EFE3]/80 p-4 sm:p-5 flex items-start gap-3">
-            <span
-              className="text-gold font-bold text-lg leading-none mt-0.5"
-              aria-hidden="true"
-            >
-              ⚑
-            </span>
             <p className="text-xs sm:text-[14px] leading-relaxed text-char/90 font-medium">
               {t("sec2Disclaimer")}
             </p>
