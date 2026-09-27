@@ -41,6 +41,7 @@ export default function MobileMenu({
     t("nav.founder"),
     t("nav.faq"),
     t("nav.institutional"),
+    t("nav.blogs"),
     t("nav.contact"),
   ];
   const items = showCourses

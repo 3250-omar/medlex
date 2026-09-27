@@ -9,6 +9,54 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      blogs: {
+        Row: {
+          id: string;
+          title_en: string;
+          title_ar: string;
+          slug: string;
+          excerpt_en: string | null;
+          excerpt_ar: string | null;
+          content_en: string | null;
+          content_ar: string | null;
+          cover_image: string | null;
+          og_image_url: string | null;
+          seo_title_en: string | null;
+          seo_title_ar: string | null;
+          seo_description_en: string | null;
+          seo_description_ar: string | null;
+          seo_tags: string[] | null;
+          status: string;
+          is_published: boolean;
+          published_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          title_en: string;
+          title_ar: string;
+          slug: string;
+          excerpt_en?: string | null;
+          excerpt_ar?: string | null;
+          content_en?: string | null;
+          content_ar?: string | null;
+          cover_image?: string | null;
+          og_image_url?: string | null;
+          seo_title_en?: string | null;
+          seo_title_ar?: string | null;
+          seo_description_en?: string | null;
+          seo_description_ar?: string | null;
+          seo_tags?: string[] | null;
+          status?: string;
+          is_published?: boolean;
+          published_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["blogs"]["Insert"]>;
+        Relationships: [];
+      };
       profiles: {
         Row: {
           id: string;

@@ -1,0 +1,9 @@
+-- Add missing columns to the blogs table
+ALTER TABLE public.blogs
+ADD COLUMN IF NOT EXISTS excerpt_en TEXT,
+ADD COLUMN IF NOT EXISTS excerpt_ar TEXT,
+ADD COLUMN IF NOT EXISTS cover_image TEXT,
+ADD COLUMN IF NOT EXISTS seo_title_en TEXT,
+ADD COLUMN IF NOT EXISTS seo_title_ar TEXT,
+ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'draft',
+ADD COLUMN IF NOT EXISTS published_at TIMESTAMP WITH TIME ZONE;

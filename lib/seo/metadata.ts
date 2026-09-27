@@ -22,7 +22,8 @@ export type SeoRouteKey =
   | "register"
   | "privacy"
   | "terms"
-  | "refundPolicy";
+  | "refundPolicy"
+  | "blogs";
 
 export interface SeoRouteConfig {
   key: SeoRouteKey;
@@ -144,6 +145,13 @@ export const SEO_ROUTES_REGISTRY: Record<SeoRouteKey, SeoRouteConfig> = {
     translationKey: "refundPolicy",
     schemaType: "WebPage",
     lastModified: "2026-03-01T00:00:00.000Z",
+  },
+  blogs: {
+    key: "blogs",
+    path: "/blogs",
+    translationKey: "blogs",
+    schemaType: "CollectionPage",
+    lastModified: "2026-09-27T00:00:00.000Z",
   },
 };
 
