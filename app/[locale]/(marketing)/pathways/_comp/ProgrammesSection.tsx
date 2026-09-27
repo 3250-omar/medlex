@@ -1,18 +1,30 @@
 import InterestButton from "./InterestButton";
 import SubscribeButton from "./SubscribeButton";
 import { type PathwayContent, type PathwayKey } from "./pathwayContent";
+import { useLocale } from "next-intl";
 
 interface ProgrammesSectionProps {
   pathway: PathwayKey;
   programmes: NonNullable<PathwayContent["programmes"]>;
   programmeLabel: string;
+  courseData?: { price: number; currency: string } | null;
 }
 
 export default function ProgrammesSection({
   pathway,
   programmes,
   programmeLabel,
+  courseData,
 }: ProgrammesSectionProps) {
+  const locale = useLocale();
+  const formattedPrice = courseData
+    ? new Intl.NumberFormat(locale, {
+        style: "currency",
+        currency: courseData.currency,
+        maximumFractionDigits: 0,
+      }).format(courseData.price)
+    : undefined;
+
   return (
     <section className="border-b border-white/10 bg-navy on-navy text-lbody">
       <div className="mx-auto grid w-full gap-10 px-6 py-20 sm:px-8 lg:max-w-6xl lg:grid-cols-[10rem_1fr] lg:gap-8 lg:px-10 lg:py-28">
@@ -59,7 +71,7 @@ export default function ProgrammesSection({
                     </p>
                     <div className="mt-6">
                       {pathway === "casc-academy" ? (
-                        <SubscribeButton>{item.action}</SubscribeButton>
+                        <SubscribeButton itemPrice={formattedPrice}>{item.action}</SubscribeButton>
                       ) : (
                         <InterestButton pathway={pathway}>
                           {item.action}

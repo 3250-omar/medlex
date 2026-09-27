@@ -7,12 +7,14 @@ type Props = {
   locale: string;
   cascEnrolment?: EnrolledCourse;
   continueSlug?: string | null;
+  courseData?: { price: number; currency: string } | null;
 };
 
 export default function CascClosingBannerSection({
   locale,
   cascEnrolment,
   continueSlug,
+  courseData,
 }: Props) {
   const t = useTranslations("cascClosingBanner");
 
@@ -31,6 +33,7 @@ export default function CascClosingBannerSection({
             cascEnrolment={cascEnrolment}
             continueSlug={continueSlug}
             locale={locale}
+            courseData={courseData}
           />
           <Link
             className="btn btn-ghost !min-h-12 !px-7 font-semibold !text-navy !border-navy/30 hover:!bg-navy hover:!text-white text-sm !rounded-full transition-all hover:-translate-y-0.5"

@@ -53,16 +53,61 @@ export interface Database {
           description_en: string | null;
           description_ar: string | null;
           price: number;
+          currency: string;
+          course_status: "active" | "waiting_list" | "launching";
           access_duration_days: number;
           points_on_completion: number;
           is_published: boolean;
+          features_ar: string[] | null;
+          features_en: string[] | null;
           created_at: string;
         };
         Insert: Omit<
           Database["public"]["Tables"]["courses"]["Row"],
           "id" | "created_at"
-        > & { id?: string; created_at?: string };
+        > & {
+          id?: string;
+          created_at?: string;
+          price?: number;
+          currency?: string;
+          course_status?: "active" | "waiting_list" | "launching";
+          features_ar?: string[] | null;
+          features_en?: string[] | null;
+        };
         Update: Partial<Database["public"]["Tables"]["courses"]["Insert"]>;
+        Relationships: [];
+      };
+      course_country_prices: {
+        Row: {
+          id: string;
+          course_id: string;
+          country_code: string;
+          price: number;
+          currency: string;
+          is_active: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          course_id: string;
+          country_code: string;
+          price: number;
+          currency: string;
+          is_active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          course_id?: string;
+          country_code?: string;
+          price?: number;
+          currency?: string;
+          is_active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
         Relationships: [];
       };
       course_releases: {
@@ -330,7 +375,9 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
-        Update: Partial<Database["public"]["Tables"]["private_session_hosts"]["Insert"]>;
+        Update: Partial<
+          Database["public"]["Tables"]["private_session_hosts"]["Insert"]
+        >;
         Relationships: [];
       };
       private_session_offers: {
@@ -366,7 +413,9 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
-        Update: Partial<Database["public"]["Tables"]["private_session_offers"]["Insert"]>;
+        Update: Partial<
+          Database["public"]["Tables"]["private_session_offers"]["Insert"]
+        >;
         Relationships: [];
       };
       offer_country_prices: {
@@ -390,7 +439,9 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
-        Update: Partial<Database["public"]["Tables"]["offer_country_prices"]["Insert"]>;
+        Update: Partial<
+          Database["public"]["Tables"]["offer_country_prices"]["Insert"]
+        >;
         Relationships: [];
       };
       private_session_slots: {
@@ -422,7 +473,9 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
-        Update: Partial<Database["public"]["Tables"]["private_session_slots"]["Insert"]>;
+        Update: Partial<
+          Database["public"]["Tables"]["private_session_slots"]["Insert"]
+        >;
         Relationships: [];
       };
       session_payment_attempts: {
@@ -440,7 +493,14 @@ export interface Database {
           provider: string;
           provider_order_id: string | null;
           provider_transaction_id: string | null;
-          status: "created" | "pending" | "paid" | "failed" | "cancelled" | "expired" | "paid_unfulfilled";
+          status:
+            | "created"
+            | "pending"
+            | "paid"
+            | "failed"
+            | "cancelled"
+            | "expired"
+            | "paid_unfulfilled";
           hold_expires_at: string | null;
           failure_code: string | null;
           failure_detail: string | null;
@@ -462,7 +522,14 @@ export interface Database {
           provider?: string;
           provider_order_id?: string | null;
           provider_transaction_id?: string | null;
-          status?: "created" | "pending" | "paid" | "failed" | "cancelled" | "expired" | "paid_unfulfilled";
+          status?:
+            | "created"
+            | "pending"
+            | "paid"
+            | "failed"
+            | "cancelled"
+            | "expired"
+            | "paid_unfulfilled";
           hold_expires_at?: string | null;
           failure_code?: string | null;
           failure_detail?: string | null;
@@ -470,7 +537,9 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
-        Update: Partial<Database["public"]["Tables"]["session_payment_attempts"]["Insert"]>;
+        Update: Partial<
+          Database["public"]["Tables"]["session_payment_attempts"]["Insert"]
+        >;
         Relationships: [];
       };
       session_payment_webhook_events: {
@@ -480,7 +549,12 @@ export interface Database {
           provider_transaction_id: string | null;
           payload_hash: string;
           verified: boolean;
-          processing_status: "received" | "processed" | "duplicate" | "rejected" | "failed";
+          processing_status:
+            | "received"
+            | "processed"
+            | "duplicate"
+            | "rejected"
+            | "failed";
           attempt_id: string | null;
           error_detail: string | null;
           received_at: string;
@@ -492,13 +566,20 @@ export interface Database {
           provider_transaction_id?: string | null;
           payload_hash: string;
           verified?: boolean;
-          processing_status?: "received" | "processed" | "duplicate" | "rejected" | "failed";
+          processing_status?:
+            | "received"
+            | "processed"
+            | "duplicate"
+            | "rejected"
+            | "failed";
           attempt_id?: string | null;
           error_detail?: string | null;
           received_at?: string;
           processed_at?: string | null;
         };
-        Update: Partial<Database["public"]["Tables"]["session_payment_webhook_events"]["Insert"]>;
+        Update: Partial<
+          Database["public"]["Tables"]["session_payment_webhook_events"]["Insert"]
+        >;
         Relationships: [];
       };
       session_entitlements: {
@@ -534,7 +615,9 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
-        Update: Partial<Database["public"]["Tables"]["session_entitlements"]["Insert"]>;
+        Update: Partial<
+          Database["public"]["Tables"]["session_entitlements"]["Insert"]
+        >;
         Relationships: [];
       };
       session_credit_ledger: {
@@ -560,7 +643,9 @@ export interface Database {
           actor_id?: string | null;
           created_at?: string;
         };
-        Update: Partial<Database["public"]["Tables"]["session_credit_ledger"]["Insert"]>;
+        Update: Partial<
+          Database["public"]["Tables"]["session_credit_ledger"]["Insert"]
+        >;
         Relationships: [];
       };
       sessions_booking: {
@@ -573,7 +658,14 @@ export interface Database {
           funding_type: "direct_payment" | "package_credit";
           payment_attempt_id: string | null;
           entitlement_id: string | null;
-          status: "pending_payment" | "confirmed" | "fulfillment_pending" | "ready" | "expired" | "failed" | "cancelled";
+          status:
+            | "pending_payment"
+            | "confirmed"
+            | "fulfillment_pending"
+            | "ready"
+            | "expired"
+            | "failed"
+            | "cancelled";
           starts_at: string;
           ends_at: string;
           amount_minor: number;
@@ -593,7 +685,14 @@ export interface Database {
           funding_type: "direct_payment" | "package_credit";
           payment_attempt_id?: string | null;
           entitlement_id?: string | null;
-          status?: "pending_payment" | "confirmed" | "fulfillment_pending" | "ready" | "expired" | "failed" | "cancelled";
+          status?:
+            | "pending_payment"
+            | "confirmed"
+            | "fulfillment_pending"
+            | "ready"
+            | "expired"
+            | "failed"
+            | "cancelled";
           starts_at: string;
           ends_at: string;
           amount_minor: number;
@@ -604,7 +703,9 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
-        Update: Partial<Database["public"]["Tables"]["sessions_booking"]["Insert"]>;
+        Update: Partial<
+          Database["public"]["Tables"]["sessions_booking"]["Insert"]
+        >;
         Relationships: [];
       };
       private_session_meetings: {
@@ -642,7 +743,9 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
-        Update: Partial<Database["public"]["Tables"]["private_session_meetings"]["Insert"]>;
+        Update: Partial<
+          Database["public"]["Tables"]["private_session_meetings"]["Insert"]
+        >;
         Relationships: [];
       };
       private_session_outbox: {
@@ -676,7 +779,9 @@ export interface Database {
           created_at?: string;
           completed_at?: string | null;
         };
-        Update: Partial<Database["public"]["Tables"]["private_session_outbox"]["Insert"]>;
+        Update: Partial<
+          Database["public"]["Tables"]["private_session_outbox"]["Insert"]
+        >;
         Relationships: [];
       };
       private_session_audit_events: {
@@ -704,7 +809,9 @@ export interface Database {
           correlation_id?: string | null;
           created_at?: string;
         };
-        Update: Partial<Database["public"]["Tables"]["private_session_audit_events"]["Insert"]>;
+        Update: Partial<
+          Database["public"]["Tables"]["private_session_audit_events"]["Insert"]
+        >;
         Relationships: [];
       };
     };
@@ -828,33 +935,85 @@ export interface Database {
   };
 }
 
-export type PrivateSessionOfferRow = Database["public"]["Tables"]["private_session_offers"]["Row"];
-export type OfferCountryPriceRow = Database["public"]["Tables"]["offer_country_prices"]["Row"];
-export type PrivateSessionSlotRow = Database["public"]["Tables"]["private_session_slots"]["Row"];
-export type SessionPaymentAttemptRow = Database["public"]["Tables"]["session_payment_attempts"]["Row"];
-export type SessionPaymentWebhookEventRow = Database["public"]["Tables"]["session_payment_webhook_events"]["Row"];
-export type SessionEntitlementRow = Database["public"]["Tables"]["session_entitlements"]["Row"];
-export type SessionCreditLedgerRow = Database["public"]["Tables"]["session_credit_ledger"]["Row"];
-export type SessionsBookingRow = Database["public"]["Tables"]["sessions_booking"]["Row"];
-export type PrivateSessionMeetingRow = Database["public"]["Tables"]["private_session_meetings"]["Row"];
-export type PrivateSessionHostRow = Database["public"]["Tables"]["private_session_hosts"]["Row"];
-export type PrivateSessionOutboxRow = Database["public"]["Tables"]["private_session_outbox"]["Row"];
-export type PrivateSessionAuditEventRow = Database["public"]["Tables"]["private_session_audit_events"]["Row"];
+export type PrivateSessionOfferRow =
+  Database["public"]["Tables"]["private_session_offers"]["Row"];
+export type OfferCountryPriceRow =
+  Database["public"]["Tables"]["offer_country_prices"]["Row"];
+export type PrivateSessionSlotRow =
+  Database["public"]["Tables"]["private_session_slots"]["Row"];
+export type SessionPaymentAttemptRow =
+  Database["public"]["Tables"]["session_payment_attempts"]["Row"];
+export type SessionPaymentWebhookEventRow =
+  Database["public"]["Tables"]["session_payment_webhook_events"]["Row"];
+export type SessionEntitlementRow =
+  Database["public"]["Tables"]["session_entitlements"]["Row"];
+export type SessionCreditLedgerRow =
+  Database["public"]["Tables"]["session_credit_ledger"]["Row"];
+export type SessionsBookingRow =
+  Database["public"]["Tables"]["sessions_booking"]["Row"];
+export type PrivateSessionMeetingRow =
+  Database["public"]["Tables"]["private_session_meetings"]["Row"];
+export type PrivateSessionHostRow =
+  Database["public"]["Tables"]["private_session_hosts"]["Row"];
+export type PrivateSessionOutboxRow =
+  Database["public"]["Tables"]["private_session_outbox"]["Row"];
+export type PrivateSessionAuditEventRow =
+  Database["public"]["Tables"]["private_session_audit_events"]["Row"];
 
 export type PrivateSessionOfferCode = "direct" | "package_5" | "package_10";
 export type PrivateSessionOfferKind = "direct" | "package";
-export type PrivateSessionSlotStatus = "available" | "held" | "booked" | "withdrawn" | "completed";
+export type PrivateSessionSlotStatus =
+  | "available"
+  | "held"
+  | "booked"
+  | "withdrawn"
+  | "completed";
 export type SessionPaymentPurpose = "direct" | "package";
-export type SessionPaymentStatus = "created" | "pending" | "paid" | "failed" | "cancelled" | "expired" | "paid_unfulfilled";
+export type SessionPaymentStatus =
+  | "created"
+  | "pending"
+  | "paid"
+  | "failed"
+  | "cancelled"
+  | "expired"
+  | "paid_unfulfilled";
 export type SessionEntitlementStatus = "active" | "exhausted" | "suspended";
-export type SessionCreditLedgerReason = "purchase_grant" | "booking_consumed" | "booking_restored";
+export type SessionCreditLedgerReason =
+  | "purchase_grant"
+  | "booking_consumed"
+  | "booking_restored";
 export type SessionBookingFundingType = "direct_payment" | "package_credit";
-export type SessionBookingStatus = "pending_payment" | "confirmed" | "fulfillment_pending" | "ready" | "expired" | "failed" | "cancelled";
-export type PrivateSessionMeetingStatus = "pending" | "creating" | "ready" | "failed";
-export type PrivateSessionEmailStatus = "pending" | "sending" | "sent" | "failed";
-export type PrivateSessionOutboxJobType = "create_meeting" | "send_confirmation_email";
-export type PrivateSessionOutboxStatus = "pending" | "processing" | "completed" | "failed";
-export type PrivateSessionActorType = "system" | "learner" | "admin" | "provider";
+export type SessionBookingStatus =
+  | "pending_payment"
+  | "confirmed"
+  | "fulfillment_pending"
+  | "ready"
+  | "expired"
+  | "failed"
+  | "cancelled";
+export type PrivateSessionMeetingStatus =
+  | "pending"
+  | "creating"
+  | "ready"
+  | "failed";
+export type PrivateSessionEmailStatus =
+  | "pending"
+  | "sending"
+  | "sent"
+  | "failed";
+export type PrivateSessionOutboxJobType =
+  | "create_meeting"
+  | "send_confirmation_email";
+export type PrivateSessionOutboxStatus =
+  | "pending"
+  | "processing"
+  | "completed"
+  | "failed";
+export type PrivateSessionActorType =
+  | "system"
+  | "learner"
+  | "admin"
+  | "provider";
 
 export interface PrivateSessionOfferDTO {
   id: string;
@@ -896,4 +1055,3 @@ export interface PrivateSessionContextDTO {
   } | null;
   activeEntitlements: LearnerEntitlementSummaryDTO[];
 }
-

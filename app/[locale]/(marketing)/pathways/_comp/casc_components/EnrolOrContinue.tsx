@@ -18,6 +18,7 @@ export type EnrolOrContinueProps = {
   cascEnrolment?: EnrolledCourse;
   continueSlug?: string | null;
   locale: string;
+  courseData?: { price: number; currency: string } | null;
 };
 
 export default function EnrolOrContinue({
@@ -26,9 +27,18 @@ export default function EnrolOrContinue({
   cascEnrolment,
   continueSlug,
   locale,
+  courseData,
 }: EnrolOrContinueProps) {
   const t = useTranslations("enrolOrContinue");
   const buttonLabel = label || t("defaultLabel");
+
+  const formattedPrice = courseData
+    ? new Intl.NumberFormat(locale, {
+        style: "currency",
+        currency: courseData.currency,
+        maximumFractionDigits: 0,
+      }).format(courseData.price)
+    : undefined;
 
   return cascEnrolment && continueSlug ? (
     <Link
@@ -38,7 +48,11 @@ export default function EnrolOrContinue({
       {t("continueCourse")}
     </Link>
   ) : (
-    <SubscribeButton className={className} showArrow={false}>
+    <SubscribeButton
+      className={className}
+      showArrow={false}
+      itemPrice={formattedPrice}
+    >
       {buttonLabel}
     </SubscribeButton>
   );

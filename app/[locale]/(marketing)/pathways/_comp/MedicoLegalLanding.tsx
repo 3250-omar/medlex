@@ -14,7 +14,11 @@ import {
   MedicoLegalFaqSection,
 } from "./medico_legal_components";
 
-type Props = { content: PathwayContent; labels: PathwayLabels };
+type Props = {
+  content: PathwayContent;
+  labels: PathwayLabels;
+  courseData?: { price: number; currency: string } | null;
+};
 
 export default function MedicoLegalLanding(_props: Props) {
   const locale = useLocale();

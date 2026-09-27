@@ -11,11 +11,13 @@ import EnrolOrContinue from "./EnrolOrContinue";
 type Props = {
   cascEnrolment?: EnrolledCourse;
   continueSlug?: string | null;
+  courseData?: { price: number; currency: string } | null;
 };
 
 export default function CascHeroSection({
   cascEnrolment,
   continueSlug,
+  courseData,
 }: Props) {
   const locale = useLocale();
   const t = useTranslations("cascHero");
@@ -114,6 +116,7 @@ export default function CascHeroSection({
             cascEnrolment={cascEnrolment}
             continueSlug={continueSlug}
             locale={locale}
+            courseData={courseData}
           />
           <Link
             className="btn bg-white/90! hover:bg-white! border border-navy/30! hover:border-navy! text-navy! !min-h-12 !px-7 font-semibold text-sm !rounded-lg transition-transform hover:-translate-y-0.5 shadow-sm"

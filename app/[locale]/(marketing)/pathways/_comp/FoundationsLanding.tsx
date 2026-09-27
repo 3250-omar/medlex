@@ -15,7 +15,11 @@ import {
   FoundationsFaqSection,
 } from "./foundations_components";
 
-type Props = { content: PathwayContent; labels: PathwayLabels };
+type Props = {
+  content: PathwayContent;
+  labels: PathwayLabels;
+  courseData?: { price: number; currency: string } | null;
+};
 
 export default function FoundationsLanding(_props: Props) {
   const locale = useLocale();

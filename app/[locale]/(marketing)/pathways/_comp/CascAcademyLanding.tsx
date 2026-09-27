@@ -33,10 +33,14 @@ const PrivateSessionDialog = dynamic(
   { ssr: false },
 );
 
-type Props = { content: PathwayContent; labels: PathwayLabels };
+type Props = {
+  content: PathwayContent;
+  labels: PathwayLabels;
+  courseData?: { price: number; currency: string } | null;
+};
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function CascAcademyLanding(_props: Props) {
+export default function CascAcademyLanding({ courseData, ..._props }: Props) {
   const locale = useLocale();
   const searchParams = useSearchParams();
 
@@ -103,6 +107,7 @@ export default function CascAcademyLanding(_props: Props) {
         locale={locale}
         cascEnrolment={cascEnrolment}
         continueSlug={continueSlug}
+        courseData={courseData}
       />
       {/* 11. COACHING */}
       <CascCoachingSection locale={locale} onOpenBooking={handleOpenBooking} />

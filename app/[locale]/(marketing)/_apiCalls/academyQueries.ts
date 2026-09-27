@@ -73,9 +73,29 @@ export type EnrolledCourse = {
   privateSessions?: UserUpcomingBooking[];
 };
 
+export type Course = {
+  id: string;
+  slug: string;
+  title_en: string;
+  title_ar: string | null;
+  description_en: string | null;
+  description_ar: string | null;
+  features_en: string[] | null;
+  features_ar: string[] | null;
+  course_status: "active" | "waiting_list" | "launching";
+  currency: string;
+  price: number;
+  access_duration_days: number;
+  points_on_completion: number;
+  is_published: boolean;
+  created_at: string;
+  privateSessions?: UserUpcomingBooking[];
+};
+
 export const academyQueryKeys = {
   authenticated: ["authenticated"] as const,
   currentUser: ["auth", "me"] as const,
+  allCourses: ["courses", "all"] as const,
   enrolledCourses: ["authenticated", "courses", "enrolled"] as const,
   course: (slug: string) =>
     ["authenticated", "academy", "course", slug] as const,
@@ -128,6 +148,17 @@ export function useEnrolledCourses(enabled = true) {
     queryKey: academyQueryKeys.enrolledCourses,
     queryFn: () => apiRequest<EnrolledCourse[]>("/api/courses/enrolled"),
     enabled,
+  });
+}
+
+export function useAllCourses() {
+  return useQuery({
+    queryKey: academyQueryKeys.allCourses,
+    queryFn: async () => {
+      const res = await apiRequest<Course[]>("/api/courses");
+      return res;
+    },
+    staleTime: 60_000,
   });
 }
 

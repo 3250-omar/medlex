@@ -26,12 +26,14 @@ interface PathwayHeroSectionProps {
   pathway: PathwayKey;
   content: PathwayContent;
   labels: PathwayLabels;
+  courseData?: { price: number; currency: string } | null;
 }
 
 export default function PathwayHeroSection({
   pathway,
   content,
   labels,
+  courseData,
 }: PathwayHeroSectionProps) {
   const locale = useLocale();
   const isMedicoLegal = pathway === "medico-legal";
@@ -188,6 +190,14 @@ export default function PathwayHeroSection({
       );
     }
 
+    const formattedPrice = courseData
+      ? new Intl.NumberFormat(locale, {
+          style: "currency",
+          currency: courseData.currency,
+          maximumFractionDigits: 0,
+        }).format(courseData.price)
+      : undefined;
+
     // Not subscribed (or not logged in): show celebratory subscribe button
     return (
       <SubscribeButton
@@ -196,6 +206,7 @@ export default function PathwayHeroSection({
         onSuccess={handleSubscriptionSuccess}
         className={`${buttonClassName} group gap-2.5 shadow-lg shadow-gold/10`}
         showArrow={false}
+        itemPrice={formattedPrice}
       >
         <span>Subscribe to get your gift</span>
         <span
