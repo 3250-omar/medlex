@@ -68,8 +68,47 @@ export async function GET(request: NextRequest) {
     const paramType = searchParams.get("type"); // e.g. "article" | "page"
     const paramCategory = searchParams.get("category");
     const paramAuthor = searchParams.get("author");
+    const paramImage = searchParams.get("image");
     const routeKey = (searchParams.get("route") ?? "home") as SeoRouteKey;
     const locale = (searchParams.get("locale") ?? "en") as Locale;
+
+    if (paramImage) {
+      try {
+        return new ImageResponse(
+          (
+            <div
+              style={{
+                height: "100%",
+                width: "100%",
+                display: "flex",
+                position: "relative",
+                backgroundColor: "#08121f",
+                alignItems: "center",
+                justifyContent: "center",
+                overflow: "hidden",
+              }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={paramImage}
+                alt="OG Preview"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
+            </div>
+          ),
+          {
+            width: 1200,
+            height: 630,
+          },
+        );
+      } catch {
+        // Fall back to branded dynamic card below
+      }
+    }
 
     const isAr = locale === "ar";
     const isArticle = paramType === "article" || paramType === "blog";

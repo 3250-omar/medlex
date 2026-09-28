@@ -12,6 +12,7 @@ import {
 import { ArrowLeft, ArrowRight, Calendar, Clock, Tag } from "lucide-react";
 import { ShareButtons } from "../_comps/ShareButtons";
 import { BlogLikeButton } from "../_comps/BlogLikeButton";
+import { BlogViewsBadge } from "../_comps/BlogViewsBadge";
 import { ArticleGalleryCarousel } from "../_comps/ArticleGalleryCarousel";
 
 function estimateReadingTime(content: string | null): number {
@@ -102,10 +103,10 @@ export async function generateMetadata({
     primarySection ? `&category=${encodeURIComponent(primarySection)}` : ""
   }`;
 
-  const primaryOgImage = explicitOg || dynamicOg;
-  const imageType = primaryOgImage.toLowerCase().endsWith(".png")
-    ? "image/png"
-    : "image/jpeg";
+  // Route images through /api/og to eliminate Supabase's X-Robots-Tag: none and ensure social crawler compatibility
+  const primaryOgImage = explicitOg
+    ? `${devOrigin}/api/og?image=${encodeURIComponent(explicitOg)}`
+    : dynamicOg;
 
   const ogImages = [
     {
@@ -113,19 +114,17 @@ export async function generateMetadata({
       width: 1200,
       height: 630,
       alt: resolvedTitle,
-      type: imageType,
+      type: "image/png",
     },
   ];
 
-  if (explicitCover && explicitCover !== primaryOgImage) {
+  if (explicitCover && explicitCover !== explicitOg) {
     ogImages.push({
-      url: explicitCover,
+      url: `${devOrigin}/api/og?image=${encodeURIComponent(explicitCover)}`,
       width: 1200,
       height: 630,
       alt: resolvedTitle,
-      type: explicitCover.toLowerCase().endsWith(".png")
-        ? "image/png"
-        : "image/jpeg",
+      type: "image/png",
     });
   }
 
@@ -220,6 +219,7 @@ export default async function BlogPostPage({
     authorName,
     likesCount: blog.likes_count,
     sharesCount: blog.shares_count,
+    viewsCount: blog.views_count,
   });
 
   const breadcrumbSchema = createBlogBreadcrumbSchema(locale, slug, title);
@@ -257,6 +257,11 @@ export default async function BlogPostPage({
             </Link>
 
             <div className="flex items-center gap-2">
+              <BlogViewsBadge
+                blogId={blog.id}
+                initialViews={blog.views_count || 0}
+                isRtl={isRtl}
+              />
               <BlogLikeButton
                 blogId={blog.id}
                 initialLikes={blog.likes_count || 0}
@@ -387,6 +392,11 @@ export default async function BlogPostPage({
                 <span className="text-white font-medium">{authorName}</span>
               </div>
               <div className="flex items-center gap-2">
+                <BlogViewsBadge
+                  blogId={blog.id}
+                  initialViews={blog.views_count || 0}
+                  isRtl={isRtl}
+                />
                 <BlogLikeButton
                   blogId={blog.id}
                   initialLikes={blog.likes_count || 0}

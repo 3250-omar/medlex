@@ -290,6 +290,7 @@ export function createBlogArticleSchema({
   authorName,
   likesCount,
   sharesCount,
+  viewsCount,
 }: {
   locale: string;
   slug: string;
@@ -305,6 +306,7 @@ export function createBlogArticleSchema({
   authorName: string;
   likesCount?: number;
   sharesCount?: number;
+  viewsCount?: number;
 }) {
   const isAr = locale === "ar";
   const canonicalUrl = `${CANONICAL_ORIGIN}/${locale}/blogs/${slug}`;
@@ -404,6 +406,13 @@ export function createBlogArticleSchema({
       "@type": "InteractionCounter",
       interactionType: "https://schema.org/ShareAction",
       userInteractionCount: sharesCount,
+    });
+  }
+  if (typeof viewsCount === "number" && viewsCount > 0) {
+    interactions.push({
+      "@type": "InteractionCounter",
+      interactionType: "https://schema.org/ViewAction",
+      userInteractionCount: viewsCount,
     });
   }
 

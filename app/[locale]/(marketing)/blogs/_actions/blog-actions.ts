@@ -25,6 +25,7 @@ export type PublishedBlogItem = Pick<
   | "seo_tags"
   | "likes_count"
   | "shares_count"
+  | "views_count"
 >;
 
 export interface ActionResponse<T = number> {
@@ -38,7 +39,7 @@ export async function getPublishedBlogs(): Promise<PublishedBlogItem[]> {
   const { data, error } = await supabase
     .from("blogs")
     .select(
-      "id, title_en, title_ar, slug, excerpt_en, excerpt_ar, cover_image, published_at, is_published, created_at, seo_title_en, seo_title_ar, seo_description_en, seo_description_ar, seo_tags, likes_count, shares_count",
+      "id, title_en, title_ar, slug, excerpt_en, excerpt_ar, cover_image, published_at, is_published, created_at, seo_title_en, seo_title_ar, seo_description_en, seo_description_ar, seo_tags, likes_count, shares_count, views_count",
     )
     .or("status.eq.published,is_published.eq.true")
     .order("published_at", { ascending: false, nullsFirst: false });
@@ -170,6 +171,62 @@ export async function incrementBlogShares(
     return { success: true, count: Number(data) };
   } catch (err) {
     console.error("Error incrementing blog shares:", err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : String(err),
+    };
+  }
+}
+
+export async function incrementBlogViews(
+  blogId: string,
+): Promise<ActionResponse<number>> {
+  try {
+    const supabase = createAdminClient();
+
+    // Execute atomic RPC function
+    const { data, error } = await supabase.rpc("increment_blog_views", {
+      p_blog_id: blogId,
+    });
+
+    if (error) {
+      console.warn(
+        "RPC increment_blog_views unavailable, attempting fallback:",
+        error.message,
+      );
+
+      // Fallback direct table update
+      const { data: blog, error: fetchError } = await supabase
+        .from("blogs")
+        .select("views_count")
+        .eq("id", blogId)
+        .single();
+
+      if (fetchError || !blog) {
+        return {
+          success: false,
+          error: fetchError?.message || "Blog not found",
+        };
+      }
+
+      const current = blog.views_count ?? 0;
+      const nextCount = current + 1;
+
+      const { error: updateError } = await supabase
+        .from("blogs")
+        .update({ views_count: nextCount })
+        .eq("id", blogId);
+
+      if (updateError) {
+        return { success: false, error: updateError.message };
+      }
+
+      return { success: true, count: nextCount };
+    }
+
+    return { success: true, count: Number(data) };
+  } catch (err) {
+    console.error("Error incrementing blog views:", err);
     return {
       success: false,
       error: err instanceof Error ? err.message : String(err),
