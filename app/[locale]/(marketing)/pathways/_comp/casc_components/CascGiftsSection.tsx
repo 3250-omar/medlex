@@ -133,18 +133,14 @@ export default function CascGiftsSection() {
             />
 
             {/* Book 1: The Examiner's Briefing (Back / Left) */}
-            <div
-              onClick={() => {
-                if (!user) {
-                  router.push(
-                    `/${locale}/auth?tab=sign-in&redirect=${encodeURIComponent(pathname || `/${locale}/pathways/casc`)}`,
-                  );
-                  return;
-                }
-                void handleDownloadSingle("1", "The Examiner's Briefing.pdf");
+            <AuthDownloadButton
+              fileUrl="/gifts/The%20Examiner's%20Briefing.pdf"
+              fileName="The Examiner's Briefing.pdf"
+              resourceName={{
+                en: "The Examiner's Briefing",
+                ar: t("book1Name"),
               }}
-              className="group relative w-44 sm:w-52 md:w-56 aspect-[3/4.3] rounded-[4px] border-l-[10px] sm:border-l-[12px] border-[#B8933D] bg-gradient-to-br from-[#1B3766] via-[#142A4E] to-[#0E1D38] p-4 sm:p-5 text-white shadow-[0_22px_45px_rgba(20,40,75,0.38)] -rotate-[4.5deg] transition-all duration-300 hover:-translate-y-2 hover:rotate-[-5.5deg] hover:shadow-[0_28px_55px_rgba(20,40,75,0.48)] cursor-pointer z-10 flex flex-col justify-between"
-              title={t("book1Tooltip")}
+              className="text-left group relative w-44 sm:w-52 md:w-56 aspect-[3/4.3] rounded-[4px] border-l-[10px] sm:border-l-[12px] border-[#B8933D] bg-gradient-to-br from-[#1B3766] via-[#142A4E] to-[#0E1D38] p-4 sm:p-5 text-white shadow-[0_22px_45px_rgba(20,40,75,0.38)] -rotate-[4.5deg] transition-all duration-300 hover:-translate-y-2 hover:rotate-[-5.5deg] hover:shadow-[0_28px_55px_rgba(20,40,75,0.48)] cursor-pointer z-10 flex flex-col justify-between"
             >
               {/* Spine crease shadow */}
               <div className="absolute inset-y-0 left-0 w-3 bg-gradient-to-r from-black/40 to-transparent pointer-events-none" />
@@ -182,21 +178,17 @@ export default function CascGiftsSection() {
                   {t("book1Tagline")}
                 </p>
               </div>
-            </div>
+            </AuthDownloadButton>
 
             {/* Book 2: The Examiner's Error Log (Front / Right) */}
-            <div
-              onClick={() => {
-                if (!user) {
-                  router.push(
-                    `/${locale}/auth?tab=sign-in&redirect=${encodeURIComponent(pathname || `/${locale}/pathways/casc`)}`,
-                  );
-                  return;
-                }
-                void handleDownloadSingle("2", "The Examiner's Error Log.pdf");
+            <AuthDownloadButton
+              fileUrl="/gifts/The%20Examiner's%20Error%20Log.pdf"
+              fileName="The Examiner's Error Log.pdf"
+              resourceName={{
+                en: "The Examiner's Error Log",
+                ar: t("book2Name"),
               }}
-              className="group relative w-44 sm:w-52 md:w-56 aspect-[3/4.3] rounded-[4px] border-l-[10px] sm:border-l-[12px] border-[#B8933D] bg-gradient-to-br from-[#1C3A6B] via-[#142A4E] to-[#0C1A32] p-4 sm:p-5 text-white shadow-[-8px_25px_50px_rgba(15,29,56,0.42)] rotate-[2.5deg] -ml-20 sm:-ml-24 mt-8 sm:mt-10 transition-all duration-300 hover:-translate-y-2 hover:rotate-[1.5deg] hover:shadow-[-8px_32px_60px_rgba(15,29,56,0.52)] cursor-pointer z-20 flex flex-col justify-between"
-              title={t("book2Tooltip")}
+              className="text-left group relative w-44 sm:w-52 md:w-56 aspect-[3/4.3] rounded-[4px] border-l-[10px] sm:border-l-[12px] border-[#B8933D] bg-gradient-to-br from-[#1C3A6B] via-[#142A4E] to-[#0C1A32] p-4 sm:p-5 text-white shadow-[-8px_25px_50px_rgba(15,29,56,0.42)] rotate-[2.5deg] -ml-20 sm:-ml-24 mt-8 sm:mt-10 transition-all duration-300 hover:-translate-y-2 hover:rotate-[1.5deg] hover:shadow-[-8px_32px_60px_rgba(15,29,56,0.52)] cursor-pointer z-20 flex flex-col justify-between"
             >
               {/* Spine crease shadow */}
               <div className="absolute inset-y-0 left-0 w-3 bg-gradient-to-r from-black/40 to-transparent pointer-events-none" />
@@ -234,7 +226,7 @@ export default function CascGiftsSection() {
                   {t("book2Tagline")}
                 </p>
               </div>
-            </div>
+            </AuthDownloadButton>
           </div>
 
           {/* Right Column: Text and Download Form */}
@@ -277,19 +269,17 @@ export default function CascGiftsSection() {
                   icon={<Download className="w-4 h-4 shrink-0" />}
                   className="bg-[#0E1D38] hover:bg-[#1A365D] active:bg-[#0A162B] text-white font-medium text-[14px] px-5 py-3 sm:py-3.5 rounded-[4px] transition-colors duration-200 whitespace-nowrap cursor-pointer flex items-center justify-center gap-2 shadow-xs"
                 />
-                {user && (
-                  <AuthDownloadButton
-                    fileUrl="/gifts/The%20Examiner's%20Error%20Log.pdf"
-                    fileName="The Examiner's Error Log.pdf"
-                    resourceName={{
-                      en: "The Examiner's Error Log",
-                      ar: t("book2Name"),
-                    }}
-                    loginLabel={t("loginToDownload")}
-                    icon={<Download className="w-4 h-4 shrink-0" />}
-                    className="bg-[#0E1D38] hover:bg-[#1A365D] active:bg-[#0A162B] text-white font-medium text-[14px] px-5 py-3 sm:py-3.5 rounded-[4px] transition-colors duration-200 whitespace-nowrap cursor-pointer flex items-center justify-center gap-2 shadow-xs"
-                  />
-                )}
+                <AuthDownloadButton
+                  fileUrl="/gifts/The%20Examiner's%20Error%20Log.pdf"
+                  fileName="The Examiner's Error Log.pdf"
+                  resourceName={{
+                    en: "The Examiner's Error Log",
+                    ar: t("book2Name"),
+                  }}
+                  loginLabel={t("loginToDownload")}
+                  icon={<Download className="w-4 h-4 shrink-0" />}
+                  className="bg-[#0E1D38] hover:bg-[#1A365D] active:bg-[#0A162B] text-white font-medium text-[14px] px-5 py-3 sm:py-3.5 rounded-[4px] transition-colors duration-200 whitespace-nowrap cursor-pointer flex items-center justify-center gap-2 shadow-xs"
+                />
               </div>
             </div>
 

@@ -121,10 +121,7 @@ async function PathwaysData({ locale }: { locale: string }) {
     else if (course.course_status === "waiting_list")
       badge = locale === "ar" ? "قائمة الانتظار مفتوحة" : "Waitlist open";
     else if (course.course_status === "launching")
-      badge =
-        locale === "ar"
-          ? "البرامج الأولى قيد الإطلاق"
-          : "First programmes launching";
+      badge = locale === "ar" ? "قريباً" : "Coming soon";
 
     let cta = "";
     if (course.slug === "medico-legal") cta = t("medicoLegal.cta");

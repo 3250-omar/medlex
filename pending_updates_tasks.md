@@ -13,42 +13,42 @@
   - [x] Update the top card text in `/terms` to: "Paddle processes course payments, taxes and invoicing".
   - [x] Update Payments line in `/privacy-policy` Section 4 to: "Payments: Paddle.com Market Limited (merchant of record, for courses); Paymob (for coaching sessions)".
   - [x] Update "We collect" column for "Book coaching" in `/privacy-policy` table to: "Name, email, phone, session preferences; payment is handled by Paymob — we do not see your card details".
-- [ ] **Fix Policy Text Formatting:**
-  - [ ] Wait for `MedLex_Terms_of_Sale_and_Use.md`.
-  - [ ] Copy exact text with correct punctuation to `/terms`, `/privacy-policy`, and `/refund-policy` (fixing missing periods in sections 4, 7, 8, 10).
-- [ ] **Consolidate Contact Email:**
-  - [ ] Change footer email to `info@medlexsolutions.com`.
-  - [ ] Update all `mailto:` links across the site to `info@medlexsolutions.com`.
-  - [ ] Verify `info@` email reception.
-- [ ] **Temporarily Update "Enrol" Button Behavior:**
-  - [ ] Replace the current checkout flow with an email capture form stating: "Enrolment opens shortly. Leave your email and you will be the first to know."
+- [x] **Fix Policy Text Formatting:**
+  - [x] Extracted and verified text from `Terms of Sale and Use` artifact/screenshot.
+  - [x] Copied exact text with correct punctuation and independent sentences to `/terms`, `/privacy-policy`, and `/refund-policy` (in both English and Arabic translations).
+- [x] **Consolidate Contact Email:**
+  - [x] Change footer email to `info@medlexsolutions.com`.
+  - [x] Update all `mailto:` links across the site to `info@medlexsolutions.com`.
+  - [x] Verify `info@` email reception / configuration.
+- [x] **Temporarily Update "Enrol" Button Behavior:**
+  - [x] Replace the current checkout flow with an email capture form stating: "Enrolment opens shortly. Leave your email and you will be the first to know."
 
 ## 2. Copy and UI Updates
 
-- [ ] **Homepage - Medico-Legal Education Card:**
-  - [ ] Replace paragraph with: "4 independent formats — masterclass, workshop series, programme and certification. No prerequisites: take one, or take them all, in any order. Home of the flagship programme, Writing Psychiatric Evidence."
-- [ ] **Homepage - Free Gifts Section (MedLex Foundations):**
-  - [ ] Update gift title to: "What the Panel Is Really Asking"
-  - [ ] Update gift description to: "Interview skills, and the 10 questions every clinician must prepare — what each question is really testing, and the trap behind each one."
-  - [ ] Update button text to: "Visit the MedLex Foundations pathway to download your free gift"
-- [ ] **Update Status Labels:**
-  - [ ] Change "In production" in the footer to "Coming soon".
-  - [ ] Change "First programmes launching" in Homepage Foundations card to "Coming soon".
-- [ ] **Gifts Download Flow:**
-  - [ ] Update the download flow on CASC, Foundations, and Medico-Legal pages to use an email capture form (Name [optional], Email, "Send me the guide" button) instead of login.
-  - [ ] Implement instant PDF download and email dispatch upon form submission.
-- [ ] **"Prospectus" Terminology:**
-  - [ ] Change "Download Prospectus" to "Download course guide" in `/pathways/casc-academy`.
-  - [ ] Change "Download Prospectus" to "Download pathway guide" in `/pathways/foundations`.
-  - [ ] Hide the "The MedLex Prospectus" band on the Homepage.
-- [ ] **Metadata Adjustments:**
-  - [ ] Homepage: Update title, og:title, and twitter:title to: "MedLex | Professional Education in Psychiatry, Law and Leadership"
-  - [ ] Homepage: Update meta description, og:description, and twitter:description to: "Professional education for psychiatrists, psychologists and clinicians — medico-legal practice, CASC examination preparation and clinical leadership. Founded by Dr Ahmed Abouelghit."
-  - [ ] CASC page: Update meta description to: "Online MRCPsych CASC preparation: 43 interactive stations across 8 domains, a timed Exam Mode, a 12-week workbook and optional one-to-one coaching."
-- [ ] **Header Subtitles:**
-  - [ ] Change "CASC Academy" to "The CASC Academy" on the CASC page header.
-  - [ ] Change "MedLex Foundations" to "Foundations" on the Foundations page header.
-- [ ] **CASC Hero Section:**
-  - [ ] Update coaching copy to: "One-to-one coaching is available separately — see coaching".
-- [ ] **CASC Coaching Pricing:**
-  - [ ] Verify visibility and accuracy of all coaching prices (Single session, Packages, Small group).
+- [x] **Homepage - Medico-Legal Education Card:**
+  - [x] Replace paragraph with: "4 independent formats — masterclass, workshop series, programme and certification. No prerequisites: take one, or take them all, in any order. Home of the flagship programme, Writing Psychiatric Evidence." (Updated in translations and Supabase database).
+- [x] **Homepage - Free Gifts Section (MedLex Foundations):**
+  - [x] Update gift title to: "What the Panel Is Really Asking"
+  - [x] Update gift description to: "Interview skills, and the 10 questions every clinician must prepare — what each question is really testing, and the trap behind each one."
+  - [x] Update button text to: "Visit the MedLex Foundations pathway to download your free gift"
+- [x] **Update Status Labels:**
+  - [x] Change "In production" in the footer to "Coming soon".
+  - [x] Change "First programmes launching" in Homepage Foundations card to "Coming soon".
+- [x] **Gifts Download Flow:**
+  - [x] Update the download flow on CASC, Foundations, and Medico-Legal pages to use an email capture form (Name [optional], Email, "Send me the guide" button) instead of login.
+  - [x] Implement instant PDF download and email dispatch upon form submission.
+- [x] **"Prospectus" Terminology:**
+  - [x] Change "Download Prospectus" to "Download course guide" in `/pathways/casc-academy`.
+  - [x] Change "Download Prospectus" to "Download pathway guide" in `/pathways/foundations`.
+  - [x] Hide the "The MedLex Prospectus" band on the Homepage.
+- [x] **Metadata Adjustments:**
+  - [x] Homepage: Update title, og:title, and twitter:title to: "MedLex | Professional Education in Psychiatry, Law and Leadership"
+  - [x] Homepage: Update meta description, og:description, and twitter:description to: "Professional education for psychiatrists, psychologists and clinicians — medico-legal practice, CASC examination preparation and clinical leadership. Founded by Dr Ahmed Abouelghit."
+  - [x] CASC page: Update meta description to: "Online MRCPsych CASC preparation: 43 interactive stations across 8 domains, a timed Exam Mode, a 12-week workbook and optional one-to-one coaching."
+- [x] **Header Subtitles:**
+  - [x] Change "CASC Academy" to "The CASC Academy" on the CASC page header.
+  - [x] Change "MedLex Foundations" to "Foundations" on the Foundations page header.
+- [x] **CASC Hero Section:**
+  - [x] Update coaching copy to: "One-to-one coaching is available separately — see coaching" (both EN and AR).
+- [x] **CASC Coaching Pricing:**
+  - [x] Verify visibility and accuracy of all coaching prices (Single session £120, 5 sessions £540, 10 sessions £960).

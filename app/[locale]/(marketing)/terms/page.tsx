@@ -19,7 +19,7 @@ export default async function TermsPage({ params }: PageProps) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "termsPage" });
 
-  const sections = [
+  const sections = [  
     {
       id: "1",
       num: 1,
