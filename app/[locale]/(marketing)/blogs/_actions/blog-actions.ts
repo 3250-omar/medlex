@@ -69,6 +69,47 @@ export async function getBlogBySlug(slug: string): Promise<BlogRow | null> {
   return data;
 }
 
+export async function getAdjacentBlogs(
+  currentPublishedAt: string | null,
+  currentId: string,
+): Promise<{ prev: PublishedBlogItem | null; next: PublishedBlogItem | null }> {
+  try {
+    const supabase = await createClient();
+    const selectFields =
+      "id, title_en, title_ar, slug, excerpt_en, excerpt_ar, cover_image, published_at, is_published, created_at, seo_title_en, seo_title_ar, seo_description_en, seo_description_ar, seo_tags, likes_count, shares_count, views_count";
+
+    const dateToCompare = currentPublishedAt || new Date().toISOString();
+
+    // Previous (older article)
+    const { data: prevData } = await supabase
+      .from("blogs")
+      .select(selectFields)
+      .or("status.eq.published,is_published.eq.true")
+      .lt("published_at", dateToCompare)
+      .neq("id", currentId)
+      .order("published_at", { ascending: false })
+      .limit(1);
+
+    // Next (newer article)
+    const { data: nextData } = await supabase
+      .from("blogs")
+      .select(selectFields)
+      .or("status.eq.published,is_published.eq.true")
+      .gt("published_at", dateToCompare)
+      .neq("id", currentId)
+      .order("published_at", { ascending: true })
+      .limit(1);
+
+    return {
+      prev: (prevData?.[0] as PublishedBlogItem) ?? null,
+      next: (nextData?.[0] as PublishedBlogItem) ?? null,
+    };
+  } catch (err) {
+    console.error("Error fetching adjacent blogs:", err);
+    return { prev: null, next: null };
+  }
+}
+
 export async function toggleBlogLike(
   blogId: string,
   increment: boolean,
