@@ -10,7 +10,7 @@ const NAV_ITEMS = [
   { label: "Founder", href: "/founder" },
   { label: "FAQ", href: "/faq" },
   { label: "Institutional", href: "/institutional" },
-  { label: "Blogs", href: "/blogs" },
+  { label: "Articles", href: "/blogs" },
   { label: "Contact", href: "/contact" },
 ] as const;
 

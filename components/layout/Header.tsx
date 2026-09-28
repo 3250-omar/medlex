@@ -8,7 +8,6 @@ import Image from "next/image";
 import Navigation from "./Navigation";
 import MobileMenu from "./MobileMenu";
 import { useLocale, useTranslations } from "next-intl";
-import { InterestDialogTrigger } from "@/components/marketing/InterestDialog";
 import { getLocalePath } from "@/lib/i18n/localePath";
 import { createClient } from "@/lib/supabase/browser";
 import { apiRequest } from "@/lib/api/client";
@@ -18,7 +17,11 @@ import {
   useCurrentUser,
   useEnrolledCourses,
 } from "@/app/[locale]/(marketing)/_apiCalls/academyQueries";
-import { UserAccountMenu, ExamCountdown } from "./_comp/header";
+import {
+  UserAccountMenu,
+  ExamCountdown,
+  HeaderUserAction,
+} from "./_comp/header";
 
 export default function Header() {
   const locale = useLocale();
@@ -28,10 +31,12 @@ export default function Header() {
   const alternateLocalePath = getLocalePath(pathname, alternateLocale);
   const isLessonPath =
     pathname.includes("/academy/courses/") && pathname.includes("/learn/");
+  const cleanBlogPath = pathname.replace(/\/+$/, "");
+  const isSingleBlogPage = /^\/(?:en|ar)\/blogs\/[^\/]+$/.test(cleanBlogPath);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [countdownDismissed, setCountdownDismissed] = useState(false);
-  const [now, setNow] = useState(() => Date.now());
+  const [now] = useState(() => Date.now());
   const [countdownH, setCountdownH] = useState(72);
   const menuTriggerRef = useRef<HTMLButtonElement>(null);
   const headerRef = useRef<HTMLElement>(null);
@@ -179,7 +184,9 @@ export default function Header() {
         className={[
           isLessonPath
             ? "relative z-50 transition-all duration-300"
-            : "fixed inset-x-0 top-0 z-50 transition-all duration-300",
+            : isSingleBlogPage
+              ? "absolute inset-x-0 top-0 z-40 transition-all duration-300"
+              : "fixed inset-x-0 top-0 z-50 transition-all duration-300",
           scrolled || pathname.includes("/learn")
             ? "bg-navy/95 shadow-[0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-md"
             : "bg-navy/90 backdrop-blur-md border-b border-white/[0.08]",
@@ -245,20 +252,7 @@ export default function Header() {
               </Link>
             )}
 
-            {user ? (
-              <UserAccountMenu
-                user={user}
-                locale={locale}
-                onSignOut={handleSignOut}
-                profileLabel={t("nav.profile")}
-                logoutLabel={t("actions.logout")}
-              />
-            ) : (
-              /* ── Guest: register button ───────────────────────────── */
-              <InterestDialogTrigger className="btn btn-gold !h-9 !py-1 !px-5 text-sm font-semibold">
-                {t("actions.register")}
-              </InterestDialogTrigger>
-            )}
+            <HeaderUserAction />
           </div>
 
           {/* ── Mobile right actions (User menu + hamburger) ──────────── */}
