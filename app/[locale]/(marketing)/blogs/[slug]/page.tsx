@@ -103,6 +103,9 @@ export async function generateMetadata({
   }`;
 
   const primaryOgImage = explicitOg || dynamicOg;
+  const imageType = primaryOgImage.toLowerCase().endsWith(".png")
+    ? "image/png"
+    : "image/jpeg";
 
   const ogImages = [
     {
@@ -110,6 +113,7 @@ export async function generateMetadata({
       width: 1200,
       height: 630,
       alt: resolvedTitle,
+      type: imageType,
     },
   ];
 
@@ -119,6 +123,9 @@ export async function generateMetadata({
       width: 1200,
       height: 630,
       alt: resolvedTitle,
+      type: explicitCover.toLowerCase().endsWith(".png")
+        ? "image/png"
+        : "image/jpeg",
     });
   }
 
