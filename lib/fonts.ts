@@ -1,7 +1,7 @@
 import { Source_Serif_4, Inter, Fraunces, Cairo } from "next/font/google";
 
 export const cairo = Cairo({
-  subsets: ["arabic", "latin"],
+  subsets: ["arabic"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-cairo",
   display: "swap",
@@ -14,10 +14,6 @@ export const sourceSerif4 = Source_Serif_4({
   variable: "--font-serif",
   display: "swap",
 });
-
-
-
-
 
 export const fraunces = Fraunces({
   subsets: ["latin"],
@@ -37,5 +33,3 @@ export const inter = Inter({
 // Backward-compatibility aliases
 export const ovo = sourceSerif4;
 export const manrope = inter;
-
-

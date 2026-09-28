@@ -8,7 +8,7 @@
     "env:prod": "node scripts/switch-env.mjs prod",
     "dev:dev": "node scripts/switch-env.mjs dev && next dev",
     "dev:prod": "node scripts/switch-env.mjs prod && next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
     "seo:check": "node scripts/seo-check.mjs",
