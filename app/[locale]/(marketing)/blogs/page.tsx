@@ -15,6 +15,7 @@ import {
   FileText,
   Heart,
   Share2,
+  Eye,
 } from "lucide-react";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -211,6 +212,18 @@ function BlogsData({
                       <span className="inline-flex items-center gap-1 text-gold/90 text-[11px] font-mono">
                         <Share2 className="size-3" />
                         <span>{blog.shares_count}</span>
+                      </span>
+                    </>
+                  )}
+                  {Number(blog.views_count) > 0 && (
+                    <>
+                      <span className="text-white/20">•</span>
+                      <span
+                        className="inline-flex items-center gap-1 text-gold/90 text-[11px] font-mono"
+                        title={isRtl ? "المشاهدات" : "Views"}
+                      >
+                        <Eye className="size-3 text-gold/80" />
+                        <span>{blog.views_count}</span>
                       </span>
                     </>
                   )}

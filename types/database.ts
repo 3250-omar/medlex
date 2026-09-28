@@ -31,6 +31,7 @@ export interface Database {
           published_at: string | null;
           likes_count: number;
           shares_count: number;
+          views_count: number;
           created_at: string;
           updated_at: string;
         };
@@ -55,6 +56,7 @@ export interface Database {
           published_at?: string | null;
           likes_count?: number;
           shares_count?: number;
+          views_count?: number;
           created_at?: string;
           updated_at?: string;
         };
@@ -877,6 +879,12 @@ export interface Database {
         Returns: number;
       };
       increment_blog_shares: {
+        Args: {
+          p_blog_id: string;
+        };
+        Returns: number;
+      };
+      increment_blog_views: {
         Args: {
           p_blog_id: string;
         };
