@@ -15,10 +15,6 @@ export const sourceSerif4 = Source_Serif_4({
   display: "swap",
 });
 
-
-
-
-
 export const fraunces = Fraunces({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
@@ -37,5 +33,3 @@ export const inter = Inter({
 // Backward-compatibility aliases
 export const ovo = sourceSerif4;
 export const manrope = inter;
-
-
