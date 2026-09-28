@@ -1845,6 +1845,14 @@
       "ogDescription": "Transparent enrolment terms, cancellation guidelines, and refund conditions.",
       "imageAlt": "MedLex Refund Policy",
       "breadcrumb": "Refund Policy"
+    },
+    "blogs": {
+      "title": "Articles & Insights | Medicolegal Analyses",
+      "description": "Original peer-informed analyses, medicolegal frameworks, and institutional insights from Consultant Forensic Psychiatrist Dr. Ahmed Abouelghit.",
+      "ogTitle": "Articles & Insights | MedLex",
+      "ogDescription": "Expert analyses on forensic psychiatry, medical law, and clinical practice across the UK and MENA.",
+      "imageAlt": "MedLex Articles & Insights",
+      "breadcrumb": "Articles"
     }
   },
   "pathwaysOverview": {

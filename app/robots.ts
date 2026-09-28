@@ -22,6 +22,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: [
         "/",
+        "/api/og",
         "/en/academy/preview/station-7-2",
         "/ar/academy/preview/station-7-2",
       ],

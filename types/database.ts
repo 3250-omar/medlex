@@ -29,6 +29,8 @@ export interface Database {
           status: string;
           is_published: boolean;
           published_at: string | null;
+          likes_count: number;
+          shares_count: number;
           created_at: string;
           updated_at: string;
         };
@@ -51,6 +53,8 @@ export interface Database {
           status?: string;
           is_published?: boolean;
           published_at?: string | null;
+          likes_count?: number;
+          shares_count?: number;
           created_at?: string;
           updated_at?: string;
         };
@@ -865,6 +869,19 @@ export interface Database {
     };
     Views: Record<string, never>;
     Functions: {
+      increment_blog_likes: {
+        Args: {
+          p_blog_id: string;
+          p_increment?: number;
+        };
+        Returns: number;
+      };
+      increment_blog_shares: {
+        Args: {
+          p_blog_id: string;
+        };
+        Returns: number;
+      };
       mark_unit_completed: {
         Args: {
           target_course_slug: string;

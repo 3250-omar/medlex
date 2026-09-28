@@ -164,7 +164,11 @@ export function getAbsoluteOgImageUrl(
   routeKey: SeoRouteKey,
   locale: Locale,
 ): string {
-  return `${CANONICAL_ORIGIN}/api/og?route=${encodeURIComponent(routeKey)}&locale=${locale}`;
+  const origin =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : CANONICAL_ORIGIN;
+  return `${origin}/api/og?route=${encodeURIComponent(routeKey)}&locale=${locale}`;
 }
 
 export async function createLocalizedMetadata(

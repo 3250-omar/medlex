@@ -16,7 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const { data: blogs } = await supabase
     .from("blogs")
     .select("slug, updated_at, published_at")
-    .eq("status", "published");
+    .or("status.eq.published,is_published.eq.true");
 
   const staticRoutes = LOCALES.flatMap((locale) =>
     routes.map((config) => {
@@ -46,8 +46,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
       return {
         url: canonicalUrl,
-        lastModified:
-          blog.updated_at || blog.published_at || undefined,
+        lastModified: blog.updated_at || blog.published_at || undefined,
         alternates: {
           languages: {
             en: enUrl,
