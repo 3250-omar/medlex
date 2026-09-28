@@ -30,6 +30,7 @@ const EXPECTED_ROUTES = [
   { key: "privacy", path: "/privacy-policy" },
   { key: "terms", path: "/terms" },
   { key: "refundPolicy", path: "/refund-policy" },
+  { key: "blogs", path: "/blogs" },
 ];
 
 let failed = false;
@@ -79,8 +80,14 @@ assert(fs.existsSync(arPath), "ar.json exists");
 const en = JSON.parse(fs.readFileSync(enPath, "utf8"));
 const ar = JSON.parse(fs.readFileSync(arPath, "utf8"));
 
-assert(typeof en.seo === "object" && en.seo !== null, "en.json has 'seo' namespace");
-assert(typeof ar.seo === "object" && ar.seo !== null, "ar.json has 'seo' namespace");
+assert(
+  typeof en.seo === "object" && en.seo !== null,
+  "en.json has 'seo' namespace",
+);
+assert(
+  typeof ar.seo === "object" && ar.seo !== null,
+  "ar.json has 'seo' namespace",
+);
 
 for (const route of EXPECTED_ROUTES) {
   const enEntry = en.seo?.[route.key];
@@ -91,7 +98,9 @@ for (const route of EXPECTED_ROUTES) {
     `[EN] Route '${route.key}' has valid non-empty title`,
   );
   assert(
-    Boolean(enEntry && enEntry.description && enEntry.description.trim().length > 0),
+    Boolean(
+      enEntry && enEntry.description && enEntry.description.trim().length > 0,
+    ),
     `[EN] Route '${route.key}' has valid non-empty description`,
   );
   assert(
@@ -99,7 +108,9 @@ for (const route of EXPECTED_ROUTES) {
     `[AR] Route '${route.key}' has valid non-empty title`,
   );
   assert(
-    Boolean(arEntry && arEntry.description && arEntry.description.trim().length > 0),
+    Boolean(
+      arEntry && arEntry.description && arEntry.description.trim().length > 0,
+    ),
     `[AR] Route '${route.key}' has valid non-empty description`,
   );
 }
@@ -142,28 +153,39 @@ assert(
     robotsContent.includes("/ar/academy/preview/station-7-2"),
   "robots.ts explicitly keeps the public station preview crawlable",
 );
-assert(
-  robotsContent.includes("/api/"),
-  "robots.ts disallows /api/ endpoint",
-);
+assert(robotsContent.includes("/api/"), "robots.ts disallows /api/ endpoint");
 
 // 5. Validate Root Layout and Clean Architecture
 console.log("\n--- 5. Checking Root Layout Architecture ---");
 const rootLayoutPath = path.join(rootDir, "app", "layout.tsx");
 const localeLayoutPath = path.join(rootDir, "app", "[locale]", "layout.tsx");
 const rootPagePath = path.join(rootDir, "app", "page.tsx");
-const localeDocPath = path.join(rootDir, "components", "i18n", "LocaleDocument.tsx");
+const localeDocPath = path.join(
+  rootDir,
+  "components",
+  "i18n",
+  "LocaleDocument.tsx",
+);
 
-assert(!fs.existsSync(rootLayoutPath), "Redundant app/layout.tsx has been removed");
+assert(
+  !fs.existsSync(rootLayoutPath),
+  "Redundant app/layout.tsx has been removed",
+);
 assert(!fs.existsSync(rootPagePath), "Redundant app/page.tsx has been removed");
-assert(!fs.existsSync(localeDocPath), "Client-only LocaleDocument.tsx workaround removed");
-assert(fs.existsSync(localeLayoutPath), "app/[locale]/layout.tsx is the sole root layout");
+assert(
+  !fs.existsSync(localeDocPath),
+  "Client-only LocaleDocument.tsx workaround removed",
+);
+assert(
+  fs.existsSync(localeLayoutPath),
+  "app/[locale]/layout.tsx is the sole root layout",
+);
 
 const localeLayoutContent = fs.readFileSync(localeLayoutPath, "utf8");
 assert(
   localeLayoutContent.includes("<html") &&
     localeLayoutContent.includes("lang={locale}") &&
-    localeLayoutContent.includes("dir={locale === \"ar\" ? \"rtl\" : \"ltr\"}"),
+    localeLayoutContent.includes('dir={locale === "ar" ? "rtl" : "ltr"}'),
   "app/[locale]/layout.tsx server-renders <html lang=... dir=...>",
 );
 assert(

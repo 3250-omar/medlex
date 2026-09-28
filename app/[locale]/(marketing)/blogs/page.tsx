@@ -3,11 +3,25 @@ import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { JsonLd } from "@/lib/seo/JsonLd";
 import { createCollectionPageSchema } from "@/lib/seo/schema";
-import { CANONICAL_ORIGIN } from "@/lib/seo/metadata";
-import { ArrowRight, Calendar, BookOpen, FileText } from "lucide-react";
+import {
+  createLocalizedMetadata,
+  CANONICAL_ORIGIN,
+  type Locale,
+} from "@/lib/seo/metadata";
+import {
+  ArrowRight,
+  Calendar,
+  BookOpen,
+  FileText,
+  Heart,
+  Share2,
+} from "lucide-react";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getPublishedBlogs } from "./_actions/blog-actions";
+import {
+  getPublishedBlogs,
+  type PublishedBlogItem,
+} from "./_actions/blog-actions";
 
 export async function generateMetadata({
   params,
@@ -15,37 +29,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const title = locale === "ar" ? "المقالات والتحليلات" : "Articles & Insights";
-  const description =
-    locale === "ar"
-      ? "أحدث المقالات والتحليلات الطبية القانونية من خبراء ميدليكس."
-      : "Latest medicolegal articles, analyses, and insights from MedLex experts.";
-
-  return {
-    title: `${title}`,
-    description,
-    alternates: {
-      canonical: `${CANONICAL_ORIGIN}/${locale}/blogs`,
-      languages: {
-        en: `${CANONICAL_ORIGIN}/en/blogs`,
-        ar: `${CANONICAL_ORIGIN}/ar/blogs`,
-        "x-default": `${CANONICAL_ORIGIN}/en/blogs`,
-      },
-    },
-    openGraph: {
-      type: "website",
-      locale: locale === "ar" ? "ar_EG" : "en_US",
-      url: `${CANONICAL_ORIGIN}/${locale}/blogs`,
-      siteName: "MedLex",
-      title,
-      description,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-    },
-  };
+  return createLocalizedMetadata(locale as Locale, "blogs");
 }
 
 export default async function BlogsPage({
@@ -55,6 +39,7 @@ export default async function BlogsPage({
 }) {
   const { locale } = await params;
   const isRtl = locale === "ar";
+  const blogs = await getPublishedBlogs();
 
   const title = isRtl ? "المقالات والتحليلات" : "Articles & Insights";
   const intro = isRtl
@@ -67,7 +52,11 @@ export default async function BlogsPage({
     "/blogs",
     title,
     intro,
-    [],
+    blogs.map((b) => ({
+      name: isRtl && b.title_ar ? b.title_ar : b.title_en,
+      url: `${CANONICAL_ORIGIN}/${locale}/blogs/${b.slug}`,
+      description: (isRtl && b.excerpt_ar ? b.excerpt_ar : b.excerpt_en) || "",
+    })),
   );
 
   return (
@@ -106,22 +95,22 @@ export default async function BlogsPage({
 
       {/* Blogs Catalog Grid */}
       <section className="relative mx-auto max-w-7xl px-6 py-20 sm:px-10 lg:px-12 z-10">
-        <Suspense fallback={<GridSkeleton />}>
-          <BlogsData locale={locale} isRtl={isRtl} />
-        </Suspense>
+        <BlogsData initialBlogs={blogs} isRtl={isRtl} locale={locale} />
       </section>
     </main>
   );
 }
 
-async function BlogsData({
+function BlogsData({
+  initialBlogs,
   locale,
   isRtl,
 }: {
+  initialBlogs: PublishedBlogItem[];
   locale: string;
   isRtl: boolean;
 }) {
-  const blogs = await getPublishedBlogs();
+  const blogs = initialBlogs;
   const readMore = isRtl ? "اقرأ المقال" : "Read Article";
 
   if (!blogs || blogs.length === 0) {
@@ -204,6 +193,24 @@ async function BlogsData({
                       <span className="text-white/20">•</span>
                       <span className="text-mute text-[11px] font-sans">
                         {blog.seo_tags[0]}
+                      </span>
+                    </>
+                  )}
+                  {Number(blog.likes_count) > 0 && (
+                    <>
+                      <span className="text-white/20">•</span>
+                      <span className="inline-flex items-center gap-1 text-rose-400 text-[11px] font-mono">
+                        <Heart className="size-3 fill-rose-500 text-rose-500" />
+                        <span>{blog.likes_count}</span>
+                      </span>
+                    </>
+                  )}
+                  {Number(blog.shares_count) > 0 && (
+                    <>
+                      <span className="text-white/20">•</span>
+                      <span className="inline-flex items-center gap-1 text-gold/90 text-[11px] font-mono">
+                        <Share2 className="size-3" />
+                        <span>{blog.shares_count}</span>
                       </span>
                     </>
                   )}

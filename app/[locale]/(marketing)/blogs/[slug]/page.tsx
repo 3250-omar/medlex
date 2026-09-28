@@ -1,12 +1,17 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { getBlogBySlug } from "../_actions/blog-actions";
 import { CANONICAL_ORIGIN } from "@/lib/seo/metadata";
 import { JsonLd } from "@/lib/seo/JsonLd";
+import {
+  createBlogArticleSchema,
+  createBlogBreadcrumbSchema,
+} from "@/lib/seo/schema";
 import { ArrowLeft, ArrowRight, Calendar, Clock, Tag } from "lucide-react";
-import { ReadingProgressBar } from "../_comps/ReadingProgressBar";
 import { ShareButtons } from "../_comps/ShareButtons";
+import { BlogLikeButton } from "../_comps/BlogLikeButton";
 import { ArticleGalleryCarousel } from "../_comps/ArticleGalleryCarousel";
 
 function estimateReadingTime(content: string | null): number {
@@ -18,62 +23,155 @@ function estimateReadingTime(content: string | null): number {
   return Math.max(1, Math.ceil(wordCount / 180));
 }
 
+function resolveAbsoluteImageUrl(
+  url: string | null | undefined,
+): string | null {
+  if (!url) return null;
+  const trimmed = url.trim();
+  if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+    return trimmed;
+  }
+  return `${CANONICAL_ORIGIN}${trimmed.startsWith("/") ? "" : "/"}${trimmed}`;
+}
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string; slug: string }>;
-}) {
+}): Promise<Metadata> {
   const { locale, slug } = await params;
+  const isRtl = locale === "ar";
   const blog = await getBlogBySlug(slug);
 
   if (!blog) {
     return {
-      title: "Not Found",
+      title: isRtl ? "المقال غير موجود" : "Article Not Found",
       description: "Blog not found",
     };
   }
 
-  const title =
-    locale === "ar"
-      ? blog.seo_title_ar || blog.title_ar
-      : blog.seo_title_en || blog.title_en;
+  const articleTitle =
+    (isRtl ? blog.title_ar : blog.title_en) ||
+    blog.title_en ||
+    blog.title_ar ||
+    "Article";
+  const customSeoTitle = (isRtl ? blog.seo_title_ar : blog.seo_title_en) || "";
+
+  // Guard against generic category names like "Article", "Articles", "مقال", "مقالات"
+  const isGenericTitle =
+    /^(article|articles|blog|blogs|مقال|مقالات|المقالات)$/i.test(
+      customSeoTitle.trim(),
+    );
+  const resolvedTitle =
+    !isGenericTitle && customSeoTitle.trim().length > 0
+      ? customSeoTitle.trim()
+      : articleTitle;
+
+  const articleExcerpt =
+    (isRtl ? blog.excerpt_ar : blog.excerpt_en) ||
+    blog.excerpt_en ||
+    blog.excerpt_ar ||
+    "";
+  const customSeoDescription =
+    (isRtl ? blog.seo_description_ar : blog.seo_description_en) || "";
+  const isGenericDesc =
+    /^(article|articles|blog|blogs|مقال|مقالات|المقالات)$/i.test(
+      customSeoDescription.trim(),
+    );
   const description =
-    locale === "ar"
-      ? blog.seo_description_ar || blog.excerpt_ar
-      : blog.seo_description_en || blog.excerpt_en;
+    !isGenericDesc && customSeoDescription.trim().length > 0
+      ? customSeoDescription.trim()
+      : articleExcerpt;
+
+  const authorName = isRtl ? "د. أحمد أبو الغيط" : "Dr. Ahmed Abouelghit";
+  const tags = blog.seo_tags || [];
+  const primarySection =
+    tags[0] || (isRtl ? "الطب النفسي الشرعي" : "Forensic Psychiatry");
+
+  const devOrigin =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : CANONICAL_ORIGIN;
+
+  // Determine absolute Open Graph image (custom OG > dynamic branded card > cover image)
+  const explicitOg = resolveAbsoluteImageUrl(blog.og_image_url);
+  const explicitCover = resolveAbsoluteImageUrl(blog.cover_image);
+  const dynamicOg = `${devOrigin}/api/og?title=${encodeURIComponent(
+    resolvedTitle,
+  )}&locale=${locale}&type=article&author=${encodeURIComponent(authorName)}${
+    primarySection ? `&category=${encodeURIComponent(primarySection)}` : ""
+  }`;
+
+  const primaryOgImage = explicitOg || dynamicOg;
+
+  const ogImages = [
+    {
+      url: primaryOgImage,
+      width: 1200,
+      height: 630,
+      alt: resolvedTitle,
+    },
+  ];
+
+  if (explicitCover && explicitCover !== primaryOgImage) {
+    ogImages.push({
+      url: explicitCover,
+      width: 1200,
+      height: 630,
+      alt: resolvedTitle,
+    });
+  }
 
   return {
-    title,
+    title: resolvedTitle,
     description,
-    openGraph: {
-      type: "article",
-      locale: locale === "ar" ? "ar_EG" : "en_US",
-      url: `${CANONICAL_ORIGIN}/${locale}/blogs/${slug}`,
-      siteName: "MedLex",
-      title,
-      description,
-      images: blog.og_image_url
-        ? [blog.og_image_url]
-        : blog.cover_image
-          ? [blog.cover_image]
-          : [],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: blog.og_image_url
-        ? [blog.og_image_url]
-        : blog.cover_image
-          ? [blog.cover_image]
-          : [],
-    },
+    keywords: tags.length > 0 ? tags : undefined,
+    authors: [
+      {
+        name: authorName,
+        url: `${CANONICAL_ORIGIN}/${locale}/founder`,
+      },
+    ],
+    creator: authorName,
+    publisher: "MedLex",
     alternates: {
       canonical: `${CANONICAL_ORIGIN}/${locale}/blogs/${slug}`,
       languages: {
         en: `${CANONICAL_ORIGIN}/en/blogs/${slug}`,
         ar: `${CANONICAL_ORIGIN}/ar/blogs/${slug}`,
         "x-default": `${CANONICAL_ORIGIN}/en/blogs/${slug}`,
+      },
+    },
+    openGraph: {
+      type: "article",
+      locale: isRtl ? "ar_EG" : "en_US",
+      url: `${CANONICAL_ORIGIN}/${locale}/blogs/${slug}`,
+      siteName: "MedLex",
+      title: `${resolvedTitle} | MedLex`,
+      description,
+      publishedTime: blog.published_at || blog.created_at,
+      modifiedTime: blog.updated_at || blog.published_at || blog.created_at,
+      authors: [`${CANONICAL_ORIGIN}/${locale}/founder`],
+      section: primarySection,
+      tags,
+      images: ogImages,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${resolvedTitle} | MedLex`,
+      description,
+      images: [primaryOgImage],
+      creator: "@MedLex",
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
       },
     },
   };
@@ -100,33 +198,29 @@ export default async function BlogPostPage({
 
   const authorName = isRtl ? "د. أحمد أبو الغيط" : "Dr. Ahmed Abouelghit";
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: title,
-    description: excerpt,
-    image: blog.og_image_url || blog.cover_image || [],
-    datePublished: blog.published_at || blog.created_at,
-    dateModified: blog.updated_at || blog.created_at,
-    author: {
-      "@type": "Person",
-      name: authorName,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "MedLex",
-      logo: {
-        "@type": "ImageObject",
-        url: `${CANONICAL_ORIGIN}/icon.png`,
-      },
-    },
-    ...(tags.length > 0 && { keywords: tags.join(", ") }),
-  };
+  const articleSchema = createBlogArticleSchema({
+    locale,
+    slug,
+    title,
+    excerpt,
+    content,
+    coverImage: blog.cover_image,
+    ogImageUrl: blog.og_image_url,
+    publishedAt: blog.published_at,
+    updatedAt: blog.updated_at,
+    createdAt: blog.created_at,
+    tags,
+    authorName,
+    likesCount: blog.likes_count,
+    sharesCount: blog.shares_count,
+  });
+
+  const breadcrumbSchema = createBlogBreadcrumbSchema(locale, slug, title);
 
   return (
     <>
       <JsonLd data={articleSchema} />
-      <ReadingProgressBar />
+      <JsonLd data={breadcrumbSchema} />
 
       <main
         className="relative isolate min-h-screen overflow-hidden bg-navy on-navy pb-32 pt-32 sm:pt-40 text-lbody"
@@ -155,7 +249,19 @@ export default async function BlogPostPage({
               </span>
             </Link>
 
-            <ShareButtons title={title} isRtl={isRtl} />
+            <div className="flex items-center gap-2">
+              <BlogLikeButton
+                blogId={blog.id}
+                initialLikes={blog.likes_count || 0}
+                isRtl={isRtl}
+              />
+              <ShareButtons
+                blogId={blog.id}
+                title={title}
+                initialShares={blog.shares_count || 0}
+                isRtl={isRtl}
+              />
+            </div>
           </div>
 
           {/* Article Header (Clean Editorial Style) */}
@@ -268,13 +374,25 @@ export default async function BlogPostPage({
 
           {/* Article Footer & Author Signature */}
           <footer className="mx-auto max-w-[860px] mt-16 pt-10 border-t border-white/10 space-y-12">
-            {/* <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2">
               <div className="text-xs text-mute">
                 <span>{isRtl ? "الكاتب" : "Author"}: </span>
                 <span className="text-white font-medium">{authorName}</span>
               </div>
-              <ShareButtons title={title} isRtl={isRtl} />
-            </div> */}
+              <div className="flex items-center gap-2">
+                <BlogLikeButton
+                  blogId={blog.id}
+                  initialLikes={blog.likes_count || 0}
+                  isRtl={isRtl}
+                />
+                <ShareButtons
+                  blogId={blog.id}
+                  title={title}
+                  initialShares={blog.shares_count || 0}
+                  isRtl={isRtl}
+                />
+              </div>
+            </div>
 
             {/* Educational Pathways Next Step */}
             <div className="rounded-2xl border border-gold/30 bg-gradient-to-r from-deep via-navy2/50 to-deep p-8 sm:p-10 flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-xl">
