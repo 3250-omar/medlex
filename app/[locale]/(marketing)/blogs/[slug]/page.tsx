@@ -297,7 +297,7 @@ export default async function BlogPostPage({
               />
 
               {/* Educational Pathways Call-to-Action */}
-              <ArticleCta locale={locale} isRtl={isRtl} />
+              {/* <ArticleCta locale={locale} isRtl={isRtl} /> */}
             </article>
           </div>
         </div>
