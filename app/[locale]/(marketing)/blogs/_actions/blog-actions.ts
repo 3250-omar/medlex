@@ -185,12 +185,15 @@ export async function incrementBlogViews(
     const supabase = createAdminClient();
 
     // Execute atomic RPC function
-    const { data, error } = await (supabase.rpc as any)("increment_blog_views", {
+    const { data, error } = await supabase.rpc("increment_blog_views", {
       p_blog_id: blogId,
     });
 
     if (error) {
-      console.warn("RPC increment_blog_views unavailable, attempting fallback:", error.message);
+      console.warn(
+        "RPC increment_blog_views unavailable, attempting fallback:",
+        error.message,
+      );
 
       // Fallback direct table update
       const { data: blog, error: fetchError } = await supabase
@@ -230,4 +233,3 @@ export async function incrementBlogViews(
     };
   }
 }
-
