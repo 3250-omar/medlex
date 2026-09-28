@@ -19,10 +19,11 @@ export function generateStaticParams() {
 export const metadata: Metadata = {
   title: {
     template: "%s | MedLex",
-    default: "MedLex | Forensic Psychiatry Education & CASC Training",
+    default:
+      "MedLex | Professional Education in Psychiatry, Law and Leadership",
   },
   description:
-    "MedLex trains psychiatrists to produce evaluations that survive cross-examination and provides courts, legal counsel, and ministries psychiatric evidence built to a documented standard.",
+    "Professional education for psychiatrists, psychologists and clinicians — medico-legal practice, CASC examination preparation and clinical leadership. Founded by Dr Ahmed Abouelghit.",
   metadataBase: siteUrl,
   applicationName: "MedLex",
   category: "Education",

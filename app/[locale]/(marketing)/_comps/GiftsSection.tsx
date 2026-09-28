@@ -89,7 +89,7 @@ export default function GiftsSection() {
       giftKey: "foundations",
       href: "/pathways/foundations",
       defaultActionText:
-        "Visit The MedLex Foundation Pathway to download your FREE GIFT",
+        "Visit the MedLex Foundations pathway to download your free gift",
     },
   ];
 

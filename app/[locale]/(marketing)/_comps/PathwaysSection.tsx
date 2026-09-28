@@ -156,8 +156,8 @@ export default function PathwaysSection() {
                 else if (course.course_status === "launching")
                   statusText =
                     locale === "ar"
-                      ? "البرامج الأولى قيد الإطلاق"
-                      : "First programmes launching";
+                      ? "قريباً"
+                      : "Coming soon";
 
                 return (
                   <SpotlightCard

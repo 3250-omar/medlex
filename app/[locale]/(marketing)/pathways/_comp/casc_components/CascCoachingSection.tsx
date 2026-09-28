@@ -40,6 +40,7 @@ export default function CascCoachingSection({ locale, onOpenBooking }: Props) {
   const offers = contextData?.offers || [];
   const directOffer = offers.find((o) => o.code === "direct");
   const pkg5Offer = offers.find((o) => o.code === "package_5");
+  const pkg10Offer = offers.find((o) => o.code === "package_10");
 
   const userPrivateSessions = user?.privateSessions;
 
@@ -58,9 +59,9 @@ export default function CascCoachingSection({ locale, onOpenBooking }: Props) {
   const hasPackageCredits = remainingCredits > 0;
   const isSubscribedOrBooked = hasUpcomingBooking || hasPackageCredits;
 
-  const formatPrice = (minor?: number, currency = "EGP") => {
+  const formatPrice = (minor?: number, currency = "GBP") => {
     if (minor === undefined) return "—";
-    return new Intl.NumberFormat(locale === "ar" ? "ar-EG" : "en-US", {
+    return new Intl.NumberFormat(locale === "ar" ? "ar-EG" : "en-GB", {
       style: "currency",
       currency,
       maximumFractionDigits: 0,
@@ -89,46 +90,77 @@ export default function CascCoachingSection({ locale, onOpenBooking }: Props) {
                 {t("sectionDescription")}
               </p>
 
-              {/* Dynamic Server-Fed Offer Grid */}
-              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 py-5 border-y border-hair">
-                <div className="p-3 rounded-xl bg-tint/20 border border-hair/50">
-                  <div className="flex items-center gap-1.5 mb-1 text-navy font-semibold font-serif text-sm">
-                    <Calendar className="w-4 h-4 text-navy shrink-0" />
-                    <span>
-                      {directOffer?.title || t("singleSession")}
-                    </span>
+              {/* Dynamic Server-Fed Offer Grid: Single £120, 5 sessions £540, 10 sessions £960 */}
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 py-5 border-y border-hair">
+                <div className="p-3 rounded-xl bg-tint/20 border border-hair/50 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center gap-1.5 mb-1 text-navy font-semibold font-serif text-sm">
+                      <Calendar className="w-4 h-4 text-navy shrink-0" />
+                      <span>
+                        {directOffer?.title || t("singleSession")}
+                      </span>
+                    </div>
+                    <div className="font-serif text-lg font-bold text-navy">
+                      {isLoading ? (
+                        <span className="inline-block w-16 h-5 bg-char/10 rounded animate-pulse" />
+                      ) : (
+                        formatPrice(
+                          directOffer?.priceMinor ?? 12000,
+                          directOffer?.currency || "GBP",
+                        )
+                      )}
+                    </div>
                   </div>
-                  <div className="font-serif text-lg font-bold text-navy">
-                    {isLoading ? (
-                      <span className="inline-block w-20 h-5 bg-char/10 rounded animate-pulse" />
-                    ) : (
-                      formatPrice(
-                        directOffer?.priceMinor,
-                        directOffer?.currency,
-                      )
-                    )}
-                  </div>
-                  <div className="text-[11px] text-grey mt-0.5">
+                  <div className="text-[11px] text-grey mt-1">
                     {t("sessionDurationOnline")}
                   </div>
                 </div>
 
-                <div className="p-3 rounded-xl bg-tint/20 border border-hair/50">
-                  <div className="flex items-center gap-1.5 mb-1 text-navy font-semibold font-serif text-sm">
-                    <Layers className="w-4 h-4 text-gold shrink-0" />
-                    <span>
-                      {pkg5Offer?.title || t("sessionPackages")}
-                    </span>
+                <div className="p-3 rounded-xl bg-tint/20 border border-hair/50 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center gap-1.5 mb-1 text-navy font-semibold font-serif text-sm">
+                      <Layers className="w-4 h-4 text-gold shrink-0" />
+                      <span>
+                        {pkg5Offer?.title || (locale === "ar" ? "٥ جلسات" : "5 Sessions")}
+                      </span>
+                    </div>
+                    <div className="font-serif text-lg font-bold text-navy">
+                      {isLoading ? (
+                        <span className="inline-block w-16 h-5 bg-char/10 rounded animate-pulse" />
+                      ) : (
+                        formatPrice(
+                          pkg5Offer?.priceMinor ?? 54000,
+                          pkg5Offer?.currency || "GBP",
+                        )
+                      )}
+                    </div>
                   </div>
-                  <div className="font-serif text-lg font-bold text-navy">
-                    {isLoading ? (
-                      <span className="inline-block w-24 h-5 bg-char/10 rounded animate-pulse" />
-                    ) : (
-                      `${formatPrice(pkg5Offer?.priceMinor, pkg5Offer?.currency)}`
-                    )}
+                  <div className="text-[11px] text-emerald-700 font-medium mt-1">
+                    {t("save10")}
                   </div>
-                  <div className="text-[11px] text-emerald-700 font-medium mt-0.5">
-                    {t("saveUpTo20")}
+                </div>
+
+                <div className="p-3 rounded-xl bg-tint/20 border border-hair/50 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center gap-1.5 mb-1 text-navy font-semibold font-serif text-sm">
+                      <Sparkles className="w-4 h-4 text-gold shrink-0" />
+                      <span>
+                        {pkg10Offer?.title || (locale === "ar" ? "١٠ جلسات" : "10 Sessions")}
+                      </span>
+                    </div>
+                    <div className="font-serif text-lg font-bold text-navy">
+                      {isLoading ? (
+                        <span className="inline-block w-16 h-5 bg-char/10 rounded animate-pulse" />
+                      ) : (
+                        formatPrice(
+                          pkg10Offer?.priceMinor ?? 96000,
+                          pkg10Offer?.currency || "GBP",
+                        )
+                      )}
+                    </div>
+                  </div>
+                  <div className="text-[11px] text-emerald-700 font-medium mt-1">
+                    {t("save20")}
                   </div>
                 </div>
               </div>
