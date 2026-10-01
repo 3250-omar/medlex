@@ -36,6 +36,7 @@ export default function SubscribeButton({
   requireCancellationWaiver = true,
   waiverText = DEFAULT_CANCELLATION_WAIVER_TEXT,
   isWaitlist = true,
+  selectedPackageInfo,
 }: {
   children: React.ReactNode;
   pathway?: PathwayKey;
@@ -48,6 +49,7 @@ export default function SubscribeButton({
   requireCancellationWaiver?: boolean;
   waiverText?: string;
   isWaitlist?: boolean;
+  selectedPackageInfo?: string;
 }) {
   const locale = useLocale();
   const isAr = locale === "ar";
@@ -164,7 +166,9 @@ export default function SubscribeButton({
           email: waitlistEmail.trim(),
           pathway,
           type: "enrol_waitlist",
-          resource: `${pathway} Enrolment Waitlist`,
+          resource: selectedPackageInfo
+            ? `${pathway} Enrolment Waitlist — ${selectedPackageInfo} (${itemPrice})`
+            : `${pathway} Enrolment Waitlist`,
         }),
       });
 
@@ -225,6 +229,19 @@ export default function SubscribeButton({
                 : "Enrolment opens shortly. Leave your email and you will be the first to know."}
             </DialogDescription>
           </DialogHeader>
+
+          {selectedPackageInfo && (
+            <div className="mt-2 p-3 rounded-xl bg-[#142646] border border-[#c5a059]/40 flex items-center justify-between text-xs sm:text-sm">
+              <span className="text-slate-200 font-medium">
+                {selectedPackageInfo}
+              </span>
+              {itemPrice && (
+                <span className="font-bold text-[#c5a059] ms-2 shrink-0">
+                  {itemPrice}
+                </span>
+              )}
+            </div>
+          )}
 
           {isWaitlistSuccess ? (
             <div className="py-6 flex flex-col items-center justify-center text-center space-y-3">

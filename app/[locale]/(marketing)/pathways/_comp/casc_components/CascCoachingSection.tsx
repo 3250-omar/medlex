@@ -89,96 +89,21 @@ export default function CascCoachingSection({ locale, onOpenBooking }: Props) {
               <p className="mt-3 font-sans text-sm sm:text-base leading-relaxed text-char/80">
                 {t("sectionDescription")}
               </p>
-
-              {/* Dynamic Server-Fed Offer Grid: Single £120, 5 sessions £540, 10 sessions £960 */}
-              <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 py-5 border-y border-hair">
-                <div className="p-3 rounded-xl bg-tint/20 border border-hair/50 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center gap-1.5 mb-1 text-navy font-semibold font-serif text-sm">
-                      <Calendar className="w-4 h-4 text-navy shrink-0" />
-                      <span>
-                        {directOffer?.title || t("singleSession")}
-                      </span>
-                    </div>
-                    <div className="font-serif text-lg font-bold text-navy">
-                      {isLoading ? (
-                        <span className="inline-block w-16 h-5 bg-char/10 rounded animate-pulse" />
-                      ) : (
-                        formatPrice(
-                          directOffer?.priceMinor ?? 12000,
-                          directOffer?.currency || "GBP",
-                        )
-                      )}
-                    </div>
-                  </div>
-                  <div className="text-[11px] text-grey mt-1">
-                    {t("sessionDurationOnline")}
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-xl bg-tint/20 border border-hair/50 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center gap-1.5 mb-1 text-navy font-semibold font-serif text-sm">
-                      <Layers className="w-4 h-4 text-gold shrink-0" />
-                      <span>
-                        {pkg5Offer?.title || (locale === "ar" ? "٥ جلسات" : "5 Sessions")}
-                      </span>
-                    </div>
-                    <div className="font-serif text-lg font-bold text-navy">
-                      {isLoading ? (
-                        <span className="inline-block w-16 h-5 bg-char/10 rounded animate-pulse" />
-                      ) : (
-                        formatPrice(
-                          pkg5Offer?.priceMinor ?? 54000,
-                          pkg5Offer?.currency || "GBP",
-                        )
-                      )}
-                    </div>
-                  </div>
-                  <div className="text-[11px] text-emerald-700 font-medium mt-1">
-                    {t("save10")}
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-xl bg-tint/20 border border-hair/50 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center gap-1.5 mb-1 text-navy font-semibold font-serif text-sm">
-                      <Sparkles className="w-4 h-4 text-gold shrink-0" />
-                      <span>
-                        {pkg10Offer?.title || (locale === "ar" ? "١٠ جلسات" : "10 Sessions")}
-                      </span>
-                    </div>
-                    <div className="font-serif text-lg font-bold text-navy">
-                      {isLoading ? (
-                        <span className="inline-block w-16 h-5 bg-char/10 rounded animate-pulse" />
-                      ) : (
-                        formatPrice(
-                          pkg10Offer?.priceMinor ?? 96000,
-                          pkg10Offer?.currency || "GBP",
-                        )
-                      )}
-                    </div>
-                  </div>
-                  <div className="text-[11px] text-emerald-700 font-medium mt-1">
-                    {t("save20")}
-                  </div>
-                </div>
-              </div>
             </div>
 
-            {/* CTA Controls */}
-            <div className="mt-6 space-y-3">
+            {/* Quota, Booking, and Meeting Link Controls */}
+            <div className="mt-6 space-y-4">
               {!isMounted || isLoading ? (
-                /* Skeleton loader while mounting and query is loading (Hydration safe) */
+                /* Skeleton loader while mounting and query is loading */
                 <div className="space-y-3">
+                  <div className="h-14 w-full bg-char/5 rounded-xl animate-pulse" />
                   <div className="h-11 w-full bg-char/5 rounded-xl animate-pulse" />
                 </div>
-              ) : isSubscribedOrBooked ? (
-                /* Subscribed / Booked state: Hide direct & package purchase buttons */
-                <div className="space-y-3">
-                  {/* 1. If user has an upcoming booking, show upcoming session card */}
+              ) : (
+                <div className="space-y-4">
+                  {/* 1. Upcoming confirmed booking with Google Meet Link */}
                   {nextBooking && (
-                    <div className="p-4 rounded-xl border border-emerald-300 bg-emerald-50/50 space-y-2.5 text-start">
+                    <div className="p-4 rounded-xl border border-emerald-300 bg-emerald-50/60 space-y-2.5 text-start">
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex items-center gap-2">
                           <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
@@ -207,53 +132,91 @@ export default function CascCoachingSection({ locale, onOpenBooking }: Props) {
                           }
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center gap-2 w-full min-h-[40px] px-4 py-2 rounded-xl bg-emerald-700 text-white text-xs font-semibold hover:bg-emerald-800 transition-colors shadow-xs mt-1"
+                          className="inline-flex items-center justify-center gap-2 w-full min-h-[42px] px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold transition-colors shadow-xs mt-1"
                         >
-                          <span>{t("joinGoogleMeet")}</span>
+                          <span>{t("joinMeeting")}</span>
                           <ExternalLink className="w-3.5 h-3.5" />
                         </a>
                       )}
                     </div>
                   )}
 
-                  {/* 2. If user has available package credits, show Redeem button */}
-                  {hasPackageCredits && (
-                    <button
-                      type="button"
-                      onClick={() => onOpenBooking("redeem")}
-                      className="w-full min-h-[44px] px-5 py-2.5 rounded-xl bg-emerald-700 text-white text-sm font-semibold hover:bg-emerald-800 transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-gold"
-                    >
-                      <ShieldCheck className="w-4 h-4" />
-                      <span>
-                        {t("redeemSessionCta")} ({remainingCredits})
-                      </span>
-                    </button>
+                  {/* 2. Available Quota / Remaining Credits */}
+                  {hasPackageCredits ? (
+                    <div className="p-4 rounded-xl border border-gold/40 bg-gold/5 space-y-3 text-start">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-navy font-semibold text-sm">
+                          <Layers className="w-4 h-4 text-gold shrink-0" />
+                          <span>
+                            {locale === "ar"
+                              ? `الرصيد المتاح: ${remainingCredits} ${
+                                  remainingCredits === 1
+                                    ? "جلسة"
+                                    : remainingCredits === 2
+                                      ? "جلستان"
+                                      : remainingCredits <= 10
+                                        ? "جلسات"
+                                        : "جلسة"
+                                }`
+                              : `Available Quota: ${remainingCredits} ${
+                                  remainingCredits === 1
+                                    ? "session"
+                                    : "sessions"
+                                }`}
+                          </span>
+                        </div>
+                        <span className="text-xs font-bold text-navy px-2.5 py-0.5 rounded-full bg-gold/20">
+                          {remainingCredits}
+                        </span>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => onOpenBooking("redeem")}
+                        className="w-full min-h-[44px] px-5 py-2.5 rounded-xl bg-navy text-white text-sm font-semibold hover:bg-navy/90 transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-gold"
+                      >
+                        <ShieldCheck className="w-4 h-4 text-gold" />
+                        <span>
+                          {t("redeemSessionCta")} ({remainingCredits})
+                        </span>
+                      </button>
+                    </div>
+                  ) : (
+                    /* 3. Quota Finished / None Remaining */
+                    <div className="p-5 rounded-xl border border-hair bg-tint/25 text-start space-y-2.5">
+                      <div className="flex items-center gap-2 text-char/90 font-semibold text-sm">
+                        <span className="inline-block w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0" />
+                        <span className="font-serif font-bold text-navy">
+                          {locale === "ar"
+                            ? "انتهت الجلسات المتاحة"
+                            : "Session Quota Completed"}
+                        </span>
+                      </div>
+                      <p className="text-xs sm:text-[13px] text-char/75 leading-relaxed">
+                        {locale === "ar"
+                          ? "لا يوجد لديك رصيد جلسات متبقٍ حالياً. تُضاف الجلسات الخاصة مباشرةً مع باقة اشتراك الدورة."
+                          : "You currently have no remaining private session quota. Private coaching sessions are bundled when enrolling in the academy."}
+                      </p>
+                      <a
+                        href="#top"
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-navy hover:text-gold transition-colors pt-1"
+                      >
+                        <span>
+                          {locale === "ar"
+                            ? "تخصيص باقة الدورة والجلسات"
+                            : "Customise your course & coaching bundle"}
+                        </span>
+                        <span aria-hidden="true">↑</span>
+                      </a>
+                    </div>
                   )}
                 </div>
-              ) : (
-                /* Non-subscribed state: Show the standard two purchase CTA buttons */
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={() => onOpenBooking("direct")}
-                    className="flex-1 min-h-[44px] px-5 py-2.5 rounded-xl bg-navy text-white text-sm font-semibold hover:bg-navy/90 transition-all shadow-xs text-center cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-gold"
-                  >
-                    {t("bookDirectCta")}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => onOpenBooking("package")}
-                    className="flex-1 min-h-[44px] px-5 py-2.5 rounded-xl border border-navy/30 bg-white text-navy text-sm font-semibold hover:bg-tint/30 transition-all text-center cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-gold"
-                  >
-                    {t("buyPackageCta")}
-                  </button>
-                </div>
               )}
-
-              <span className="block text-xs text-grey text-center">
-                {t("sectionDisclaimer")}
-              </span>
             </div>
+
+            <span className="block text-xs text-grey text-center">
+              {t("sectionDisclaimer")}
+            </span>
           </div>
 
           {/* Coaching Image */}
