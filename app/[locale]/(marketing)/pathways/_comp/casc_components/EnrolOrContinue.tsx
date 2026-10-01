@@ -19,6 +19,8 @@ export type EnrolOrContinueProps = {
   continueSlug?: string | null;
   locale: string;
   courseData?: { price: number; currency: string } | null;
+  overridePrice?: string;
+  selectedPackageInfo?: string;
 };
 
 export default function EnrolOrContinue({
@@ -28,6 +30,8 @@ export default function EnrolOrContinue({
   continueSlug,
   locale,
   courseData,
+  overridePrice,
+  selectedPackageInfo,
 }: EnrolOrContinueProps) {
   const t = useTranslations("enrolOrContinue");
   const buttonLabel = label || t("defaultLabel");
@@ -51,7 +55,8 @@ export default function EnrolOrContinue({
     <SubscribeButton
       className={className}
       showArrow={false}
-      itemPrice={formattedPrice}
+      itemPrice={overridePrice || formattedPrice}
+      selectedPackageInfo={selectedPackageInfo}
     >
       {buttonLabel}
     </SubscribeButton>

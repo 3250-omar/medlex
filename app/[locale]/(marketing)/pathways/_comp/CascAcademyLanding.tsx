@@ -88,6 +88,7 @@ export default function CascAcademyLanding({ courseData, ..._props }: Props) {
       <CascHeroSection
         cascEnrolment={cascEnrolment}
         continueSlug={continueSlug}
+        courseData={courseData}
       />
       {/* 6. INCLUDED SECTION (WHAT YOU GET) */}
       <CascWhatYouGetSection />

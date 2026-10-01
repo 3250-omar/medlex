@@ -11,6 +11,12 @@ import {
   useAllCourses,
 } from "../_apiCalls/academyQueries";
 
+const COURSE_INDEX_MAP: Record<string, number> = {
+  "medico-legal": 0,
+  "casc-academy": 1,
+  foundations: 2,
+};
+
 const PATHWAY_STATIC_DATA = {
   "medico-legal": {
     audienceClass: "text-gold",
@@ -125,115 +131,126 @@ export default function PathwaysSection() {
                   <Skeleton className="h-5 w-32 mt-auto bg-white/10" />
                 </div>
               ))
-            : allCourses.map((course, index) => {
-                const isEnrolled = enrolledCourseSlugs.has(course.slug);
-                const staticData = PATHWAY_STATIC_DATA[
-                  course.slug as keyof typeof PATHWAY_STATIC_DATA
-                ] || {
-                  audienceClass: "text-white/55",
-                  audienceI18nKey: `pathwayCards.${index}.audience`,
-                };
+            : [...allCourses]
+                .sort(
+                  (a, b) =>
+                    (COURSE_INDEX_MAP[a.slug] ?? 99) -
+                    (COURSE_INDEX_MAP[b.slug] ?? 99),
+                )
+                .map((course, index) => {
+                  const courseIndex = COURSE_INDEX_MAP[course.slug] ?? index;
+                  const isEnrolled = enrolledCourseSlugs.has(course.slug);
+                  const staticData = PATHWAY_STATIC_DATA[
+                    course.slug as keyof typeof PATHWAY_STATIC_DATA
+                  ] || {
+                    audienceClass: "text-white/55",
+                    audienceI18nKey: `pathwayCards.${courseIndex}.audience`,
+                  };
 
-                const title =
-                  locale === "ar" && course.title_ar
-                    ? course.title_ar
-                    : course.title_en;
-                const description =
-                  locale === "ar" && course.description_ar
-                    ? course.description_ar
-                    : course.description_en;
-                const features =
-                  (locale === "ar" && course.features_ar
-                    ? course.features_ar
-                    : course.features_en) || [];
+                  const title =
+                    locale === "ar" && course.title_ar
+                      ? course.title_ar
+                      : course.title_en;
+                  const description =
+                    locale === "ar" && course.description_ar
+                      ? course.description_ar
+                      : course.description_en;
+                  const features =
+                    (locale === "ar" && course.features_ar
+                      ? course.features_ar
+                      : course.features_en) || [];
 
-                let statusText = t(`pathwayCards.${index}.status`);
-                if (course.course_status === "active")
-                  statusText = locale === "ar" ? "متاح الآن" : "Open now";
-                else if (course.course_status === "waiting_list")
-                  statusText =
-                    locale === "ar" ? "قائمة الانتظار مفتوحة" : "Waitlist open";
-                else if (course.course_status === "launching")
-                  statusText =
-                    locale === "ar"
-                      ? "قريباً"
-                      : "Coming soon";
+                  let statusText = t(`pathwayCards.${courseIndex}.status`);
+                  if (course.course_status === "active")
+                    statusText = locale === "ar" ? "متاح الآن" : "Open now";
+                  else if (course.course_status === "waiting_list")
+                    statusText =
+                      locale === "ar"
+                        ? "قائمة الانتظار مفتوحة"
+                        : "Waitlist open";
+                  else if (course.course_status === "launching")
+                    statusText = locale === "ar" ? "قريباً" : "Coming soon";
 
-                return (
-                  <SpotlightCard
-                    key={course.slug}
-                    className="rounded-2xl border border-white/12 bg-deep/90 transition-all hover:border-gold/50 hover:-translate-y-1.5 duration-200 shadow-xl"
-                  >
-                    <article className="flex h-full flex-col gap-6 p-8 lg:p-10">
-                      <div>
-                        <div className="mb-4 flex items-center justify-between gap-3">
-                          <span className="font-serif text-base font-bold text-gold">
-                            {String(index + 1).padStart(2, "0")}
-                          </span>
-                          <div className="flex items-center gap-2">
-                            <span
-                              className={`rounded px-2.5 py-0.5 font-sans text-[10px] uppercase tracking-wider font-semibold ${
-                                course.course_status === "active"
-                                  ? "border border-emerald-400/40 bg-emerald-500/15 text-emerald-300"
-                                  : "border border-gold/40 bg-gold/15 text-gold"
-                              }`}
-                            >
-                              {statusText}
-                            </span>
-                            {isEnrolled && (
-                              <span className="border border-gold/50 bg-gold/15 px-3 py-1 font-sans text-[10px] uppercase tracking-[0.16em] text-gold font-semibold rounded-full">
-                                {t("pathways.enrolled")}
+                  return (
+                    <Link
+                      key={course.slug}
+                      href={`/${locale}/pathways/${course.slug}`}
+                      className="block h-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-2xl transition-transform hover:-translate-y-1.5 duration-200"
+                    >
+                      <SpotlightCard className="h-full rounded-2xl border border-white/12 bg-deep/90 transition-all group-hover:border-gold/50 duration-200 shadow-xl cursor-pointer">
+                        <article className="flex h-full flex-col gap-6 p-8 lg:p-10">
+                          <div>
+                            <div className="mb-4 flex items-center justify-between gap-3">
+                              <span className="font-serif text-base font-bold text-gold">
+                                {String(courseIndex + 1).padStart(2, "0")}
                               </span>
-                            )}
-                          </div>
-                        </div>
-                        <h3 className="mb-2 font-serif text-2xl font-bold text-white leading-snug">
-                          {title}
-                        </h3>
-                        <p
-                          className={`font-sans text-xs uppercase tracking-wider font-semibold ${staticData.audienceClass}`}
-                        >
-                          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                          {t(staticData.audienceI18nKey as any)}
-                        </p>
-                      </div>
-
-                      <div className="h-px bg-white/10" />
-
-                      <p className="flex-1 font-sans text-sm sm:text-[15px] leading-relaxed text-lbody whitespace-pre-line">
-                        {description}
-                      </p>
-
-                      <ul className="flex flex-col gap-2.5">
-                        {features.map((feature, featureIndex) => (
-                          <li
-                            key={featureIndex}
-                            className="flex items-center gap-2.5 font-sans text-xs"
-                          >
-                            <span
-                              className="grid size-3.5 shrink-0 place-items-center"
-                              aria-hidden="true"
+                              <div className="flex items-center gap-2">
+                                <span
+                                  className={`rounded px-2.5 py-0.5 font-sans text-[10px] uppercase tracking-wider font-semibold ${
+                                    course.course_status === "active"
+                                      ? "border border-emerald-400/40 bg-emerald-500/15 text-emerald-300"
+                                      : "border border-gold/40 bg-gold/15 text-gold"
+                                  }`}
+                                >
+                                  {statusText}
+                                </span>
+                                {isEnrolled && (
+                                  <span className="border border-gold/50 bg-gold/15 px-3 py-1 font-sans text-[10px] uppercase tracking-[0.16em] text-gold font-semibold rounded-full">
+                                    {t("pathways.enrolled")}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                            <h3 className="mb-2 font-serif text-2xl font-bold text-white leading-snug group-hover:text-gold transition-colors">
+                              {title}
+                            </h3>
+                            <p
+                              className={`font-sans text-xs uppercase tracking-wider font-semibold ${staticData.audienceClass}`}
                             >
-                              <span className="size-1.5 rotate-45 bg-gold" />
-                            </span>
-                            <span className="text-white/90 font-medium">
-                              {feature}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
+                              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                              {t(staticData.audienceI18nKey as any)}
+                            </p>
+                          </div>
 
-                      <Link
-                        href={`/${locale}/pathways/${course.slug}`}
-                        className="mt-auto inline-flex items-center gap-2 font-sans text-sm font-semibold tracking-wide text-gold transition-colors hover:text-white pt-2"
-                      >
-                        {t(`pathwayCards.${index}.link`)}
-                        <span aria-hidden="true">→</span>
-                      </Link>
-                    </article>
-                  </SpotlightCard>
-                );
-              })}
+                          <div className="h-px bg-white/10" />
+
+                          <p className="flex-1 font-sans text-sm sm:text-[15px] leading-relaxed text-lbody whitespace-pre-line">
+                            {description}
+                          </p>
+
+                          <ul className="flex flex-col gap-2.5">
+                            {features.map((feature, featureIndex) => (
+                              <li
+                                key={featureIndex}
+                                className="flex items-center gap-2.5 font-sans text-xs"
+                              >
+                                <span
+                                  className="grid size-3.5 shrink-0 place-items-center"
+                                  aria-hidden="true"
+                                >
+                                  <span className="size-1.5 rotate-45 bg-gold" />
+                                </span>
+                                <span className="text-white/90 font-medium">
+                                  {feature}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+
+                          <div className="mt-auto inline-flex items-center gap-2 font-sans text-sm font-semibold tracking-wide text-gold transition-colors group-hover:text-white pt-2">
+                            <span>{t(`pathwayCards.${courseIndex}.link`)}</span>
+                            <span
+                              aria-hidden="true"
+                              className="transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1"
+                            >
+                              →
+                            </span>
+                          </div>
+                        </article>
+                      </SpotlightCard>
+                    </Link>
+                  );
+                })}
         </div>
 
         <div className="mt-12 text-center">
