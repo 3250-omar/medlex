@@ -15,6 +15,12 @@ export { default as CascExaminerSection } from "./CascExaminerSection";
 export { default as CascGiftsSection } from "./CascGiftsSection";
 export { default as CascCoachingSection } from "./CascCoachingSection";
 export { default as CascPricingSection } from "./CascPricingSection";
+export {
+  CascPricingProvider,
+  useCascPricing,
+  type SessionOption,
+  type CascPricingContextValue,
+} from "./CascPricingContext";
 export { default as CascFaqSection, referenceFaqs } from "./CascFaqSection";
 export { default as CascClosingBannerSection } from "./CascClosingBannerSection";
 export { default as PrivateSessionDialog } from "./booking/PrivateSessionDialog";

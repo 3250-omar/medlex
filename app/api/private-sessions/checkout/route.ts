@@ -10,7 +10,7 @@ import {
   internalError,
   authenticateAndRequireVerifiedUser,
 } from "@/lib/private-sessions/http";
-// TODO: Re-import paymentAdapter once Paymob payment integration is enabled
+// TODO: Re-import paymentAdapter once Paddle payment integration is enabled
 // import { paymentAdapter } from "@/lib/private-sessions/payment";
 import { fulfillBookingImmediately } from "@/lib/private-sessions/fulfillment";
 
@@ -109,9 +109,9 @@ export async function POST(req: NextRequest) {
         );
       }
 
-      // TODO: Add Paymob payment integration soon. Currently disabled for direct session subscription without routing to payment page.
+      // TODO: Add Paddle payment integration soon if needed. Currently disabled for direct session subscription without routing to payment page.
       /*
-      // Create Hosted Checkout intention via Paymob adapter
+      // Create Hosted Checkout intention via Paddle adapter
       const intention = await paymentAdapter.createPaymentIntention({
         amountMinor: hold.amount_minor,
         currency: hold.currency,
@@ -254,7 +254,7 @@ export async function POST(req: NextRequest) {
           quantity_snapshot: offer.session_count,
           amount_minor: resolvedPriceMinor,
           currency: resolvedCurrency,
-          provider: "paymob",
+          provider: "paddle",
           status: "pending",
           hold_expires_at: null,
         })
@@ -269,7 +269,7 @@ export async function POST(req: NextRequest) {
         );
       }
 
-      // TODO: Add Paymob payment integration soon. Currently disabled for direct package subscription without routing to payment page.
+      // TODO: Add Paddle payment integration soon if needed. Currently disabled for direct package subscription without routing to payment page.
       /*
       const intention = await paymentAdapter.createPaymentIntention({
         amountMinor: attempt.amount_minor,

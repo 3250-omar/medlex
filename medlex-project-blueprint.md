@@ -34,7 +34,7 @@ The public website builds trust, the course storefront converts that trust into 
 
 - Account creation and login before purchase.
 - One-time purchase per course with time-limited access.
-- Paymob Hosted Checkout so MedLex never stores card details.
+- Paddle Hosted Checkout so MedLex never stores card details.
 - Coupon and points discounts.
 - Payment success, pending, failed, and retry experiences.
 - Payment history and downloadable receipts where supported.
@@ -63,7 +63,7 @@ The public website builds trust, the course storefront converts that trust into 
 
 ## 4. Core customer journey
 
-Visitor discovers MedLex -> reviews founder authority and a pathway -> opens a course page -> creates an account -> applies a coupon if available -> pays through Paymob -> webhook confirms payment -> enrolment and expiry are created -> learner resumes from My Courses -> completes every required activity -> receives points, certificate, and gift -> gives feedback or shares -> returns for another course using a discount.
+Visitor discovers MedLex -> reviews founder authority and a pathway -> opens a course page -> creates an account -> applies a coupon if available -> pays through Paddle -> webhook confirms payment -> enrolment and expiry are created -> learner resumes from My Courses -> completes every required activity -> receives points, certificate, and gift -> gives feedback or shares -> returns for another course using a discount.
 
 The course page has three states:
 
@@ -89,7 +89,7 @@ Expired access returns the learner to the purchase state without deleting prior 
 - PostgreSQL for relational course, enrolment, payment, progress, coupon, and certificate data.
 - Prisma or Drizzle for schema migrations and typed database access.
 - Auth.js or a managed authentication provider, using secure HTTP-only sessions and verified email.
-- Paymob Hosted Checkout plus signed webhooks for payment confirmation.
+- Paddle Checkout plus signed webhooks for payment confirmation.
 - Private object storage for gifts and generated certificates, served through short-lived signed URLs.
 - Transactional email for registration, payment, expiry, and certificate messages.
 - Vercel plus managed PostgreSQL/object storage for the simplest deployment, or a VPS when operational control is more important.
@@ -113,7 +113,7 @@ A point ledger is safer than storing only a mutable points balance. Payment webh
 ## 8. Payment and security rules
 
 - Never store raw card data; redirect to hosted checkout.
-- Verify Paymob webhook signatures using the raw request data before changing payment or enrolment state.
+- Verify Paddle webhook signatures using the raw request data before changing payment or enrolment state.
 - Treat the webhook as the source of truth, not the browser success redirect.
 - Make payment processing idempotent and keep every attempt for reconciliation.
 - Validate question answers on the server and return only the result/explanation needed by the interface.
@@ -128,7 +128,7 @@ The first release should include:
 
 - Bilingual public portfolio and three pathway/course marketing pages.
 - Authentication and profiles.
-- Paymob payment for one-time, time-limited course access.
+- Paddle payment for one-time, time-limited course access.
 - My Courses, sequential learning pages, server-validated questions, and saved progress.
 - Certificate, one gift per course, points/coupons, and payment history.
 - Admin users table, learner details, core course settings, payment visibility, and feedback templates.
@@ -145,7 +145,7 @@ Defer WhatsApp Business automation, a full visual course CMS, subscriptions, mul
 - Required course content, correct answers, explanations, and downloadable gifts.
 - Certificate wording, signatory, serial/verification method, and branding.
 - Final Arabic and English copy, social links, feedback templates, and support channels.
-- Legal entity information, Paymob account ownership, tax/receipt requirements, and privacy retention periods.
+- Legal entity information, Paddle account ownership, tax/receipt requirements, and privacy retention periods.
 
 ## 11. Delivery sequence
 
@@ -153,7 +153,7 @@ Defer WhatsApp Business automation, a full visual course CMS, subscriptions, mul
 2. Finalise information architecture, user flows, design system, and responsive screens.
 3. Build the database, authentication, roles, and audit foundation.
 4. Build public portfolio/pathway/course pages and bilingual SEO.
-5. Integrate Paymob in test mode and complete payment reconciliation.
+5. Integrate Paddle in test mode and complete payment reconciliation.
 6. Build Academy progress, questions, certificates, gifts, points, and coupons.
 7. Build the admin dashboard.
 8. Complete accessibility, security, payment, RTL, and end-to-end testing.

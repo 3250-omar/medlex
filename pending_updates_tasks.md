@@ -9,10 +9,10 @@
   - [x] Update "Email delivery" line in `/privacy-policy` Section 4 with the actual email provider name, or remove it.
   - [x] Add the actual analytics tool name to `/privacy-policy` Section 6, or remove `[analytics tool, if any]` if none is used.
 - [x] **Update Coaching Payment Terms:**
-  - [x] Replace payments paragraph in `/terms` Section 1 with the new Paddle/Paymob text.
-  - [x] Update the top card text in `/terms` to: "Paddle processes course payments, taxes and invoicing".
-  - [x] Update Payments line in `/privacy-policy` Section 4 to: "Payments: Paddle.com Market Limited (merchant of record, for courses); Paymob (for coaching sessions)".
-  - [x] Update "We collect" column for "Book coaching" in `/privacy-policy` table to: "Name, email, phone, session preferences; payment is handled by Paymob — we do not see your card details".
+  - [x] Replace payments paragraph in `/terms` Section 1 with the new Paddle text (coaching sessions purchased at enrolment).
+  - [x] Update the top card text in `/terms` to: "Paddle processes payments, taxes and invoicing".
+  - [x] Update Payments line in `/privacy-policy` Section 4 to: "Payments: Paddle.com Market Limited (merchant of record)".
+  - [x] Update "We collect" column for "Book coaching" in `/privacy-policy` table to: "Name, email, phone, session preferences; payment is handled by Paddle — we do not see your card details".
 - [x] **Fix Policy Text Formatting:**
   - [x] Extracted and verified text from `Terms of Sale and Use` artifact/screenshot.
   - [x] Copied exact text with correct punctuation and independent sentences to `/terms`, `/privacy-policy`, and `/refund-policy` (in both English and Arabic translations).

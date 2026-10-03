@@ -18,7 +18,7 @@ MedLex is one platform with three connected surfaces:
 - React Bits only for selected, restrained animated components.
 - TanStack Query v5 for interactive client-side server state, queries, mutations, polling, caching, and invalidation.
 - Supabase Auth, PostgreSQL database, and Storage.
-- Paymob Hosted/Unified Checkout with server-created payment intentions and HMAC-verified callbacks.
+- Paddle Checkout as merchant of record with server-side validation and signed webhooks.
 - Yarn 4 as the package manager declared by the repository.
 
 ## 2. App Router architecture
@@ -68,7 +68,7 @@ Route groups separate marketing, authentication, Academy, account, and admin lay
 │   ├── api/
 │   │   ├── payments/create-intention/route.ts
 │   │   ├── payments/status/[orderId]/route.ts
-│   │   ├── webhooks/paymob/route.ts
+│   │   ├── webhooks/paddle/route.ts
 │   │   └── health/route.ts
 │   ├── layout.tsx
 │   ├── providers.tsx
@@ -86,7 +86,7 @@ Route groups separate marketing, authentication, Academy, account, and admin lay
 ├── lib/
 │   ├── query/
 │   ├── supabase/
-│   ├── paymob/
+│   ├── paddle/
 │   ├── seo/
 │   └── validation/
 ├── server/                 # server-only repositories and business services
@@ -119,7 +119,7 @@ _apiCalls/
 └── types.ts
 ```
 
-Server Components load read-heavy initial data directly through server-only repositories. Client Components use TanStack Query only when they require refetching, mutations, polling, optimistic UI, or cache invalidation. Privileged operations use validated Route Handlers or carefully scoped Server Actions. Paymob secrets and the Supabase service-role key never enter the browser bundle.
+Server Components load read-heavy initial data directly through server-only repositories. Client Components use TanStack Query only when they require refetching, mutations, polling, optimistic UI, or cache invalidation. Privileged operations use validated Route Handlers or carefully scoped Server Actions. Payment secrets and the Supabase service-role key never enter the browser bundle.
 
 ## 3. Prototype design system
 
@@ -303,24 +303,24 @@ Implement the complete learning workflow.
 - Repeated requests cannot duplicate points, completion, or certificates.
 - End-to-end tests cover the complete learner journey.
 
-## Phase 7 — Paymob integration
+## Phase 7 — Paddle integration
 
 ### Goal
 
-Sell time-limited course access securely through Paymob.
+Sell time-limited course access securely through Paddle.
 
 ### Work
 
-1. Configure separate Paymob test/live credentials and integration IDs.
-2. Create `app/api/payments/create-intention/route.ts` to validate the course/coupon, calculate the authoritative total, create a pending internal order, and create the Paymob intention.
-3. Redirect to Hosted/Unified Checkout; MedLex never collects card details.
-4. Implement `app/api/webhooks/paymob/route.ts`, read the unmodified request payload, and verify HMAC before processing.
+1. Configure Paddle credentials and product/price IDs.
+2. Create `app/api/payments/create-intention/route.ts` to validate the course/coupon, calculate the authoritative total, and prepare checkout.
+3. Redirect to Paddle Checkout; MedLex never collects card details.
+4. Implement `app/api/webhooks/paddle/route.ts`, read the unmodified request payload, and verify signature before processing.
 5. Store provider event IDs and process callbacks idempotently.
 6. Activate enrolment only from a verified successful backend callback.
 7. Handle pending, failed, retried, duplicate, refunded, and voided states.
 8. Poll internal payment status after the checkout return while waiting for the callback.
 9. Add payment history and admin reconciliation.
-10. Test invalid HMAC, duplicate/delayed callbacks, sandbox methods, and amount mismatches.
+10. Test signature verification, duplicate/delayed callbacks, sandbox methods, and amount mismatches.
 
 ### Acceptance criteria
 
@@ -389,7 +389,7 @@ Launch with repeatable deployment and recovery procedures.
 2. Integration tests for Supabase RLS, repositories, Route Handlers, and Server Actions.
 3. End-to-end tests for auth, purchase, callback, Academy, completion, certificate, expiry, and reconciliation.
 4. Browser, responsive, EN/AR, RTL, theme, and accessibility QA.
-5. Staging with Paymob sandbox and production-equivalent Supabase policies.
+5. Staging with Paddle sandbox and production-equivalent Supabase policies.
 6. Production environment variables, DNS, email, Storage, backups, monitoring, and alerts.
 7. Migration, rollback, restore, launch, and smoke-test runbooks.
 
