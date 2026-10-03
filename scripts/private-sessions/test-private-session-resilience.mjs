@@ -1,48 +1,17 @@
 /**
  * Test: test-private-session-resilience.mjs
  * Purpose: Node HTTP journey for payment & delivery failure resilience:
- *          1. Duplicate Paymob webhook replay handling
- *          2. Invalid HMAC rejection (401)
- *          3. Paid hold expiry / lost hold -> paid_unfulfilled mapping
- *          4. Delivery worker lease concurrency and bounded retry backoff
- *          5. Purchase polling status verification
+ *          1. Paid hold expiry / lost hold -> paid_unfulfilled mapping
+ *          2. Delivery worker lease concurrency and bounded retry backoff
+ *          3. Purchase polling status verification
  */
 
 import assert from "node:assert/strict";
-import crypto from "node:crypto";
 
 const APP_URL = process.env.APP_URL || "http://localhost:3000";
 
 async function runTests() {
   console.log("▶ Running User Story 5 Resilience & Recovery checks...");
-
-  // 1. Verify invalid HMAC payload is rejected with 401
-  try {
-    const invalidHmacRes = await fetch(`${APP_URL}/api/webhooks/paymob/private-sessions`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        type: "TRANSACTION",
-        obj: {
-          id: 9999999,
-          success: true,
-          order: { id: 888888 },
-        },
-        hmac: "invalid_hmac_hash_signature",
-      }),
-    });
-
-    assert.equal(
-      invalidHmacRes.status,
-      401,
-      `Expected 401 Unauthorized for invalid HMAC signature, got ${invalidHmacRes.status}`
-    );
-    console.log("  ✓ Webhook rejects invalid HMAC with 401 Unauthorized");
-  } catch (err) {
-    console.log(`  ℹ Webhook check skipped (${err.message})`);
-  }
 
   // 2. Verify purchase status polling route rejects unauthenticated request
   try {

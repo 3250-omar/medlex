@@ -22,6 +22,7 @@ import {
   CascGiftsSection,
   CascCoachingSection,
   CascPricingSection,
+  CascPricingProvider,
   CascFaqSection,
   CascClosingBannerSection,
 } from "./casc_components";
@@ -83,65 +84,67 @@ export default function CascAcademyLanding({ courseData, ..._props }: Props) {
     cascEnrolment?.currentUnitSlug ?? cascEnrolment?.firstUnitSlug;
 
   return (
-    <main id="top" className="bg-white text-char">
-      {/* 1. HERO SECTION */}
-      <CascHeroSection
-        cascEnrolment={cascEnrolment}
-        continueSlug={continueSlug}
-        courseData={courseData}
-      />
-      {/* 6. INCLUDED SECTION (WHAT YOU GET) */}
-      <CascWhatYouGetSection />
-      {/* 3. HOW A STATION WORKS (ANATOMY) */}
-      <CascHowStationWorksSection />
-      {/* 9. BEFORE YOU ENROL (GIFTS) */}
-      <CascGiftsSection />
-      {/* 5. DOMAINS SECTION */}
-      <CascDomainsSection />
-      {/* 2. PROBLEM SECTION */}
-      <CascProblemSection />
-
-      {/* 7. WHO IT IS FOR */}
-      <CascWhoItIsForSection />
-      {/* 12. PRICING & ENROL */}
-      <CascPricingSection
-        locale={locale}
-        cascEnrolment={cascEnrolment}
-        continueSlug={continueSlug}
-        courseData={courseData}
-      />
-      {/* 11. COACHING */}
-      <CascCoachingSection locale={locale} onOpenBooking={handleOpenBooking} />
-      {/* 8. THE EXAMINER (ABOUT) */}
-      <CascExaminerSection />
-
-      {/* 4. FREE STATION PREVIEW CALLOUT */}
-      <CascFreeStationPreviewSection locale={locale} />
-
-      {/* 10. FEEDBACK SECTION */}
-      <FeedbackSection pathway="casc-academy" />
-
-      {/* 13. QUESTIONS (FAQ) */}
-      <CascFaqSection />
-
-      {/* 14. CLOSING BANNER */}
-      {/* <CascClosingBannerSection
-        locale={locale}
-        cascEnrolment={cascEnrolment}
-        continueSlug={continueSlug}
-      /> */}
-
-      {/* On-demand Private Session Booking Dialog */}
-      {isDialogOpen && (
-        <PrivateSessionDialog
-          open={isDialogOpen}
-          onOpenChange={setIsDialogOpen}
-          locale={locale}
-          courseSlug="casc-academy"
-          initialMode={bookingMode}
-          initialPurchaseId={returnPurchaseId}
+    <CascPricingProvider courseData={courseData}>
+      <main id="top" className="bg-white text-char">
+        {/* 1. HERO SECTION */}
+        <CascHeroSection
+          cascEnrolment={cascEnrolment}
+          continueSlug={continueSlug}
+          courseData={courseData}
         />
-      )}
-    </main>
+        {/* 6. INCLUDED SECTION (WHAT YOU GET) */}
+        <CascWhatYouGetSection />
+        {/* 3. HOW A STATION WORKS (ANATOMY) */}
+        <CascHowStationWorksSection />
+        {/* 9. BEFORE YOU ENROL (GIFTS) */}
+        <CascGiftsSection />
+        {/* 5. DOMAINS SECTION */}
+        <CascDomainsSection />
+        {/* 2. PROBLEM SECTION */}
+        <CascProblemSection />
+
+        {/* 7. WHO IT IS FOR */}
+        <CascWhoItIsForSection />
+        {/* 12. PRICING & ENROL */}
+        <CascPricingSection
+          locale={locale}
+          cascEnrolment={cascEnrolment}
+          continueSlug={continueSlug}
+          courseData={courseData}
+        />
+        {/* 11. COACHING */}
+        <CascCoachingSection locale={locale} onOpenBooking={handleOpenBooking} />
+        {/* 8. THE EXAMINER (ABOUT) */}
+        <CascExaminerSection />
+
+        {/* 4. FREE STATION PREVIEW CALLOUT */}
+        <CascFreeStationPreviewSection locale={locale} />
+
+        {/* 10. FEEDBACK SECTION */}
+        <FeedbackSection pathway="casc-academy" />
+
+        {/* 13. QUESTIONS (FAQ) */}
+        <CascFaqSection />
+
+        {/* 14. CLOSING BANNER */}
+        {/* <CascClosingBannerSection
+          locale={locale}
+          cascEnrolment={cascEnrolment}
+          continueSlug={continueSlug}
+        /> */}
+
+        {/* On-demand Private Session Booking Dialog */}
+        {isDialogOpen && (
+          <PrivateSessionDialog
+            open={isDialogOpen}
+            onOpenChange={setIsDialogOpen}
+            locale={locale}
+            courseSlug="casc-academy"
+            initialMode={bookingMode}
+            initialPurchaseId={returnPurchaseId}
+          />
+        )}
+      </main>
+    </CascPricingProvider>
   );
 }

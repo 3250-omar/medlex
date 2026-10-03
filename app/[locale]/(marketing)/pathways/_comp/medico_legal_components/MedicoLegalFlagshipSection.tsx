@@ -38,15 +38,15 @@ export default function MedicoLegalFlagshipSection({ locale }: Props) {
             ))}
           </ul>
           <div className="ctas">
-            <a className="btn" href="#waitlist">
+            {/* <a className="btn" href="#waitlist">
               {t("joinWaitlist")}
-            </a>
-            <Link
+            </a> */}
+            {/* <Link
               className="btn ghost"
               href={`/${locale}/programmes/writing-psychiatric-evidence`}
             >
               {t("brochure")}
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

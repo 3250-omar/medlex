@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { EnrolledCourse } from "../../../_apiCalls/academyQueries";
 import EnrolOrContinue, { btnGold } from "./EnrolOrContinue";
+import { useCascPricing } from "./CascPricingContext";
 
 type Props = {
   locale: string;
@@ -17,6 +18,7 @@ export default function CascClosingBannerSection({
   courseData,
 }: Props) {
   const t = useTranslations("cascClosingBanner");
+  const pricing = useCascPricing();
 
   return (
     <section className="relative py-20 lg:py-28 bg-tint text-center border-t border-hair overflow-hidden">
@@ -30,10 +32,13 @@ export default function CascClosingBannerSection({
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
           <EnrolOrContinue
             className={btnGold}
+            label={pricing?.mainCtaLabel}
             cascEnrolment={cascEnrolment}
             continueSlug={continueSlug}
             locale={locale}
             courseData={courseData}
+            overridePrice={pricing?.formattedTotal}
+            selectedPackageInfo={pricing?.selectedPackageInfo}
           />
           <Link
             className="btn btn-ghost !min-h-12 !px-7 font-semibold !text-navy !border-navy/30 hover:!bg-navy hover:!text-white text-sm !rounded-full transition-all hover:-translate-y-0.5"

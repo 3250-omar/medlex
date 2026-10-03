@@ -1,6 +1,7 @@
 import type { EnrolledCourse } from "../../../_apiCalls/academyQueries";
 import EnrolOrContinue from "./EnrolOrContinue";
 import { useTranslations } from "next-intl";
+import { useCascPricing } from "./CascPricingContext";
 
 type Props = {
   locale: string;
@@ -16,6 +17,7 @@ export default function CascPricingSection({
   courseData,
 }: Props) {
   const t = useTranslations("cascPricing");
+  const pricing = useCascPricing();
 
   const features = [
     t("feat1"),
@@ -26,14 +28,18 @@ export default function CascPricingSection({
     t("feat6"),
   ];
 
-  // Dynamic price display
-  const priceDisplay = courseData
-    ? new Intl.NumberFormat(locale, {
-        style: "currency",
-        currency: courseData.currency,
-        maximumFractionDigits: 0,
-      }).format(courseData.price)
-    : t("price");
+  // Dynamic price display (uses context total if available, otherwise base course price)
+  const priceDisplay = pricing
+    ? pricing.formattedTotal
+    : courseData
+      ? new Intl.NumberFormat(locale, {
+          style: "currency",
+          currency: courseData.currency,
+          maximumFractionDigits: 0,
+        }).format(courseData.price)
+      : t("price");
+
+  const ctaLabel = pricing?.mainCtaLabel || t("cta");
 
   return (
     <section
@@ -58,11 +64,40 @@ export default function CascPricingSection({
           <div className="font-serif text-5xl sm:text-6xl font-bold text-navy! leading-none">
             {priceDisplay}
           </div>
-          <div className="text-sm text-grey mt-2 mb-6">
-            {t("priceSubtitle")}
-          </div>
+
+          {pricing && pricing.sessionsPrice > 0 ? (
+            <div className="mt-2 mb-6 space-y-1">
+              <div className="text-sm font-semibold text-navy flex flex-wrap items-center gap-2">
+                <span>
+                  + {pricing.sessionsLabel} ({pricing.formatPrice(pricing.sessionsPrice)})
+                </span>
+                {pricing.savingsAmount > 0 && (
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold text-xs">
+                    {locale === "ar"
+                      ? `وفرت ${pricing.formatPrice(pricing.savingsAmount)}`
+                      : `Save ${pricing.formatPrice(pricing.savingsAmount)}`}
+                  </span>
+                )}
+              </div>
+              <div className="text-xs text-grey">
+                {t("priceSubtitle")}
+              </div>
+            </div>
+          ) : (
+            <div className="text-sm text-grey mt-2 mb-6">
+              {t("priceSubtitle")}
+            </div>
+          )}
 
           <ul className="list-none p-0 m-0 mb-8 divide-y divide-hair">
+            {pricing && pricing.sessionsPrice > 0 && (
+              <li className="py-2.5 text-sm sm:text-base text-navy font-semibold flex items-center gap-2 bg-[#F5EFE3]/80 px-3 rounded-xl border border-[#DFD5C0] mb-2">
+                <span className="text-gold font-bold">✓</span>
+                <span>
+                  {pricing.sessionsLabel} ({pricing.formatPrice(pricing.sessionsPrice)})
+                </span>
+              </li>
+            )}
             {features.map((item) => (
               <li
                 key={item}
@@ -76,11 +111,13 @@ export default function CascPricingSection({
 
           <EnrolOrContinue
             className="btn btn-gold !min-h-12 w-full text-center text-sm font-semibold !rounded-full shadow-sm"
-            label={t("cta")}
+            label={ctaLabel}
             cascEnrolment={cascEnrolment}
             continueSlug={continueSlug}
             locale={locale}
             courseData={courseData}
+            overridePrice={pricing?.formattedTotal}
+            selectedPackageInfo={pricing?.selectedPackageInfo}
           />
         </div>
       </div>

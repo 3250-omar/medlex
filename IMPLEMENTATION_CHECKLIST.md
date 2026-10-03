@@ -95,12 +95,12 @@
 - [ ] Atomic completion, points, certificates, authorized downloads, feedback, and social actions.
 - [ ] Complete learner journey end-to-end tests and acceptance criteria.
 
-## Phase 7 — Paymob integration
+## Phase 7 — Paddle integration
 
-- [ ] Test/live credentials and integration IDs.
-- [ ] Authoritative server-side payment-intention creation and pending order creation.
-- [ ] Hosted/Unified Checkout redirect.
-- [ ] HMAC-verified, idempotent Paymob webhook handling.
+- [ ] Credentials, vendor settings, and product/price IDs.
+- [ ] Authoritative server-side checkout creation and pending order tracking.
+- [ ] Paddle Checkout integration (merchant of record).
+- [ ] Signature-verified, idempotent Paddle webhook handling.
 - [ ] Verified-callback-only enrolment activation and internal status polling.
 - [ ] Payment history, reconciliation, and sandbox/error-path testing.
 - [ ] Complete Phase 7 acceptance criteria.
@@ -125,7 +125,7 @@
 
 - [ ] Unit, integration/RLS, and end-to-end coverage for all critical flows.
 - [ ] Browser, responsive, EN/AR, RTL, theme, and accessibility QA.
-- [ ] Staging environment with Paymob sandbox and production-equivalent policies.
+- [ ] Staging environment with Paddle sandbox and production-equivalent policies.
 - [ ] Production environment, DNS/email/Storage/backups/monitoring/alerts.
 - [ ] Migration, rollback, restore, launch, and smoke-test runbooks.
 - [ ] CI quality gates and all Phase 10 acceptance criteria.

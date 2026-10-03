@@ -13,7 +13,7 @@ import {
   Minus,
 } from "lucide-react";
 import type { EnrolledCourse } from "../../../_apiCalls/academyQueries";
-import { usePrivateSessionContext } from "../privateSessionQueries";
+import { useCascPricing } from "./CascPricingContext";
 import EnrolOrContinue from "./EnrolOrContinue";
 
 type Props = {
@@ -21,8 +21,6 @@ type Props = {
   continueSlug?: string | null;
   courseData?: { price: number; currency: string } | null;
 };
-
-type SessionOption = "none" | "1" | "5" | "10" | "custom";
 
 export default function CascHeroSection({
   cascEnrolment,
@@ -33,75 +31,33 @@ export default function CascHeroSection({
   const t = useTranslations("cascHero");
   const isAr = locale === "ar";
 
-  const { data: contextData } = usePrivateSessionContext("casc-academy");
-  const offers = contextData?.offers || [];
-  const directOffer = offers.find((o) => o.code === "direct");
-  const pkg5Offer = offers.find((o) => o.code === "package_5");
-  const pkg10Offer = offers.find((o) => o.code === "package_10");
+  const pricing = useCascPricing();
 
-  const singlePrice = directOffer ? directOffer.priceMinor / 100 : 120;
-  const pkg5Price = pkg5Offer ? pkg5Offer.priceMinor / 100 : 540;
-  const pkg10Price = pkg10Offer ? pkg10Offer.priceMinor / 100 : 960;
-  const coursePrice = courseData?.price ?? 147;
-  const currency = courseData?.currency || "GBP";
-
-  const [selectedOption, setSelectedOption] = useState<SessionOption>("none");
-  const [customCount, setCustomCount] = useState<number>(3);
-
-  const formatPrice = (amount: number) => {
-    return new Intl.NumberFormat(isAr ? "ar-EG" : "en-GB", {
-      style: "currency",
-      currency,
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
-  let sessionsPrice = 0;
-  let sessionsLabel = "";
-  let savingsAmount = 0;
-
-  if (selectedOption === "none") {
-    sessionsPrice = 0;
-    sessionsLabel = t("noSessionsSelected");
-  } else if (selectedOption === "1") {
-    sessionsPrice = singlePrice;
-    sessionsLabel = t("optSingle");
-  } else if (selectedOption === "5") {
-    sessionsPrice = pkg5Price;
-    sessionsLabel = t("opt5");
-    savingsAmount = singlePrice * 5 - pkg5Price;
-  } else if (selectedOption === "10") {
-    sessionsPrice = pkg10Price;
-    sessionsLabel = t("opt10");
-    savingsAmount = singlePrice * 10 - pkg10Price;
-  } else if (selectedOption === "custom") {
-    if (customCount === 5) {
-      sessionsPrice = pkg5Price;
-      savingsAmount = singlePrice * 5 - pkg5Price;
-    } else if (customCount === 10) {
-      sessionsPrice = pkg10Price;
-      savingsAmount = singlePrice * 10 - pkg10Price;
-    } else {
-      sessionsPrice = customCount * singlePrice;
-    }
-    sessionsLabel = t("sessionsCount", { count: customCount });
-  }
-
-  const totalPrice = coursePrice + sessionsPrice;
-  const formattedTotal = formatPrice(totalPrice);
-
-  const selectedPackageInfo =
-    selectedOption === "none"
-      ? isAr
-        ? "دورة CASC فقط"
-        : "The CASC Academy (Course Only)"
-      : isAr
-        ? `دورة CASC + ${sessionsLabel}`
-        : `The CASC Academy + ${sessionsLabel} Mentoring`;
-
-  const mainCtaLabel = isAr
-    ? `الانضمام إلى قائمة الانتظار — ${formattedTotal}`
-    : `Join Waitlist — ${formattedTotal}`;
+  const selectedOption = pricing?.selectedOption ?? "none";
+  const setSelectedOption = pricing?.setSelectedOption ?? (() => {});
+  const customCount = pricing?.customCount ?? 3;
+  const setCustomCount = pricing?.setCustomCount ?? (() => {});
+  const singlePrice = pricing?.singlePrice ?? 120;
+  const pkg5Price = pricing?.pkg5Price ?? 540;
+  const pkg10Price = pricing?.pkg10Price ?? 960;
+  const coursePrice = pricing?.coursePrice ?? courseData?.price ?? 147;
+  const sessionsPrice = pricing?.sessionsPrice ?? 0;
+  const savingsAmount = pricing?.savingsAmount ?? 0;
+  const formattedTotal = pricing?.formattedTotal ?? `£${coursePrice}`;
+  const selectedPackageInfo = pricing?.selectedPackageInfo ?? "";
+  const mainCtaLabel =
+    pricing?.mainCtaLabel ??
+    (isAr
+      ? `الانضمام إلى قائمة الانتظار — ${formattedTotal}`
+      : `Join Waitlist — ${formattedTotal}`);
+  const formatPrice =
+    pricing?.formatPrice ??
+    ((amount: number) =>
+      new Intl.NumberFormat(isAr ? "ar-EG" : "en-GB", {
+        style: "currency",
+        currency: courseData?.currency || "GBP",
+        maximumFractionDigits: 0,
+      }).format(amount));
 
   return (
     <section className="relative text-char flex flex-col justify-between min-h-[calc(100vh-125px)] min-h-[calc(100dvh-125px)] pt-12 sm:pt-16 lg:pt-20 pb-0 border-b border-hair overflow-hidden">
