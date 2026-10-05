@@ -49,6 +49,6 @@
   - [x] Change "CASC Academy" to "The CASC Academy" on the CASC page header.
   - [x] Change "MedLex Foundations" to "Foundations" on the Foundations page header.
 - [x] **CASC Hero Section:**
-  - [x] Update coaching copy to: "One-to-one coaching is available separately — see coaching" (both EN and AR).
+  - [x] Update coaching copy to: "One-to-one coaching can be added when you enrol — see coaching" (both EN and AR).
 - [x] **CASC Coaching Pricing:**
   - [x] Verify visibility and accuracy of all coaching prices (Single session £120, 5 sessions £540, 10 sessions £960).
