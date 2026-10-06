@@ -1732,6 +1732,8 @@
     "selectedSlotLabel": "Selected session slot:",
     "continueToConfirmation": "Continue to Confirmation",
     "noActiveCreditsError": "No active session credits available",
+    "checkoutCancelled": "Payment checkout was closed. You can resume your secure payment when you are ready.",
+    "checkoutUnavailable": "We could not open secure checkout. Please try again.",
     "generalError": "An error occurred while processing your request"
   },
   "seo": {

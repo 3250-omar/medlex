@@ -547,6 +547,8 @@ export interface Database {
           provider: string;
           provider_order_id: string | null;
           provider_transaction_id: string | null;
+          provider_creation_claim_id: string | null;
+          provider_creation_claimed_at: string | null;
           status:
             | "created"
             | "pending"
@@ -576,6 +578,8 @@ export interface Database {
           provider?: string;
           provider_order_id?: string | null;
           provider_transaction_id?: string | null;
+          provider_creation_claim_id?: string | null;
+          provider_creation_claimed_at?: string | null;
           status?:
             | "created"
             | "pending"
@@ -939,6 +943,7 @@ export interface Database {
           p_slot_id: string;
           p_course_slug: string;
           p_idempotency_key: string;
+          p_country_code?: string;
         };
         Returns: {
           booking_id: string;
@@ -947,6 +952,49 @@ export interface Database {
           currency: string;
           hold_expires_at: string;
         };
+      };
+      create_paddle_direct_session_hold: {
+        Args: {
+          p_slot_id: string;
+          p_course_slug: string;
+          p_idempotency_key: string;
+          p_country_code?: string;
+        };
+        Returns: {
+          booking_id: string;
+          payment_attempt_id: string;
+          amount_minor: number;
+          currency: string;
+          hold_expires_at: string;
+        }[];
+      };
+      create_paddle_package_payment_attempt: {
+        Args: {
+          p_course_slug: string;
+          p_offer_id: string;
+          p_idempotency_key: string;
+          p_country_code?: string;
+        };
+        Returns: {
+          payment_attempt_id: string;
+          amount_minor: number;
+          currency: string;
+        }[];
+      };
+      process_paddle_private_session_webhook: {
+        Args: {
+          p_provider_event_id: string;
+          p_provider_transaction_id: string;
+          p_event_type: string;
+          p_payload_hash: string;
+          p_custom_payment_attempt_id: string | null;
+          p_is_success: boolean;
+          p_failure_code?: string | null;
+        };
+        Returns: {
+          outcome: string;
+          reconciliation_status: string;
+        }[];
       };
       expire_direct_session_hold: {
         Args: {
@@ -981,6 +1029,7 @@ export interface Database {
           p_slot_id: string;
           p_entitlement_id: string;
           p_idempotency_key: string;
+          p_country_code?: string;
         };
         Returns: {
           booking_id: string;

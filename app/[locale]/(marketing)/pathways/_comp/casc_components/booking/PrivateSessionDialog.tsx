@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import {
@@ -12,12 +12,17 @@ import {
 } from "@/components/ui/dialog";
 import { ArrowLeft, ArrowRight, AlertTriangle } from "lucide-react";
 import type {
+  BookingDTO,
+  CheckoutResultData,
+  EntitlementSummaryDTO,
   LocalizedOfferDTO,
   SlotDTO,
-  BookingDTO,
-  EntitlementSummaryDTO,
 } from "@/lib/private-sessions/types";
 import { useQueryClient } from "@tanstack/react-query";
+import {
+  closePaddleCheckout,
+  openPaddleCheckout,
+} from "@/lib/payments/paddle/client";
 import {
   usePrivateSessionContext,
   useDirectCheckoutMutation,
@@ -30,9 +35,7 @@ import { PrivateSessionPackageStep } from "./PrivateSessionPackageStep";
 import { PrivateSessionCalendarStep } from "./PrivateSessionCalendarStep";
 import { PrivateSessionSummaryStep } from "./PrivateSessionSummaryStep";
 import { PrivateSessionStatusStep } from "./PrivateSessionStatusStep";
-
 import type { DialogStep, BookingMode } from "./types";
-
 interface PrivateSessionDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -92,6 +95,10 @@ export default function PrivateSessionDialog({
     sessionLink?: string | null;
   } | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [pendingCheckout, setPendingCheckout] =
+    useState<CheckoutResultData | null>(null);
+  const [paddleCheckoutOpening, setPaddleCheckoutOpening] = useState(false);
+  const paymentCompletedRef = React.useRef(false);
 
   // Mutations
   const directCheckout = useDirectCheckoutMutation();
@@ -105,7 +112,73 @@ export default function PrivateSessionDialog({
 
   const queryClient = useQueryClient();
 
+  const launchPaddleCheckout = useCallback(
+    async (checkout: CheckoutResultData) => {
+      if (!checkout.transactionId) {
+        setErrorMessage(t("checkoutUnavailable"));
+        return;
+      }
+
+      paymentCompletedRef.current = false;
+      setPaddleCheckoutOpening(true);
+      setErrorMessage(null);
+
+      try {
+        await openPaddleCheckout({
+          transactionId: checkout.transactionId,
+          locale: locale === "ar" ? "ar" : "en",
+          onEvent: (event) => {
+            if (
+              event.data?.transaction_id &&
+              event.data.transaction_id !== checkout.transactionId
+            ) {
+              return;
+            }
+
+            if (event.name === "checkout.completed") {
+              paymentCompletedRef.current = true;
+              closePaddleCheckout();
+              setPaddleCheckoutOpening(false);
+              setStep("status");
+              return;
+            }
+
+            if (
+              event.name === "checkout.error" ||
+              event.name === "checkout.failed" ||
+              event.name === "checkout.payment.error" ||
+              event.name === "checkout.payment.failed"
+            ) {
+              closePaddleCheckout();
+              setPaddleCheckoutOpening(false);
+              setErrorMessage(t("checkoutUnavailable"));
+              return;
+            }
+
+            if (
+              event.name === "checkout.closed" &&
+              !paymentCompletedRef.current
+            ) {
+              setPaddleCheckoutOpening(false);
+              setErrorMessage(t("checkoutCancelled"));
+            }
+          },
+        });
+      } catch {
+        closePaddleCheckout();
+        setErrorMessage(t("checkoutUnavailable"));
+      } finally {
+        setPaddleCheckoutOpening(false);
+      }
+    },
+    [locale, t],
+  );
+
   const handleClose = useCallback(() => {
+    closePaddleCheckout();
+    paymentCompletedRef.current = false;
+    setPendingCheckout(null);
+    setPaddleCheckoutOpening(false);
     queryClient.invalidateQueries({
       queryKey: privateSessionKeys.context(courseSlug),
     });
@@ -122,6 +195,8 @@ export default function PrivateSessionDialog({
   const handleBack = useCallback(() => {
     setErrorMessage(null);
     if (step === "summary") {
+      setPendingCheckout(null);
+      setPurchaseId(null);
       setStep(mode === "package" ? "package" : "calendar");
     } else if (step === "calendar" || step === "package") {
       setStep("choice");
@@ -138,6 +213,8 @@ export default function PrivateSessionDialog({
   const handleSelectMode = useCallback(
     (chosenMode: BookingMode) => {
       setMode(chosenMode);
+      setPendingCheckout(null);
+      setPurchaseId(null);
       setErrorMessage(null);
 
       if (chosenMode === "package") {
@@ -154,12 +231,14 @@ export default function PrivateSessionDialog({
   );
 
   const handleProceedToSummaryFromSlot = useCallback((slot: SlotDTO) => {
+    setPendingCheckout(null);
     setSelectedSlot(slot);
     setStep("summary");
   }, []);
 
   const handleProceedToSummaryFromOffer = useCallback(
     (offer: LocalizedOfferDTO) => {
+      setPendingCheckout(null);
       setSelectedOffer(offer);
       setStep("summary");
     },
@@ -170,6 +249,11 @@ export default function PrivateSessionDialog({
   const handleExecute = useCallback(async () => {
     setErrorMessage(null);
     try {
+      if (mode !== "redeem" && pendingCheckout) {
+        await launchPaddleCheckout(pendingCheckout);
+        return;
+      }
+
       if (mode === "direct") {
         if (!selectedSlot || !selectedOffer) return;
         const result = await directCheckout.mutateAsync({
@@ -184,7 +268,8 @@ export default function PrivateSessionDialog({
 
         setPurchaseId(result.purchaseId);
         setDirectBooking(result);
-        setStep("status");
+        setPendingCheckout(result);
+        await launchPaddleCheckout(result);
       } else if (mode === "package") {
         if (!selectedOffer) return;
         const result = await packageCheckout.mutateAsync({
@@ -197,7 +282,8 @@ export default function PrivateSessionDialog({
         });
 
         setPurchaseId(result.purchaseId);
-        setStep("status");
+        setPendingCheckout(result);
+        await launchPaddleCheckout(result);
       } else if (mode === "redeem") {
         if (!selectedSlot) return;
         const activeEntitlement = activeEntitlements.find(
@@ -221,9 +307,7 @@ export default function PrivateSessionDialog({
         setStep("status");
       }
     } catch (err: unknown) {
-      setErrorMessage(
-        err instanceof Error ? err.message : t("generalError"),
-      );
+      setErrorMessage(err instanceof Error ? err.message : t("generalError"));
     }
   }, [
     mode,
@@ -234,6 +318,9 @@ export default function PrivateSessionDialog({
     packageCheckout,
     redeemCredit,
     generateIdempotencyKey,
+    launchPaddleCheckout,
+    pendingCheckout,
+    t,
   ]);
 
   const formatPrice = useCallback(
@@ -250,7 +337,8 @@ export default function PrivateSessionDialog({
   const isSubmitting =
     directCheckout.isPending ||
     packageCheckout.isPending ||
-    redeemCredit.isPending;
+    redeemCredit.isPending ||
+    paddleCheckoutOpening;
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
@@ -319,7 +407,7 @@ export default function PrivateSessionDialog({
         </div>
 
         {errorMessage && (
-          <div className="flex items-start gap-2.5 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800">
+          <div role="alert" aria-live="assertive" className="flex items-start gap-2.5 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800">
             <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
             <span>{errorMessage}</span>
           </div>
@@ -392,7 +480,11 @@ export default function PrivateSessionDialog({
               setMode("redeem");
               setStep("calendar");
             }}
-            onRetry={() => setStep("choice")}
+            onRetry={() => {
+              setPendingCheckout(null);
+              setPurchaseId(null);
+              setStep("choice");
+            }}
           />
         )}
       </DialogContent>

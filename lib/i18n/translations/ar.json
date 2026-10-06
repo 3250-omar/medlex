@@ -1732,6 +1732,8 @@
     "selectedSlotLabel": "الموعد المختار حالياً:",
     "continueToConfirmation": "متابعة لتأكيد الحجز",
     "noActiveCreditsError": "لا يوجد رصيد جلسات نشط متاح",
+    "checkoutCancelled": "تم إغلاق نافذة الدفع. يمكنك متابعة الدفع الآمن عندما تكون مستعداً.",
+    "checkoutUnavailable": "تعذر فتح صفحة الدفع الآمن. يرجى المحاولة مرة أخرى.",
     "generalError": "حدث خطأ أثناء معالجة طلبك"
   },
   "seo": {
