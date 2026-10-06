@@ -67,9 +67,12 @@ export async function POST(req: NextRequest) {
     const returnUrl = `${origin}/pathways/casc-academy?oneToOne=open`;
     const admin = createAdminClient();
 
-    // Resolve country code from middleware-injected header
+    // Resolve country code from headers
     const countryCode = (
-      req.headers.get("x-user-country") || "EG"
+      req.headers.get("x-user-country") ||
+      req.headers.get("x-vercel-ip-country") ||
+      req.headers.get("cf-ipcountry") ||
+      "EG"
     ).toUpperCase();
 
     if (payload.mode === "direct") {
@@ -98,7 +101,7 @@ export async function POST(req: NextRequest) {
           );
         }
         return internalError(holdError.message, correlationId);
-      } 
+      }
 
       const hold = Array.isArray(holdData) ? holdData[0] : holdData;
       if (!hold || !hold.payment_attempt_id) {

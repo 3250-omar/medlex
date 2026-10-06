@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { headers } from "next/headers";
 import PathwayDetailPage from "./PathwayDetailPage";
 import {
   type PathwayContent,
@@ -20,11 +21,47 @@ export default async function PathwayRoutePage({
   const t = await getTranslations({ locale, namespace: "pathwayPages" });
 
   const supabase = await createClient();
+  const headersList = await headers();
+  const countryCode = (
+    headersList.get("x-user-country") ||
+    headersList.get("x-vercel-ip-country") ||
+    headersList.get("cf-ipcountry") ||
+    "EG"
+  ).toUpperCase();
+
   const { data: course } = await supabase
     .from("courses")
-    .select("price, currency")
+    .select("id, price, currency")
     .eq("slug", pathway)
     .single();
+
+  if (course) {
+    const { data: countryPrice } = await supabase
+      .from("course_country_prices")
+      .select("price, currency")
+      .eq("course_id", course.id)
+      .eq("country_code", countryCode)
+      .eq("is_active", true)
+      .maybeSingle();
+
+    if (countryPrice) {
+      course.price = countryPrice.price;
+      course.currency = countryPrice.currency;
+    } else {
+      const { data: otherPrice } = await supabase
+        .from("course_country_prices")
+        .select("price, currency")
+        .eq("course_id", course.id)
+        .eq("country_code", "__OTHER__")
+        .eq("is_active", true)
+        .maybeSingle();
+
+      if (otherPrice) {
+        course.price = otherPrice.price;
+        course.currency = otherPrice.currency;
+      }
+    }
+  }
 
   return (
     <PathwayDetailPage

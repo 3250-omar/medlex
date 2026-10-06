@@ -32,7 +32,10 @@ export async function POST(
   );
 
   if (!rpcError && rpcData) {
-    return NextResponse.json({ data: rpcData }, { headers: NOINDEX_ROBOTS_HEADER });
+    return NextResponse.json(
+      { data: rpcData },
+      { headers: NOINDEX_ROBOTS_HEADER },
+    );
   }
 
   // 2. Fallback direct execution
@@ -52,7 +55,7 @@ export async function POST(
 
     const enrollmentRes = await supabase
       .from("enrollments")
-      .select("id, release_id")
+      .select("id, release_id, expires_at")
       .eq("user_id", user.id)
       .eq("course_id", courseRes.data.id)
       .in("status", ["active", "paused", "completed"])
@@ -60,7 +63,11 @@ export async function POST(
       .limit(1)
       .single();
 
-    if (enrollmentRes.error || !enrollmentRes.data) {
+    const isExpired =
+      enrollmentRes.data?.expires_at &&
+      new Date(enrollmentRes.data.expires_at) <= new Date();
+
+    if (enrollmentRes.error || !enrollmentRes.data || isExpired) {
       return NextResponse.json(
         { error: "active_enrollment_required" },
         { status: 403, headers: NOINDEX_ROBOTS_HEADER },

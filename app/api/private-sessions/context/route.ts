@@ -51,9 +51,11 @@ export async function GET(req: NextRequest) {
       return internalError("Failed to fetch session offers", correlationId);
     }
 
-    // 3. Resolve country-specific prices
     const countryCode = (
-      req.headers.get("x-user-country") || "EG"
+      req.headers.get("x-user-country") ||
+      req.headers.get("x-vercel-ip-country") ||
+      req.headers.get("cf-ipcountry") ||
+      "EG"
     ).toUpperCase();
 
     const offerIds = (offersData || []).map((o) => o.id);
@@ -72,15 +74,11 @@ export async function GET(req: NextRequest) {
         .eq("is_active", true);
 
       if (exactPrices && exactPrices.length > 0) {
-        countryPriceMap = new Map(
-          exactPrices.map((p) => [p.offer_id, p]),
-        );
+        countryPriceMap = new Map(exactPrices.map((p) => [p.offer_id, p]));
       }
 
       // For offers without an exact match, try __OTHER__ fallback
-      const missingOfferIds = offerIds.filter(
-        (id) => !countryPriceMap.has(id),
-      );
+      const missingOfferIds = offerIds.filter((id) => !countryPriceMap.has(id));
       if (missingOfferIds.length > 0) {
         const { data: otherPrices } = await supabase
           .from("offer_country_prices")
