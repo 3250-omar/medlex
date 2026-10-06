@@ -98,7 +98,11 @@ export function CascPricingProvider({
       label = t("sessionsCount", { count: customCount });
     }
 
-    return { sessionsPrice: price, sessionsLabel: label, savingsAmount: savings };
+    return {
+      sessionsPrice: price,
+      sessionsLabel: label,
+      savingsAmount: savings,
+    };
   }, [selectedOption, customCount, singlePrice, pkg5Price, pkg10Price, t]);
 
   const totalPrice = coursePrice + sessionsPrice;
@@ -123,8 +127,8 @@ export function CascPricingProvider({
 
   const mainCtaLabel = useMemo(() => {
     return isAr
-      ? `الانضمام إلى قائمة الانتظار — ${formattedTotal}`
-      : `Join Waitlist — ${formattedTotal}`;
+      ? `ابدأ الآن  — ${formattedTotal}`
+      : `Enrol — ${formattedTotal}`;
   }, [isAr, formattedTotal]);
 
   const value: CascPricingContextValue = useMemo(
