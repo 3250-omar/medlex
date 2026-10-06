@@ -1,46 +1,62 @@
-export class ApiError extends Error {
-  readonly status: number;
+import { showApiError } from "@/lib/api/errorToast";
+import { ApiError, isApiError } from "@/lib/api/error";
 
-  constructor(message: string, status: number) {
-    super(message);
-    this.name = "ApiError";
-    this.status = status;
-  }
-}
+export { ApiError, isApiError } from "@/lib/api/error";
 
-export function isApiError(error: unknown): error is ApiError {
-  return error instanceof ApiError;
-}
+type ApiErrorPayload = {
+  message?: unknown;
+  code?: unknown;
+  correlationId?: unknown;
+};
 
 type ApiResponse<T> = {
   data?: T;
-  error?: string;
+  error?: string | ApiErrorPayload;
   success?: boolean;
 };
+
+function toApiError(body: (ApiResponse<unknown> & Record<string, unknown>) | null, status: number) {
+  const payload = body?.error;
+  if (typeof payload === "string") return new ApiError(payload, status);
+
+  if (payload && typeof payload === "object") {
+    const detail = payload as ApiErrorPayload;
+    return new ApiError(
+      typeof detail.message === "string" ? detail.message : "Unable to complete the request.",
+      status,
+      {
+        code: typeof detail.code === "string" ? detail.code : undefined,
+        correlationId: typeof detail.correlationId === "string" ? detail.correlationId : undefined,
+      },
+    );
+  }
+
+  return new ApiError("Unable to complete the request.", status);
+}
 
 async function readApiResponse<T>(response: Response): Promise<T> {
   const body = (await response.json().catch(() => null)) as
     | (ApiResponse<T> & Record<string, unknown>)
     | null;
 
-  if (!response.ok) {
-    throw new ApiError(
-      body?.error ?? "Unable to complete the request.",
-      response.status,
-    );
-  }
-
-  if (body?.data !== undefined) {
-    return body.data;
-  }
-
-  return body as unknown as T;
+  if (!response.ok) throw toApiError(body, response.status);
+  return body?.data !== undefined ? body.data : (body as T);
 }
 
 export async function apiRequest<T>(
   input: RequestInfo | URL,
   init?: RequestInit,
 ): Promise<T> {
-  const response = await fetch(input, init);
-  return readApiResponse<T>(response);
+  try {
+    const response = await fetch(input, init);
+    return await readApiResponse<T>(response);
+  } catch (error) {
+    if (error instanceof DOMException && error.name === "AbortError") throw error;
+
+    const apiError = isApiError(error)
+      ? error
+      : new ApiError("Unable to reach the server. Please check your connection and try again.", 0);
+    showApiError(apiError);
+    throw apiError;
+  }
 }
