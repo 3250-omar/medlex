@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
@@ -45,6 +45,7 @@ export default function CascHeroSection({
   const savingsAmount = pricing?.savingsAmount ?? 0;
   const formattedTotal = pricing?.formattedTotal ?? `£${coursePrice}`;
   const selectedPackageInfo = pricing?.selectedPackageInfo ?? "";
+  const sessionCount = pricing?.sessionCount ?? 0;
   const mainCtaLabel =
     pricing?.mainCtaLabel ??
     (isAr
@@ -144,6 +145,8 @@ export default function CascHeroSection({
           <span>{t("workbookDesc")}</span>
         </div>
 
+        {!cascEnrolment && (
+          <>
         {/* Customise Your Bundle Widget */}
         <div className="mt-8 rounded-2xl border border-[#DFD5C0] bg-[#FAF7F2]/95 backdrop-blur-sm p-5 sm:p-6 shadow-sm">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
@@ -377,6 +380,9 @@ export default function CascHeroSection({
           </div>
         </div>
 
+          </>
+        )}
+
         {/* CTA Buttons */}
         <div className="mt-8 flex flex-wrap items-center gap-4">
           <EnrolOrContinue
@@ -388,6 +394,7 @@ export default function CascHeroSection({
             courseData={courseData}
             overridePrice={formattedTotal}
             selectedPackageInfo={selectedPackageInfo}
+            sessionCount={sessionCount}
           />
           <Link
             className="btn bg-white/90! hover:bg-white! border border-navy/30! hover:border-navy! text-navy! !min-h-12 !px-7 font-semibold text-sm !rounded-lg transition-transform hover:-translate-y-0.5 shadow-sm"

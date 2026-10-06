@@ -10,6 +10,7 @@ export type PrivateSessionPaddleWebhook = {
     | typeof EventName.TransactionPaymentFailed
     | typeof EventName.TransactionCanceled;
   transactionId: string;
+  source: string | null;
   paymentAttemptId: string | null;
   isSuccess: boolean;
   failureCode: string | null;
@@ -58,6 +59,7 @@ export function toPrivateSessionPaddleWebhook(
     eventId: event.eventId,
     eventType: event.eventType,
     transactionId,
+    source: stringValue(customData?.source),
     paymentAttemptId: uuidValue(customData?.payment_attempt_id),
     isSuccess: event.eventType === EventName.TransactionCompleted,
     failureCode:

@@ -11,6 +11,16 @@ type WebhookProcessResult = {
   outcome: "processed" | "duplicate" | "rejected";
 };
 
+type PaddleWebhookRpcClient = {
+  rpc: (
+    name: string,
+    args: Record<string, unknown>,
+  ) => Promise<{
+    data: WebhookProcessResult[] | null;
+    error: { message: string } | null;
+  }>;
+};
+
 export async function GET() {
   return NextResponse.json({
     status: "ok",
@@ -41,15 +51,23 @@ export async function POST(request: NextRequest) {
     );
     const webhook = toPrivateSessionPaddleWebhook(event, rawBody);
 
-    // A verified event outside the private-session flow is deliberately
-    // acknowledged; this destination may serve other Paddle products later.
-    if (!webhook) {
+    // A verified event outside Medlex payment flows is deliberately
+    // acknowledged without changing local access.
+    if (
+      !webhook ||
+      (webhook.source !== "medlex_private_sessions" &&
+        webhook.source !== "medlex_course")
+    ) {
       return NextResponse.json({ received: true, ignored: true });
     }
 
     const admin = createAdminClient();
-    const { data, error } = await admin.rpc(
-      "process_paddle_private_session_webhook",
+    const rpcName =
+      webhook.source === "medlex_course"
+        ? "process_paddle_course_webhook"
+        : "process_paddle_private_session_webhook";
+    const { data, error } = await (admin as unknown as PaddleWebhookRpcClient).rpc(
+      rpcName,
       {
         p_provider_event_id: webhook.eventId,
         p_provider_transaction_id: webhook.transactionId,

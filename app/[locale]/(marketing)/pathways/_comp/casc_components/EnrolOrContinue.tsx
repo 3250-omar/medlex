@@ -21,6 +21,7 @@ export type EnrolOrContinueProps = {
   courseData?: { price: number; currency: string } | null;
   overridePrice?: string;
   selectedPackageInfo?: string;
+  sessionCount?: number;
 };
 
 export default function EnrolOrContinue({
@@ -32,6 +33,7 @@ export default function EnrolOrContinue({
   courseData,
   overridePrice,
   selectedPackageInfo,
+  sessionCount,
 }: EnrolOrContinueProps) {
   const t = useTranslations("enrolOrContinue");
   const buttonLabel = label || t("defaultLabel");
@@ -57,6 +59,7 @@ export default function EnrolOrContinue({
       showArrow={false}
       itemPrice={overridePrice || formattedPrice}
       selectedPackageInfo={selectedPackageInfo}
+      sessionCount={sessionCount}
     >
       {buttonLabel}
     </SubscribeButton>

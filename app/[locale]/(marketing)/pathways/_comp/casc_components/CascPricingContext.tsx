@@ -23,6 +23,7 @@ export interface CascPricingContextValue {
   formattedTotal: string;
   formattedCoursePrice: string;
   selectedPackageInfo: string;
+  sessionCount: number;
   mainCtaLabel: string;
   formatPrice: (amount: number) => string;
 }
@@ -101,6 +102,12 @@ export function CascPricingProvider({
   }, [selectedOption, customCount, singlePrice, pkg5Price, pkg10Price, t]);
 
   const totalPrice = coursePrice + sessionsPrice;
+  const sessionCount =
+    selectedOption === "none"
+      ? 0
+      : selectedOption === "custom"
+        ? customCount
+        : Number(selectedOption);
   const formattedTotal = formatPrice(totalPrice);
   const formattedCoursePrice = formatPrice(coursePrice);
 
@@ -138,6 +145,7 @@ export function CascPricingProvider({
       formattedTotal,
       formattedCoursePrice,
       selectedPackageInfo,
+      sessionCount,
       mainCtaLabel,
       formatPrice,
     }),
@@ -156,6 +164,7 @@ export function CascPricingProvider({
       formattedTotal,
       formattedCoursePrice,
       selectedPackageInfo,
+      sessionCount,
       mainCtaLabel,
       formatPrice,
     ],

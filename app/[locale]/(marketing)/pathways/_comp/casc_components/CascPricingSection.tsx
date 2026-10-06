@@ -118,6 +118,7 @@ export default function CascPricingSection({
             courseData={courseData}
             overridePrice={pricing?.formattedTotal}
             selectedPackageInfo={pricing?.selectedPackageInfo}
+            sessionCount={pricing?.sessionCount}
           />
         </div>
       </div>

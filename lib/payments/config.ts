@@ -59,6 +59,13 @@ export function getPaddlePrivateSessionProductId(): string {
   return productId;
 }
 
+export function getPaddleCourseProductId(): string {
+  const productId = required("PADDLE_COURSE_PRODUCT_ID");
+  if (!/^pro_[a-z\d]{26}$/.test(productId)) {
+    throw new Error("PADDLE_COURSE_PRODUCT_ID must be a Paddle product ID");
+  }
+  return productId;
+}
 export function getPaddlePublicConfig(): PaddlePublicConfig {
   return {
     clientToken: required("NEXT_PUBLIC_PADDLE_CLIENT_TOKEN"),

@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
     ],
   },
   allowedDevOrigins: [
-    "achievement-cumulative-tropical-communicate.trycloudflare.com",
+    "*.trycloudflare.com",
   ],
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
