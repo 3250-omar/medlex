@@ -2,18 +2,21 @@
 
 import { useCallback, useContext, useState } from "react";
 import { useLocale } from "next-intl";
-import { useRouter } from "next/navigation";
 import { InterestDialogContext } from "@/components/marketing/InterestDialog";
 import CheckoutDialog, {
   DEFAULT_CANCELLATION_WAIVER_TEXT,
-  type CheckoutConfirmationData,
 } from "@/components/checkout/CheckoutDialog";
 import {
   academyQueryKeys,
+  type EnrolledCourse,
   useCurrentUser,
-  useSubscribeToCourse,
 } from "../../_apiCalls/academyQueries";
 import { useQueryClient } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/api/client";
+import {
+  closePaddleCheckout,
+  openPaddleCheckout,
+} from "@/lib/payments/paddle/client";
 import { type PathwayKey } from "./pathwayContent";
 import {
   Dialog,
@@ -27,7 +30,6 @@ import { CheckCircle2, Loader2, Mail } from "lucide-react";
 export default function SubscribeButton({
   children,
   pathway = "casc-academy",
-  autoRedirect = true,
   onSuccess,
   className,
   showArrow = true,
@@ -35,8 +37,9 @@ export default function SubscribeButton({
   itemPrice = "£147",
   requireCancellationWaiver = true,
   waiverText = DEFAULT_CANCELLATION_WAIVER_TEXT,
-  isWaitlist = true,
+  isWaitlist = pathway !== "casc-academy",
   selectedPackageInfo,
+  sessionCount = 0,
 }: {
   children: React.ReactNode;
   pathway?: PathwayKey;
@@ -50,14 +53,14 @@ export default function SubscribeButton({
   waiverText?: string;
   isWaitlist?: boolean;
   selectedPackageInfo?: string;
+  sessionCount?: number;
 }) {
   const locale = useLocale();
   const isAr = locale === "ar";
-  const router = useRouter();
   const queryClient = useQueryClient();
   const dialog = useContext(InterestDialogContext);
   const { data: user, isLoading } = useCurrentUser();
-  const subscribe = useSubscribeToCourse();
+  const [isCheckoutOpening, setIsCheckoutOpening] = useState(false);
 
   const [showCheckout, setShowCheckout] = useState(false);
   const [showWaitlist, setShowWaitlist] = useState(false);
@@ -66,74 +69,72 @@ export default function SubscribeButton({
   const [isWaitlistSubmitting, setIsWaitlistSubmitting] = useState(false);
   const [isWaitlistSuccess, setIsWaitlistSuccess] = useState(false);
 
-  const completeSubscription = useCallback(
-    async (waiverData?: CheckoutConfirmationData) => {
-      try {
-        const result = await subscribe.mutateAsync({
-          slug: pathway,
-          waiverAccepted: waiverData?.waiverAccepted ?? false,
-          waiverText: waiverData?.waiverText,
-        });
-
-        await Promise.all([
-          queryClient.invalidateQueries({
-            queryKey: academyQueryKeys.currentUser,
-          }),
-          queryClient.invalidateQueries({
-            queryKey: academyQueryKeys.enrolledCourses,
-          }),
-        ]);
-
-        setShowCheckout(false);
-
-        if (onSuccess) {
-          onSuccess();
-        }
-
-        if (autoRedirect) {
-          router.push(
-            `/${locale}/academy/courses/${pathway}/learn/${result.firstUnitSlug ?? "start-here"}`,
-          );
-        }
-      } catch (err: unknown) {
-        await queryClient.invalidateQueries({
+  const refreshPaidEnrollment = useCallback(async () => {
+    const retryDelays = [0, 1_000, 2_000, 4_000, 8_000];
+    for (const delay of retryDelays) {
+      if (delay)
+        await new Promise((resolve) => window.setTimeout(resolve, delay));
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: academyQueryKeys.currentUser,
+        }),
+        queryClient.invalidateQueries({
           queryKey: academyQueryKeys.enrolledCourses,
-        });
+        }),
+      ]);
+      await Promise.all([
+        queryClient.refetchQueries({
+          queryKey: academyQueryKeys.currentUser,
+          type: "active",
+        }),
+        queryClient.refetchQueries({
+          queryKey: academyQueryKeys.enrolledCourses,
+          type: "active",
+        }),
+      ]);
+      const courses = queryClient.getQueryData<EnrolledCourse[]>(
+        academyQueryKeys.enrolledCourses,
+      );
+      if (courses?.some((course) => course.slug === pathway)) return true;
+    }
+    return false;
+  }, [pathway, queryClient]);
+  const completeSubscription = useCallback(async () => {
+    setIsCheckoutOpening(true);
+    try {
+      const result = await apiRequest<{
+        purchaseId: string;
+        transactionId: string;
+        checkoutUrl: string;
+        status: string;
+      }>(`/api/courses/${pathway}/checkout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Idempotency-Key": crypto.randomUUID(),
+        },
+        body: JSON.stringify({ sessionCount }),
+      });
 
-        const message =
-          err instanceof Error ? err.message : String(err ?? "");
-        const isAlreadySubscribed =
-          message.includes("already_subscribed") ||
-          (typeof err === "object" &&
-            err !== null &&
-            "status" in err &&
-            (err as { status: number }).status === 409);
-
-        if (isAlreadySubscribed) {
-          setShowCheckout(false);
-          if (onSuccess) {
-            onSuccess();
+      await openPaddleCheckout({
+        transactionId: result.transactionId,
+        locale: isAr ? "ar" : "en",
+        onEvent: (event) => {
+          if (event.name === "checkout.completed") {
+            closePaddleCheckout();
+            setShowCheckout(false);
+            void refreshPaidEnrollment().then((enrolled) => {
+              if (enrolled) onSuccess?.();
+            });
           }
-          if (autoRedirect) {
-            router.push(`/${locale}/academy/courses/${pathway}/learn/start-here`);
-          }
-          return;
-        }
-
-        console.error("[SubscribeButton] Subscription error:", err);
-      }
-    },
-    [
-      autoRedirect,
-      locale,
-      onSuccess,
-      pathway,
-      queryClient,
-      router,
-      subscribe,
-    ],
-  );
-
+        },
+      });
+    } catch (err) {
+      console.error("[SubscribeButton] Checkout error:", err);
+    } finally {
+      setIsCheckoutOpening(false);
+    }
+  }, [isAr, onSuccess, pathway, refreshPaidEnrollment, sessionCount]);
   function handleClick() {
     if (isWaitlist) {
       if (user?.email && !waitlistEmail) {
@@ -200,13 +201,13 @@ export default function SubscribeButton({
       <button
         type="button"
         onClick={handleClick}
-        disabled={isLoading || subscribe.isPending}
+        disabled={isLoading || isCheckoutOpening}
         className={
           className ||
           "btn btn-gold !rounded-full !min-h-12 !px-7 font-body text-sm font-semibold text-navy inline-flex items-center justify-center transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
         }
       >
-        {subscribe.isPending ? "…" : children}
+        {isCheckoutOpening ? "…" : children}
         {showArrow && (
           <span className="ms-3" aria-hidden="true">
             →
@@ -324,7 +325,7 @@ export default function SubscribeButton({
         price={itemPrice}
         requireCancellationWaiver={requireCancellationWaiver}
         waiverText={waiverText}
-        isProcessing={subscribe.isPending}
+        isProcessing={isCheckoutOpening}
         onConfirm={completeSubscription}
       />
     </>

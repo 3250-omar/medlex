@@ -1,15 +1,19 @@
 import { toast } from "@/components/ui/toast";
-import { isApiError } from "@/lib/api/client";
+import { isApiError } from "@/lib/api/error";
 
 export function showApiError(error: unknown, suppressGlobalError = false) {
-  if (!isApiError(error) || suppressGlobalError) return;
+  if (suppressGlobalError || typeof window === "undefined") return;
+  if (isApiError(error) && error.toastShown) return;
 
-  
+  const message = error instanceof Error ? error.message.trim() : "Unable to complete the request.";
+  if (!message) return;
+
+  if (isApiError(error)) error.toastShown = true;
   toast.add({
-    id: `api-error-${error.status}-${error.message}`,
+    id: `api-error-${isApiError(error) ? error.status : "unknown"}-${message}`,
     type: "error",
     title: "Request failed",
-    description: error.message,
+    description: message,
     priority: "high",
   });
 }

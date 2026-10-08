@@ -7,7 +7,6 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { InterestDialogProvider } from "@/components/marketing/InterestDialog";
 import { Toaster } from "@/components/ui/toast";
 import { showApiError } from "@/lib/api/errorToast";

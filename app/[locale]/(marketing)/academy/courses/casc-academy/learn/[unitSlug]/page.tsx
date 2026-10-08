@@ -28,13 +28,16 @@ export async function generateMetadata({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { data: enrollment } = await (supabase as any)
       .from("enrollments")
-      .select("id, courses!inner(slug)")
+      .select("id, expires_at, courses!inner(slug)")
       .eq("user_id", user.id)
       .eq("courses.slug", "casc-academy")
       .in("status", ["active", "completed", "paused"])
       .maybeSingle();
 
-    if (!enrollment) {
+    const isExpired =
+      enrollment?.expires_at && new Date(enrollment.expires_at) <= new Date();
+
+    if (!enrollment || isExpired) {
       return {
         title: fallbackTitle,
         robots: CASC_PRIVATE_ROBOTS,

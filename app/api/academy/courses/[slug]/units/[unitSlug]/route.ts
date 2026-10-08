@@ -41,15 +41,18 @@ export async function GET(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { data: enrollment } = await (supabase as any)
     .from("enrollments")
-    .select("id, status, courses!inner(slug)")
+    .select("id, status, expires_at, courses!inner(slug)")
     .eq("user_id", user.id)
     .eq("courses.slug", slug)
     .in("status", ["active", "completed", "paused"])
     .maybeSingle();
 
-  if (!enrollment) {
+  const isExpired =
+    enrollment?.expires_at && new Date(enrollment.expires_at) <= new Date();
+
+  if (!enrollment || isExpired) {
     return NextResponse.json(
-      { error: "enrolment_required" },
+      { error: isExpired ? "enrollment_expired" : "enrolment_required" },
       {
         status: 403,
         headers: NOINDEX_ROBOTS_HEADER,

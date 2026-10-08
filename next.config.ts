@@ -14,6 +14,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  allowedDevOrigins: [
+    "*.trycloudflare.com",
+  ],
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },

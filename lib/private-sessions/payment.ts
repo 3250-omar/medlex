@@ -25,25 +25,20 @@ export interface PaymentProviderAdapter {
 
 class PaddlePaymentAdapter implements PaymentProviderAdapter {
   /**
-   * Creates a checkout URL or fallback redirect.
+   * Transaction creation is implemented in Phase 3. Keep this adapter
+   * fail-closed so no caller can accidentally treat a local redirect as a
+   * successful Paddle checkout.
    */
-  async createPaymentIntention({
-    purchaseId,
-    returnUrl,
-  }: CreateIntentionParams): Promise<IntentionResult> {
-    const mockReturn = new URL(returnUrl);
-    mockReturn.searchParams.set("purchaseId", purchaseId);
-    return {
-      checkoutUrl: mockReturn.toString(),
-      providerOrderId: `paddle-${purchaseId}`,
-    };
+  async createPaymentIntention(): Promise<IntentionResult> {
+    throw new Error("Paddle transaction creation is not implemented yet");
   }
 
   /**
-   * Verifies webhook signatures.
+   * Webhook verification is implemented in Phase 5. Never accept a webhook
+   * until Paddle's signature has been verified against the raw request body.
    */
-  verifyWebhookHmac(_rawBody: string, _signature: string): boolean {
-    return true;
+  verifyWebhookHmac(): boolean {
+    return false;
   }
 }
 

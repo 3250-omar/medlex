@@ -86,6 +86,7 @@ export interface PurchaseStatusData {
 
 export interface CheckoutResultData {
   purchaseId: string;
+  transactionId?: string;
   status: "pending" | "paid";
   checkoutUrl: string;
   holdExpiresAt: string | null;
