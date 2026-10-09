@@ -313,11 +313,17 @@ export async function POST(
     );
   } catch (error) {
     if (error instanceof ApiError) {
-      console.error("Paddle transaction creation rejected", {
-        correlationId,
-        message: error.message,
-        error,
-      });
+      console.error(
+        "Paddle transaction creation rejected",
+        JSON.stringify({
+          correlationId,
+          type: error.type,
+          code: error.code,
+          detail: error.detail,
+          documentationUrl: error.documentationUrl,
+          errors: error.errors,
+        }),
+      );
       await admin
         .from("course_payment_attempts")
         .update({

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext, useState, useSyncExternalStore } from "react";
 import { useLocale } from "next-intl";
 import { InterestDialogContext } from "@/components/marketing/InterestDialog";
 import CheckoutDialog, {
@@ -26,6 +26,8 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { CheckCircle2, Loader2, Mail } from "lucide-react";
+
+const subscribeToHydration = () => () => {};
 
 export default function SubscribeButton({
   children,
@@ -61,6 +63,11 @@ export default function SubscribeButton({
   const dialog = useContext(InterestDialogContext);
   const { data: user, isLoading } = useCurrentUser();
   const [isCheckoutOpening, setIsCheckoutOpening] = useState(false);
+  const hasHydrated = useSyncExternalStore(
+    subscribeToHydration,
+    () => true,
+    () => false,
+  );
 
   const [showCheckout, setShowCheckout] = useState(false);
   const [showWaitlist, setShowWaitlist] = useState(false);
@@ -201,7 +208,7 @@ export default function SubscribeButton({
       <button
         type="button"
         onClick={handleClick}
-        disabled={isLoading || isCheckoutOpening}
+        disabled={!hasHydrated || isLoading || isCheckoutOpening}
         className={
           className ||
           "btn btn-gold !rounded-full !min-h-12 !px-7 font-body text-sm font-semibold text-navy inline-flex items-center justify-center transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
