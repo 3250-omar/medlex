@@ -41,7 +41,7 @@ export default function SubscribeButton({
   waiverText = DEFAULT_CANCELLATION_WAIVER_TEXT,
   isWaitlist = pathway !== "casc-academy",
   selectedPackageInfo,
-  sessionCount = 0,
+  /* sessionCount = 0, */
 }: {
   children: React.ReactNode;
   pathway?: PathwayKey;
@@ -120,7 +120,9 @@ export default function SubscribeButton({
           "Content-Type": "application/json",
           "Idempotency-Key": crypto.randomUUID(),
         },
-        body: JSON.stringify({ sessionCount }),
+        // Standalone online course checkout; coaching sessions are handled separately
+        // body: JSON.stringify({ sessionCount }),
+        body: JSON.stringify({ sessionCount: 0 }),
       });
 
       await openPaddleCheckout({
@@ -141,7 +143,7 @@ export default function SubscribeButton({
     } finally {
       setIsCheckoutOpening(false);
     }
-  }, [isAr, onSuccess, pathway, refreshPaidEnrollment, sessionCount]);
+  }, [isAr, onSuccess, pathway, refreshPaidEnrollment /*, sessionCount */]);
   function handleClick() {
     if (isWaitlist) {
       if (user?.email && !waitlistEmail) {

@@ -7,9 +7,20 @@ import {
 } from "../../_apiCalls/academyQueries";
 import FeedbackSection from "./FeedbackSection";
 import type { PathwayContent, PathwayLabels } from "./pathwayContent";
+
+/*
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
+import type { BookingMode } from "./casc_components/booking/types";
+
+// Lazy-load private session dialog so it doesn't impact initial page load performance
+const PrivateSessionDialog = dynamic(
+  () => import("./casc_components/booking/PrivateSessionDialog"),
+  { ssr: false },
+);
+*/
+
 import {
   CascHeroSection,
   CascProblemSection,
@@ -24,15 +35,8 @@ import {
   CascPricingSection,
   CascPricingProvider,
   CascFaqSection,
-  CascClosingBannerSection,
+  // CascClosingBannerSection,
 } from "./casc_components";
-import type { BookingMode } from "./casc_components/booking/types";
-
-// Lazy-load private session dialog so it doesn't impact initial page load performance
-const PrivateSessionDialog = dynamic(
-  () => import("./casc_components/booking/PrivateSessionDialog"),
-  { ssr: false },
-);
 
 type Props = {
   content: PathwayContent;
@@ -43,7 +47,6 @@ type Props = {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function CascAcademyLanding({ courseData, ..._props }: Props) {
   const locale = useLocale();
-  const searchParams = useSearchParams();
 
   const { data: user } = useCurrentUser();
   const { data: fallbackEnrolledCourses } = useEnrolledCourses(
@@ -51,11 +54,12 @@ export default function CascAcademyLanding({ courseData, ..._props }: Props) {
   );
   const enrolledCourses = user?.enrolledCourses ?? fallbackEnrolledCourses;
 
+  /*
+  // Dialog control state (commented out: private sessions will be handled separately in another provider)
+  const searchParams = useSearchParams();
   const initialPurchaseId = searchParams.get("purchaseId");
   const initialOpen =
     searchParams.get("oneToOne") === "open" || !!initialPurchaseId;
-
-  // Dialog control state
   const [isDialogOpen, setIsDialogOpen] = useState(initialOpen);
   const [bookingMode, setBookingMode] = useState<BookingMode>("direct");
   const [returnPurchaseId, setReturnPurchaseId] = useState<string | null>(
@@ -75,6 +79,9 @@ export default function CascAcademyLanding({ courseData, ..._props }: Props) {
     setReturnPurchaseId(null);
     setIsDialogOpen(true);
   };
+  */
+
+
 
   // Detect active casc-academy enrolment
   const cascEnrolment = enrolledCourses?.find(
@@ -113,7 +120,10 @@ export default function CascAcademyLanding({ courseData, ..._props }: Props) {
           courseData={courseData}
         />
         {/* 11. COACHING */}
-        <CascCoachingSection locale={locale} onOpenBooking={handleOpenBooking} />
+        <CascCoachingSection
+          locale={locale}
+          /* onOpenBooking={handleOpenBooking} */
+        />
         {/* 8. THE EXAMINER (ABOUT) */}
         <CascExaminerSection />
 
@@ -133,8 +143,8 @@ export default function CascAcademyLanding({ courseData, ..._props }: Props) {
           continueSlug={continueSlug}
         /> */}
 
-        {/* On-demand Private Session Booking Dialog */}
-        {isDialogOpen && (
+        {/* On-demand Private Session Booking Dialog commented out (coaching is Coming Soon separately) */}
+        {/* {isDialogOpen && (
           <PrivateSessionDialog
             open={isDialogOpen}
             onOpenChange={setIsDialogOpen}
@@ -143,7 +153,7 @@ export default function CascAcademyLanding({ courseData, ..._props }: Props) {
             initialMode={bookingMode}
             initialPurchaseId={returnPurchaseId}
           />
-        )}
+        )} */}
       </main>
     </CascPricingProvider>
   );
