@@ -6,7 +6,7 @@ import { isPaddlePaymentsEnabled } from "@/lib/payments/config";
 import { toPaddleCurrency } from "@/lib/payments/paddle/currencies";
 import { getPaddleCheckoutUrl } from "@/lib/payments/paddle/transactions";
 import { createCoursePaddleTransaction } from "@/lib/courses/paddle";
-import { resolvePrivateSessionPrice } from "@/lib/private-sessions/pricing";
+// import { resolvePrivateSessionPrice } from "@/lib/private-sessions/pricing";
 import {
   authenticateAndRequireVerifiedUser,
   conflictError,
@@ -155,9 +155,13 @@ export async function POST(
     });
   }
 
-  let sessionOfferId: string | null = null;
-  let sessionAmountMinor = 0;
-  let sessionTitle: string | null = null;
+  const sessionOfferId: string | null = null;
+  const sessionAmountMinor = 0;
+  const sessionTitle: string | null = null;
+  // Bundled private coaching with course checkout is commented out:
+  // Course checkout via Paddle is strictly for the online course.
+  // Private sessions will be provided separately in another provider.
+  /*
   if (sessionCount > 0) {
     const offerCode =
       sessionCount === 5
@@ -206,6 +210,7 @@ export async function POST(
       );
     }
   }
+  */
 
   const amountMinor = courseAmountMinor + sessionAmountMinor;
   let { data: attempt } = await admin

@@ -65,7 +65,8 @@ export default function CascPricingSection({
             {priceDisplay}
           </div>
 
-          {pricing && pricing.sessionsPrice > 0 ? (
+          {/* Bundled sessions addition commented out: course pricing is standalone */}
+          {/* {pricing && pricing.sessionsPrice > 0 ? (
             <div className="mt-2 mb-6 space-y-1">
               <div className="text-sm font-semibold text-navy flex flex-wrap items-center gap-2">
                 <span>
@@ -83,21 +84,21 @@ export default function CascPricingSection({
                 {t("priceSubtitle")}
               </div>
             </div>
-          ) : (
+          ) : ( */}
             <div className="text-sm text-grey mt-2 mb-6">
               {t("priceSubtitle")}
             </div>
-          )}
+          {/* )} */}
 
           <ul className="list-none p-0 m-0 mb-8 divide-y divide-hair">
-            {pricing && pricing.sessionsPrice > 0 && (
+            {/* {pricing && pricing.sessionsPrice > 0 && (
               <li className="py-2.5 text-sm sm:text-base text-navy font-semibold flex items-center gap-2 bg-[#F5EFE3]/80 px-3 rounded-xl border border-[#DFD5C0] mb-2">
                 <span className="text-gold font-bold">✓</span>
                 <span>
                   {pricing.sessionsLabel} ({pricing.formatPrice(pricing.sessionsPrice)})
                 </span>
               </li>
-            )}
+            )} */}
             {features.map((item) => (
               <li
                 key={item}
@@ -116,9 +117,9 @@ export default function CascPricingSection({
             continueSlug={continueSlug}
             locale={locale}
             courseData={courseData}
-            overridePrice={pricing?.formattedTotal}
-            selectedPackageInfo={pricing?.selectedPackageInfo}
-            sessionCount={pricing?.sessionCount}
+            /* overridePrice={pricing?.formattedTotal} */
+            /* selectedPackageInfo={pricing?.selectedPackageInfo} */
+            /* sessionCount={pricing?.sessionCount} */
           />
         </div>
       </div>

@@ -7,10 +7,10 @@ import { useLocale, useTranslations } from "next-intl";
 import {
   ArrowRight,
   Download,
-  Sparkles,
-  Check,
-  Plus,
-  Minus,
+  // Sparkles,
+  // Check,
+  // Plus,
+  // Minus,
 } from "lucide-react";
 import type { EnrolledCourse } from "../../../_apiCalls/academyQueries";
 import { useCascPricing } from "./CascPricingContext";
@@ -33,6 +33,8 @@ export default function CascHeroSection({
 
   const pricing = useCascPricing();
 
+  /*
+  // Bundled pricing variables (commented out: course subscription is standalone)
   const selectedOption = pricing?.selectedOption ?? "none";
   const setSelectedOption = pricing?.setSelectedOption ?? (() => {});
   const customCount = pricing?.customCount ?? 3;
@@ -40,7 +42,6 @@ export default function CascHeroSection({
   const singlePrice = pricing?.singlePrice ?? 120;
   const pkg5Price = pricing?.pkg5Price ?? 540;
   const pkg10Price = pricing?.pkg10Price ?? 960;
-  const coursePrice = pricing?.coursePrice ?? courseData?.price ?? 147;
   const sessionsPrice = pricing?.sessionsPrice ?? 0;
   const savingsAmount = pricing?.savingsAmount ?? 0;
   const formattedTotal = pricing?.formattedTotal ?? `£${coursePrice}`;
@@ -49,6 +50,8 @@ export default function CascHeroSection({
   const mainCtaLabel =
     pricing?.mainCtaLabel ??
     (isAr ? `ابدأ الآن  — ${formattedTotal}` : `Enrol — ${formattedTotal}`);
+  */
+  const coursePrice = pricing?.coursePrice ?? courseData?.price ?? 147;
   const formatPrice =
     pricing?.formatPrice ??
     ((amount: number) =>
@@ -143,9 +146,13 @@ export default function CascHeroSection({
           <span>{t("workbookDesc")}</span>
         </div>
 
-        {!cascEnrolment && (
+        {/*
+          Bundled coaching subscription commented out:
+          Online course subscription is separate via Paddle;
+          private coaching will be booked separately via another provider.
+        */}
+        {/* {!cascEnrolment && (
           <>
-            {/* Customise Your Bundle Widget */}
             <div className="mt-8 rounded-2xl border border-[#DFD5C0] bg-[#FAF7F2]/95 backdrop-blur-sm p-5 sm:p-6 shadow-sm">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
                 <div>
@@ -162,9 +169,7 @@ export default function CascHeroSection({
                 </div>
               </div>
 
-              {/* Option Selector Buttons */}
               <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-2.5 mt-3">
-                {/* 1. None */}
                 <button
                   type="button"
                   onClick={() => setSelectedOption("none")}
@@ -191,7 +196,6 @@ export default function CascHeroSection({
                   </div>
                 </button>
 
-                {/* 2. Single Session */}
                 <button
                   type="button"
                   onClick={() => setSelectedOption("1")}
@@ -218,7 +222,6 @@ export default function CascHeroSection({
                   </div>
                 </button>
 
-                {/* 3. 5 Sessions (Save 10%) */}
                 <button
                   type="button"
                   onClick={() => setSelectedOption("5")}
@@ -248,7 +251,6 @@ export default function CascHeroSection({
                   </div>
                 </button>
 
-                {/* 4. 10 Sessions (Save 20%) */}
                 <button
                   type="button"
                   onClick={() => setSelectedOption("10")}
@@ -278,7 +280,6 @@ export default function CascHeroSection({
                   </div>
                 </button>
 
-                {/* 5. Custom */}
                 <button
                   type="button"
                   onClick={() => setSelectedOption("custom")}
@@ -312,7 +313,6 @@ export default function CascHeroSection({
                 </button>
               </div>
 
-              {/* Stepper if Custom is chosen */}
               {selectedOption === "custom" && (
                 <div className="mt-4 p-3.5 rounded-xl bg-white border border-[#DFD5C0] flex flex-wrap items-center justify-between gap-3 animate-in fade-in duration-200">
                   <span className="text-xs sm:text-sm font-medium text-navy">
@@ -344,7 +344,6 @@ export default function CascHeroSection({
                 </div>
               )}
 
-              {/* Pricing Breakdown & Savings Line */}
               <div className="mt-5 pt-4 border-t border-[#DFD5C0]/70 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
                 <div className="flex flex-wrap items-center gap-3 text-char/80">
                   <span>
@@ -382,20 +381,26 @@ export default function CascHeroSection({
               </div>
             </div>
           </>
-        )}
+        )} */}
 
         {/* CTA Buttons */}
         <div className="mt-8 flex flex-wrap items-center gap-4">
           <EnrolOrContinue
             className="btn bg-navy! hover:bg-[#0E1D38]! text-white! !min-h-12 !px-7 font-semibold text-sm !rounded-lg transition-transform hover:-translate-y-0.5 shadow-sm"
-            label={mainCtaLabel}
+            label={
+              coursePrice
+                ? isAr
+                  ? `ابدأ الآن  — ${formatPrice(coursePrice)}`
+                  : `Enrol — ${formatPrice(coursePrice)}`
+                : undefined
+            }
             cascEnrolment={cascEnrolment}
             continueSlug={continueSlug}
             locale={locale}
             courseData={courseData}
-            overridePrice={formattedTotal}
-            selectedPackageInfo={selectedPackageInfo}
-            sessionCount={sessionCount}
+            /* overridePrice={formattedTotal} */
+            /* selectedPackageInfo={selectedPackageInfo} */
+            /* sessionCount={sessionCount} */
           />
           <Link
             className="btn bg-white/90! hover:bg-white! border border-navy/30! hover:border-navy! text-navy! !min-h-12 !px-7 font-semibold text-sm !rounded-lg transition-transform hover:-translate-y-0.5 shadow-sm"
@@ -418,7 +423,7 @@ export default function CascHeroSection({
           {t("coachingPrefix")}
           <Link
             href={`/${locale}/pathways/casc-academy#one-to-one-sessions`}
-            className="text-navy underline hover:text-goldd transition-colors font-medium"
+            className="text-navy underline hover:text-gold transition-colors font-medium"
           >
             {t("coachingLink")}
           </Link>
