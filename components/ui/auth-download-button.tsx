@@ -12,6 +12,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Download, CheckCircle2, Loader2, Mail } from "lucide-react";
+import { trackEvent } from "@/lib/analytics/events";
 
 export interface AuthDownloadButtonProps {
   /** The path to the file in /gifts/ or public folder */
@@ -79,6 +80,30 @@ export function AuthDownloadButton({
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+
+    // Track GA4 event with session deduplication
+    const lowerName = resolvedFileName.toLowerCase();
+    if (lowerName.includes("briefing")) {
+      trackEvent(
+        "download_examiner_briefing",
+        {
+          gift_id: "1",
+          file_name: resolvedFileName,
+          pathway: "casc-academy",
+        },
+        { dedupeKey: "download_briefing_1" }
+      );
+    } else if (lowerName.includes("error")) {
+      trackEvent(
+        "download_examiner_error_log",
+        {
+          gift_id: "2",
+          file_name: resolvedFileName,
+          pathway: "casc-academy",
+        },
+        { dedupeKey: "download_error_log_2" }
+      );
+    }
   };
 
   const handleButtonClick = (e: React.MouseEvent) => {

@@ -17,6 +17,7 @@ import {
   closePaddleCheckout,
   openPaddleCheckout,
 } from "@/lib/payments/paddle/client";
+import { trackEvent } from "@/lib/analytics/events";
 import { type PathwayKey } from "./pathwayContent";
 import {
   Dialog,
@@ -130,6 +131,22 @@ export default function SubscribeButton({
         locale: isAr ? "ar" : "en",
         onEvent: (event) => {
           if (event.name === "checkout.completed") {
+            const numericValue = parseFloat(itemPrice.replace(/[^0-9.]/g, "")) || undefined;
+            const currencyCode = itemPrice.includes("$") ? "USD" : itemPrice.includes("£") ? "GBP" : "EGP";
+
+            trackEvent(
+              "course_enrollment_success",
+              {
+                course_id: pathway,
+                pathway,
+                value: numericValue,
+                currency: currencyCode,
+              },
+              {
+                dedupeKey: `enrollment_${result.transactionId || pathway}`,
+              }
+            );
+
             closePaddleCheckout();
             setShowCheckout(false);
             void refreshPaidEnrollment().then((enrolled) => {
@@ -143,8 +160,15 @@ export default function SubscribeButton({
     } finally {
       setIsCheckoutOpening(false);
     }
-  }, [isAr, onSuccess, pathway, refreshPaidEnrollment /*, sessionCount */]);
+  }, [isAr, itemPrice, onSuccess, pathway, refreshPaidEnrollment /*, sessionCount */]);
   function handleClick() {
+    trackEvent("click_cta_subscription", {
+      cta_name: courseTitle,
+      pathway,
+      placement: isWaitlist ? "waitlist_button" : "subscribe_button",
+      price: itemPrice,
+    });
+
     if (isWaitlist) {
       if (user?.email && !waitlistEmail) {
         setWaitlistEmail(user.email);

@@ -14,6 +14,7 @@ import {
   useCurrentUser,
   useGiftStatus,
 } from "../../../_apiCalls/academyQueries";
+import { trackEvent } from "@/lib/analytics/events";
 
 export default function CascGiftsSection() {
   const t = useTranslations("cascGifts");
@@ -81,6 +82,28 @@ export default function CascGiftsSection() {
       anchor.click();
       document.body.removeChild(anchor);
       URL.revokeObjectURL(url);
+
+      if (id === "1") {
+        trackEvent(
+          "download_examiner_briefing",
+          {
+            gift_id: "1",
+            file_name: cleanFileName,
+            pathway: "casc-academy",
+          },
+          { dedupeKey: "download_briefing_1" }
+        );
+      } else if (id === "2") {
+        trackEvent(
+          "download_examiner_error_log",
+          {
+            gift_id: "2",
+            file_name: cleanFileName,
+            pathway: "casc-academy",
+          },
+          { dedupeKey: "download_error_log_2" }
+        );
+      }
 
       if (user) {
         queryClient.setQueryData<GiftStatus>(

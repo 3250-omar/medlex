@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { useMemo } from "react";
+import { trackEvent } from "@/lib/analytics/events";
 
 interface ArticleCtaProps {
   locale: string;
@@ -70,6 +73,13 @@ export function ArticleCta({
         href={ctaContent.href}
         data-cta-placement="article_bottom"
         data-cta-category={category || "general"}
+        onClick={() => {
+          trackEvent("click_cta_subscription", {
+            cta_name: ctaContent.buttonText,
+            pathway: category || "general",
+            placement: "article_bottom",
+          });
+        }}
         className="inline-flex items-center gap-2 bg-[#d6b03f] hover:bg-[#e8cd7a] text-[#0b1a30] font-semibold text-sm sm:text-base px-6 py-3 rounded-full transition-all duration-200 shrink-0 shadow-md self-start md:self-auto cursor-pointer group"
       >
         <span>{ctaContent.buttonText}</span>

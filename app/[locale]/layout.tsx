@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import Providers from "@/app/providers";
 import { sourceSerif4, inter, fraunces, cairo } from "@/lib/fonts";
 import "@/app/globals.css";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { cn } from "@/lib/utils";
 import { siteUrl } from "@/lib/seo/metadata";
 
@@ -72,6 +73,7 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <body className="flex min-h-screen flex-col bg-paper text-text antialiased">
+        <GoogleAnalytics />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
             <div className="flex min-h-screen flex-col">

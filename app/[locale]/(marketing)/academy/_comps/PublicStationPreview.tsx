@@ -10,6 +10,7 @@ import {
 } from "./cascExamEngine";
 import "./cascEditorial.css";
 import { sanitizeLessonHtml } from "./lessonSanitizer";
+import { trackEvent } from "@/lib/analytics/events";
 
 export type PreviewUnit = {
   title: string;
@@ -22,6 +23,17 @@ export default function PublicStationPreview({ locale, initialUnit }: Props) {
   const [unit, setUnit] = useState<PreviewUnit | null>(initialUnit ?? null);
   const [error, setError] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    trackEvent(
+      "view_station_7_2_preview",
+      {
+        station_slug: "station-7-2",
+        locale,
+      },
+      { dedupeKey: "view_station_7_2_preview" }
+    );
+  }, [locale]);
 
   useEffect(() => {
     if (initialUnit) return;
