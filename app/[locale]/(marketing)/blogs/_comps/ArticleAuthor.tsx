@@ -1,8 +1,10 @@
+import Link from "next/link";
 import Image from "next/image";
 import { useMemo } from "react";
 
 interface ArticleAuthorProps {
   authorName?: string;
+  locale?: string;
   isRtl?: boolean;
 }
 
@@ -19,6 +21,7 @@ function isDrAhmed(name?: string | null): boolean {
 
 export function ArticleAuthor({
   authorName,
+  locale = "en",
   isRtl = false,
 }: ArticleAuthorProps) {
   const resolvedName = useMemo(() => {
@@ -39,10 +42,16 @@ export function ArticleAuthor({
     return resolvedName.trim().charAt(0).toUpperCase() || "A";
   }, [isRtl, resolvedName]);
 
+  const founderUrl = `/${locale}/founder`;
+
   return (
     <section className="flex flex-col sm:flex-row gap-5 items-start mt-14 p-7 border border-[#d6b03f]/25 rounded-[18px] bg-[#17305a]/80 shadow-lg">
       {isFounder ? (
-        <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-[#d6b03f] shrink-0 shadow-md bg-[#0b1a30]">
+        <Link
+          href={founderUrl}
+          className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-[#d6b03f] shrink-0 shadow-md bg-[#0b1a30] hover:scale-105 transition-transform block"
+          title={resolvedName}
+        >
           <Image
             src="/images/dr-ahmed-abouelghit.webp"
             alt={resolvedName}
@@ -51,7 +60,7 @@ export function ArticleAuthor({
             className="object-cover object-top w-full h-full"
             loading="lazy"
           />
-        </div>
+        </Link>
       ) : (
         <div
           aria-hidden="true"
@@ -62,7 +71,16 @@ export function ArticleAuthor({
       )}
       <div>
         <h3 className="font-serif text-[22px] font-medium text-[#f3efe4] mb-1.5 leading-snug">
-          {resolvedName}
+          {isFounder ? (
+            <Link
+              href={founderUrl}
+              className="hover:text-[#e8cd7a] transition-colors"
+            >
+              {resolvedName}
+            </Link>
+          ) : (
+            resolvedName
+          )}
         </h3>
         <p className="text-[15px] text-[#a9b6cb] leading-relaxed max-w-[62ch]">
           {bio}

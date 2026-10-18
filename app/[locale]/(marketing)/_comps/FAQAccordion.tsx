@@ -16,6 +16,7 @@ export interface FAQAccordionProps {
   itemClassName?: string;
   triggerClassName?: string;
   contentClassName?: string;
+  theme?: "light" | "dark";
 }
 
 export default function FAQAccordion({
@@ -24,14 +25,27 @@ export default function FAQAccordion({
   itemClassName,
   triggerClassName,
   contentClassName,
+  theme = "light",
 }: FAQAccordionProps) {
+  const isDark = theme === "dark";
+
   return (
-    <Accordion className={cn("flex w-full flex-col border-t border-[#e5e0d8]", className)}>
+    <Accordion
+      className={cn(
+        "flex w-full flex-col",
+        isDark ? "border-t border-[#d6b03f]/25" : "border-t border-[#e5e0d8]",
+        className
+      )}
+    >
       {items.map((item, index) => (
         <AccordionItem
           key={index}
           value={`faq-${index}`}
-          className={cn("border-b border-[#e5e0d8] transition-colors", itemClassName)}
+          className={cn(
+            "transition-colors",
+            isDark ? "border-b border-[#d6b03f]/20" : "border-b border-[#e5e0d8]",
+            itemClassName
+          )}
         >
           <AccordionTrigger
             showChevron={false}
@@ -40,7 +54,12 @@ export default function FAQAccordion({
               triggerClassName
             )}
           >
-            <span className="font-serif text-lg sm:text-xl font-medium leading-snug text-[#1a365d] transition-colors duration-200 group-hover:text-gold">
+            <span
+              className={cn(
+                "font-serif text-lg sm:text-xl font-medium leading-snug transition-colors duration-200 group-hover:text-gold",
+                isDark ? "text-[#f3efe4]" : "text-[#1a365d]"
+              )}
+            >
               {item.question}
             </span>
             <span
@@ -53,7 +72,8 @@ export default function FAQAccordion({
           </AccordionTrigger>
           <AccordionContent
             className={cn(
-              "pb-6 pt-1 font-sans text-sm sm:text-base leading-relaxed text-[#313538] max-w-3xl",
+              "pb-6 pt-1 font-sans text-sm sm:text-base leading-relaxed max-w-3xl",
+              isDark ? "text-[#c9d3e3]" : "text-[#313538]",
               contentClassName
             )}
           >

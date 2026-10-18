@@ -23,6 +23,8 @@ export default function robots(): MetadataRoute.Robots {
       allow: [
         "/",
         "/api/og",
+        "/en/blogs",
+        "/ar/blogs",
         "/en/academy/preview/station-7-2",
         "/ar/academy/preview/station-7-2",
       ],

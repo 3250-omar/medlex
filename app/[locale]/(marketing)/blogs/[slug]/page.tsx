@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { getBlogBySlug, getAdjacentBlogs } from "../_actions/blog-actions";
 import { CANONICAL_ORIGIN } from "@/lib/seo/metadata";
 import { JsonLd } from "@/lib/seo/JsonLd";
 import {
   createBlogArticleSchema,
   createBlogBreadcrumbSchema,
+  createBlogFaqSchema,
 } from "@/lib/seo/schema";
 import { ArticleMiniBar } from "../_comps/ArticleMiniBar";
 import { ArticleHero } from "../_comps/ArticleHero";
 import { ArticleActionRail } from "../_comps/ArticleActionRail";
 import { ArticleProse } from "../_comps/ArticleProse";
+import { ArticleFaq } from "../_comps/ArticleFaq";
 import { ArticleGallery } from "../_comps/ArticleGallery";
 import { ArticleAuthor } from "../_comps/ArticleAuthor";
 import { ArticlePrevNext } from "../_comps/ArticlePrevNext";
@@ -127,6 +129,26 @@ export async function generateMetadata({
     });
   }
 
+  const isEnglishOnly =
+    blog.category === "casc" ||
+    blog.is_english_only === true ||
+    !blog.content_ar?.trim();
+
+  const canonicalUrl = isEnglishOnly
+    ? `${CANONICAL_ORIGIN}/en/blogs/${slug}`
+    : `${CANONICAL_ORIGIN}/${locale}/blogs/${slug}`;
+
+  const alternateLanguages = isEnglishOnly
+    ? {
+        en: `${CANONICAL_ORIGIN}/en/blogs/${slug}`,
+        "x-default": `${CANONICAL_ORIGIN}/en/blogs/${slug}`,
+      }
+    : {
+        en: `${CANONICAL_ORIGIN}/en/blogs/${slug}`,
+        ar: `${CANONICAL_ORIGIN}/ar/blogs/${slug}`,
+        "x-default": `${CANONICAL_ORIGIN}/en/blogs/${slug}`,
+      };
+
   return {
     title: resolvedTitle,
     description,
@@ -140,17 +162,13 @@ export async function generateMetadata({
     creator: authorName,
     publisher: "MedLex",
     alternates: {
-      canonical: `${CANONICAL_ORIGIN}/${locale}/blogs/${slug}`,
-      languages: {
-        en: `${CANONICAL_ORIGIN}/en/blogs/${slug}`,
-        ar: `${CANONICAL_ORIGIN}/ar/blogs/${slug}`,
-        "x-default": `${CANONICAL_ORIGIN}/en/blogs/${slug}`,
-      },
+      canonical: canonicalUrl,
+      languages: alternateLanguages,
     },
     openGraph: {
       type: "article",
-      locale: isRtl ? "ar_EG" : "en_US",
-      url: `${CANONICAL_ORIGIN}/${locale}/blogs/${slug}`,
+      locale: isRtl && !isEnglishOnly ? "ar_EG" : "en_US",
+      url: canonicalUrl,
       siteName: "MedLex",
       title: `${resolvedTitle} | MedLex`,
       description,
@@ -182,18 +200,28 @@ export async function generateMetadata({
   };
 }
 
-export default async function BlogPostPage({
-  params,
-}: {
-  params: Promise<{ locale: string; slug: string }>;
-}) {
-  const { locale, slug } = await params;
-  const isRtl = locale === "ar";
-  const blog = await getBlogBySlug(slug);
+  export default async function BlogPostPage({
+    params,
+  }: {
+    params: Promise<{ locale: string; slug: string }>;
+  }) {
+    const { locale, slug } = await params;
+    const isRtl = locale === "ar";
+    const blog = await getBlogBySlug(slug);
 
-  if (!blog) {
-    notFound();
-  }
+    if (!blog) {
+      notFound();
+    }
+
+    const isEnglishOnly =
+      blog.category === "casc" ||
+      blog.is_english_only === true ||
+      !blog.content_ar?.trim();
+
+    // If an Arabic route is requested for an English-only article, 301 redirect to English
+    if (locale === "ar" && isEnglishOnly) {
+      permanentRedirect(`/en/blogs/${slug}`);
+    }
 
   const title =
     (isRtl ? blog.title_ar : blog.title_en) ||
@@ -232,10 +260,18 @@ export default async function BlogPostPage({
 
   const breadcrumbSchema = createBlogBreadcrumbSchema(locale, slug, title);
 
+  const faqItems =
+    Array.isArray(blog.faq_items) && blog.faq_items.length > 0
+      ? blog.faq_items
+      : null;
+
+  const faqSchema = faqItems ? createBlogFaqSchema(faqItems) : null;
+
   return (
     <>
       <JsonLd data={articleSchema} />
       <JsonLd data={breadcrumbSchema} />
+      {faqSchema && <JsonLd data={faqSchema} />}
 
       {/* Sticky Compact Reading Bar */}
       <ArticleMiniBar title={title} isRtl={isRtl} />
@@ -250,6 +286,7 @@ export default async function BlogPostPage({
           isRtl={isRtl}
           title={title}
           excerpt={excerpt}
+          category={blog.category}
           tags={tags}
           authorName={authorName}
           publishedAt={blog.published_at || blog.created_at}
@@ -275,6 +312,9 @@ export default async function BlogPostPage({
               {/* Formatted Article Body */}
               <ArticleProse content={content} isRtl={isRtl} />
 
+              {/* FAQ Accordion Section */}
+              {faqItems && <ArticleFaq items={faqItems} isRtl={isRtl} />}
+
               {/* Photo Gallery with Lightbox */}
               <ArticleGallery
                 images={
@@ -286,7 +326,7 @@ export default async function BlogPostPage({
               />
 
               {/* Author Bio Section */}
-              <ArticleAuthor authorName={authorName} isRtl={isRtl} />
+              <ArticleAuthor authorName={authorName} locale={locale} isRtl={isRtl} />
 
               {/* Prev / Next Articles Navigation */}
               <ArticlePrevNext
@@ -297,7 +337,11 @@ export default async function BlogPostPage({
               />
 
               {/* Educational Pathways Call-to-Action */}
-              {/* <ArticleCta locale={locale} isRtl={isRtl} /> */}
+              <ArticleCta
+                locale={locale}
+                category={blog.category}
+                isRtl={isRtl}
+              />
             </article>
           </div>
         </div>
