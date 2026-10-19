@@ -4,6 +4,7 @@ import Script from "next/script";
 import { Suspense, useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { captureUtmFromUrl } from "@/lib/analytics/utm";
+import { VisitorTrackerInner } from "@/components/analytics/VisitorTracker";
 
 function UtmListener() {
   const pathname = usePathname();
@@ -23,6 +24,7 @@ export function GoogleAnalytics() {
     <>
       <Suspense fallback={null}>
         <UtmListener />
+        <VisitorTrackerInner />
       </Suspense>
 
       {gaId ? (

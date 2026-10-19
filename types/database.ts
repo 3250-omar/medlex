@@ -9,6 +9,32 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      site_visits: {
+        Row: {
+          id: string;
+          visitor_hash: string;
+          path: string;
+          referrer: string | null;
+          utm_source: string | null;
+          utm_medium: string | null;
+          utm_campaign: string | null;
+          ip_hash: string;
+          visited_at: string;
+        };
+        Insert: {
+          id?: string;
+          visitor_hash: string;
+          path: string;
+          referrer?: string | null;
+          utm_source?: string | null;
+          utm_medium?: string | null;
+          utm_campaign?: string | null;
+          ip_hash: string;
+          visited_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["site_visits"]["Insert"]>;
+        Relationships: [];
+      };
       blogs: {
         Row: {
           id: string;
