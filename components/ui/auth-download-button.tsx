@@ -73,17 +73,44 @@ export function AuthDownloadButton({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const triggerDownload = () => {
+  const triggerDownload = async () => {
+    const lowerName = resolvedFileName.toLowerCase();
+    const giftId: "1" | "2" | null = lowerName.includes("briefing")
+      ? "1"
+      : lowerName.includes("error")
+        ? "2"
+        : null;
+
+    let downloadUrl = fileUrl;
+    let createdBlobUrl: string | null = null;
+
+    // If logged in, call authenticated endpoint to record gift download in profiles table
+    if (user && giftId) {
+      try {
+        const response = await fetch(`/api/gifts/download?gift=${giftId}`);
+        if (response.ok) {
+          const blob = await response.blob();
+          createdBlobUrl = window.URL.createObjectURL(blob);
+          downloadUrl = createdBlobUrl;
+        }
+      } catch (apiErr) {
+        console.warn("[AuthDownloadButton] Gift API recording note:", apiErr);
+      }
+    }
+
     const link = document.createElement("a");
-    link.href = fileUrl;
+    link.href = downloadUrl;
     link.download = resolvedFileName;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
 
+    if (createdBlobUrl) {
+      window.URL.revokeObjectURL(createdBlobUrl);
+    }
+
     // Track GA4 event with session deduplication
-    const lowerName = resolvedFileName.toLowerCase();
-    if (lowerName.includes("briefing")) {
+    if (giftId === "1") {
       trackEvent(
         "download_examiner_briefing",
         {
@@ -91,9 +118,9 @@ export function AuthDownloadButton({
           file_name: resolvedFileName,
           pathway: "casc-academy",
         },
-        { dedupeKey: "download_briefing_1" }
+        { dedupeKey: "download_briefing_1" },
       );
-    } else if (lowerName.includes("error")) {
+    } else if (giftId === "2") {
       trackEvent(
         "download_examiner_error_log",
         {
@@ -101,14 +128,14 @@ export function AuthDownloadButton({
           file_name: resolvedFileName,
           pathway: "casc-academy",
         },
-        { dedupeKey: "download_error_log_2" }
+        { dedupeKey: "download_error_log_2" },
       );
     }
   };
 
-  const handleButtonClick = (e: React.MouseEvent) => {
+  const handleButtonClick = async (e: React.MouseEvent) => {
     if (user) {
-      triggerDownload();
+      await triggerDownload();
       return;
     }
     e.preventDefault();
@@ -133,7 +160,7 @@ export function AuthDownloadButton({
       });
 
       // Immediate browser download
-      triggerDownload();
+      await triggerDownload();
       setIsSuccess(true);
 
       setTimeout(() => {
@@ -143,7 +170,7 @@ export function AuthDownloadButton({
     } catch (err) {
       console.error("Error submitting guide request:", err);
       // Still trigger download on error so user is never blocked
-      triggerDownload();
+      await triggerDownload();
       setIsSuccess(true);
       setTimeout(() => {
         setIsSuccess(false);

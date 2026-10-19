@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail } from "@/lib/email/transport";
 
 export async function POST(req: NextRequest) {
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
 
     // 1. Record lead into contacts_requests table
     try {
-      const supabase = await createClient();
+      const supabase = createAdminClient();
       await supabase.from("contacts_requests").insert({
         full_name: cleanName === "Colleague" ? "Guest / Subscriber" : cleanName,
         gmail: cleanEmail,
@@ -32,6 +32,31 @@ export async function POST(req: NextRequest) {
           : `Free guide download: ${resourceTitle} (${fileUrl || "N/A"})`,
         locale: "en",
       });
+
+      // If user already exists in auth with this email, also record download in profiles
+      const lowerRes = resourceTitle.toLowerCase();
+      const giftColumn = lowerRes.includes("briefing")
+        ? "gift_1_downloaded_at"
+        : lowerRes.includes("error")
+          ? "gift_2_downloaded_at"
+          : null;
+
+      if (giftColumn) {
+        const { data: usersData } = await supabase.auth.admin.listUsers();
+        const matched = usersData?.users.find(
+          (u) => u.email?.toLowerCase() === cleanEmail,
+        );
+        if (matched) {
+          const updateData =
+            giftColumn === "gift_1_downloaded_at"
+              ? { gift_1_downloaded_at: new Date().toISOString() }
+              : { gift_2_downloaded_at: new Date().toISOString() };
+          await supabase
+            .from("profiles")
+            .update(updateData)
+            .eq("id", matched.id);
+        }
+      }
     } catch (dbErr) {
       console.error("[api/gifts/interest] Failed to save lead to database:", dbErr);
     }
