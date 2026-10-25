@@ -185,6 +185,9 @@ export function createFaqSchema(
   };
 }
 
+export const createBlogFaqSchema = createFaqSchema;
+
+
 export function createLearningResourceSchema(locale: string) {
   const isAr = locale === "ar";
   return {

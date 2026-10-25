@@ -182,12 +182,22 @@ export async function createLocalizedMetadata(
 
   const messages = (await import(`@/lib/i18n/translations/${locale}.json`))
     .default;
-  const seoData = messages?.seo?.[config.translationKey] ?? {};
+  const isBlogs = routeKey === "blogs";
+  const defaultTitle = isBlogs
+    ? locale === "ar"
+      ? "المقالات والتحليلات | MedLex"
+      : "Articles & Insights | MedLex"
+    : "MedLex";
 
-  const title = seoData.title ?? "MedLex";
-  const description =
-    seoData.description ??
-    "Forensic psychiatry education and medicolegal training by MedLex.";
+  const defaultDescription = isBlogs
+    ? locale === "ar"
+      ? "مقالات في امتحان CASC والممارسة الطبية القانونية والقيادة السريرية بقلم استشاري الطب النفسي الشرعي د. أحمد أبو الغيط."
+      : "Articles on the MRCPsych CASC, medico-legal practice and clinical leadership by Consultant Forensic Psychiatrist Dr Ahmed Abouelghit."
+    : "Forensic psychiatry education and medicolegal training by MedLex.";
+
+  const seoData = messages?.seo?.[config.translationKey] ?? {};
+  const title = seoData.title ?? defaultTitle;
+  const description = seoData.description ?? defaultDescription;
   const imageAlt = seoData.imageAlt ?? title;
   const ogTitle = seoData.ogTitle ?? title;
   const ogDescription = seoData.ogDescription ?? description;
@@ -196,9 +206,11 @@ export async function createLocalizedMetadata(
   const ogImageUrl = getAbsoluteOgImageUrl(routeKey, locale);
 
   const isHome = routeKey === "home";
+  const isAbsoluteTitle =
+    isHome || isBlogs || (typeof title === "string" && title.includes("|"));
 
   return {
-    title: isHome ? { absolute: title } : title,
+    title: isAbsoluteTitle ? { absolute: title } : title,
     description,
     alternates: {
       canonical: canonicalUrl,

@@ -7,6 +7,7 @@ interface ArticleHeroProps {
   isRtl?: boolean;
   title: string;
   excerpt?: string | null;
+  category?: string | null;
   tags?: string[];
   authorName: string;
   publishedAt?: string | null;
@@ -30,6 +31,7 @@ export function ArticleHero({
   isRtl = false,
   title,
   excerpt,
+  category,
   tags = [],
   authorName,
   publishedAt,
@@ -84,7 +86,7 @@ export function ArticleHero({
         {coverImage ? (
           <Image
             src={coverImage}
-            alt=""
+            alt={excerpt || title || "Article cover"}
             fill
             sizes="560px"
             priority
@@ -119,6 +121,17 @@ export function ArticleHero({
           <span aria-hidden="true" className="text-[#a9b6cb]/50">
             /
           </span>
+          {category && (
+            <span className="border border-[#d6b03f] px-2.5 py-0.5 rounded-full text-xs text-[#0b1a30] bg-[#d6b03f] font-semibold tracking-wider uppercase">
+              {category.toLowerCase() === "casc"
+                ? "CASC"
+                : category.toLowerCase() === "medico-legal"
+                  ? isRtl
+                    ? "الطب النفسي القضائي"
+                    : "Medico-Legal"
+                  : category}
+            </span>
+          )}
           {tags.length > 0 ? (
             tags.map((tag) => (
               <span
@@ -150,7 +163,11 @@ export function ArticleHero({
         {/* Byline */}
         <div className="flex items-center gap-3.5 text-sm text-[#a9b6cb] flex-wrap">
           {isFounder ? (
-            <div className="relative w-11 h-11 rounded-full overflow-hidden border border-[#d6b03f] shrink-0 shadow-sm bg-[#17305a]">
+            <Link
+              href={`/${locale}/founder`}
+              className="relative w-11 h-11 rounded-full overflow-hidden border border-[#d6b03f] shrink-0 shadow-sm bg-[#17305a] hover:scale-105 transition-transform block"
+              title={authorName}
+            >
               <Image
                 src="/images/dr-ahmed-abouelghit.webp"
                 alt={authorName}
@@ -158,7 +175,7 @@ export function ArticleHero({
                 height={44}
                 className="object-cover object-top w-full h-full"
               />
-            </div>
+            </Link>
           ) : (
             <div
               aria-hidden="true"
@@ -168,9 +185,18 @@ export function ArticleHero({
             </div>
           )}
           <div>
-            <strong className="text-[#f3efe4] font-semibold block text-[15px] leading-tight">
-              {authorName}
-            </strong>
+            {isFounder ? (
+              <Link
+                href={`/${locale}/founder`}
+                className="text-[#f3efe4] hover:text-[#e8cd7a] font-semibold block text-[15px] leading-tight transition-colors"
+              >
+                {authorName}
+              </Link>
+            ) : (
+              <strong className="text-[#f3efe4] font-semibold block text-[15px] leading-tight">
+                {authorName}
+              </strong>
+            )}
             <span className="text-xs sm:text-sm text-[#a9b6cb]">
               {formattedDate ? `${formattedDate} • ` : ""}
               {readingTime} {isRtl ? "دقيقة قراءة" : "min read"}

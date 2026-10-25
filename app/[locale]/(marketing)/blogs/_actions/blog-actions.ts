@@ -15,6 +15,9 @@ export type PublishedBlogItem = Pick<
   | "excerpt_en"
   | "excerpt_ar"
   | "cover_image"
+  | "cover_image_alt"
+  | "category"
+  | "is_english_only"
   | "published_at"
   | "is_published"
   | "created_at"
@@ -39,7 +42,7 @@ export async function getPublishedBlogs(): Promise<PublishedBlogItem[]> {
   const { data, error } = await supabase
     .from("blogs")
     .select(
-      "id, title_en, title_ar, slug, excerpt_en, excerpt_ar, cover_image, published_at, is_published, created_at, seo_title_en, seo_title_ar, seo_description_en, seo_description_ar, seo_tags, likes_count, shares_count, views_count",
+      "id, title_en, title_ar, slug, excerpt_en, excerpt_ar, cover_image, cover_image_alt, category, is_english_only, published_at, is_published, created_at, seo_title_en, seo_title_ar, seo_description_en, seo_description_ar, seo_tags, likes_count, shares_count, views_count",
     )
     .or("status.eq.published,is_published.eq.true")
     .order("published_at", { ascending: false, nullsFirst: false });
@@ -76,7 +79,7 @@ export async function getAdjacentBlogs(
   try {
     const supabase = await createClient();
     const selectFields =
-      "id, title_en, title_ar, slug, excerpt_en, excerpt_ar, cover_image, published_at, is_published, created_at, seo_title_en, seo_title_ar, seo_description_en, seo_description_ar, seo_tags, likes_count, shares_count, views_count";
+      "id, title_en, title_ar, slug, excerpt_en, excerpt_ar, cover_image, cover_image_alt, category, is_english_only, published_at, is_published, created_at, seo_title_en, seo_title_ar, seo_description_en, seo_description_ar, seo_tags, likes_count, shares_count, views_count";
 
     const dateToCompare = currentPublishedAt || new Date().toISOString();
 

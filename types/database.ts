@@ -9,11 +9,37 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      site_visits: {
+        Row: {
+          id: string;
+          visitor_hash: string;
+          path: string;
+          referrer: string | null;
+          utm_source: string | null;
+          utm_medium: string | null;
+          utm_campaign: string | null;
+          ip_hash: string;
+          visited_at: string;
+        };
+        Insert: {
+          id?: string;
+          visitor_hash: string;
+          path: string;
+          referrer?: string | null;
+          utm_source?: string | null;
+          utm_medium?: string | null;
+          utm_campaign?: string | null;
+          ip_hash: string;
+          visited_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["site_visits"]["Insert"]>;
+        Relationships: [];
+      };
       blogs: {
         Row: {
           id: string;
           title_en: string;
-          title_ar: string;
+          title_ar: string | null;
           slug: string;
           excerpt_en: string | null;
           excerpt_ar: string | null;
@@ -32,13 +58,18 @@ export interface Database {
           likes_count: number;
           shares_count: number;
           views_count: number;
+          category: string;
+          course_id: string | null;
+          cover_image_alt: string | null;
+          faq_items: { question: string; answer: string }[] | null;
+          is_english_only: boolean;
           created_at: string;
           updated_at: string;
         };
         Insert: {
           id?: string;
           title_en: string;
-          title_ar: string;
+          title_ar?: string | null;
           slug: string;
           excerpt_en?: string | null;
           excerpt_ar?: string | null;
@@ -51,6 +82,11 @@ export interface Database {
           seo_description_en?: string | null;
           seo_description_ar?: string | null;
           seo_tags?: string[] | null;
+          category?: string;
+          course_id?: string | null;
+          cover_image_alt?: string | null;
+          faq_items?: { question: string; answer: string }[] | null;
+          is_english_only?: boolean;
           status?: string;
           is_published?: boolean;
           published_at?: string | null;

@@ -1,10 +1,45 @@
+import { useMemo } from "react";
+import { extractYoutubeVideoId } from "./ArticleYoutubeVideo";
+
 interface ArticleProseProps {
   content: string | null;
   isRtl?: boolean;
 }
 
+export function normalizeArticleContent(rawHtml: string): string {
+  if (!rawHtml) return "";
+
+  // 1. Demote any <h1> in article body to <h2> so the article has strictly one H1 (the title in ArticleHero)
+  let processed = rawHtml
+    .replace(/<h1(\s+[^>]*)?>/gi, "<h2$1>")
+    .replace(/<\/h1>/gi, "</h2>");
+
+  // 2. Normalize <h3> to <h2> as required by client guidelines
+  processed = processed
+    .replace(/<h3(\s+[^>]*)?>/gi, "<h2$1>")
+    .replace(/<\/h3>/gi, "</h2>");
+
+  // 3. Transform standalone YouTube URLs or paragraph links into responsive iframes
+  processed = processed.replace(
+    /<p>(?:\s*<a[^>]*href=["']([^"']+)["'][^>]*>.*?<\/a>\s*|\s*(https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?[^\s<]+|youtu\.be\/[a-zA-Z0-9_-]{11}[^\s<]*))\s*)<\/p>/gi,
+    (match, p1, p2) => {
+      const url = p1 || p2;
+      const videoId = extractYoutubeVideoId(url);
+      if (!videoId) return match;
+      return `<div class="relative w-full aspect-video rounded-xl overflow-hidden my-8 shadow-xl border border-white/10"><iframe src="https://www.youtube-nocookie.com/embed/${videoId}" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="absolute inset-0 w-full h-full" loading="lazy"></iframe></div>`;
+    },
+  );
+
+  return processed;
+}
+
 export function ArticleProse({ content, isRtl = false }: ArticleProseProps) {
-  if (!content) return null;
+  const normalizedHtml = useMemo(
+    () => (content ? normalizeArticleContent(content) : ""),
+    [content],
+  );
+
+  if (!normalizedHtml) return null;
 
   return (
     <div
@@ -34,7 +69,7 @@ export function ArticleProse({ content, isRtl = false }: ArticleProseProps) {
         [&_img]:rounded-xl [&_img]:border [&_img]:border-[#d6b03f]/25 [&_img]:my-8 [&_img]:w-full [&_img]:shadow-xl
         [&_hr]:border-[#d6b03f]/20 [&_hr]:my-10
       `}
-      dangerouslySetInnerHTML={{ __html: content }}
+      dangerouslySetInnerHTML={{ __html: normalizedHtml }}
     />
   );
 }
