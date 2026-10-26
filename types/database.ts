@@ -61,7 +61,7 @@ export interface Database {
           category: string;
           course_id: string | null;
           cover_image_alt: string | null;
-          faq_items: { question: string; answer: string }[] | null;
+          faq_items: import("@/lib/blogs/faq").StoredBlogFaqItem[] | null;
           is_english_only: boolean;
           created_at: string;
           updated_at: string;
@@ -85,7 +85,7 @@ export interface Database {
           category?: string;
           course_id?: string | null;
           cover_image_alt?: string | null;
-          faq_items?: { question: string; answer: string }[] | null;
+          faq_items?: import("@/lib/blogs/faq").StoredBlogFaqItem[] | null;
           is_english_only?: boolean;
           status?: string;
           is_published?: boolean;

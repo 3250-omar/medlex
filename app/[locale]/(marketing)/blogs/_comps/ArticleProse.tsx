@@ -68,6 +68,10 @@ export function ArticleProse({ content, isRtl = false }: ArticleProseProps) {
         [&_blockquote]:border-s-2 [&_blockquote]:border-[#d6b03f] [&_blockquote]:ps-6 [&_blockquote]:my-8 [&_blockquote]:italic [&_blockquote]:text-[#f3efe4] [&_blockquote]:text-xl
         [&_img]:rounded-xl [&_img]:border [&_img]:border-[#d6b03f]/25 [&_img]:my-8 [&_img]:w-full [&_img]:shadow-xl
         [&_hr]:border-[#d6b03f]/20 [&_hr]:my-10
+        [&_table]:w-full [&_table]:border-collapse [&_table]:my-8 [&_table]:text-[15px] [&_table]:rounded-lg [&_table]:overflow-hidden
+        [&_th]:bg-[#1a3558] [&_th]:border [&_th]:border-[#d6b03f]/20 [&_th]:px-4 [&_th]:py-3 [&_th]:text-left [&_th]:font-semibold [&_th]:text-[#d6b03f]
+        [&_td]:border [&_td]:border-white/10 [&_td]:px-4 [&_td]:py-3 [&_td]:text-[#e6e9f0] [&_td]:align-top
+        [&_tr:nth-child(even)_td]:bg-white/[0.03]
       `}
       dangerouslySetInnerHTML={{ __html: normalizedHtml }}
     />
