@@ -17,6 +17,7 @@ import { ArticleGallery } from "../_comps/ArticleGallery";
 import { ArticleAuthor } from "../_comps/ArticleAuthor";
 import { ArticlePrevNext } from "../_comps/ArticlePrevNext";
 import { ArticleCta } from "../_comps/ArticleCta";
+import { resolveBlogFaqItems } from "@/lib/blogs/faq";
 
 function estimateReadingTime(content: string | null): number {
   if (!content) return 3;
@@ -260,10 +261,8 @@ export async function generateMetadata({
 
   const breadcrumbSchema = createBlogBreadcrumbSchema(locale, slug, title);
 
-  const faqItems =
-    Array.isArray(blog.faq_items) && blog.faq_items.length > 0
-      ? blog.faq_items
-      : null;
+  const localizedFaqItems = resolveBlogFaqItems(blog.faq_items, locale);
+  const faqItems = localizedFaqItems.length > 0 ? localizedFaqItems : null;
 
   const faqSchema = faqItems ? createBlogFaqSchema(faqItems) : null;
 
