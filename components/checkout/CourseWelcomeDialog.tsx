@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import confetti from "canvas-confetti";
@@ -21,25 +21,79 @@ import {
 } from "lucide-react";
 
 export interface CourseWelcomeDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
   courseTitle?: string;
   courseSlug?: string;
   whatsappSupportNumber?: string;
   whatsappSupportUrl?: string;
 }
 
+/**
+ * Triggers the CourseWelcomeDialog globally.
+ * Can be called from any component (even if that component unmounts right after).
+ */
+export function triggerCourseWelcomeModal(data?: {
+  courseTitle?: string;
+  courseSlug?: string;
+}) {
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(
+      new CustomEvent("medlex:open-course-welcome", { detail: data }),
+    );
+  }
+}
+
 export default function CourseWelcomeDialog({
-  open,
-  onOpenChange,
-  courseTitle = "The CASC Academy",
-  courseSlug = "casc-academy",
+  open: controlledOpen,
+  onOpenChange: controlledOnOpenChange,
+  courseTitle: initialTitle = "The CASC Academy",
+  courseSlug: initialSlug = "casc-academy",
   whatsappSupportNumber = "+20 101 951 5321",
   whatsappSupportUrl = "https://wa.me/201019515321",
-}: CourseWelcomeDialogProps) {
+}: CourseWelcomeDialogProps = {}) {
   const locale = useLocale();
   const isAr = locale === "ar";
   const router = useRouter();
+
+  const [internalOpen, setInternalOpen] = useState(false);
+  const [courseTitle, setCourseTitle] = useState(initialTitle);
+  const [courseSlug, setCourseSlug] = useState(initialSlug);
+
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (isControlled && controlledOnOpenChange) {
+      controlledOnOpenChange(nextOpen);
+    } else {
+      setInternalOpen(nextOpen);
+    }
+  };
+
+  useEffect(() => {
+    const handleGlobalTrigger = (e: Event) => {
+      const customEvent = e as CustomEvent<{
+        courseTitle?: string;
+        courseSlug?: string;
+      }>;
+      if (customEvent.detail) {
+        if (customEvent.detail.courseTitle)
+          setCourseTitle(customEvent.detail.courseTitle);
+        if (customEvent.detail.courseSlug)
+          setCourseSlug(customEvent.detail.courseSlug);
+      }
+      handleOpenChange(true);
+    };
+
+    window.addEventListener("medlex:open-course-welcome", handleGlobalTrigger);
+    return () => {
+      window.removeEventListener(
+        "medlex:open-course-welcome",
+        handleGlobalTrigger,
+      );
+    };
+  }, []);
 
   // Fire celebration confetti when dialog opens
   useEffect(() => {
@@ -71,12 +125,12 @@ export default function CourseWelcomeDialog({
   }, [open]);
 
   const handleStartLearning = () => {
-    onOpenChange(false);
+    handleOpenChange(false);
     router.push(`/${locale}/academy/courses/${courseSlug}`);
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent
         className="sm:max-w-lg bg-[#0e1d38] text-white border border-[#c5a059]/40 p-6 sm:p-8 rounded-2xl shadow-2xl overflow-hidden"
         dir={isAr ? "rtl" : "ltr"}

@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import FloatingWhatsApp from "@/components/layout/FloatingWhatsApp";
+import CourseWelcomeDialog from "@/components/checkout/CourseWelcomeDialog";
 import Providers from "@/app/providers";
 import { sourceSerif4, inter, fraunces, cairo } from "@/lib/fonts";
 import "@/app/globals.css";
@@ -84,6 +85,7 @@ export default async function LocaleLayout({
               </main>
               <Footer locale={locale} />
               <FloatingWhatsApp />
+              <CourseWelcomeDialog />
             </div>
           </Providers>
         </NextIntlClientProvider>
