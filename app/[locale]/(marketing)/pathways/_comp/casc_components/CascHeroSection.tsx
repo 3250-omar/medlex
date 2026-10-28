@@ -410,7 +410,8 @@ export default function CascHeroSection({
           </Link>
           <a
             href="/gifts/MedLex_CASC_Academy_Course_Guide.pdf"
-            download="MedLex_CASC_Academy_Course_Guide.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             className="btn bg-white/90! hover:bg-white! border border-navy/30! hover:border-navy! text-navy! !min-h-12 !px-7 font-semibold text-sm !rounded-lg transition-transform hover:-translate-y-0.5 shadow-sm inline-flex items-center gap-2"
           >
             <Download className="w-4 h-4 shrink-0" />

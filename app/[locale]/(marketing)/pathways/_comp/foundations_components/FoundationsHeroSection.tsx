@@ -83,11 +83,8 @@ export default function FoundationsHeroSection({ locale = "en" }: Props) {
                   ? "/gifts/ar/foundation_prospectus.pdf"
                   : "/gifts/MedLex_Foundations_Pathway_Guide.pdf"
               }
-              download={
-                locale === "ar"
-                  ? "MedLex_Foundations_Pathway_Guide_AR.pdf"
-                  : "MedLex_Foundations_Pathway_Guide.pdf"
-              }
+              target="_blank"
+              rel="noopener noreferrer"
             >
               {t("downloadProspectus")}
             </a>

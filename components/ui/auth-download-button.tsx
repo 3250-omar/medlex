@@ -81,32 +81,16 @@ export function AuthDownloadButton({
         ? "2"
         : null;
 
-    let downloadUrl = fileUrl;
-    let createdBlobUrl: string | null = null;
+    // Open PDF directly in a new tab so user can read it and download from browser toolbar if desired
+    window.open(fileUrl, "_blank", "noopener,noreferrer");
 
-    // If logged in, call authenticated endpoint to record gift download in profiles table
+    // If logged in, call authenticated endpoint to record gift access in profiles table
     if (user && giftId) {
       try {
-        const response = await fetch(`/api/gifts/download?gift=${giftId}`);
-        if (response.ok) {
-          const blob = await response.blob();
-          createdBlobUrl = window.URL.createObjectURL(blob);
-          downloadUrl = createdBlobUrl;
-        }
+        fetch(`/api/gifts/download?gift=${giftId}`).catch(() => {});
       } catch (apiErr) {
         console.warn("[AuthDownloadButton] Gift API recording note:", apiErr);
       }
-    }
-
-    const link = document.createElement("a");
-    link.href = downloadUrl;
-    link.download = resolvedFileName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    if (createdBlobUrl) {
-      window.URL.revokeObjectURL(createdBlobUrl);
     }
 
     // Track GA4 event with session deduplication
@@ -147,6 +131,9 @@ export function AuthDownloadButton({
     if (!email) return;
 
     setIsSubmitting(true);
+    // Open in a new tab immediately to prevent browser popup blockers from blocking window.open
+    window.open(fileUrl, "_blank", "noopener,noreferrer");
+
     try {
       await fetch("/api/gifts/interest", {
         method: "POST",
@@ -159,18 +146,13 @@ export function AuthDownloadButton({
         }),
       });
 
-      // Immediate browser download
-      await triggerDownload();
       setIsSuccess(true);
-
       setTimeout(() => {
         setIsSuccess(false);
         setIsOpen(false);
       }, 3000);
     } catch (err) {
       console.error("Error submitting guide request:", err);
-      // Still trigger download on error so user is never blocked
-      await triggerDownload();
       setIsSuccess(true);
       setTimeout(() => {
         setIsSuccess(false);

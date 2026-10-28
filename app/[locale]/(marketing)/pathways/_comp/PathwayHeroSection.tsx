@@ -85,19 +85,12 @@ export default function PathwayHeroSection({
     try {
       setDownloadingGiftId(giftId);
       triggerPartyAnimation();
-      const response = await fetch(`/api/gifts/download?gift=${giftId}`);
-      if (!response.ok) {
-        throw new Error("Failed to download gift");
-      }
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = fileName;
-      document.body.appendChild(link);
-      link.click();
-      window.URL.revokeObjectURL(url);
-      link.remove();
+
+      const fileUrl = `/gifts/${encodeURIComponent(fileName)}`;
+      window.open(fileUrl, "_blank", "noopener,noreferrer");
+
+      // In background, record download in DB
+      fetch(`/api/gifts/download?gift=${giftId}`).catch(() => {});
 
       queryClient.setQueryData<GiftStatus>(
         academyQueryKeys.giftStatus,

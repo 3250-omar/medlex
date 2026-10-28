@@ -111,7 +111,7 @@ export async function GET(request: Request) {
     status: 200,
     headers: {
       "Content-Type": "application/pdf",
-      "Content-Disposition": `attachment; filename="${gift.fileName}"`,
+      "Content-Disposition": `inline; filename="${gift.fileName}"`,
       "Content-Length": fileBuffer.length.toString(),
       "Cache-Control": "private, no-cache, no-store, must-revalidate",
     },
