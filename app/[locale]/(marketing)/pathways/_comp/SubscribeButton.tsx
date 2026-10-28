@@ -6,6 +6,7 @@ import { InterestDialogContext } from "@/components/marketing/InterestDialog";
 import CheckoutDialog, {
   DEFAULT_CANCELLATION_WAIVER_TEXT,
 } from "@/components/checkout/CheckoutDialog";
+import CourseWelcomeDialog from "@/components/checkout/CourseWelcomeDialog";
 import {
   academyQueryKeys,
   type EnrolledCourse,
@@ -71,6 +72,7 @@ export default function SubscribeButton({
   );
 
   const [showCheckout, setShowCheckout] = useState(false);
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const [showWaitlist, setShowWaitlist] = useState(false);
   const [waitlistName, setWaitlistName] = useState("");
   const [waitlistEmail, setWaitlistEmail] = useState("");
@@ -149,6 +151,7 @@ export default function SubscribeButton({
 
             closePaddleCheckout();
             setShowCheckout(false);
+            setShowWelcomeModal(true);
             void refreshPaidEnrollment().then((enrolled) => {
               if (enrolled) onSuccess?.();
             });
@@ -360,6 +363,14 @@ export default function SubscribeButton({
         waiverText={waiverText}
         isProcessing={isCheckoutOpening}
         onConfirm={completeSubscription}
+      />
+
+      {/* Post-Subscription Welcome Modal */}
+      <CourseWelcomeDialog
+        open={showWelcomeModal}
+        onOpenChange={setShowWelcomeModal}
+        courseSlug={pathway}
+        courseTitle={courseTitle}
       />
     </>
   );
