@@ -22,7 +22,7 @@ function run(cmd, desc) {
 function main() {
   console.log(bold("\n🚀 MedLex Git Dual-Branch Push (main & dev)\n"));
 
-  // 1. Get commit message
+  // 1. Get commit message from CLI argument
   const args = process.argv.slice(2);
   let commitMessage = args.join(" ").trim();
 
@@ -33,50 +33,62 @@ function main() {
     console.log(yellow(`💡 Tip: You can pass a custom message like: npm run push "your message"\n`));
   }
 
-  // 2. Determine current branch
-  const currentBranch = run("git rev-parse --abbrev-ref HEAD", "Detecting current branch");
-  console.log(`${green("✔")} Active branch: ${bold(currentBranch)}`);
+  // 2. Identify initial branch
+  const initialBranch = run("git rev-parse --abbrev-ref HEAD", "Detecting active branch");
+  console.log(`${green("✔")} Active branch: ${bold(initialBranch)}`);
 
-  if (!["main", "dev"].includes(currentBranch)) {
-    console.error(red(`✖ Current branch '${currentBranch}' is neither 'main' nor 'dev'. Aborting.`));
+  if (!["main", "dev"].includes(initialBranch)) {
+    console.error(red(`✖ Current branch '${initialBranch}' is neither 'main' nor 'dev'. Aborting.`));
     process.exit(1);
   }
 
-  const targetBranch = currentBranch === "main" ? "dev" : "main";
+  const otherBranch = initialBranch === "main" ? "dev" : "main";
 
   // 3. Stage changes
-  console.log(`${blue("→")} Staging changes (git add -A)...`);
+  console.log(`${blue("→")} Staging all changes (git add -A)...`);
   run("git add -A");
 
-  // 4. Commit if there are changes
+  // 4. Commit if changes exist
   const status = run("git status --porcelain");
   if (status) {
-    console.log(`${blue("→")} Committing: "${commitMessage}"...`);
-    run(`git commit -m "${commitMessage.replace(/"/g, '\\"')}"`);
-    console.log(`${green("✔")} Changes committed successfully.`);
+    console.log(`${blue("→")} Committing changes: "${commitMessage}"...`);
+    // Escape double quotes for shell safety
+    const safeMsg = commitMessage.replace(/"/g, '\\"');
+    run(`git commit -m "${safeMsg}"`);
+    console.log(`${green("✔")} Changes committed to ${bold(initialBranch)}.`);
   } else {
-    console.log(yellow("ℹ No new uncommitted changes detected. Proceeding to push existing commits."));
+    console.log(yellow(`ℹ Working tree is clean on ${initialBranch}. Proceeding to push & sync.`));
   }
 
-  // 5. Push active branch to origin
-  console.log(`${blue("→")} Pushing to origin/${currentBranch}...`);
-  run(`git push origin ${currentBranch}`);
-  console.log(`${green("✔")} Pushed to ${bold(`origin/${currentBranch}`)}`);
+  // 5. Push initial branch to origin
+  console.log(`${blue("→")} Pushing ${bold(initialBranch)} to origin/${initialBranch}...`);
+  run(`git push origin ${initialBranch}`);
+  console.log(`${green("✔")} Successfully pushed to ${bold(`origin/${initialBranch}`)}.`);
 
-  // 6. Push active branch to origin target branch
-  console.log(`${blue("→")} Synchronizing and pushing to origin/${targetBranch}...`);
-  run(`git push origin ${currentBranch}:${targetBranch}`);
-  console.log(`${green("✔")} Pushed to ${bold(`origin/${targetBranch}`)}`);
+  // 6. Switch to the other branch, pull latest, merge initial branch, and push
+  console.log(`${blue("→")} Switching to ${bold(otherBranch)} branch...`);
+  run(`git checkout ${otherBranch}`);
 
-  // 7. Update local target branch pointer so both local branches remain synchronized
+  console.log(`${blue("→")} Pulling latest changes from origin/${otherBranch}...`);
   try {
-    run(`git branch -f ${targetBranch} ${currentBranch}`);
-    console.log(`${green("✔")} Updated local ${bold(targetBranch)} pointer to match ${bold(currentBranch)}.`);
+    run(`git pull origin ${otherBranch}`);
   } catch {
-    // Non-fatal if local branch update needs manual checkout
+    console.log(yellow(`⚠ Could not pull origin/${otherBranch}, continuing...`));
   }
 
-  console.log(bold(green("\n✨ All done! Both 'main' and 'dev' branches are fully up-to-date on GitHub.\n")));
+  console.log(`${blue("→")} Merging ${bold(initialBranch)} into ${bold(otherBranch)}...`);
+  run(`git merge ${initialBranch} --no-edit`);
+
+  console.log(`${blue("→")} Pushing ${bold(otherBranch)} to origin/${otherBranch}...`);
+  run(`git push origin ${otherBranch}`);
+  console.log(`${green("✔")} Successfully pushed to ${bold(`origin/${otherBranch}`)}.`);
+
+  // 7. Return to initial branch
+  console.log(`${blue("→")} Returning to ${bold(initialBranch)} branch...`);
+  run(`git checkout ${initialBranch}`);
+  console.log(`${green("✔")} Returned to ${bold(initialBranch)}.`);
+
+  console.log(bold(green("\n✨ All done! Both 'main' and 'dev' are fully synchronized on GitHub and locally.\n")));
 }
 
 main();
