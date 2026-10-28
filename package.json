@@ -8,6 +8,7 @@
     "env:prod": "node scripts/switch-env.mjs prod",
     "dev:dev": "node scripts/switch-env.mjs dev && next dev",
     "dev:prod": "node scripts/switch-env.mjs prod && next dev",
+    "push": "node scripts/git-push-all.mjs",
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
