@@ -59,11 +59,8 @@ export default function MedicoLegalHeroSection({ locale: _locale }: Props) {
                     ? "/gifts/ar/medical_legal_prospectus.pdf"
                     : "/gifts/MedLex_Medico-Legal_Pathway_Guide.pdf"
                 }
-                download={
-                  locale === "ar"
-                    ? "medical_legal_prospectus.pdf"
-                    : "MedLex_Medico-Legal_Pathway_Guide.pdf"
-                }
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 {t("downloadProspectus")}
               </a>

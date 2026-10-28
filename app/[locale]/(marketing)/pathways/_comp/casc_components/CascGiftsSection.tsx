@@ -49,39 +49,16 @@ export default function CascGiftsSection() {
 
   async function downloadResource(id: "1" | "2", fileName: string) {
     try {
-      let blob: Blob;
-      try {
-        const response = await fetch(`/api/gifts/download?gift=${id}`);
-        if (response.ok) {
-          blob = await response.blob();
-        } else {
-          const fallbackRes = await fetch(
-            `/gifts/${encodeURIComponent(fileName)}`,
-          );
-          if (!fallbackRes.ok) throw new Error("Fallback failed");
-          blob = await fallbackRes.blob();
-        }
-      } catch {
-        const fallbackRes = await fetch(
-          `/gifts/${encodeURIComponent(fileName)}`,
-        );
-        if (!fallbackRes.ok) throw new Error("Fallback failed");
-        blob = await fallbackRes.blob();
-      }
-
       const cleanFileName =
         fileName
           .replace(/(\s*-\s*downloaded.*)+/gi, "")
           .replace(/\.pdf$/i, "") + ".pdf";
 
-      const url = URL.createObjectURL(blob);
-      const anchor = document.createElement("a");
-      anchor.href = url;
-      anchor.download = cleanFileName;
-      document.body.appendChild(anchor);
-      anchor.click();
-      document.body.removeChild(anchor);
-      URL.revokeObjectURL(url);
+      const fileUrl = `/gifts/${encodeURIComponent(cleanFileName)}`;
+      window.open(fileUrl, "_blank", "noopener,noreferrer");
+
+      // Record access in background if logged in
+      fetch(`/api/gifts/download?gift=${id}`).catch(() => {});
 
       if (id === "1") {
         trackEvent(

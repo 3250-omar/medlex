@@ -99,11 +99,8 @@ export default function InstitutionalHero() {
                   ? "/gifts/ar/institutional_prospectus.pdf"
                   : "/gifts/MedLex_Institutional_Guide.pdf"
               }
-              download={
-                isAr
-                  ? "MedLex_Institutional_Guide_AR.pdf"
-                  : "MedLex_Institutional_Guide.pdf"
-              }
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center font-sans font-semibold text-[15px] px-6 py-3.5 rounded border border-white text-white hover:bg-white hover:text-navy transition-colors"
             >
               {isAr ? "تحميل الدليل التعريفي" : "Download Prospectus"}
