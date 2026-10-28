@@ -6,7 +6,7 @@ import { InterestDialogContext } from "@/components/marketing/InterestDialog";
 import CheckoutDialog, {
   DEFAULT_CANCELLATION_WAIVER_TEXT,
 } from "@/components/checkout/CheckoutDialog";
-import CourseWelcomeDialog from "@/components/checkout/CourseWelcomeDialog";
+import { triggerCourseWelcomeModal } from "@/components/checkout/CourseWelcomeDialog";
 import {
   academyQueryKeys,
   type EnrolledCourse,
@@ -72,12 +72,17 @@ export default function SubscribeButton({
   );
 
   const [showCheckout, setShowCheckout] = useState(false);
-  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const [showWaitlist, setShowWaitlist] = useState(false);
   const [waitlistName, setWaitlistName] = useState("");
   const [waitlistEmail, setWaitlistEmail] = useState("");
   const [isWaitlistSubmitting, setIsWaitlistSubmitting] = useState(false);
   const [isWaitlistSuccess, setIsWaitlistSuccess] = useState(false);
+
+  const courseTitle =
+    itemTitle ||
+    (pathway === "casc-academy"
+      ? "The CASC Academy — Complete Access"
+      : "Course Enrolment");
 
   const refreshPaidEnrollment = useCallback(async () => {
     const retryDelays = [0, 1_000, 2_000, 4_000, 8_000];
@@ -151,7 +156,7 @@ export default function SubscribeButton({
 
             closePaddleCheckout();
             setShowCheckout(false);
-            setShowWelcomeModal(true);
+            triggerCourseWelcomeModal({ courseSlug: pathway, courseTitle });
             void refreshPaidEnrollment().then((enrolled) => {
               if (enrolled) onSuccess?.();
             });
@@ -163,7 +168,7 @@ export default function SubscribeButton({
     } finally {
       setIsCheckoutOpening(false);
     }
-  }, [isAr, itemPrice, onSuccess, pathway, refreshPaidEnrollment /*, sessionCount */]);
+  }, [courseTitle, isAr, itemPrice, onSuccess, pathway, refreshPaidEnrollment /*, sessionCount */]);
   function handleClick() {
     trackEvent("click_cta_subscription", {
       cta_name: courseTitle,
@@ -225,12 +230,6 @@ export default function SubscribeButton({
       setIsWaitlistSubmitting(false);
     }
   };
-
-  const courseTitle =
-    itemTitle ||
-    (pathway === "casc-academy"
-      ? "The CASC Academy — Complete Access"
-      : "Course Enrolment");
 
   return (
     <>
@@ -363,14 +362,6 @@ export default function SubscribeButton({
         waiverText={waiverText}
         isProcessing={isCheckoutOpening}
         onConfirm={completeSubscription}
-      />
-
-      {/* Post-Subscription Welcome Modal */}
-      <CourseWelcomeDialog
-        open={showWelcomeModal}
-        onOpenChange={setShowWelcomeModal}
-        courseSlug={pathway}
-        courseTitle={courseTitle}
       />
     </>
   );
