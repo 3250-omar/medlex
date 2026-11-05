@@ -1,55 +1,54 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
-import { getStoredUtmParams } from "@/lib/analytics/utm";
-
-const VISITOR_ID_KEY = "medlex_visitor_id";
-
-function getOrCreateVisitorId(): string {
-  if (typeof window === "undefined") return "";
-  try {
-    let id = window.localStorage.getItem(VISITOR_ID_KEY);
-    if (!id) {
-      id =
-        "vx_" +
-        (typeof crypto !== "undefined" && crypto.randomUUID
-          ? crypto.randomUUID()
-          : Math.random().toString(36).slice(2) + Date.now().toString(36));
-      window.localStorage.setItem(VISITOR_ID_KEY, id);
-    }
-    return id;
-  } catch {
-    return "anon_" + Date.now().toString(36);
-  }
-}
+import { getVisitAttribution } from "@/lib/analytics/visit-attribution";
+import { getOrCreateVisitorId } from "@/lib/analytics/visitor-id";
+import {
+  CONSENT_CHANGED_EVENT,
+  getTrackingConsent,
+} from "@/lib/analytics/consent";
 
 export function VisitorTrackerInner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const lastTrackedPathRef = useRef<string | null>(null);
+  const lastTrackedUrlRef = useRef<string | null>(null);
+  const [consentVersion, setConsentVersion] = useState(0);
+
+  useEffect(() => {
+    const handleConsentChange = () => setConsentVersion((value) => value + 1);
+    window.addEventListener(CONSENT_CHANGED_EVENT, handleConsentChange);
+    return () =>
+      window.removeEventListener(CONSENT_CHANGED_EVENT, handleConsentChange);
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    if (getTrackingConsent() !== "accepted") return;
 
     const canonicalPath = pathname || "/";
+    const previousPath = lastTrackedPathRef.current;
+    const trackingKey = `${canonicalPath}?${searchParams.toString()}`;
 
     // Prevent duplicate dispatch for same path in rapid succession
-    if (lastTrackedPathRef.current === canonicalPath) {
+    if (lastTrackedUrlRef.current === trackingKey) {
       return;
     }
     lastTrackedPathRef.current = canonicalPath;
+    lastTrackedUrlRef.current = trackingKey;
 
     const visitorId = getOrCreateVisitorId();
-    const utm = getStoredUtmParams();
+    const attribution = getVisitAttribution(searchParams, previousPath === null);
 
     const payload = {
       visitor_hash: visitorId,
       path: canonicalPath,
-      referrer: document.referrer || null,
-      utm_source: utm.utm_source || null,
-      utm_medium: utm.utm_medium || null,
-      utm_campaign: utm.utm_campaign || null,
+      referrer: attribution.referrer,
+      utm_source: attribution.utm_source,
+      utm_medium: attribution.utm_medium,
+      utm_campaign: attribution.utm_campaign,
+      google_ads_click_detected: attribution.google_ads_click_detected,
     };
 
     try {
@@ -79,7 +78,7 @@ export function VisitorTrackerInner() {
     } catch {
       // Non-blocking catch
     }
-  }, [pathname, searchParams]);
+  }, [pathname, searchParams, consentVersion]);
 
   return null;
 }

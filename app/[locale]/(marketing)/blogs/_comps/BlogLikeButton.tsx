@@ -1,4 +1,6 @@
 "use client";
+import { getTrackingConsent } from "@/lib/analytics/consent";
+import { getOrCreateVisitorId } from "@/lib/analytics/visitor-id";
 
 import React, { useState, useCallback, useSyncExternalStore } from "react";
 import { Heart } from "lucide-react";
@@ -113,7 +115,8 @@ export function BlogLikeButton({
     // Call Server Action
     setIsPending(true);
     try {
-      const res = await toggleBlogLike(blogId, nextLiked);
+      const consent = getTrackingConsent() === "accepted";
+      const res = await toggleBlogLike(blogId, nextLiked, consent, consent ? getOrCreateVisitorId() : undefined);
       if (res && res.success && typeof res.count === "number") {
         blogLikesCache.set(blogId, res.count);
         notifyListeners();
