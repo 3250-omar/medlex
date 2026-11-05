@@ -99,8 +99,9 @@ export async function POST(req: NextRequest) {
       utm_medium: string | null;
       utm_campaign: string | null;
       google_ads_click_detected?: boolean | null;
+      user_id?: string | null;
     } | undefined;
-    if (recent &&
+    if (recent && (recent.user_id || null) === (user?.id || null) &&
       (recent.referrer || null) === (cleanReferrer || null) &&
       (recent.utm_source || null) === (cleanSource || null) &&
       (recent.utm_medium || null) === (cleanMedium || null) &&

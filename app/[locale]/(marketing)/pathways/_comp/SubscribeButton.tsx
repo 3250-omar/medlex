@@ -19,6 +19,7 @@ import {
   openPaddleCheckout,
 } from "@/lib/payments/paddle/client";
 import { trackEvent } from "@/lib/analytics/events";
+import { recordCheckoutVisit } from "@/lib/analytics/checkout-attribution";
 import {
   PENDING_CASC_PURCHASE_EVENT,
   PENDING_CASC_PURCHASE_KEY,
@@ -121,6 +122,7 @@ export default function SubscribeButton({
   const completeSubscription = useCallback(async () => {
     setIsCheckoutOpening(true);
     try {
+      await recordCheckoutVisit();
       const result = await apiRequest<{
         purchaseId: string;
         transactionId: string;
