@@ -10,6 +10,8 @@ import {
 } from "react";
 import { toggleBlogLike, incrementBlogViews } from "../_actions/blog-actions";
 import { ShareDialog } from "./ShareDialog";
+import { getTrackingConsent } from "@/lib/analytics/consent";
+import { getOrCreateVisitorId } from "@/lib/analytics/visitor-id";
 
 interface ArticleActionRailProps {
   blogId: string;
@@ -182,7 +184,8 @@ export function ArticleActionRail({
     setLikesOffset((prev) => prev + (nextLiked ? 1 : -1));
 
     startTransition(async () => {
-      const res = await toggleBlogLike(blogId, nextLiked);
+      const consent = getTrackingConsent() === "accepted";
+      const res = await toggleBlogLike(blogId, nextLiked, consent, consent ? getOrCreateVisitorId() : undefined);
       if (res && res.success && typeof res.count === "number") {
         setLikesOffset(res.count - initialLikes);
       }

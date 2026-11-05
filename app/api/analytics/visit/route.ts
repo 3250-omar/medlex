@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
+import { isIP } from "node:net";
 import { z } from "zod";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 
 const BOT_PATTERNS = [
   /bot/i,
@@ -73,6 +75,8 @@ export async function POST(req: NextRequest) {
       .digest("hex");
 
     const supabase = createAdminClient();
+    const viewer = await createClient();
+    const { data: { user } } = await viewer.auth.getUser();
 
     // Deduplication check: check if same visitor visited same path within the last 5 minutes
     const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000).toISOString();
@@ -88,7 +92,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: true, deduplicated: true });
     }
 
-    await supabase.from("site_visits").insert({
+    const baseVisit = {
       visitor_hash,
       path: cleanPath,
       referrer: cleanReferrer,
@@ -97,7 +101,37 @@ export async function POST(req: NextRequest) {
       utm_campaign: cleanCampaign,
       ip_hash,
       visited_at: new Date().toISOString(),
+    };
+    // These optional columns are added by the details migration.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const db = supabase as any;
+    const locationDetails = {
+      ip_address: isIP(rawIp) && rawIp !== "127.0.0.1" && rawIp !== "::1" ? rawIp : null,
+      country_code: (() => {
+        const code = (req.headers.get("x-vercel-ip-country") || req.headers.get("cf-ipcountry"))?.toUpperCase();
+        return code && /^[A-Z]{2}$/.test(code) ? code : null;
+      })(),
+    };
+    const { error: detailedInsertError } = await db.from("site_visits").insert({
+      ...baseVisit,
+      ...locationDetails,
+      user_id: user?.id || null,
     });
+    let insertError = detailedInsertError;
+    if (insertError && ["PGRST204", "42703"].includes(insertError.code)) {
+      // Older schemas have IP and country but not user_id.
+      const retry = await db.from("site_visits").insert({ ...baseVisit, ...locationDetails });
+      insertError = retry.error;
+    }
+    if (insertError && ["PGRST204", "42703"].includes(insertError.code)) {
+      // Keep visits working on the oldest schema too.
+      const retry = await supabase.from("site_visits").insert(baseVisit);
+      insertError = retry.error;
+    }
+    if (insertError) {
+      console.error("[Visitor Ingestion Error]:", insertError);
+      return NextResponse.json({ success: false }, { status: 503 });
+    }
 
     return NextResponse.json({ success: true });
   } catch (err) {

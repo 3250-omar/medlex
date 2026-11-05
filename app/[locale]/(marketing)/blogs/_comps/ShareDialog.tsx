@@ -1,4 +1,6 @@
 "use client";
+import { getTrackingConsent } from "@/lib/analytics/consent";
+import { getOrCreateVisitorId } from "@/lib/analytics/visitor-id";
 
 import React, {
   useState,
@@ -67,7 +69,8 @@ export function ShareDialog({
     if (!blogId || hasTrackedShareRef.current) return;
     hasTrackedShareRef.current = true;
     try {
-      const res = await incrementBlogShares(blogId);
+      const consent = getTrackingConsent() === "accepted";
+      const res = await incrementBlogShares(blogId, consent, consent ? getOrCreateVisitorId() : undefined);
       if (res && res.success && typeof res.count === "number") {
         onShareTracked?.(res.count);
       }
