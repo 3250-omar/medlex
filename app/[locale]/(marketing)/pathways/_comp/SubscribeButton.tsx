@@ -19,6 +19,10 @@ import {
   openPaddleCheckout,
 } from "@/lib/payments/paddle/client";
 import { trackEvent } from "@/lib/analytics/events";
+import {
+  PENDING_CASC_PURCHASE_EVENT,
+  PENDING_CASC_PURCHASE_KEY,
+} from "@/components/analytics/PurchaseConversionTracker";
 import { type PathwayKey } from "./pathwayContent";
 import {
   Dialog,
@@ -133,32 +137,24 @@ export default function SubscribeButton({
         body: JSON.stringify({ sessionCount: 0 }),
       });
 
+      if (pathway === "casc-academy") {
+        window.sessionStorage.setItem(PENDING_CASC_PURCHASE_KEY, result.purchaseId);
+        window.dispatchEvent(new Event(PENDING_CASC_PURCHASE_EVENT));
+      }
+
       await openPaddleCheckout({
         transactionId: result.transactionId,
         locale: isAr ? "ar" : "en",
         onEvent: (event) => {
           if (event.name === "checkout.completed") {
-            const numericValue = parseFloat(itemPrice.replace(/[^0-9.]/g, "")) || undefined;
-            const currencyCode = itemPrice.includes("$") ? "USD" : itemPrice.includes("£") ? "GBP" : "EGP";
-
-            trackEvent(
-              "course_enrollment_success",
-              {
-                course_id: pathway,
-                pathway,
-                value: numericValue,
-                currency: currencyCode,
-              },
-              {
-                dedupeKey: `enrollment_${result.transactionId || pathway}`,
-              }
-            );
-
             closePaddleCheckout();
             setShowCheckout(false);
-            triggerCourseWelcomeModal({ courseSlug: pathway, courseTitle });
+            window.dispatchEvent(new Event(PENDING_CASC_PURCHASE_EVENT));
             void refreshPaidEnrollment().then((enrolled) => {
-              if (enrolled) onSuccess?.();
+              if (enrolled) {
+                triggerCourseWelcomeModal({ courseSlug: pathway, courseTitle });
+                onSuccess?.();
+              }
             });
           }
         },
@@ -168,7 +164,7 @@ export default function SubscribeButton({
     } finally {
       setIsCheckoutOpening(false);
     }
-  }, [courseTitle, isAr, itemPrice, onSuccess, pathway, refreshPaidEnrollment /*, sessionCount */]);
+  }, [courseTitle, isAr, onSuccess, pathway, refreshPaidEnrollment /*, sessionCount */]);
   function handleClick() {
     trackEvent("click_cta_subscription", {
       cta_name: courseTitle,

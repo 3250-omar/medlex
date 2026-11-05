@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import CookieSettingsButton from "@/components/analytics/CookieSettingsButton";
 
 export default async function Footer({ locale }: { locale: string }) {
   const t = await getTranslations({ locale, namespace: "footer" });
@@ -207,6 +208,8 @@ export default async function Footer({ locale }: { locale: string }) {
               >
                 {t("refund")}
               </Link>
+              <span>·</span>
+              <CookieSettingsButton locale={locale} />
             </div>
           </div>
         </div>

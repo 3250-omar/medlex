@@ -9,6 +9,8 @@ import Providers from "@/app/providers";
 import { sourceSerif4, inter, fraunces, cairo } from "@/lib/fonts";
 import "@/app/globals.css";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
+import CookieConsentBanner from "@/components/analytics/CookieConsentBanner";
+import Script from "next/script";
 import { cn } from "@/lib/utils";
 import { siteUrl } from "@/lib/seo/metadata";
 
@@ -75,9 +77,23 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <body className="flex min-h-screen flex-col bg-paper text-text antialiased">
+        <Script id="medlex-consent-default" strategy="beforeInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            var medlexConsent = null;
+            try { medlexConsent = localStorage.getItem('medlex_tracking_consent_v1'); } catch (_) {}
+            var medlexConsentState = medlexConsent === 'accepted' ? 'granted' : 'denied';
+            gtag('consent', 'default', {
+              ad_storage: medlexConsentState,
+              ad_user_data: medlexConsentState,
+              ad_personalization: medlexConsentState,
+              analytics_storage: medlexConsentState
+            });`}
+        </Script>
         <GoogleAnalytics />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
+            <CookieConsentBanner />
             <div className="flex min-h-screen flex-col">
               <Header />
               <main id="main-content" className="flex flex-1 flex-col">

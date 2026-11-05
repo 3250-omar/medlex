@@ -30,6 +30,7 @@ import {
 import { academyQueryKeys } from "@/app/[locale]/(marketing)/_apiCalls/academyQueries";
 import { signInSchema, signUpSchema } from "@/lib/auth/validation";
 import { DatePicker } from "@/components/ui/datePicker";
+import { trackSignUp } from "@/lib/analytics/events";
 
 export type AuthTab = "sign-in" | "register" | "forgot-password";
 
@@ -239,7 +240,13 @@ export function AuthPageContent() {
     }
 
     signUp.mutate(signUpData, {
-      onSuccess: (result) => void handleSuccess(result),
+      onSuccess: async (result) => {
+        const tracked = trackSignUp(result.userId);
+        if (tracked && !result.requiresEmailConfirmation) {
+          await new Promise((resolve) => setTimeout(resolve, 350));
+        }
+        await handleSuccess(result);
+      },
       onError: (error) => setFormError(error.message),
     });
   }

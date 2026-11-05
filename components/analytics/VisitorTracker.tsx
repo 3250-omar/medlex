@@ -1,8 +1,12 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { getStoredUtmParams } from "@/lib/analytics/utm";
+import {
+  CONSENT_CHANGED_EVENT,
+  getTrackingConsent,
+} from "@/lib/analytics/consent";
 
 const VISITOR_ID_KEY = "medlex_visitor_id";
 
@@ -28,9 +32,18 @@ export function VisitorTrackerInner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const lastTrackedPathRef = useRef<string | null>(null);
+  const [consentVersion, setConsentVersion] = useState(0);
+
+  useEffect(() => {
+    const handleConsentChange = () => setConsentVersion((value) => value + 1);
+    window.addEventListener(CONSENT_CHANGED_EVENT, handleConsentChange);
+    return () =>
+      window.removeEventListener(CONSENT_CHANGED_EVENT, handleConsentChange);
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    if (getTrackingConsent() !== "accepted") return;
 
     const canonicalPath = pathname || "/";
 
@@ -79,7 +92,7 @@ export function VisitorTrackerInner() {
     } catch {
       // Non-blocking catch
     }
-  }, [pathname, searchParams]);
+  }, [pathname, searchParams, consentVersion]);
 
   return null;
 }
