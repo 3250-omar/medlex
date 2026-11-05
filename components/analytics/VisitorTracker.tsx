@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
-import { getStoredUtmParams } from "@/lib/analytics/utm";
+import { getVisitAttribution } from "@/lib/analytics/visit-attribution";
 import { getOrCreateVisitorId } from "@/lib/analytics/visitor-id";
 import {
   CONSENT_CHANGED_EVENT,
@@ -13,6 +13,7 @@ export function VisitorTrackerInner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const lastTrackedPathRef = useRef<string | null>(null);
+  const lastTrackedUrlRef = useRef<string | null>(null);
   const [consentVersion, setConsentVersion] = useState(0);
 
   useEffect(() => {
@@ -27,23 +28,27 @@ export function VisitorTrackerInner() {
     if (getTrackingConsent() !== "accepted") return;
 
     const canonicalPath = pathname || "/";
+    const previousPath = lastTrackedPathRef.current;
+    const trackingKey = `${canonicalPath}?${searchParams.toString()}`;
 
     // Prevent duplicate dispatch for same path in rapid succession
-    if (lastTrackedPathRef.current === canonicalPath) {
+    if (lastTrackedUrlRef.current === trackingKey) {
       return;
     }
     lastTrackedPathRef.current = canonicalPath;
+    lastTrackedUrlRef.current = trackingKey;
 
     const visitorId = getOrCreateVisitorId();
-    const utm = getStoredUtmParams();
+    const attribution = getVisitAttribution(searchParams, previousPath === null);
 
     const payload = {
       visitor_hash: visitorId,
       path: canonicalPath,
-      referrer: document.referrer || null,
-      utm_source: utm.utm_source || null,
-      utm_medium: utm.utm_medium || null,
-      utm_campaign: utm.utm_campaign || null,
+      referrer: attribution.referrer,
+      utm_source: attribution.utm_source,
+      utm_medium: attribution.utm_medium,
+      utm_campaign: attribution.utm_campaign,
+      google_ads_click_detected: attribution.google_ads_click_detected,
     };
 
     try {

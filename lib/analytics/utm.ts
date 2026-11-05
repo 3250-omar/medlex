@@ -20,7 +20,7 @@ const UTM_KEYS = [
  * Capture UTM parameters from URL search params and persist in sessionStorage.
  */
 export function captureUtmFromUrl(
-  searchParams?: URLSearchParams | string
+  searchParams?: URLSearchParams | string,
 ): UtmParams | null {
   if (typeof window === "undefined") {
     return null;
@@ -48,10 +48,8 @@ export function captureUtmFromUrl(
     }
 
     if (hasUtm) {
-      const existing = getStoredUtmParams();
-      const merged = { ...existing, ...captured };
-      window.sessionStorage.setItem(UTM_STORAGE_KEY, JSON.stringify(merged));
-      return merged;
+      window.sessionStorage.setItem(UTM_STORAGE_KEY, JSON.stringify(captured));
+      return captured;
     }
 
     return getStoredUtmParams();
