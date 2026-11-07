@@ -22,7 +22,7 @@ import { trackEvent } from "@/lib/analytics/events";
 import { recordCheckoutVisit } from "@/lib/analytics/checkout-attribution";
 import {
   PENDING_CASC_PURCHASE_EVENT,
-  PENDING_CASC_PURCHASE_KEY,
+  rememberPendingCascPurchase,
 } from "@/components/analytics/PurchaseConversionTracker";
 import { type PathwayKey } from "./pathwayContent";
 import {
@@ -140,7 +140,7 @@ export default function SubscribeButton({
       });
 
       if (pathway === "casc-academy") {
-        window.sessionStorage.setItem(PENDING_CASC_PURCHASE_KEY, result.purchaseId);
+        rememberPendingCascPurchase(result.purchaseId);
         window.dispatchEvent(new Event(PENDING_CASC_PURCHASE_EVENT));
       }
 
