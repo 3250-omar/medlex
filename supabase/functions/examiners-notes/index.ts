@@ -4,6 +4,7 @@ declare const Deno: {
   env: { get(name: string): string | undefined };
   serve(handler: (request: Request) => Response | Promise<Response>): void;
 };
+declare const EdgeRuntime: { waitUntil(promise: Promise<unknown>): void };
 
 const required = (name: string): string => {
   const value = Deno.env.get(name)?.trim();
@@ -43,6 +44,7 @@ Deno.serve(async (request: Request) => {
       method: "POST",
       headers,
       body: JSON.stringify(args),
+      signal: AbortSignal.timeout(20000),
     });
     if (!response.ok)
       throw new Error(
@@ -52,9 +54,15 @@ Deno.serve(async (request: Request) => {
     return body ? JSON.parse(body) : null;
   }
   let processed = 0;
+  const startedAt = Date.now();
+  let continueBatch = false;
   try {
-    // Limit duration and let subsequent cron invocations continue the queue.
+    // Continue the same weekly dispatch in bounded function invocations.
     while (processed < 20) {
+      if (processed > 0 && Date.now() - startedAt >= 70000) {
+        continueBatch = true;
+        break;
+      }
       const [job] = (await rpc("claim_examiners_note")) as Array<{
         enrollment_id: string;
         message_number: number;
@@ -87,10 +95,11 @@ Deno.serve(async (request: Request) => {
       try {
         response = await fetch("https://api.resend.com/emails", {
           method: "POST",
+          signal: AbortSignal.timeout(20000),
           headers: {
             Authorization: `Bearer ${apiKey}`,
             "Content-Type": "application/json",
-            "Idempotency-Key": `examiners-notes/${job.enrollment_id}/${job.message_number}`,
+            "Idempotency-Key": `examiners-notes/${environment}/${job.enrollment_id}/${job.message_number}`,
           },
           body: JSON.stringify({
             from: "Dr Ahmed Abouelghit <info@medlexsolutions.com>",
@@ -141,8 +150,24 @@ Deno.serve(async (request: Request) => {
         }
       }
       processed++;
+      if (Date.now() - startedAt >= 70000) {
+        continueBatch = true;
+        break;
+      }
     }
-    return Response.json({ processed });
+    if (processed === 20 || continueBatch) {
+      EdgeRuntime.waitUntil(
+        fetch(`${url}/functions/v1/examiners-notes`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "x-cron-secret": secret },
+          body: "{}",
+          signal: AbortSignal.timeout(120000),
+        }).then((next) => {
+          if (!next.ok) console.error(`Next email batch failed: HTTP ${next.status}`);
+        }).catch((error) => console.error("Next email batch could not start:", error)),
+      );
+    }
+    return Response.json({ processed, continuation: processed === 20 || continueBatch });
   } catch (error) {
     console.error(error);
     return new Response("Processing error", { status: 500 });

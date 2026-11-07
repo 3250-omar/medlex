@@ -24,6 +24,20 @@ alter table public.site_visits
   add column if not exists country_code text,
   add column if not exists user_id uuid references auth.users(id) on delete set null;
 
-alter table public.site_visits
-  add constraint site_visits_country_code_check
-  check (country_code is null or country_code ~ '^[A-Z]{2}$');
+do $$
+declare
+  existing_definition text;
+begin
+  select pg_get_constraintdef(oid) into existing_definition
+  from pg_constraint
+  where conrelid = 'public.site_visits'::regclass
+    and conname = 'site_visits_country_code_check';
+
+  if existing_definition is null then
+    alter table public.site_visits
+      add constraint site_visits_country_code_check
+      check (country_code is null or country_code ~ '^[A-Z]{2}$');
+  elsif existing_definition <> 'CHECK (((country_code IS NULL) OR (country_code ~ ''^[A-Z]{2}$''::text)))' then
+    raise exception 'Existing site_visits_country_code_check has an unexpected definition: %', existing_definition;
+  end if;
+end $$;
