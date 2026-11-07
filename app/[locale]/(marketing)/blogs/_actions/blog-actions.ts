@@ -3,6 +3,38 @@
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import type { Database } from "@/types/database";
+import { headers } from "next/headers";
+import { isIP } from "node:net";
+
+async function recordBlogEngagement(
+  blogId: string,
+  eventType: "like" | "unlike" | "share",
+  visitorHash?: string,
+) {
+  try {
+    const requestHeaders = await headers();
+    const forwarded = requestHeaders.get("x-forwarded-for")?.split(",")[0]?.trim();
+    const candidateIp = forwarded || requestHeaders.get("x-real-ip");
+    const ip = candidateIp && isIP(candidateIp) ? candidateIp : null;
+    const country = (requestHeaders.get("x-vercel-ip-country") || requestHeaders.get("cf-ipcountry"))?.toUpperCase();
+    const client = await createClient();
+    const { data: { user } } = await client.auth.getUser();
+    // The event table is new and is not yet represented in generated database types.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const db = createAdminClient() as any;
+    const { error } = await db.from("blog_engagement_events").insert({
+      blog_id: blogId,
+      event_type: eventType,
+      user_id: user?.id || null,
+      visitor_hash: visitorHash && /^[a-zA-Z0-9_-]{1,100}$/.test(visitorHash) ? visitorHash : null,
+      ip_address: ip,
+      country_code: country && /^[A-Z]{2}$/.test(country) ? country : null,
+    });
+    if (error) console.error("Failed to record blog engagement", error);
+  } catch (error) {
+    console.error("Failed to record blog engagement", error);
+  }
+}
 
 export type BlogRow = Database["public"]["Tables"]["blogs"]["Row"];
 
@@ -116,6 +148,8 @@ export async function getAdjacentBlogs(
 export async function toggleBlogLike(
   blogId: string,
   increment: boolean,
+  analyticsConsent = false,
+  visitorHash?: string,
 ): Promise<ActionResponse<number>> {
   try {
     const supabase = createAdminClient();
@@ -156,9 +190,11 @@ export async function toggleBlogLike(
         return { success: false, error: updateError.message };
       }
 
+      if (analyticsConsent) await recordBlogEngagement(blogId, increment ? "like" : "unlike", visitorHash);
       return { success: true, count: nextCount };
     }
 
+    if (analyticsConsent) await recordBlogEngagement(blogId, increment ? "like" : "unlike", visitorHash);
     return { success: true, count: Number(data) };
   } catch (err) {
     console.error("Error toggling blog like:", err);
@@ -171,6 +207,8 @@ export async function toggleBlogLike(
 
 export async function incrementBlogShares(
   blogId: string,
+  analyticsConsent = false,
+  visitorHash?: string,
 ): Promise<ActionResponse<number>> {
   try {
     const supabase = createAdminClient();
@@ -209,9 +247,11 @@ export async function incrementBlogShares(
         return { success: false, error: updateError.message };
       }
 
+      if (analyticsConsent) await recordBlogEngagement(blogId, "share", visitorHash);
       return { success: true, count: nextCount };
     }
 
+    if (analyticsConsent) await recordBlogEngagement(blogId, "share", visitorHash);
     return { success: true, count: Number(data) };
   } catch (err) {
     console.error("Error incrementing blog shares:", err);

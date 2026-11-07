@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
+import { isIP } from "node:net";
 import { z } from "zod";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 
 const BOT_PATTERNS = [
   /bot/i,
@@ -25,6 +27,7 @@ const VisitPayloadSchema = z.object({
   utm_source: z.string().max(100).nullable().optional(),
   utm_medium: z.string().max(100).nullable().optional(),
   utm_campaign: z.string().max(100).nullable().optional(),
+  google_ads_click_detected: z.boolean().optional(),
 });
 
 export async function POST(req: NextRequest) {
@@ -50,6 +53,7 @@ export async function POST(req: NextRequest) {
       utm_source: cleanSource,
       utm_medium: cleanMedium,
       utm_campaign: cleanCampaign,
+      google_ads_click_detected: googleAdsClickDetected,
     } = parsed.data;
 
     // Normalize path by stripping query strings and hash anchors for clean aggregation and deduplication
@@ -73,22 +77,40 @@ export async function POST(req: NextRequest) {
       .digest("hex");
 
     const supabase = createAdminClient();
+    const viewer = await createClient();
+    const {
+      data: { user },
+    } = await viewer.auth.getUser();
 
     // Deduplication check: check if same visitor visited same path within the last 5 minutes
     const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000).toISOString();
     const { data: recentVisits } = await supabase
       .from("site_visits")
-      .select("id")
+      .select("*")
       .eq("visitor_hash", visitor_hash)
       .eq("path", cleanPath)
       .gte("visited_at", fiveMinutesAgo)
+      .order("visited_at", { ascending: false })
       .limit(1);
 
-    if (recentVisits && recentVisits.length > 0) {
+    const recent = recentVisits?.[0] as {
+      referrer: string | null;
+      utm_source: string | null;
+      utm_medium: string | null;
+      utm_campaign: string | null;
+      google_ads_click_detected?: boolean | null;
+      user_id?: string | null;
+    } | undefined;
+    if (recent && (recent.user_id || null) === (user?.id || null) &&
+      (recent.referrer || null) === (cleanReferrer || null) &&
+      (recent.utm_source || null) === (cleanSource || null) &&
+      (recent.utm_medium || null) === (cleanMedium || null) &&
+      (recent.utm_campaign || null) === (cleanCampaign || null) &&
+      Boolean(recent.google_ads_click_detected) === Boolean(googleAdsClickDetected)) {
       return NextResponse.json({ success: true, deduplicated: true });
     }
 
-    await supabase.from("site_visits").insert({
+    const baseVisit = {
       visitor_hash,
       path: cleanPath,
       referrer: cleanReferrer,
@@ -97,7 +119,42 @@ export async function POST(req: NextRequest) {
       utm_campaign: cleanCampaign,
       ip_hash,
       visited_at: new Date().toISOString(),
-    });
+    };
+    // These optional columns are added by the details migration.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const db = supabase as any;
+    const locationDetails = {
+      ip_address: isIP(rawIp) ? rawIp : null,
+      country_code: (() => {
+        const code = (
+          req.headers.get("x-vercel-ip-country") ||
+          req.headers.get("cf-ipcountry")
+        )?.toUpperCase();
+        return code && /^[A-Z]{2}$/.test(code) ? code : null;
+      })(),
+    };
+    const optional: Record<string, string | boolean | null> = {
+      ...locationDetails,
+      user_id: user?.id || null,
+      google_ads_click_detected: googleAdsClickDetected ?? null,
+    };
+    let insertError: { code?: string; message?: string } | null = null;
+    for (let attempt = 0; attempt < 5; attempt++) {
+      const result = await db.from("site_visits").insert({
+      ...baseVisit,
+        ...optional,
+      });
+      insertError = result.error;
+      if (!insertError || !["PGRST204", "42703"].includes(insertError.code || "")) break;
+      const errorMessage = insertError.message || "";
+      const missingKey = Object.keys(optional).find((key) => errorMessage.includes(key));
+      if (!missingKey) break;
+      delete optional[missingKey];
+    }
+    if (insertError) {
+      console.error("[Visitor Ingestion Error]:", insertError);
+      return NextResponse.json({ success: false }, { status: 503 });
+    }
 
     return NextResponse.json({ success: true });
   } catch (err) {

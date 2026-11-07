@@ -1,5 +1,7 @@
 "use client";
 
+import { recordCheckoutVisit } from "@/lib/analytics/checkout-attribution";
+
 import React, { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -256,6 +258,7 @@ export default function PrivateSessionDialog({
 
       if (mode === "direct") {
         if (!selectedSlot || !selectedOffer) return;
+        await recordCheckoutVisit();
         const result = await directCheckout.mutateAsync({
           input: {
             courseSlug: "casc-academy",
@@ -272,6 +275,7 @@ export default function PrivateSessionDialog({
         await launchPaddleCheckout(result);
       } else if (mode === "package") {
         if (!selectedOffer) return;
+        await recordCheckoutVisit();
         const result = await packageCheckout.mutateAsync({
           input: {
             courseSlug: "casc-academy",
