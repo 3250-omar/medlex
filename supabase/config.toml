@@ -1,0 +1,4 @@
+project_id = "medlex"
+
+[functions.examiners-notes]
+verify_jwt = false
