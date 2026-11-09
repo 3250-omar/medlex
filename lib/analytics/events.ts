@@ -83,6 +83,22 @@ export function trackSignUp(userId: string): boolean {
   return tracked;
 }
 
+/** Report Free Guides sign-up conversion to Google Ads. */
+export function trackFreeGuideSignUp(_resource?: string): boolean {
+  if (typeof window === "undefined" || typeof window.gtag !== "function")
+    return false;
+
+  const adsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
+  const label = process.env.NEXT_PUBLIC_GOOGLE_ADS_SIGNUP_LABEL;
+  if (adsId && /^AW-\d+$/.test(adsId) && label && /^[A-Za-z0-9_-]+$/.test(label)) {
+    window.gtag("event", "conversion", {
+      send_to: `${adsId}/${label}`,
+    });
+    return true;
+  }
+  return false;
+}
+
 /** Report a server-confirmed CASC purchase once per destination and transaction. */
 export function trackVerifiedPurchase(purchase: VerifiedPurchase): boolean {
   if (typeof window === "undefined" || typeof window.gtag !== "function")

@@ -31,7 +31,7 @@ export function GoogleAnalytics() {
   const adsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
   const validGaId = gaId && /^G-[A-Z0-9]+$/.test(gaId) ? gaId : null;
   const validAdsId = adsId && /^AW-\d+$/.test(adsId) ? adsId : null;
-  const tagId = validGaId || validAdsId;
+  const tagId = validAdsId || validGaId;
 
   return (
     <>

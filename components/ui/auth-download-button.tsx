@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Download, CheckCircle2, Loader2, Mail } from "lucide-react";
 import confetti from "canvas-confetti";
-import { trackEvent } from "@/lib/analytics/events";
+import { trackEvent, trackFreeGuideSignUp } from "@/lib/analytics/events";
 
 export interface AuthDownloadButtonProps {
   /** The path to the file in /gifts/ or public folder */
@@ -144,6 +144,8 @@ export function AuthDownloadButton({
           fileUrl,
         }),
       });
+
+      trackFreeGuideSignUp(resolvedFileName);
 
       setIsSuccess(true);
       try {
