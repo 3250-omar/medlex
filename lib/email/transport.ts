@@ -55,8 +55,13 @@ export interface SendEmailResult {
 // }
 // =====================================================================
 
+function cleanEnvValue(val?: string | null): string {
+  if (!val) return "";
+  return val.replace(/^["']|["']$/g, "").trim();
+}
+
 function getResendClient(): Resend | null {
-  const apiKey = process.env.RESEND_API_KEY?.trim();
+  const apiKey = cleanEnvValue(process.env.RESEND_API_KEY);
   if (!apiKey) return null;
   return new Resend(apiKey);
 }
@@ -70,11 +75,11 @@ export async function sendEmail({
 }: SendEmailOptions): Promise<SendEmailResult> {
   const resend = getResendClient();
   const from =
-    process.env.EMAIL_FROM?.trim() ||
-    process.env.SMTP_FROM?.trim() ||
+    cleanEnvValue(process.env.EMAIL_FROM) ||
+    cleanEnvValue(process.env.SMTP_FROM) ||
     `MedLex System <onboarding@resend.dev>`;
   const defaultReplyTo =
-    process.env.SMTP_REPLY_TO || "info@medlexsolutions.com";
+    cleanEnvValue(process.env.SMTP_REPLY_TO) || "info@medlexsolutions.com";
 
   if (!resend) {
     if (process.env.NODE_ENV === "production") {
