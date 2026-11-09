@@ -12,6 +12,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Download, CheckCircle2, Loader2, Mail } from "lucide-react";
+import confetti from "canvas-confetti";
 import { trackEvent } from "@/lib/analytics/events";
 
 export interface AuthDownloadButtonProps {
@@ -131,8 +132,6 @@ export function AuthDownloadButton({
     if (!email) return;
 
     setIsSubmitting(true);
-    // Open in a new tab immediately to prevent browser popup blockers from blocking window.open
-    window.open(fileUrl, "_blank", "noopener,noreferrer");
 
     try {
       await fetch("/api/gifts/interest", {
@@ -147,17 +146,27 @@ export function AuthDownloadButton({
       });
 
       setIsSuccess(true);
+      try {
+        confetti({
+          origin: { y: 0.65 },
+          zIndex: 99999,
+          particleCount: 80,
+          spread: 60,
+        });
+      } catch {
+        // confetti fallback if unavailable
+      }
       setTimeout(() => {
         setIsSuccess(false);
         setIsOpen(false);
-      }, 3000);
+      }, 3500);
     } catch (err) {
       console.error("Error submitting guide request:", err);
       setIsSuccess(true);
       setTimeout(() => {
         setIsSuccess(false);
         setIsOpen(false);
-      }, 3000);
+      }, 3500);
     } finally {
       setIsSubmitting(false);
     }
@@ -183,12 +192,12 @@ export function AuthDownloadButton({
         <DialogContent className="sm:max-w-md bg-[#0e1d38] text-white border border-[#c5a059]/30 p-6 rounded-2xl shadow-2xl">
           <DialogHeader>
             <DialogTitle className="font-serif text-xl sm:text-2xl font-bold text-white text-start">
-              {isAr ? "تحميل الدليل المجاني" : "Download Your Free Guide"}
+              {isAr ? "طلب الدليل المجاني" : "Get Your Free Guide"}
             </DialogTitle>
             <DialogDescription className="text-sm text-slate-300 text-start mt-1">
               {isAr
-                ? `أدخل بريدك الإلكتروني وسنقوم بإرسال نسخة إليك وبدء التحميل فوراً.`
-                : `Enter your email to receive a copy of ${resourceTitle} and download it immediately.`}
+                ? "أدخل بريدك الإلكتروني وسنقوم بإرسال رابط التحميل المباشر إلى بريدك الإلكتروني."
+                : `Enter your email address to receive a direct download link to ${resourceTitle} in your inbox.`}
             </DialogDescription>
           </DialogHeader>
 
@@ -196,12 +205,12 @@ export function AuthDownloadButton({
             <div className="py-6 flex flex-col items-center justify-center text-center space-y-3">
               <CheckCircle2 className="size-12 text-[#c5a059] animate-bounce" />
               <p className="font-serif text-lg font-semibold text-white">
-                {isAr ? "تم التحميل بنجاح!" : "Download Started!"}
+                {isAr ? "تم إرسال الرابط بنجاح!" : "Sent Successfully!"}
               </p>
               <p className="text-xs text-slate-300 max-w-xs">
                 {isAr
-                  ? "تم بدء تحميل الملف وتم إرسال نسخة إلى بريدك الإلكتروني أيضاً."
-                  : "Your file is downloading now, and a copy has been sent to your email."}
+                  ? "تم إرسال رابط الدليل مباشرة إلى بريدك الإلكتروني. تفقد صندوق الوارد أو مجلد الرسائل غير المرغوب فيها (Spam)."
+                  : "The download link has been sent to your email address. Please check your inbox or spam folder."}
               </p>
             </div>
           ) : (

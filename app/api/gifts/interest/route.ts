@@ -15,7 +15,8 @@ export async function POST(req: NextRequest) {
     }
 
     const cleanEmail = email.trim().toLowerCase();
-    const cleanName = (name && typeof name === "string" ? name.trim() : "") || "Colleague";
+    const cleanName =
+      (name && typeof name === "string" ? name.trim() : "") || "Colleague";
     const resourceTitle = resource || "MedLex Resource Guide";
     const isWaitlist = type === "enrol_waitlist";
 
@@ -58,12 +59,16 @@ export async function POST(req: NextRequest) {
         }
       }
     } catch (dbErr) {
-      console.error("[api/gifts/interest] Failed to save lead to database:", dbErr);
+      console.error(
+        "[api/gifts/interest] Failed to save lead to database:",
+        dbErr,
+      );
     }
 
     // 2. Dispatch confirmation / resource email via Resend
     try {
-      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://medlexsolutions.com";
+      const siteUrl =
+        process.env.NEXT_PUBLIC_SITE_URL || "https://medlexsolutions.com";
       const fullDownloadUrl = fileUrl
         ? fileUrl.startsWith("http")
           ? fileUrl
@@ -101,7 +106,7 @@ export async function POST(req: NextRequest) {
             Thank you for requesting <strong>${resourceTitle}</strong> from MedLex.
           </p>
           <p style="font-size: 16px; line-height: 1.6; color: #2C3E50;">
-            Your guide has begun downloading in your browser. You can also access and save your copy anytime using the direct link below:
+            Here is your requested guide. You can access and save your copy anytime using the direct link below:
           </p>
           ${
             fullDownloadUrl
@@ -125,7 +130,7 @@ export async function POST(req: NextRequest) {
         </div>
       `;
 
-      await sendEmail({
+      const sendResult = await sendEmail({
         to: cleanEmail,
         subject,
         html,
@@ -133,6 +138,20 @@ export async function POST(req: NextRequest) {
           ? `Thank you for your interest in ${resourceTitle}. Enrolment opens shortly and we will notify you first.`
           : `Thank you for requesting ${resourceTitle}. You can download it here: ${fullDownloadUrl || siteUrl}`,
       });
+
+      if (!sendResult.success) {
+        console.error(
+          "[api/gifts/interest] Email dispatch failed:",
+          sendResult.error,
+        );
+      } else {
+        console.log(
+          "[api/gifts/interest] Email dispatched successfully to:",
+          cleanEmail,
+          "id:",
+          sendResult.messageId,
+        );
+      }
     } catch (emailErr) {
       console.error("[api/gifts/interest] Failed to dispatch email:", emailErr);
     }
@@ -143,4 +162,3 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true });
   }
 }
-
