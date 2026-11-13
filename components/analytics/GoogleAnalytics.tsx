@@ -6,6 +6,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { captureUtmFromUrl } from "@/lib/analytics/utm";
 import { VisitorTrackerInner } from "@/components/analytics/VisitorTracker";
 import PurchaseConversionTracker from "@/components/analytics/PurchaseConversionTracker";
+import MetaPixel from "@/components/analytics/MetaPixel";
 import { CONSENT_CHANGED_EVENT, getTrackingConsent } from "@/lib/analytics/consent";
 
 function UtmListener() {
@@ -39,6 +40,7 @@ export function GoogleAnalytics() {
         <UtmListener />
         <VisitorTrackerInner />
         <PurchaseConversionTracker />
+        <MetaPixel />
       </Suspense>
 
       {tagId ? (
