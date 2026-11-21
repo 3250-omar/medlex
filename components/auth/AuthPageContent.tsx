@@ -233,7 +233,7 @@ export function AuthPageContent() {
 
     const signUpData = new FormData();
     Object.entries(validation.data).forEach(([key, value]) => {
-      signUpData.set(key, value);
+      signUpData.set(key, String(value ?? ""));
     });
     if (profileImage) {
       signUpData.set("profileImage", profileImage);
@@ -977,9 +977,10 @@ export function AuthPageContent() {
                       />
 
                       <AuthInputField
-                        label={t("username")}
+                        label={`${t("username")} (${locale === "ar" ? "اختياري" : "optional"})`}
                         name="username"
                         field="username"
+                        required={false}
                         icon={<Sparkles className="size-4 text-muted" />}
                         error={fieldErrors.username}
                         onBlur={(event) =>
@@ -1020,7 +1021,9 @@ export function AuthPageContent() {
                         placeholder="+44 7000 000000"
                       />
                       <div className="flex flex-col gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted">
-                        <label htmlFor="exam-date">{auth("examDate")}</label>
+                        <label htmlFor="exam-date">
+                          {`${auth("examDate")} (${locale === "ar" ? "اختياري" : "optional"})`}
+                        </label>
                         <input
                           type="hidden"
                           name="exam-date"

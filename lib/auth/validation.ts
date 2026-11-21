@@ -29,9 +29,20 @@ export const signInSchema = z.object({
 
 export const signUpSchema = signInSchema.extend({
   fullName: z.string().trim().min(2).max(120),
-  username: z.string().trim().min(3).max(40),
+  username: z.preprocess(
+    (val) => (typeof val === "string" ? val.trim() : ""),
+    z.string().max(40).refine((val) => val === "" || val.length >= 3),
+  ),
   phone: z.string().trim().min(6).max(32),
-  examDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(isValidExamDate),
+  examDate: z.preprocess(
+    (val) => (typeof val === "string" ? val.trim() : ""),
+    z
+      .string()
+      .refine(
+        (val) =>
+          val === "" || (/^\d{4}-\d{2}-\d{2}$/.test(val) && isValidExamDate(val)),
+      ),
+  ),
 });
 
 export type SignInInput = z.infer<typeof signInSchema>;

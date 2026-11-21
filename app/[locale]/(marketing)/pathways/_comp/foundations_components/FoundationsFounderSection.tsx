@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import SectionHeader from "./ui/SectionHeader";
 import {
@@ -31,11 +32,12 @@ export default function FoundationsFounderSection({ locale }: Props) {
 
         {/* Founder Profile Badge */}
         <div className="flex items-center gap-4.5 mt-7 p-4 sm:p-5 border border-fd-gold-soft/45 rounded-md bg-fd-navy max-w-[560px] text-white shadow-[0_8px_24px_rgba(20,40,75,0.12)]">
-          <img
+          <Image
             src="/images/foundations/dr_ahmed_abouelghit.jpg"
             alt={t("name")}
             width={64}
             height={64}
+            sizes="64px"
             className="w-16 h-16 rounded-full object-cover border-[1.5px] border-fd-gold-soft shrink-0"
           />
           <div>

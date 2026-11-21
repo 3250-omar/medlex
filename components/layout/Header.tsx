@@ -9,7 +9,6 @@ import Navigation from "./Navigation";
 import MobileMenu from "./MobileMenu";
 import { useLocale, useTranslations } from "next-intl";
 import { getLocalePath } from "@/lib/i18n/localePath";
-import { createClient } from "@/lib/supabase/browser";
 import { apiRequest } from "@/lib/api/client";
 import { showApiError } from "@/lib/api/errorToast";
 import {
@@ -26,7 +25,6 @@ import {
 export default function Header() {
   const locale = useLocale();
   const pathname = usePathname();
-  console.log("🚀 ~ Header ~ pathname:", pathname.includes("/casc-academy"));
   const alternateLocale = locale === "en" ? "ar" : "en";
   const alternateLocalePath = getLocalePath(pathname, alternateLocale);
   const isLessonPath =
@@ -131,22 +129,40 @@ export default function Header() {
   }, []);
 
   /* ── Auth state listener ───────────────────────────────────────────── */
+  const isAuthenticated = Boolean(user);
+
   useEffect(() => {
-    const supabase = createClient();
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event) => {
-      if (event === "SIGNED_OUT") {
-        queryClient.removeQueries({ queryKey: academyQueryKeys.authenticated });
-        if (isProtectedPath(pathname)) {
-          router.push(`/${locale}`);
+    if (!isAuthenticated) return;
+
+    let active = true;
+    let unsubscribe: (() => void) | undefined;
+
+    void import("@/lib/supabase/browser").then(({ createClient }) => {
+      if (!active) return;
+
+      const supabase = createClient();
+      const {
+        data: { subscription },
+      } = supabase.auth.onAuthStateChange((event) => {
+        if (event === "SIGNED_OUT") {
+          queryClient.removeQueries({
+            queryKey: academyQueryKeys.authenticated,
+          });
+          if (isProtectedPath(pathname)) {
+            router.push(`/${locale}`);
+          }
+          router.refresh();
         }
-        router.refresh();
-      }
+      });
+
+      unsubscribe = () => subscription.unsubscribe();
     });
 
-    return () => subscription.unsubscribe();
-  }, [queryClient, pathname, locale, router, isProtectedPath]);
+    return () => {
+      active = false;
+      unsubscribe?.();
+    };
+  }, [isAuthenticated, queryClient, pathname, locale, router, isProtectedPath]);
 
   const handleSignOut = useCallback(async () => {
     try {

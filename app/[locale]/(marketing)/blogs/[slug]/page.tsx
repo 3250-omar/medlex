@@ -19,6 +19,8 @@ import { ArticlePrevNext } from "../_comps/ArticlePrevNext";
 import { ArticleCta } from "../_comps/ArticleCta";
 import { resolveBlogFaqItems } from "@/lib/blogs/faq";
 
+export const revalidate = 300;
+
 function estimateReadingTime(content: string | null): number {
   if (!content) return 3;
   const wordCount = content

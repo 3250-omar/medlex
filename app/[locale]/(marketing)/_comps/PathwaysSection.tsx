@@ -9,6 +9,7 @@ import {
   useCurrentUser,
   useEnrolledCourses,
   useAllCourses,
+  type Course,
 } from "../_apiCalls/academyQueries";
 
 const COURSE_INDEX_MAP: Record<string, number> = {
@@ -32,12 +33,16 @@ const PATHWAY_STATIC_DATA = {
   },
 } as const;
 
-export default function PathwaysSection() {
+export default function PathwaysSection({
+  initialCourses,
+}: {
+  initialCourses?: Course[];
+}) {
   const t = useTranslations("home");
   const locale = useLocale();
   const { data: user } = useCurrentUser();
   const { data: enrolledCourses = [] } = useEnrolledCourses(Boolean(user));
-  const { data: allCourses = [], isLoading } = useAllCourses();
+  const { data: allCourses = [], isLoading } = useAllCourses(initialCourses);
   const enrolledCourseSlugs = new Set(
     enrolledCourses.map((course) => course.slug),
   );

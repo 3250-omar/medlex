@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import SectionHeader from "./ui/SectionHeader";
 import {
@@ -50,9 +51,12 @@ export default function FoundationsCourseSection({ locale }: Props) {
             className="mb-0"
           />
           <figure className="m-0">
-            <img
+            <Image
               src="/images/foundations/clinicians_edge_desk.jpg"
               alt="Research, audit and quality improvement at a clinician's desk"
+              width={800}
+              height={550}
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="rounded-md aspect-[16/11] object-cover w-full shadow-[0_24px_50px_rgba(20,40,75,0.22)]"
             />
           </figure>

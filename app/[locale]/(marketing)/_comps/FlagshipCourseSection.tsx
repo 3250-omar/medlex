@@ -1,8 +1,5 @@
-"use client";
-
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { AuthDownloadButton } from "@/components/ui/auth-download-button";
 
 interface FlagshipCourseSectionProps {
   locale: string;

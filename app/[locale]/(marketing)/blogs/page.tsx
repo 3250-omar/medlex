@@ -10,6 +10,8 @@ import {
 import { getPublishedBlogs } from "./_actions/blog-actions";
 import { BlogsCatalog } from "./_comps/BlogsCatalog";
 
+export const revalidate = 300;
+
 export async function generateMetadata({
   params,
 }: {

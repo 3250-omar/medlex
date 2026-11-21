@@ -1,7 +1,10 @@
 "use server";
 
+import { cache } from "react";
+import { unstable_cache } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { createPublicClient } from "@/lib/supabase/public";
 import type { Database } from "@/types/database";
 import { headers } from "next/headers";
 import { isIP } from "node:net";
@@ -69,80 +72,110 @@ export interface ActionResponse<T = number> {
   error?: string;
 }
 
+const getPublishedBlogsCached = unstable_cache(
+  async (): Promise<PublishedBlogItem[]> => {
+    const supabase = createPublicClient();
+    const { data, error } = await supabase
+      .from("blogs")
+      .select(
+        "id, title_en, title_ar, slug, excerpt_en, excerpt_ar, cover_image, cover_image_alt, category, is_english_only, published_at, is_published, created_at, seo_title_en, seo_title_ar, seo_description_en, seo_description_ar, seo_tags, likes_count, shares_count, views_count",
+      )
+      .or("status.eq.published,is_published.eq.true")
+      .order("published_at", { ascending: false, nullsFirst: false });
+
+    if (error) {
+      console.error("Error fetching published blogs:", error);
+      return [];
+    }
+
+    return data ?? [];
+  },
+  ["published-blogs"],
+  { revalidate: 300, tags: ["blogs"] },
+);
+
 export async function getPublishedBlogs(): Promise<PublishedBlogItem[]> {
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("blogs")
-    .select(
-      "id, title_en, title_ar, slug, excerpt_en, excerpt_ar, cover_image, cover_image_alt, category, is_english_only, published_at, is_published, created_at, seo_title_en, seo_title_ar, seo_description_en, seo_description_ar, seo_tags, likes_count, shares_count, views_count",
-    )
-    .or("status.eq.published,is_published.eq.true")
-    .order("published_at", { ascending: false, nullsFirst: false });
-
-  if (error) {
-    console.error("Error fetching published blogs:", error);
-    return [];
-  }
-
-  return data ?? [];
+  return getPublishedBlogsCached();
 }
+
+const getBlogBySlugCached = cache(
+  unstable_cache(
+    async (slug: string): Promise<BlogRow | null> => {
+      const supabase = createPublicClient();
+      const { data, error } = await supabase
+        .from("blogs")
+        .select("*")
+        .eq("slug", slug)
+        .or("status.eq.published,is_published.eq.true")
+        .single();
+
+      if (error) {
+        console.error(`Error fetching blog with slug ${slug}:`, error);
+        return null;
+      }
+
+      return data;
+    },
+    ["blog-by-slug"],
+    { revalidate: 300, tags: ["blogs"] },
+  ),
+);
 
 export async function getBlogBySlug(slug: string): Promise<BlogRow | null> {
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("blogs")
-    .select("*")
-    .eq("slug", slug)
-    .or("status.eq.published,is_published.eq.true")
-    .single();
-
-  if (error) {
-    console.error(`Error fetching blog with slug ${slug}:`, error);
-    return null;
-  }
-
-  return data;
+  return getBlogBySlugCached(slug);
 }
+
+const getAdjacentBlogsCached = unstable_cache(
+  async (
+    currentPublishedAt: string | null,
+    currentId: string,
+  ): Promise<{ prev: PublishedBlogItem | null; next: PublishedBlogItem | null }> => {
+    try {
+      const supabase = createPublicClient();
+      const selectFields =
+        "id, title_en, title_ar, slug, excerpt_en, excerpt_ar, cover_image, cover_image_alt, category, is_english_only, published_at, is_published, created_at, seo_title_en, seo_title_ar, seo_description_en, seo_description_ar, seo_tags, likes_count, shares_count, views_count";
+
+      const dateToCompare = currentPublishedAt || new Date().toISOString();
+
+      const [{ data: prevData }, { data: nextData }] = await Promise.all([
+        // Previous (older article)
+        supabase
+          .from("blogs")
+          .select(selectFields)
+          .or("status.eq.published,is_published.eq.true")
+          .lt("published_at", dateToCompare)
+          .neq("id", currentId)
+          .order("published_at", { ascending: false })
+          .limit(1),
+        // Next (newer article)
+        supabase
+          .from("blogs")
+          .select(selectFields)
+          .or("status.eq.published,is_published.eq.true")
+          .gt("published_at", dateToCompare)
+          .neq("id", currentId)
+          .order("published_at", { ascending: true })
+          .limit(1),
+      ]);
+
+      return {
+        prev: (prevData?.[0] as PublishedBlogItem) ?? null,
+        next: (nextData?.[0] as PublishedBlogItem) ?? null,
+      };
+    } catch (err) {
+      console.error("Error fetching adjacent blogs:", err);
+      return { prev: null, next: null };
+    }
+  },
+  ["adjacent-blogs"],
+  { revalidate: 300, tags: ["blogs"] },
+);
 
 export async function getAdjacentBlogs(
   currentPublishedAt: string | null,
   currentId: string,
 ): Promise<{ prev: PublishedBlogItem | null; next: PublishedBlogItem | null }> {
-  try {
-    const supabase = await createClient();
-    const selectFields =
-      "id, title_en, title_ar, slug, excerpt_en, excerpt_ar, cover_image, cover_image_alt, category, is_english_only, published_at, is_published, created_at, seo_title_en, seo_title_ar, seo_description_en, seo_description_ar, seo_tags, likes_count, shares_count, views_count";
-
-    const dateToCompare = currentPublishedAt || new Date().toISOString();
-
-    // Previous (older article)
-    const { data: prevData } = await supabase
-      .from("blogs")
-      .select(selectFields)
-      .or("status.eq.published,is_published.eq.true")
-      .lt("published_at", dateToCompare)
-      .neq("id", currentId)
-      .order("published_at", { ascending: false })
-      .limit(1);
-
-    // Next (newer article)
-    const { data: nextData } = await supabase
-      .from("blogs")
-      .select(selectFields)
-      .or("status.eq.published,is_published.eq.true")
-      .gt("published_at", dateToCompare)
-      .neq("id", currentId)
-      .order("published_at", { ascending: true })
-      .limit(1);
-
-    return {
-      prev: (prevData?.[0] as PublishedBlogItem) ?? null,
-      next: (nextData?.[0] as PublishedBlogItem) ?? null,
-    };
-  } catch (err) {
-    console.error("Error fetching adjacent blogs:", err);
-    return { prev: null, next: null };
-  }
+  return getAdjacentBlogsCached(currentPublishedAt, currentId);
 }
 
 export async function toggleBlogLike(

@@ -9,7 +9,7 @@ import CheckoutDialog, {
 import { triggerCourseWelcomeModal } from "@/components/checkout/CourseWelcomeDialog";
 import {
   academyQueryKeys,
-  type EnrolledCourse,
+  type CurrentUser,
   useCurrentUser,
 } from "../../_apiCalls/academyQueries";
 import { useQueryClient } from "@tanstack/react-query";
@@ -94,27 +94,12 @@ export default function SubscribeButton({
     for (const delay of retryDelays) {
       if (delay)
         await new Promise((resolve) => window.setTimeout(resolve, delay));
-      await Promise.all([
-        queryClient.invalidateQueries({
-          queryKey: academyQueryKeys.currentUser,
-        }),
-        queryClient.invalidateQueries({
-          queryKey: academyQueryKeys.enrolledCourses,
-        }),
-      ]);
-      await Promise.all([
-        queryClient.refetchQueries({
-          queryKey: academyQueryKeys.currentUser,
-          type: "active",
-        }),
-        queryClient.refetchQueries({
-          queryKey: academyQueryKeys.enrolledCourses,
-          type: "active",
-        }),
-      ]);
-      const courses = queryClient.getQueryData<EnrolledCourse[]>(
-        academyQueryKeys.enrolledCourses,
-      );
+      await queryClient.invalidateQueries({
+        queryKey: academyQueryKeys.currentUser,
+      });
+      const courses = queryClient.getQueryData<CurrentUser | null>(
+        academyQueryKeys.currentUser,
+      )?.enrolledCourses;
       if (courses?.some((course) => course.slug === pathway)) return true;
     }
     return false;

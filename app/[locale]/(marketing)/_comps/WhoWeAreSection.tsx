@@ -77,7 +77,6 @@ export default function WhoWeAreSection() {
                 alt={t("who.imageAlt")}
                 width={1200}
                 height={675}
-                priority
                 className="w-full h-auto object-cover block"
                 sizes="(min-width: 1024px) 50vw, 100vw"
               />

@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { Download } from "lucide-react";
@@ -149,9 +150,11 @@ export default function CascGiftsSection() {
 
               {/* Book 1 Header: Logo */}
               <div className="relative z-10 flex items-center gap-2">
-                <img
+                <Image
                   src="/images/medicolegal/img_4_.png"
                   alt=""
+                  width={32}
+                  height={32}
                   className="h-5 sm:h-6 w-auto brightness-110"
                 />
                 <span className="font-serif text-xs sm:text-sm font-semibold tracking-[0.12em] text-[#D9C08A]">
@@ -197,9 +200,11 @@ export default function CascGiftsSection() {
 
               {/* Book 2 Header: Logo */}
               <div className="relative z-10 flex items-center gap-2">
-                <img
+                <Image
                   src="/images/medicolegal/img_4_.png"
                   alt=""
+                  width={32}
+                  height={32}
                   className="h-5 sm:h-6 w-auto brightness-110"
                 />
                 <span className="font-serif text-xs sm:text-sm font-semibold tracking-[0.12em] text-[#D9C08A]">

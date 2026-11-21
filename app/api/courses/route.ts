@@ -28,36 +28,34 @@ export async function GET(req: NextRequest) {
 
   // Load country specific prices
   const courseIds = (data || []).map((c) => c.id);
-  let countryPriceMap = new Map<string, { price: number; currency: string }>();
+  const countryPriceMap = new Map<string, { price: number; currency: string }>();
 
   if (courseIds.length > 0) {
-    // Exact match
-    const { data: exactPrices } = await supabase
+    const countryCodes =
+      countryCode === "__OTHER__" ? ["__OTHER__"] : [countryCode, "__OTHER__"];
+
+    const { data: countryPrices } = await supabase
       .from("course_country_prices")
-      .select("course_id, price, currency")
+      .select("course_id, country_code, price, currency")
       .in("course_id", courseIds)
-      .eq("country_code", countryCode)
+      .in("country_code", countryCodes)
       .eq("is_active", true);
 
-    if (exactPrices && exactPrices.length > 0) {
-      countryPriceMap = new Map(exactPrices.map((p) => [p.course_id, p]));
-    }
-
-    // Fallback to __OTHER__
-    const missingCourseIds = courseIds.filter((id) => !countryPriceMap.has(id));
-    if (missingCourseIds.length > 0) {
-      const { data: otherPrices } = await supabase
-        .from("course_country_prices")
-        .select("course_id, price, currency")
-        .in("course_id", missingCourseIds)
-        .eq("country_code", "__OTHER__")
-        .eq("is_active", true);
-
-      if (otherPrices) {
-        for (const p of otherPrices) {
-          if (!countryPriceMap.has(p.course_id)) {
-            countryPriceMap.set(p.course_id, p);
-          }
+    if (countryPrices) {
+      for (const p of countryPrices) {
+        if (p.country_code === countryCode) {
+          countryPriceMap.set(p.course_id, {
+            price: p.price,
+            currency: p.currency,
+          });
+        } else if (
+          p.country_code === "__OTHER__" &&
+          !countryPriceMap.has(p.course_id)
+        ) {
+          countryPriceMap.set(p.course_id, {
+            price: p.price,
+            currency: p.currency,
+          });
         }
       }
     }

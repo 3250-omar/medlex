@@ -50,9 +50,9 @@ export async function POST(request: NextRequest) {
     options: {
       data: {
         full_name: fullName,
-        username,
+        username: username || undefined,
         phone,
-        exam_date: examDate,
+        exam_date: examDate || undefined,
       },
     },
   });
