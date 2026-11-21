@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
-import confetti from "canvas-confetti";
 import {
   Dialog,
   DialogContent,
@@ -99,35 +98,50 @@ export default function CourseWelcomeDialog({
   useEffect(() => {
     if (!open) return;
 
-    const count = 200;
-    const defaults = {
-      origin: { y: 0.7 },
-      zIndex: 9999,
-    };
+    let cancelled = false;
 
-    function fire(particleRatio: number, opts: confetti.Options) {
-      confetti({
-        ...defaults,
-        ...opts,
-        particleCount: Math.floor(count * particleRatio),
+    void import("canvas-confetti").then(({ default: confetti }) => {
+      if (cancelled) return;
+
+      const count = 200;
+      const defaults = {
+        origin: { y: 0.7 },
+        zIndex: 9999,
+      };
+
+      function fire(
+        particleRatio: number,
+        opts?: NonNullable<Parameters<typeof confetti>[0]>,
+      ) {
+        confetti({
+          ...defaults,
+          ...opts,
+          particleCount: Math.floor(count * particleRatio),
+        });
+      }
+
+      fire(0.25, {
+        spread: 26,
+        startVelocity: 55,
+        colors: ["#c5a059", "#10b981", "#ffffff"],
       });
-    }
-
-    fire(0.25, {
-      spread: 26,
-      startVelocity: 55,
-      colors: ["#c5a059", "#10b981", "#ffffff"],
+      fire(0.2, { spread: 60 });
+      fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+      fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+      fire(0.1, { spread: 120, startVelocity: 45 });
     });
-    fire(0.2, { spread: 60 });
-    fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-    fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-    fire(0.1, { spread: 120, startVelocity: 45 });
+
+    return () => {
+      cancelled = true;
+    };
   }, [open]);
 
   const handleStartLearning = () => {
     handleOpenChange(false);
     router.push(`/${locale}/academy/courses/${courseSlug}`);
   };
+
+  if (!open) return null;
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>

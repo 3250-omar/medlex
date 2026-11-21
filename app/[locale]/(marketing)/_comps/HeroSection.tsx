@@ -32,33 +32,45 @@ export default function HeroSection({ locale }: HeroSectionProps) {
     const drawingContext = context;
     let frame = 0;
     let time = 0;
+    let lastDraw = 0;
+    let isVisible = true;
+    let width = guillocheCanvas.clientWidth;
+    let height = guillocheCanvas.clientHeight;
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
+    const goldVal = getComputedStyle(document.documentElement)
+      .getPropertyValue("--gold")
+      .trim();
+    const accent =
+      goldVal && !goldVal.startsWith("var") ? goldVal : "#D4AF37";
+
+    function syncCanvasSize(nextWidth: number, nextHeight: number) {
+      width = nextWidth;
+      height = nextHeight;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const targetWidth = Math.round(width * dpr);
+      const targetHeight = Math.round(height * dpr);
+      if (
+        guillocheCanvas.width !== targetWidth ||
+        guillocheCanvas.height !== targetHeight
+      ) {
+        guillocheCanvas.width = targetWidth;
+        guillocheCanvas.height = targetHeight;
+      }
+    }
+
+    syncCanvasSize(width, height);
 
     function draw() {
-      const rect = guillocheCanvas.getBoundingClientRect();
-      const width = rect.width;
-      const height = rect.height;
       if (!width || !height) return;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      if (
-        guillocheCanvas.width !== Math.round(width * dpr) ||
-        guillocheCanvas.height !== Math.round(height * dpr)
-      ) {
-        guillocheCanvas.width = Math.round(width * dpr);
-        guillocheCanvas.height = Math.round(height * dpr);
-      }
       drawingContext.setTransform(dpr, 0, 0, dpr, 0, 0);
       drawingContext.clearRect(0, 0, width, height);
       const centerX = width / 2;
       const centerY = height / 2;
       const radius = Math.min(width, height) * 0.46;
-      const goldVal = getComputedStyle(document.documentElement)
-        .getPropertyValue("--gold")
-        .trim();
-      const accent =
-        goldVal && !goldVal.startsWith("var") ? goldVal : "#D4AF37";
       const phase = time * 0.0016;
       drawingContext.strokeStyle = accent;
       drawingContext.lineWidth = 0.7;
@@ -73,7 +85,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
         drawingContext.beginPath();
         drawingContext.globalAlpha = 0.4 - index * 0.035;
         const offset = phase * (index % 2 ? -1 : 1) * (1 + index * 0.12);
-        for (let angle = 0; angle <= Math.PI * 2 + 0.01; angle += 0.008) {
+        for (let angle = 0; angle <= Math.PI * 2 + 0.016; angle += 0.016) {
           const radial =
             radius *
             (ring.radius +
@@ -89,7 +101,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
       });
       drawingContext.globalAlpha = 0.16;
       drawingContext.beginPath();
-      for (let angle = 0; angle <= Math.PI * 14 + 0.01; angle += 0.01) {
+      for (let angle = 0; angle <= Math.PI * 14 + 0.025; angle += 0.025) {
         const radial =
           radius * (0.52 + 0.28 * Math.cos(3.5 * angle + phase * 2));
         drawingContext.lineTo(
@@ -123,18 +135,59 @@ export default function HeroSection({ locale }: HeroSectionProps) {
       }
       drawingContext.globalAlpha = 1;
     }
-    const resizeObserver = new ResizeObserver(draw);
-    resizeObserver.observe(guillocheCanvas);
-    draw();
-    function animate() {
-      time += 1;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      const nextWidth = entry
+        ? entry.contentRect.width
+        : guillocheCanvas.clientWidth;
+      const nextHeight = entry
+        ? entry.contentRect.height
+        : guillocheCanvas.clientHeight;
+      syncCanvasSize(nextWidth, nextHeight);
       draw();
+    });
+    resizeObserver.observe(guillocheCanvas);
+
+    function animate(now: number) {
+      if (!isVisible) {
+        frame = 0;
+        return;
+      }
+      if (lastDraw === 0) lastDraw = now;
+      if (now - lastDraw >= 33) {
+        lastDraw = now;
+        time += 2;
+        draw();
+      }
       frame = requestAnimationFrame(animate);
     }
-    if (!reduceMotion) frame = requestAnimationFrame(animate);
+
+    const intersectionObserver = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        const nextVisible = entry ? entry.isIntersecting : true;
+        isVisible = nextVisible;
+        if (!nextVisible && frame) {
+          cancelAnimationFrame(frame);
+          frame = 0;
+        } else if (nextVisible && !reduceMotion && !frame) {
+          lastDraw = 0;
+          frame = requestAnimationFrame(animate);
+        }
+      },
+      { threshold: 0 },
+    );
+    intersectionObserver.observe(guillocheCanvas);
+
+    draw();
+    if (!reduceMotion && isVisible && !frame) {
+      frame = requestAnimationFrame(animate);
+    }
     return () => {
       resizeObserver.disconnect();
-      cancelAnimationFrame(frame);
+      intersectionObserver.disconnect();
+      if (frame) cancelAnimationFrame(frame);
     };
   }, []);
   return (

@@ -68,7 +68,7 @@ export default async function LocaleLayout({
         sourceSerif4.variable,
         fraunces.variable,
         inter.variable,
-        cairo.variable,
+        locale === "ar" ? cairo.variable : null,
         "font-sans",
       )}
       data-theme="dark"
