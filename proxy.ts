@@ -70,6 +70,19 @@ export async function proxy(request: NextRequest) {
       : response;
   }
 
+  // Anonymous public pages do not need a network round trip to Auth.
+  // Match the SDK's default storage key, including chunked session cookies.
+  // Cookie presence only decides whether to refresh; it never grants access.
+  const sessionCookieName = `sb-${new URL(supabaseUrl).hostname.split(".")[0]}-auth-token`;
+  const hasSessionCookie = request.cookies.getAll().some(
+    ({ name, value }) =>
+      Boolean(value) &&
+      (name === sessionCookieName ||
+        (name.startsWith(`${sessionCookieName}.`) &&
+          /^(0|[1-9][0-9]*)$/.test(name.slice(sessionCookieName.length + 1)))),
+  );
+  if (!isProtected && !hasSessionCookie) return response;
+
   const supabase = createServerClient(supabaseUrl, supabaseKey, {
     cookies: {
       getAll: () => request.cookies.getAll(),

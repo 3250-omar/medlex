@@ -96,7 +96,6 @@ export const academyQueryKeys = {
   authenticated: ["authenticated"] as const,
   currentUser: ["auth", "me"] as const,
   allCourses: ["courses", "all"] as const,
-  enrolledCourses: ["authenticated", "courses", "enrolled"] as const,
   course: (slug: string) =>
     ["authenticated", "academy", "course", slug] as const,
   unit: (courseSlug: string, unitSlug: string) =>
@@ -106,12 +105,18 @@ export const academyQueryKeys = {
   giftStatus: ["gifts", "status"] as const,
 };
 
+const currentUserQueryOptions = {
+  queryKey: academyQueryKeys.currentUser,
+  queryFn: () => apiRequest<CurrentUser | null>("/api/auth/me"),
+  staleTime: 30_000,
+};
+
+const EMPTY_ENROLLED_COURSES: EnrolledCourse[] = [];
+const selectEnrolledCourses = (user: CurrentUser | null) =>
+  user?.enrolledCourses ?? EMPTY_ENROLLED_COURSES;
+
 export function useCurrentUser() {
-  return useQuery({
-    queryKey: academyQueryKeys.currentUser,
-    queryFn: () => apiRequest<CurrentUser | null>("/api/auth/me"),
-    staleTime: 30_000,
-  });
+  return useQuery(currentUserQueryOptions);
 }
 
 export type SubscribeParams =
@@ -145,8 +150,9 @@ export function useSubscribeToCourse() {
 
 export function useEnrolledCourses(enabled = true) {
   return useQuery({
-    queryKey: academyQueryKeys.enrolledCourses,
-    queryFn: () => apiRequest<EnrolledCourse[]>("/api/courses/enrolled"),
+    // Share the user query and select its courses without another API request.
+    ...currentUserQueryOptions,
+    select: selectEnrolledCourses,
     enabled,
   });
 }
@@ -221,7 +227,7 @@ export function useCompleteUnit() {
       ),
     onSuccess: (_data, variables) => {
       void queryClient.invalidateQueries({
-        queryKey: academyQueryKeys.enrolledCourses,
+        queryKey: academyQueryKeys.currentUser,
       });
       void queryClient.invalidateQueries({
         queryKey: academyQueryKeys.course(variables.courseSlug),
@@ -274,7 +280,7 @@ export function useOpenUnit() {
       ),
     onSuccess: () => {
       void queryClient.invalidateQueries({
-        queryKey: academyQueryKeys.enrolledCourses,
+        queryKey: academyQueryKeys.currentUser,
       });
     },
   });
