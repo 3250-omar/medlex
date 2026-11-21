@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { createLocalizedMetadata, type Locale } from "@/lib/seo/metadata";
 import { JsonLd } from "@/lib/seo/JsonLd";
 import { createWebSiteSchema } from "@/lib/seo/schema";
+import { getPublishedCoursesForCountry } from "@/lib/courses/publicCourses";
 import FlagshipCourseSection from "./_comps/FlagshipCourseSection";
 import FounderSection from "./_comps/FounderSection";
 import GiftsSection from "./_comps/GiftsSection";
@@ -24,13 +26,21 @@ export async function generateMetadata({
 
 export default async function HomePage({ params }: HomePageProps) {
   const { locale } = await params;
+  const headersList = await headers();
+  const countryCode = (
+    headersList.get("x-user-country") ||
+    headersList.get("x-vercel-ip-country") ||
+    headersList.get("cf-ipcountry") ||
+    "EG"
+  ).toUpperCase();
+  const initialCourses = await getPublishedCoursesForCountry(countryCode);
 
   return (
     <>
       <JsonLd data={createWebSiteSchema()} />
       <HeroSection locale={locale} />
       <WhoWeAreSection />
-      <PathwaysSection />
+      <PathwaysSection initialCourses={initialCourses} />
       <FlagshipCourseSection locale={locale} />
       <StandardsSection />
       <GiftsSection />

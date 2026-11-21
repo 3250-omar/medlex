@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import SectionHeader from "./ui/SectionHeader";
 import { DEFAULT_ROLE_OPTIONS } from "./foundations.constants";
@@ -105,9 +106,12 @@ export default function FoundationsWaitlistSection() {
             )}
           </div>
           <figure className="m-0">
-            <img
+            <Image
               src="/images/foundations/waitlist_video_call.jpg"
               alt="A doctor joining a video call with colleagues across the region"
+              width={800}
+              height={550}
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="rounded-md aspect-[16/11] object-cover w-full shadow-[0_24px_50px_rgba(20,40,75,0.22)]"
             />
           </figure>

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 type Props = {
@@ -48,9 +49,12 @@ export default function MedicoLegalFounderSection({ locale }: Props) {
         <p className="lead">{t("lead")}</p>
 
         <div className="credit">
-          <img
+          <Image
             src="/images/medicolegal/img_3_dr_ahmed_abouelghit.jpg"
             alt={t("name")}
+            width={160}
+            height={160}
+            sizes="80px"
           />
           <div>
             <b>{t("name")}</b>

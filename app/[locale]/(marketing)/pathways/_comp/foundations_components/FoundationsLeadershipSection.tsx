@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import SectionHeader from "./ui/SectionHeader";
 
@@ -20,9 +21,12 @@ export default function FoundationsLeadershipSection() {
             leadClassName={"text-white!"}
           />
           <figure className="m-0">
-            <img
+            <Image
               src="/images/foundations/leadership_workshop.jpg"
               alt="Clinicians in a leadership workshop"
+              width={800}
+              height={550}
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="rounded-md aspect-[16/11] object-cover w-full border border-fd-gold-soft/50 shadow-[0_24px_50px_rgba(0,0,0,0.35)]"
             />
           </figure>

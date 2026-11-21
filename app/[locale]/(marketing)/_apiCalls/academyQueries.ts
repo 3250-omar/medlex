@@ -157,13 +157,14 @@ export function useEnrolledCourses(enabled = true) {
   });
 }
 
-export function useAllCourses() {
+export function useAllCourses(initialData?: Course[]) {
   return useQuery({
     queryKey: academyQueryKeys.allCourses,
     queryFn: async () => {
       const res = await apiRequest<Course[]>("/api/courses");
       return res;
     },
+    initialData,
     staleTime: 60_000,
   });
 }

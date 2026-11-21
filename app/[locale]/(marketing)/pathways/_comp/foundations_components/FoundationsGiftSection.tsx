@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { AuthDownloadButton } from "@/components/ui/auth-download-button";
 
@@ -19,9 +20,11 @@ export default function FoundationsGiftSection() {
             aria-hidden="true"
           >
             <div className="flex items-center gap-2.5 font-serif text-[16px] tracking-[0.1em] text-fd-gold-soft font-semibold">
-              <img
+              <Image
                 src="/images/foundations/book_cover_brand.png"
                 alt=""
+                width={32}
+                height={32}
                 className="h-[26px] w-auto"
               />
               <span>{t("bookBrand")}</span>

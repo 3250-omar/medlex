@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { AuthDownloadButton } from "@/components/ui/auth-download-button";
 
@@ -13,7 +14,12 @@ export default function MedicoLegalGiftSection() {
           <div className="cover" aria-hidden="true">
             <div className="cover-in">
               <div className="cover-brand">
-                <img src="/images/medicolegal/img_4_.png" alt="" />
+                <Image
+                  src="/images/medicolegal/img_4_.png"
+                  alt=""
+                  width={32}
+                  height={32}
+                />
                 <span>{t("bookBrand")}</span>
               </div>
               <div className="cover-kicker">{t("bookKicker")}</div>

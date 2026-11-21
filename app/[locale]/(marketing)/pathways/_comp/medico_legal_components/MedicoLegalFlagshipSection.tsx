@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 type Props = {
@@ -20,9 +21,13 @@ export default function MedicoLegalFlagshipSection({ locale }: Props) {
     <section className="flag" id="flagship">
       <div className="wrap grid">
         <figure>
-          <img
+          <Image
             src="/images/medicolegal/img_2_mlc_100___the_train_fire_case_.jpg"
             alt="MLC-100 — The Train Fire Case, the flagship case file for Writing Psychiatric Evidence"
+            width={800}
+            height={600}
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="h-auto"
           />
         </figure>
         <div>
